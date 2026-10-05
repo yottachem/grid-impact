@@ -13,6 +13,7 @@ dependencies = [
     "geopandas>=1.0",
     "pyogrio>=0.9",
     "xlrd>=2.0.2",
+    "pyfixest>=0.60.0",
 ]
 
 [dependency-groups]

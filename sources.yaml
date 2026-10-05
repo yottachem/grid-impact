@@ -115,3 +115,11 @@ sources:
     expected_max_gap_days: 45
     license: Public domain (US Gov)
     module: ingest.eia860m
+  eia930_annual:
+    name: EIA-930 annual energy by ISO/RTO (sum of daily demand)
+    publisher: U.S. EIA
+    url: https://api.eia.gov/v2/electricity/rto/daily-region-data/
+    check: monthly
+    expected_max_gap_days: 400
+    license: Public domain (US Gov)
+    module: ingest.eia930_annual

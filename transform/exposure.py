@@ -84,7 +84,8 @@ def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
     terr = pd.read_parquet(latest("pudl_eia861_annual", "out_eia861__yearly_utility_service_territory.parquet"))
     terr = _latest_per_utility(terr)[["utility_id_eia", "state", "county_id_fips", "population"]]
     sales = pd.read_parquet(latest("pudl_eia861_annual", "core_eia861__yearly_sales.parquet"))
-    sales = sales[sales.customer_class.eq("residential") & sales.service_type.isin(["bundled", "delivery"]) & (sales.customers > 0)]
+    sales = sales[sales.customer_class.eq("residential") & sales.service_type.isin(["bundled", "delivery"]) & (sales.customers > 0)
+                  & ~sales.utility_id_eia.isin([88888, 99999])]  # EIA adjustment rows are not utilities
     sales = _latest_per_utility(sales)
     res = sales.groupby(["utility_id_eia", "state"]).agg(res_customers=("customers", "sum"),
                                                         utility_name=("utility_name_eia", "first"),

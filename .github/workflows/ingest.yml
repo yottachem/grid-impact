@@ -52,12 +52,18 @@ jobs:
       - name: Build marts
         if: always() && steps.diff.outputs.changed == 'true'
         run: uv run python -m transform.run
-      - name: Upload marts
+      - name: Run analysis
+        if: always() && steps.diff.outputs.changed == 'true'
+        run: uv run python -m analysis.run
+      - name: Upload marts and results
         if: always() && steps.diff.outputs.changed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: marts-${{ github.run_id }}
-          path: data/marts/
+          path: |
+            data/marts/
+            analysis/results/
+            data/raw/eia930_annual/
           retention-days: 30
       # Week 6: redeploy site after marts build
       - name: Freshness check

@@ -1,0 +1,37 @@
+utility_id_eia,utility_name,state,zone,lda_chain,supply,note
+4110,Commonwealth Edison Co,IL,COMED,RTO,default_service,
+15477,Public Service Elec & Gas Co,NJ,PSEG,EMAAC>MAAC>RTO,default_service,
+9726,Jersey Central Power & Lt Co,NJ,JCPL,EMAAC>MAAC>RTO,default_service,
+963,Atlantic City Electric Co,NJ,AECO,EMAAC>MAAC>RTO,default_service,
+16213,Rockland Electric Co,NJ,RECO,EMAAC>MAAC>RTO,default_service,
+14940,PECO Energy Co,PA,PECO,EMAAC>MAAC>RTO,default_service,
+14715,PPL Electric Utilities Corp,PA,PPL,MAAC>RTO,default_service,
+19390,UGI Utilities Inc,PA,PPL,MAAC>RTO,default_service,
+12390,Metropolitan Edison Co,PA,METED,MAAC>RTO,default_service,merged into FirstEnergy PA (66101) in 2024
+14711,Pennsylvania Electric Co,PA,PENELEC,MAAC>RTO,default_service,merged into FirstEnergy PA (66101) in 2024
+14716,Pennsylvania Power Co,PA,ATSI,RTO,default_service,merged into FirstEnergy PA (66101) in 2024
+20387,West Penn Power Company,PA,APS,RTO,default_service,merged into FirstEnergy PA (66101) in 2024
+66101,FirstEnergy Pennsylvania Electric Co,PA,METED/PENELEC/ATSI/APS,MAAC>RTO,default_service,mixed zones; MAAC used (differs from RTO only in 2024/25)
+5487,Duquesne Light Co,PA,DUQ,RTO,default_service,
+1167,Baltimore Gas & Electric Co,MD,BGE,BGE>SWMAAC>MAAC>RTO,default_service,
+15270,Potomac Electric Power Co,MD,PEPCO,SWMAAC>MAAC>RTO,default_service,
+15270,Potomac Electric Power Co,DC,PEPCO,SWMAAC>MAAC>RTO,default_service,
+15263,The Potomac Edison Company,MD,APS,RTO,default_service,
+5027,Delmarva Power,DE,DPL,EMAAC>MAAC>RTO,default_service,southern Delmarva is the DPL-S sub-LDA (not split here)
+5027,Delmarva Power,MD,DPL,DPL-S>EMAAC>MAAC>RTO,default_service,Maryland Eastern Shore is in DPL-S
+14006,Ohio Power Co,OH,AEP,RTO,default_service,
+13998,Ohio Edison Co,OH,ATSI,RTO,default_service,
+3755,Cleveland Electric Illum Co,OH,ATSI,RTO,default_service,
+18997,The Toledo Edison Co,OH,ATSI,RTO,default_service,
+3542,Duke Energy Ohio Inc,OH,DEOK,DEOK>RTO,default_service,
+4922,Dayton Power & Light Co,OH,DAY,RTO,default_service,
+19876,Virginia Electric & Power Co,VA,DOM,DOM>RTO,regulated,FRR (self-supply) through 2024/25; in RPM from 2025/26
+19876,Virginia Electric & Power Co,NC,DOM,DOM>RTO,regulated,FRR (self-supply) through 2024/25; in RPM from 2025/26
+733,Appalachian Power Co,VA,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+733,Appalachian Power Co,WV,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+9324,Indiana Michigan Power Co,IN,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+9324,Indiana Michigan Power Co,MI,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+22053,Kentucky Power Co,KY,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+12796,Monongahela Power Co,WV,APS,RTO,regulated,
+15263,The Potomac Edison Company,WV,APS,RTO,regulated,
+19446,Duke Energy Kentucky,KY,DEOK,DEOK>RTO,regulated,
