@@ -27,9 +27,16 @@ Reported and estimated MW is **capacity** (often full planned build-out), not av
 - Residential price = revenue / sales; average bill = revenue / customers.
 - 861M covers ~375 larger utilities. Utility-level prices in restructured states reflect full-service customers only.
 
+## Controls and measured load (`marts/utility_month`, week 3)
+
+- **Measured load growth** (time-varying exposure): trailing-12-month commercial sales vs. the same months of 2019 (`com_growth_vs_2019`), plus commercial + industrial (`ci_growth_vs_2019`). Commercial-only is the cleaner data center signal; C+I also picks up oil field (e.g. Permian), crypto, and factory load. Top commercial growth through Jul 2026: Omaha PPD +143%, Indiana Michigan Power +94%, OG&E +61%, APS +53%, Dominion +41%.
+- **Inflation:** BLS CPI-U all items for the utility's Census region, expressed in dollars of the latest CPI month. **BLS stopped publishing metro-area electricity CPI after December 2024** (API returns "No Data Available" for 2025+), so metro electricity indexes are history only; regional and national series continue.
+- **Weather:** NOAA nClimDiv county heating and cooling degree days, averaged over each utility's EIA-861 service counties weighted by population. Contiguous US only (no AK, HI, DC).
+- **Generation:** EIA-860M generator inventory (operating, planned, retired, canceled) by balancing authority; monthly snapshots are kept so slipped retirements can be tracked going forward.
+
 ## Known limitations
 
-- Exposure is a current snapshot; it does not yet vary over time with site online dates.
+- Site-based exposure is a current snapshot; measured commercial load growth is the time-varying counterpart.
 - Connecticut: Census uses planning regions, EIA uses legacy counties.
 - Local exposure does not capture regional cost sharing (capacity markets). See the first descriptive result below.
 

@@ -91,3 +91,27 @@ sources:
     expected_max_gap_days: 800
     license: Public domain (US Gov, HIFLD Open)
     module: ingest.hifld
+  bls_cpi:
+    name: BLS CPI-U all items and electricity (US, regions, metros)
+    publisher: U.S. Bureau of Labor Statistics
+    url: https://api.bls.gov/publicAPI/v1/timeseries/data/
+    check: weekly
+    expected_max_gap_days: 45
+    license: Public domain (US Gov)
+    module: ingest.bls_cpi
+  noaa_degree_days:
+    name: NOAA nClimDiv county heating and cooling degree days, monthly
+    publisher: NOAA NCEI
+    url: https://www.ncei.noaa.gov/monitoring-content/data/us/climdiv/monthly/current/
+    check: weekly
+    expected_max_gap_days: 45
+    license: Public domain (US Gov)
+    module: ingest.noaa_degree_days
+  eia860m:
+    name: EIA-860M monthly generator inventory (operating, planned, retired, canceled)
+    publisher: U.S. EIA
+    url: https://www.eia.gov/electricity/data/eia860m/
+    check: weekly
+    expected_max_gap_days: 45
+    license: Public domain (US Gov)
+    module: ingest.eia860m
