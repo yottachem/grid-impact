@@ -25,8 +25,9 @@ REF = ROOT / "reference"
 
 def household_kwh() -> pd.DataFrame:
     m = pd.read_parquet(MARTS / "utility_month.parquet")
-    last = m[m.res_customers > 0].groupby(["utility_id_eia", "state"]).period.transform("max")
-    w = m[(m.res_customers > 0) & (m.period > last - pd.DateOffset(months=12))]
+    m = m[m.res_customers > 0]
+    last = m.groupby(["utility_id_eia", "state"]).period.transform("max")
+    w = m[m.period > last - pd.DateOffset(months=12)]
     g = w.groupby(["utility_id_eia", "state"]).agg(mwh=("res_sales_mwh", "sum"), cust=("res_customers", "mean"),
                                                    months=("period", "nunique"), through=("period", "max"))
     g = g[g.months == 12]

@@ -42,6 +42,8 @@ Reported and estimated MW is **capacity** (often full planned build-out), not av
 - Applies directly to `default_service` utilities (restructured IL, NJ, PA, OH, MD, DE, DC), where default supply passes auction prices through. `regulated` utilities mostly recover the cost of their own plants. Dominion self-supplied (FRR) through 2024/25. Zone assignments: `reference/pjm_utility_zones.csv`.
 - The auction total is "cleared MW × price," which PJM notes is not the same as cost to load (self-supply and bilateral hedges are not exposed). The per-kWh figure is an upper-bound average for unhedged load.
 
+**Result (restructured PJM utilities, central peak factor, median home ~10,350 kWh/yr):** capacity cost per home per year $46 in 2024/25, $217 (range $180-253) in 2025/26, $237 ($198-277) in 2026/27, $242 ($201-282) in 2027/28 and 2028/29. Increase vs 2024/25: about $190/yr (~$16/month). Portion attributed to data center load by the market monitor: about $137/yr (2025/26) and $100-103/yr (2026/27, 2027/28). By utility in 2026/27: $156 (PSE&G) to $305 (Potomac Edison MD), driven by kWh per home. Delmarva MD shows a decrease vs 2024/25 because its DPL-South zone cleared at $426.17 that year. Cross-check: $329.17/MW-day × 365 × 2.0-2.5 kW household peak contribution = $240-300/yr.
+
 ## Panel regressions (`analysis/panel.py`, week 4)
 
 - Outcome: ln(inflation-adjusted residential price); utility-state and month fixed effects; heating and cooling degree days; SEs clustered by utility. 326 utility-states, 2015-01 to 2026-07.
