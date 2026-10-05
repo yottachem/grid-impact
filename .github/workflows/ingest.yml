@@ -1,0 +1,57 @@
+name: ingest
+on:
+  schedule:
+    - cron: "0 10 * * *"   # daily 06:00 ET (EDT): daily sources
+    - cron: "0 11 * * 1"   # Mondays 07:00 ET: daily + weekly sources
+  workflow_dispatch:
+    inputs:
+      cadence:
+        description: daily | weekly | all
+        default: all
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Restore raw snapshots
+        uses: actions/cache/restore@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+          restore-keys: raw-
+      - name: Pick cadence
+        id: cad
+        run: |
+          if [ -n "${{ inputs.cadence }}" ]; then echo "v=${{ inputs.cadence }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 11 * * 1" ]; then echo "v=weekly" >> "$GITHUB_OUTPUT"
+          else echo "v=daily" >> "$GITHUB_OUTPUT"; fi
+      - name: Ingest
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          PEERINGDB_API_KEY: ${{ secrets.PEERINGDB_API_KEY }}
+        run: uv run python -m ingest.run --cadence ${{ steps.cad.outputs.v }}
+      - name: Save raw snapshots
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+      - name: Detect new data
+        id: diff
+        run: echo "changed=$( [ -s data/raw/_changed.txt ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
+      # Week 2-3: build marts + redeploy site when steps.diff.outputs.changed == 'true'
+      - name: Freshness check
+        id: fresh
+        continue-on-error: true
+        run: uv run python -m ingest.freshness > freshness.txt
+      - name: Open issue for stale sources
+        if: steps.fresh.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "Stale data sources $(date -u +%F)" --body-file freshness.txt

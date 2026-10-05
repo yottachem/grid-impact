@@ -1,0 +1,44 @@
+# Source registry. `check` = how often the pipeline polls for a new release.
+# Ingest skips when the upstream content hash is unchanged; any change triggers
+# marts rebuild + site redeploy. `expected_max_gap_days` drives the freshness monitor.
+sources:
+  eia930_daily:
+    name: EIA-930 daily balancing authority demand
+    publisher: U.S. EIA
+    url: https://api.eia.gov/v2/electricity/rto/daily-region-data/
+    check: daily
+    expected_max_gap_days: 3
+    license: Public domain (US Gov)
+    module: ingest.eia930
+  eia861m:
+    name: EIA-861M monthly utility sales, revenue, customers
+    publisher: U.S. EIA
+    url: https://www.eia.gov/electricity/data/eia861m/
+    check: weekly
+    expected_max_gap_days: 45
+    license: Public domain (US Gov)
+    module: ingest.eia861m
+  pudl_eia861_annual:
+    name: PUDL EIA-861 annual (sales, service territory, reliability)
+    publisher: Catalyst Cooperative
+    url: https://s3.us-west-2.amazonaws.com/pudl.catalyst.coop/stable/
+    check: weekly
+    expected_max_gap_days: 400
+    license: CC-BY-4.0
+    module: ingest.pudl
+  im3_datacenters:
+    name: PNNL IM3 Open Source Data Center Atlas (existing)
+    publisher: PNNL
+    url: https://github.com/IMMM-SFA/datacenter-atlas
+    check: weekly
+    expected_max_gap_days: 365
+    license: BSD-2-Clause (verify; see repo LICENSE)
+    module: ingest.im3
+  peeringdb_facilities:
+    name: PeeringDB facilities (US)
+    publisher: PeeringDB
+    url: https://www.peeringdb.com/api/fac
+    check: weekly
+    expected_max_gap_days: 14
+    license: PeeringDB AUP (verify redistribution terms)
+    module: ingest.peeringdb
