@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   ingest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest moves to 26 on 2026-10-19
     timeout-minutes: 180  # first EAGLE-I backfill streams ~15 GB
     steps:
       - uses: actions/checkout@v4

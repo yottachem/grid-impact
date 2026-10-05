@@ -34,6 +34,25 @@ Reported and estimated MW is **capacity** (often full planned build-out), not av
 - **Weather:** NOAA nClimDiv county heating and cooling degree days, averaged over each utility's EIA-861 service counties weighted by population. Contiguous US only (no AK, HI, DC).
 - **Generation:** EIA-860M generator inventory (operating, planned, retired, canceled) by balancing authority; monthly snapshots are kept so slipped retirements can be tracked going forward.
 
+## Capacity cost per household (`marts/capacity_household_cost`, week 4)
+
+- Auction totals, zone prices, cleared MW: `reference/capacity_auctions.csv`, from PJM BRA reports (2024/25, 2025/26, 2028/29 reports; the 2028/29 report's Table 2 covers 2018/19-2028/29).
+- Data center attribution: Monitoring Analytics (PJM's market monitor) — $9.3B of the 2025/26 auction (63% of that year's increase, as cited by IEEFA) and $23.1B across the 2025/26-2027/28 auctions (2025 State of the Market, 2026-03-12, via Utility Dive). The remaining $13.8B is split between 2026/27 and 2027/28 in proportion to auction cost. No attribution yet for 2028/29.
+- cost per home per year = (auction total / PJM annual energy from EIA-930) × (zone price / RTO price) × household kWh/yr × residential peak factor (1.0 / 1.2 / 1.4). Capacity is charged on peak contribution, and homes peak harder than their energy share.
+- Applies directly to `default_service` utilities (restructured IL, NJ, PA, OH, MD, DE, DC), where default supply passes auction prices through. `regulated` utilities mostly recover the cost of their own plants. Dominion self-supplied (FRR) through 2024/25. Zone assignments: `reference/pjm_utility_zones.csv`.
+- The auction total is "cleared MW × price," which PJM notes is not the same as cost to load (self-supply and bilateral hedges are not exposed). The per-kWh figure is an upper-bound average for unhedged load.
+
+## Panel regressions (`analysis/panel.py`, week 4)
+
+- Outcome: ln(inflation-adjusted residential price); utility-state and month fixed effects; heating and cooling degree days; SEs clustered by utility. 326 utility-states, 2015-01 to 2026-07.
+- **Local load (within balancing authority × month):** elasticity of residential price to the utility's own commercial load -0.026 (95% CI -0.045 to -0.007). A 40% load rise implies about -0.9% relative to peers in the same market. Local load growth has not raised local residential prices relative to regional peers; if anything, more sales spread fixed costs.
+- **PJM vs rest of US (ref. 2020):** no difference 2017-2021; +3.3% 2022, +11.1% 2023, +11.1% 2024, +12.7% 2025, +15.7% 2026. The premium **began in 2023, before the capacity price spike** (consistent with 2022 gas prices locked into restructured states' default-service procurements) and widened in 2025-2026 when capacity costs arrived.
+- **Within PJM, restructured vs regulated (ref. 2020):** +18.3% in 2026, but pre-2020 coefficients are positive and declining (no clean parallel pre-trend), so this is weaker evidence.
+
+## Case studies (`analysis/case_studies.py`, week 4)
+
+Same-months comparison (Jan-Jul 2026 vs Jan-Jul 2025, inflation-adjusted): Dominion +17.0%, Texas statewide +2.6%, CPS Energy +1.9%, Georgia Power -1.9%. Full-year inflation-adjusted prices 2019-2025 fell or were flat in all three cases despite commercial load growth (Dominion +34%, Texas +22%, Georgia Power +7%). ERCOT has 88.4 GW of planned generation vs 26.7 GW in PJM (EIA-860M). Dominion's 2026 jump coincides with its first delivery year in the PJM auction and a base-rate increase of $11.24/month (SCC order 2025-11-25), which explains about a third of the 3.0¢/kWh nominal rise; fuel and rider changes are not yet decomposed.
+
 ## Known limitations
 
 - Site-based exposure is a current snapshot; measured commercial load growth is the time-varying counterpart.
