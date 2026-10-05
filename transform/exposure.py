@@ -2,11 +2,12 @@
 
 County: estimated MW by status, per 1,000 households (Census ACS 5-year), with median
 household income for energy-burden work and ORNL EAGLE-I modeled electricity customers
-as a secondary denominator (it is missing ~65 counties, including Fairfax VA and DC). Utility: each county's MW is shared among the utilities serving it
-(EIA-861 service territories via PUDL) in proportion to each utility's estimated
-residential customers in that county, where a utility's in-state residential customers
-(EIA-861 annual) are spread over its counties by population. The allocation is an
-approximation: EIA does not publish which utility serves a given site."""
+as a secondary denominator (it is missing ~65 counties, including Fairfax VA and DC). Utility: each site is placed in the retail service territories (HIFLD polygons) that
+contain it. Where territories overlap, its MW is split by each utility's customer density
+(customers per unit area), a proxy for who serves that spot. Sites outside every polygon
+fall back to a county method: the county's MW is shared among the utilities serving it
+(EIA-861 via PUDL) by population-weighted residential customer shares. Either way this
+is an approximation: EIA does not publish which utility serves a given site."""
 import geopandas as gpd
 import pandas as pd
 
@@ -58,6 +59,27 @@ def _latest_per_utility(df: pd.DataFrame) -> pd.DataFrame:
     return df[df.report_date == newest]
 
 
+def site_utility_shares() -> pd.DataFrame:
+    """One row per (site, utility) with share in (0, 1]; method 'territory' or missing."""
+    s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
+    s = s[s.status_group.isin(LIVE) & s.mw_est.notna()]
+    pts = gpd.GeoDataFrame(s[["site_id", "state"]], geometry=gpd.points_from_xy(s.lon, s.lat), crs="EPSG:4326")
+    terr = gpd.read_parquet(latest("hifld_territories", "*.parquet"))
+    terr = terr.assign(utility_id_eia=pd.to_numeric(terr.source_ID, errors="coerce"),
+                       density=pd.to_numeric(terr.CUSTOMERS, errors="coerce").clip(lower=1) / terr.Shape__Area)
+    terr = terr.rename(columns={"STATE": "terr_state"})
+    terr = terr.dropna(subset=["utility_id_eia"])[["utility_id_eia", "terr_state", "density", "geometry"]].to_crs("EPSG:4326")
+    j = gpd.sjoin(pts, terr, how="inner", predicate="within")
+    j = j.drop_duplicates(["site_id", "utility_id_eia"])
+    # Polygons are coarse at state lines: when any containing territory is based in the
+    # site's state, drop out-of-state ones (multi-state utilities keep their other states
+    # when no in-state territory contains the site).
+    j["in_state"] = j.terr_state.eq(j.state)
+    j = j[j.in_state | ~j.groupby("site_id").in_state.transform("any")]
+    j["share"] = j.density / j.groupby("site_id").density.transform("sum")
+    return pd.DataFrame(j[["site_id", "state", "utility_id_eia", "share"]]).assign(utility_id_eia=lambda d: d.utility_id_eia.astype(int))
+
+
 def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
     terr = pd.read_parquet(latest("pudl_eia861_annual", "out_eia861__yearly_utility_service_territory.parquet"))
     terr = _latest_per_utility(terr)[["utility_id_eia", "state", "county_id_fips", "population"]]
@@ -66,20 +88,37 @@ def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
     sales = _latest_per_utility(sales)
     res = sales.groupby(["utility_id_eia", "state"]).agg(res_customers=("customers", "sum"),
                                                         utility_name=("utility_name_eia", "first"),
+                                                        balancing_authority=("balancing_authority_code_eia", lambda s: s.mode().iat[0] if s.notna().any() else None),
                                                         sales_year=("report_date", "max")).reset_index()
     res["sales_year"] = res.sales_year.dt.year
+    # Territory method for sites inside a polygon
+    sites = pd.read_parquet(MARTS / "datacenter_sites.parquet")
+    sites = sites[sites.status_group.isin(LIVE) & sites.mw_est.notna()]
+    sites["k"] = sites.status_group.map(LIVE)
+    shares = site_utility_shares()
+    a = shares.merge(sites[["site_id", "k", "mw_est"]], on="site_id")
+    a["mw"] = a.mw_est * a.share
+    by_terr = a.pivot_table(index=["utility_id_eia", "state"], columns="k", values="mw", aggfunc="sum", fill_value=0)
+    # County fallback for the rest
+    rest = sites[~sites.site_id.isin(shares.site_id) & sites.county_fips.notna()]
+    rmw = rest.pivot_table(index="county_fips", columns="k", values="mw_est", aggfunc="sum", fill_value=0)
     t = terr.merge(res, on=["utility_id_eia", "state"], how="inner")
     t["pop_share"] = t.population / t.groupby(["utility_id_eia", "state"]).population.transform("sum")
-    t["est_res_customers"] = t.res_customers * t.pop_share
-    t["w"] = t.est_res_customers / t.groupby("county_id_fips").est_res_customers.transform("sum")
-    t = t.merge(cmw.rename(columns={"county_fips": "county_id_fips"}), on="county_id_fips", how="left").fillna(
-        {c: 0 for c in cmw.columns if c != "county_fips"})
-    for col in ["mw_op", "mw_uc", "mw_pr", "mw_pipeline"]:
-        t[col] = t[col] * t.w
-    u = t.groupby(["utility_id_eia", "state"]).agg(
-        utility_name=("utility_name", "first"), res_customers=("res_customers", "first"), sales_year=("sales_year", "first"),
-        counties=("county_id_fips", "nunique"), mw_op=("mw_op", "sum"), mw_uc=("mw_uc", "sum"),
-        mw_pr=("mw_pr", "sum"), mw_pipeline=("mw_pipeline", "sum")).reset_index()
+    t["w"] = t.res_customers * t.pop_share
+    t["w"] = t.w / t.groupby("county_id_fips").w.transform("sum")
+    t = t.merge(rmw, left_on="county_id_fips", right_index=True, how="inner")
+    for k in LIVE.values():
+        if k not in t:
+            t[k] = 0.0
+        t[k] = t[k] * t.w
+    by_cty = t.groupby(["utility_id_eia", "state"])[list(LIVE.values())].sum()
+    mw = by_terr.add(by_cty, fill_value=0).reindex(columns=list(LIVE.values()), fill_value=0).add_prefix("mw_")
+    mw["mw_via_territory"] = by_terr.sum(axis=1).reindex(mw.index).fillna(0)
+    u = res.set_index(["utility_id_eia", "state"]).join(mw, how="outer").reset_index()
+    u[[c for c in u.columns if c.startswith("mw_")]] = u[[c for c in u.columns if c.startswith("mw_")]].fillna(0)
+    u["mw_pipeline"] = u.mw_uc + u.mw_pr
+    u["sites_in_territory"] = u.set_index(["utility_id_eia", "state"]).index.map(
+        shares.groupby(["utility_id_eia", "state"]).site_id.nunique()).fillna(0).astype(int)
     per = u.res_customers.where(u.res_customers > 0) / 1000
     u["mw_op_per_1k_res"] = u.mw_op / per
     u["mw_pipeline_per_1k_res"] = u.mw_pipeline / per
@@ -95,6 +134,7 @@ def run() -> None:
     no_hh = cmw[~cmw.county_fips.isin(county.dropna(subset=["households"]).county_fips)]
     if len(no_hh):
         print(f"note: {len(no_hh)} counties with sites lack households: {', '.join(no_hh.county_fips)}")
+    print(f"note: {utility.mw_via_territory.sum() / (utility.mw_op + utility.mw_pipeline).sum():.1%} of allocated MW placed by service territory polygon")
     gap = cmw.mw_op.sum() - utility.mw_op.sum()
     print(f"note: {gap:,.0f} MW operating ({gap / cmw.mw_op.sum():.1%}) not allocated to a utility "
           "(counties absent from EIA-861 territories, e.g. CT planning regions, PR)")

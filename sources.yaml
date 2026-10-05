@@ -83,3 +83,11 @@ sources:
     expected_max_gap_days: 800  # vintage pinned in module; bump each December
     license: Public domain (US Gov)
     module: ingest.acs
+  hifld_territories:
+    name: Electric retail service territories (HIFLD mirror)
+    publisher: HIFLD via hifld.publicenvirodata.org
+    url: https://hifld.publicenvirodata.org/collections/hifld/datasets/electric-retail-service-territories
+    check: monthly
+    expected_max_gap_days: 800
+    license: Public domain (US Gov, HIFLD Open)
+    module: ingest.hifld
