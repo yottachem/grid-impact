@@ -13,7 +13,7 @@ PAGE = 5000
 
 
 def run() -> bool:
-    key = os.environ.get("EIA_API_KEY", "DEMO_KEY")
+    key = os.environ.get("EIA_API_KEY") or "DEMO_KEY"  # unset CI secrets arrive as ""
     start = (date.today() - timedelta(days=WINDOW_DAYS)).isoformat()
     rows, offset = [], 0
     while True:

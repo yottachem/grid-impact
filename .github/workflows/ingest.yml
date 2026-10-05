@@ -44,14 +44,16 @@ jobs:
           key: raw-${{ github.run_id }}
       - name: Detect new data
         id: diff
+        if: always()
         run: echo "changed=$( [ -s data/raw/_changed.txt ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
       # Week 2-3: build marts + redeploy site when steps.diff.outputs.changed == 'true'
       - name: Freshness check
         id: fresh
+        if: always()
         continue-on-error: true
         run: uv run python -m ingest.freshness > freshness.txt
       - name: Open issue for stale sources
-        if: steps.fresh.outcome == 'failure'
+        if: always() && steps.fresh.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "Stale data sources $(date -u +%F)" --body-file freshness.txt
