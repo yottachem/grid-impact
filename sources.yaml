@@ -67,3 +67,19 @@ sources:
     expected_max_gap_days: 400  # one release per year, ~3-12 months after year end
     license: CC-BY-4.0
     module: ingest.eaglei
+  census_counties:
+    name: Census cartographic boundary counties, 1:500k
+    publisher: U.S. Census Bureau
+    url: https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html
+    check: monthly
+    expected_max_gap_days: 800  # vintage pinned in module; bump yearly
+    license: Public domain (US Gov)
+    module: ingest.census_counties
+  acs_county:
+    name: Census ACS 5-year county households and median household income
+    publisher: U.S. Census Bureau
+    url: https://www2.census.gov/programs-surveys/acs/summary_file/
+    check: monthly
+    expected_max_gap_days: 800  # vintage pinned in module; bump each December
+    license: Public domain (US Gov)
+    module: ingest.acs
