@@ -28,4 +28,7 @@ Set `EIA_API_KEY` (free: https://www.eia.gov/opendata/register.php). Falls back 
 
 ## License
 
-Code: MIT. Derived data: CC-BY-4.0, subject to upstream licenses listed in `sources.yaml`.
+Code: MIT. Derived data: CC-BY-4.0, subject to upstream licenses listed in `sources.yaml`, with two exceptions:
+
+- **FracTracker** data center records are non-commercial only. They are used for analysis and the map with attribution, and published as a separate CC-BY-NC download, never mixed into the CC-BY marts.
+- **OpenStreetMap**-derived records are ODbL-1.0 (© OpenStreetMap contributors).

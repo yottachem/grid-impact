@@ -42,3 +42,28 @@ sources:
     expected_max_gap_days: 14
     license: PeeringDB AUP (verify redistribution terms)
     module: ingest.peeringdb
+  osm_datacenters:
+    name: OpenStreetMap data center features (Overpass)
+    publisher: OpenStreetMap contributors
+    url: https://overpass-api.de/api/interpreter
+    check: weekly
+    expected_max_gap_days: 21
+    license: ODbL-1.0 (attribution + share-alike on derived databases)
+    module: ingest.osm
+  fractracker_datacenters:
+    name: FracTracker Open U.S. Data Centers Tracker (existing + proposed)
+    publisher: FracTracker Alliance
+    url: https://fractracker.org/data-centers-tracker/
+    check: weekly
+    expected_max_gap_days: 21
+    license: Non-commercial use only (FracTracker terms of service)
+    redistribution: separate CC-BY-NC download with attribution; excluded from CC-BY marts
+    module: ingest.fractracker
+  eaglei_outages:
+    name: ORNL EAGLE-I county outages, 15-min (aggregated to county-day)
+    publisher: Oak Ridge National Laboratory
+    url: https://doi.org/10.6084/m9.figshare.24237376
+    check: monthly
+    expected_max_gap_days: 400  # one release per year, ~3-12 months after year end
+    license: CC-BY-4.0
+    module: ingest.eaglei
