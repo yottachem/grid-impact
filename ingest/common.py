@@ -19,9 +19,18 @@ def load_sources() -> dict:
 
 
 def http_get(url: str, retries: int = 4, **kwargs) -> requests.Response:
+    return _request("GET", url, retries, **kwargs)
+
+
+def http_post(url: str, retries: int = 4, **kwargs) -> requests.Response:
+    return _request("POST", url, retries, **kwargs)
+
+
+def _request(method: str, url: str, retries: int, timeout: int = 120, **kwargs) -> requests.Response:
+    """Retry on rate limits and gateway errors with capped exponential backoff."""
     headers = {"User-Agent": USER_AGENT, **kwargs.pop("headers", {})}
     for attempt in range(retries + 1):
-        r = requests.get(url, headers=headers, timeout=120, **kwargs)
+        r = requests.request(method, url, headers=headers, timeout=timeout, **kwargs)
         if r.status_code not in (429, 502, 503, 504) or attempt == retries:
             break
         time.sleep(min(int(r.headers.get("Retry-After", 0)) or 15 * 2**attempt, 120))  # cap: some APIs send hour-long Retry-After

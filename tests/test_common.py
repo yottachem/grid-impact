@@ -27,3 +27,20 @@ def test_registry_modules_importable():
         mod = importlib.import_module(cfg["module"])
         assert mod.SOURCE_ID == sid
         assert callable(mod.run)
+
+
+def test_transient_vs_real_failures():
+    import requests
+
+    from ingest.run import _is_transient
+
+    def http_error(code):
+        resp = requests.Response()
+        resp.status_code = code
+        return requests.HTTPError(response=resp)
+
+    assert _is_transient(http_error(504))
+    assert _is_transient(http_error(429))
+    assert _is_transient(requests.Timeout())
+    assert not _is_transient(http_error(403))  # bad API key must fail loudly
+    assert not _is_transient(ValueError("schema changed"))
