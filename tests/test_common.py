@@ -13,6 +13,14 @@ def test_snapshot_skips_unchanged(tmp_path, monkeypatch):
     assert [e["changed"] for e in entries] == [True, False, True]
 
 
+def test_snapshot_multi_file_source(tmp_path, monkeypatch):
+    monkeypatch.setattr(common, "RAW", tmp_path)
+    monkeypatch.setattr(common, "ROOT", tmp_path)
+    for _ in range(2):
+        written = [common.snapshot("s", body, name) for name, body in [("a.parquet", b"1"), ("b.parquet", b"2")]]
+    assert written == [None, None]
+
+
 def test_registry_modules_importable():
     import importlib
     for sid, cfg in common.load_sources().items():

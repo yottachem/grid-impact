@@ -33,12 +33,15 @@ def _manifest(source_id: str) -> Path:
     return RAW / source_id / "manifest.jsonl"
 
 
-def last_entry(source_id: str) -> dict | None:
+def last_entry(source_id: str, filename: str | None = None) -> dict | None:
+    """Most recent manifest entry, optionally for one file (multi-file sources)."""
     m = _manifest(source_id)
     if not m.exists():
         return None
-    lines = m.read_text().strip().splitlines()
-    return json.loads(lines[-1]) if lines else None
+    entries = [json.loads(l) for l in m.read_text().strip().splitlines() if l]
+    if filename:
+        entries = [e for e in entries if e["file"] == filename]
+    return entries[-1] if entries else None
 
 
 def snapshot(source_id: str, content: bytes, filename: str, meta: dict | None = None) -> Path | None:
@@ -46,9 +49,9 @@ def snapshot(source_id: str, content: bytes, filename: str, meta: dict | None = 
     last snapshot. Returns the path written, or None when upstream is unchanged."""
     digest = hashlib.sha256(content).hexdigest()
     now = datetime.now(timezone.utc)
-    prev = last_entry(source_id)
+    prev = last_entry(source_id, filename)
     entry = {"checked_at": now.isoformat(timespec="seconds"), "sha256": digest, "file": filename, **(meta or {})}
-    if prev and prev["sha256"] == digest and prev["file"] == filename:
+    if prev and prev["sha256"] == digest:
         entry["changed"] = False
         path = None
     else:
