@@ -24,7 +24,7 @@ def http_get(url: str, retries: int = 4, **kwargs) -> requests.Response:
         r = requests.get(url, headers=headers, timeout=120, **kwargs)
         if r.status_code not in (429, 502, 503, 504) or attempt == retries:
             break
-        time.sleep(int(r.headers.get("Retry-After", 0)) or 15 * 2**attempt)
+        time.sleep(min(int(r.headers.get("Retry-After", 0)) or 15 * 2**attempt, 120))  # cap: some APIs send hour-long Retry-After
     r.raise_for_status()
     return r
 
