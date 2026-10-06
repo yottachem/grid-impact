@@ -311,11 +311,11 @@ countyLayer.on("pointermove", (e, f) => {
 });
 
 // County table
-const top = COUNTIES.filter(c => (c.households || 0) >= 10000 && c.mw_pipeline_per_1k_hh != null)
+const topCounties = COUNTIES.filter(c => (c.households || 0) >= 10000 && c.mw_pipeline_per_1k_hh != null)
   .sort((a, b) => b.mw_pipeline_per_1k_hh - a.mw_pipeline_per_1k_hh).slice(0, 15);
-const maxV = d3.max(top, c => c.mw_pipeline_per_1k_hh);
+const maxV = d3.max(topCounties, c => c.mw_pipeline_per_1k_hh);
 document.getElementById("states").innerHTML = `<thead><tr><th>County</th><th>Households</th><th>Median income</th><th>Operating</th><th>Pipeline</th><th>Pipeline MW per 1,000 households</th></tr></thead><tbody>` +
-  top.map(c => `<tr><td>${esc(c.county_name)}, ${esc(c.state)}</td><td class="num">${Math.round(c.households).toLocaleString()}</td>
+  topCounties.map(c => `<tr><td>${esc(c.county_name)}, ${esc(c.state)}</td><td class="num">${Math.round(c.households).toLocaleString()}</td>
     <td class="num">${c.median_hh_income ? "$" + Math.round(c.median_hh_income).toLocaleString() : "—"}</td>
     <td class="num">${c.mw_op ? fmtMW(c.mw_op) : "—"}</td><td class="num">${fmtMW(c.mw_pipeline)}</td>
     <td class="num"><span class="bar" style="width:${Math.round(90 * c.mw_pipeline_per_1k_hh / maxV)}px;background:var(--q3)"></span>${c.mw_pipeline_per_1k_hh.toFixed(1)}</td></tr>`).join("") + "</tbody>";
