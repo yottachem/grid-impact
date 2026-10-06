@@ -26,6 +26,12 @@ CASES = {
               "ba": "ERCO", "sites_state": "TX",
               "context": "Energy-only market with no capacity auction; most residential customers buy from competitive "
                          "retailers. Statewide totals include non-ERCOT areas (El Paso, Panhandle, East Texas)."},
+    "maryland": {"title": "Maryland (BGE and Pepco)", "units": [(1167, "MD", "Baltimore Gas & Electric"), (15270, "MD", "Pepco Maryland")],
+                 "ba": "PJM", "sites_state": "MD",
+                 "context": "Restructured state: default (standard offer) supply is bought at auction, so PJM capacity prices "
+                            "pass through to residential bills. BGE's zone cleared at $466.35/MW-day in 2025/26 vs $269.92 "
+                            "for the rest of PJM; all zones cleared at the cap in 2026/27 ($329.17) and 2027/28 ($333.44). "
+                            "Maryland has few large data centers of its own."},
     "georgia": {"title": "Georgia Power", "units": [(7140, "GA", "Georgia Power")], "ba": "SOCO", "sites_state": "GA",
                 "context": "Regulated utility in the Southeast; no capacity market. Large-load growth is planned through "
                            "the utility's integrated resource plan and certified by the state PSC."},

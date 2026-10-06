@@ -66,6 +66,11 @@ def run() -> str:
     d1 = p.dropna(subset=["ln_com_ttm"])
     f1 = pf.feols("ln_price ~ ln_com_ttm + hdd + cdd | unit + ba^ym", data=d1, vcov={"CRV1": "unit"})
     b = f1.tidy().loc["ln_com_ttm"]
+    import json
+    (OUT / "local_elasticity.json").write_text(json.dumps({
+        "elasticity": float(b.Estimate), "ci_low": float(b["2.5%"]), "ci_high": float(b["97.5%"]), "p": float(b["Pr(>|t|)"]),
+        "pct_at_40pct_load": pct(b.Estimate * np.log(1.4)), "pct_at_40pct_load_lo": pct(b["2.5%"] * np.log(1.4)),
+        "pct_at_40pct_load_hi": pct(b["97.5%"] * np.log(1.4)), "n_units": int(p.unit.nunique())}, indent=2))
     lines += ["## 1. Local load growth (within balancing authority and month)", "",
               f"Elasticity of real residential price to the utility's own commercial load: **{b.Estimate:.3f}** "
               f"(95% CI {b['2.5%']:.3f} to {b['97.5%']:.3f}, p = {b['Pr(>|t|)']:.3f}). "

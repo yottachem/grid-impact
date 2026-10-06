@@ -1,0 +1,110 @@
+"""Compact JSON exports for the public site (site/data/). Rebuilt after every analysis run.
+
+Licensing split: sites whose primary record is FracTracker (non-commercial) go to
+sites_fractracker.json with attribution; all other sites go to sites_open.json
+(ODbL for OSM-derived records). County, utility, and analysis exports are CC-BY."""
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+from transform.common import MARTS, RAW, ROOT, STAGED
+
+SITE = ROOT / "site" / "data"
+RESULTS = ROOT / "analysis" / "results"
+
+
+def _clean(v):
+    if isinstance(v, (float, np.floating)):
+        return None if not np.isfinite(v) else round(float(v), 3)
+    if isinstance(v, (np.integer,)):
+        return int(v)
+    if isinstance(v, pd.Timestamp):
+        return v.strftime("%Y-%m-%d")
+    return v
+
+
+def records(df: pd.DataFrame) -> list[dict]:
+    return [{k: _clean(v) for k, v in r.items() if v is not None and not (isinstance(v, float) and np.isnan(v))}
+            for r in df.to_dict("records")]
+
+
+def dump(name: str, obj) -> None:
+    SITE.mkdir(parents=True, exist_ok=True)
+    (SITE / f"{name}.json").write_text(json.dumps(obj, separators=(",", ":"), default=str))
+    print(f"wrote site/data/{name}.json  {(SITE / f'{name}.json').stat().st_size / 1024:,.0f} KB")
+
+
+def sites() -> None:
+    s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
+    keep = {"lon": "x", "lat": "y", "status_group": "g", "mw_est": "mw", "mw_est_low": "lo", "mw_est_high": "hi",
+            "mw_basis": "b", "name": "n", "operator": "o", "county_name": "c", "state": "s", "sources": "src",
+            "expected_online": "eta"}
+    out = s[list(keep)].rename(columns=keep)
+    out["x"], out["y"] = out.x.round(4), out.y.round(4)
+    for c in ("mw", "lo", "hi"):
+        out[c] = out[c].round(0)
+    ft = s.primary_source.eq("FracTracker")
+    dump("sites_open", records(out[~ft]))
+    dump("sites_fractracker", records(out[ft]))
+
+
+def counties() -> None:
+    c = pd.read_parquet(MARTS / "county_exposure.parquet")
+    cols = ["county_fips", "county_name", "state", "households", "median_hh_income", "mw_op", "mw_uc", "mw_pr",
+            "mw_pipeline", "sites_op", "sites_uc", "sites_pr", "mw_op_per_1k_hh", "mw_pipeline_per_1k_hh"]
+    c = c[cols].round(2)
+    dump("counties", records(c[(c.mw_op + c.mw_pipeline) > 0]))
+
+
+def utilities() -> None:
+    m = pd.read_parquet(MARTS / "utility_month.parquet")
+    m = m[m.res_customers > 0]
+    a = m.groupby(["utility_id_eia", "state", "year"]).agg(
+        name=("utility_name", "last"), months=("month", "nunique"), rev=("res_revenue_kusd", "sum"),
+        real_rev=("res_price_real_cents_kwh", lambda s: np.nan), mwh=("res_sales_mwh", "sum"),
+        cust=("res_customers", "mean"), tier=("exposure_tier", "last"), ba=("balancing_authority", "last")).reset_index()
+    real = m.assign(rr=m.res_revenue_kusd / m.deflator).groupby(["utility_id_eia", "state", "year"]).rr.sum()
+    a = a.join(real.rename("rr"), on=["utility_id_eia", "state", "year"])
+    full = a[a.months == 12]
+    full = full.assign(price=full.rev * 100 / full.mwh, real_price=full.rr * 100 / full.mwh,
+                       kwh_per_home=full.mwh * 1000 / full.cust, bill=full.rev * 1000 / full.cust,
+                       real_bill=full.rr * 1000 / full.cust)
+    cols = ["utility_id_eia", "state", "year", "name", "ba", "tier", "cust", "price", "real_price", "kwh_per_home", "bill", "real_bill"]
+    dump("utility_usage_bill", records(full[cols].round(2)))
+    u = pd.read_parquet(MARTS / "utility_exposure.parquet")
+    ucols = ["utility_id_eia", "state", "utility_name", "balancing_authority", "res_customers", "mw_op", "mw_uc", "mw_pr",
+             "mw_pipeline", "mw_op_per_1k_res", "mw_pipeline_per_1k_res"]
+    dump("utility_exposure", records(u[ucols][(u.mw_op + u.mw_pipeline) > 0].round(2)))
+
+
+def analysis() -> None:
+    cc = pd.read_parquet(MARTS / "capacity_household_cost.parquet")
+    cols = ["utility_id_eia", "state", "utility_name", "zone", "supply", "delivery_year", "zone_price_usd_mw_day",
+            "kwh_per_home_yr", "usd_per_home_yr_low", "usd_per_home_yr_central", "usd_per_home_yr_high",
+            "usd_per_home_yr_dc_central", "increase_vs_2024_25_central", "frr_not_exposed"]
+    dump("capacity_household_cost", records(cc[cols].round(2)))
+    es = {k: records(pd.read_csv(RESULTS / f)) for k, f in
+          [("pjm_vs_rest", "event_study_pjm.csv"), ("pjm_restructured_vs_regulated", "event_study_pjm_restructured.csv")]}
+    dump("event_studies", es)
+    dump("case_studies", json.loads((RESULTS / "case_studies.json").read_text()))
+
+
+def meta() -> None:
+    through = {}
+    for m in sorted(RAW.glob("*/manifest.jsonl")):
+        lines = [json.loads(l) for l in m.read_text().splitlines() if l]
+        changed = [l for l in lines if l.get("changed")]
+        through[m.parent.name] = {"last_checked": lines[-1]["checked_at"][:10] if lines else None,
+                                  "last_new_data": changed[-1]["checked_at"][:10] if changed else None,
+                                  "data_through": next((l.get("data_through") for l in reversed(lines) if l.get("data_through")), None)}
+    dump("meta", {"built": datetime.now(timezone.utc).isoformat(timespec="seconds"), "sources": through})
+
+
+def run() -> None:
+    sites(); counties(); utilities(); analysis(); meta()
+
+
+if __name__ == "__main__":
+    run()

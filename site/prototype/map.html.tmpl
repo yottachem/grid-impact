@@ -1,0 +1,331 @@
+<title>US Data Center Buildout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column, a status ledger that doubles as the legend and filter, the national map, then a state table. */
+:root {
+  --bg: #f5f7f9;
+  --surface: #ffffff;
+  --fg: #11161d;
+  --muted: #586271;
+  --line: #d8dee6;
+  --land: #e7ebf0;
+  --land-edge: #ffffff;
+  --other: #7d8794;
+  --op: #2a78d6;
+  --uc: #eb6834;
+  --pr: #1baf7a;
+  --cx: #8a93a0;
+  --q1: #cde2fb; --q2: #9ec5f4; --q3: #5598e7; --q4: #256abf; --q5: #104281;
+  --font-display: "Barlow Semi Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151a; --surface: #181d23; --fg: #eef1f4; --muted: #9aa5b2; --line: #2b323b;
+    --land: #222931; --land-edge: #11151a; --other: #8a94a1;
+    --op: #3987e5; --uc: #d95926; --pr: #199e70; --cx: #7d8794;
+    --q1: #184f95; --q2: #1c5cab; --q3: #2a78d6; --q4: #6da7ec; --q5: #b7d3f6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151a; --surface: #181d23; --fg: #eef1f4; --muted: #9aa5b2; --line: #2b323b;
+  --land: #222931; --land-edge: #11151a; --other: #8a94a1;
+  --op: #3987e5; --uc: #d95926; --pr: #199e70; --cx: #7d8794;
+  --q1: #184f95; --q2: #1c5cab; --q3: #2a78d6; --q4: #6da7ec; --q5: #b7d3f6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font-body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 48px; display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font: 500 12px/1 var(--font-data); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 600 clamp(28px, 4.2vw, 40px)/1.05 var(--font-display); margin: 0; letter-spacing: -.005em; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 68ch; }
+
+.ledger { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.status { all: unset; cursor: pointer; display: grid; gap: 4px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; min-width: 0; }
+.status:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.status[aria-pressed="false"] { opacity: .45; }
+.status[aria-pressed="false"] .swatch { background: transparent !important; }
+.status-head { display: flex; align-items: center; gap: 8px; font: 600 13px/1.2 var(--font-body); }
+.swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; border: 2px solid currentColor; }
+.status-n { font: 600 28px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.status-mw { font: 400 12px/1.35 var(--font-data); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.mapcard { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 10px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.controls label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--fg); }
+.controls input { accent-color: var(--other); }
+.modes { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.modes button { all: unset; cursor: pointer; padding: 6px 12px; font: 500 13px/1.2 var(--font-body); color: var(--muted); }
+.modes button[aria-pressed="true"] { background: var(--fg); color: var(--surface); }
+.modes button:focus-visible { outline: 2px solid var(--fg); outline-offset: -2px; }
+select { font: 13px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+.binkey { display: inline-flex; align-items: flex-start; gap: 0; margin-left: auto; font: 400 11px/1 var(--font-data); color: var(--muted); }
+.binkey > span { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
+.binkey i { display: block; width: 34px; height: 10px; }
+.sizekey { display: inline-flex; align-items: center; gap: 10px; margin-left: auto; font: 400 12px/1 var(--font-data); }
+.sizekey svg { display: block; }
+.stage { position: relative; width: 100%; aspect-ratio: 975 / 610; max-width: 100%; }
+.stage svg.base, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; font-size: 13px; line-height: 1.4; box-shadow: 0 6px 20px rgba(0,0,0,.14); max-width: 280px; z-index: 2; }
+.tip b { display: block; font-weight: 600; }
+.tip .row { display: flex; gap: 10px; justify-content: space-between; font-variant-numeric: tabular-nums; }
+.tip .k { color: var(--muted); }
+.tip .pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-block: 2px 4px; }
+.tip .pill i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+h2 { font: 600 22px/1.15 var(--font-display); margin: 0; }
+.tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+th, td { padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+tbody tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--font-data); font-size: 13px; }
+.bar { display: inline-block; height: 8px; border-radius: 0 4px 4px 0; vertical-align: middle; margin-right: 8px; }
+.notes { display: grid; gap: 6px; font-size: 13px; color: var(--muted); max-width: 78ch; }
+.notes p { margin: 0; }
+.notes a { color: inherit; }
+@media (max-width: 760px) {
+  .ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sizekey { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Grid Impact Tracker · data center layer</div>
+    <h1>US Data Center Buildout</h1>
+    <p class="lede">Distinct data center sites merged from four sources, each with reported or estimated power. Switch to Counties to see how much data center load each county carries for its number of households. Click a status to show or hide it; hover for details.</p>
+  </header>
+
+  <section class="ledger" id="ledger" aria-label="Sites by status"></section>
+
+  <section class="mapcard">
+    <div class="controls">
+      <span class="modes" role="group" aria-label="Map view">
+        <button type="button" id="m-sites" aria-pressed="true">Sites</button>
+        <button type="button" id="m-county" aria-pressed="false">Counties</button>
+      </span>
+      <label for="metric" id="metricWrap" hidden>Shade by <select id="metric">
+        <option value="mw_pipeline_per_1k_hh">Pipeline MW per 1,000 households</option>
+        <option value="mw_op_per_1k_hh">Operating MW per 1,000 households</option>
+      </select></label>
+      <span class="sizekey" id="sizekey" aria-label="Circle size shows estimated MW"></span>
+      <span class="binkey" id="binkey" hidden aria-label="MW per 1,000 households"></span>
+    </div>
+    <div class="stage" id="stage">
+      <svg class="base" id="base" viewBox="0 0 975 610" aria-hidden="true"></svg>
+      <canvas id="dots" role="img" aria-label="Map of US data center sites by status"></canvas>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:10px">
+    <h2>Counties carrying the most load per household</h2>
+    <p class="lede" style="margin:0">Counties with at least 10,000 households, ranked by pipeline (proposed plus under construction) MW per 1,000 households. Estimated MW where sites don't report it.</p>
+    <div class="tablewrap"><table id="states"></table></div>
+  </section>
+
+  <section class="notes">
+    <p id="asof"></p>
+    <p>Sources: <a href="https://fractracker.org/data-centers-tracker/">FracTracker Alliance, Open U.S. Data Centers Tracker</a> (non-commercial use, with attribution); <a href="https://immm-sfa.github.io/datacenter-atlas/">PNNL IM3 Open Source Data Center Atlas</a>; © OpenStreetMap contributors (ODbL); <a href="https://www.peeringdb.com/">PeeringDB</a>. State boundaries: US Census via us-atlas.</p>
+    <p>Records within 500 m of each other are merged into one site (FracTracker projects are never merged with each other). Power is reported MW where available; otherwise estimated from floor area (median 180 W per sq ft) or land area (median 1.67 MW per acre, capped at 1,455 MW). Solid dots are reported, lighter dots are estimates, small hollow dots have no size data. MW is planned capacity, not average load. "Operating" includes expanding sites and every site listed only in OpenStreetMap, PNNL, or PeeringDB. Households: Census ACS 2024 5-year. Territories outside the projection are left off.</p>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const SITES = __SITES__;
+const COUNTIES = __COUNTIES__;
+const US = __TOPO__;
+const META = __META__;
+
+const GROUPS = [
+  { id: "operating", label: "Operating", token: "--op" },
+  { id: "construction", label: "Approved or under construction", token: "--uc" },
+  { id: "proposed", label: "Proposed", token: "--pr" },
+  { id: "cancelled", label: "Cancelled or suspended", token: "--cx", hollow: true },
+];
+const visible = { operating: true, construction: true, proposed: true, cancelled: false };
+let mode = "sites";
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtMW = mw => mw >= 1000 ? (mw / 1000).toFixed(mw >= 10000 ? 0 : 1) + " GW" : Math.round(mw).toLocaleString() + " MW";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const row = (k, v) => v == null || v === "" ? "" : `<div class="row"><span class="k">${k}</span><span>${esc(v)}</span></div>`;
+
+// Ledger
+const ledger = document.getElementById("ledger");
+GROUPS.forEach(g => {
+  const rows = SITES.filter(d => d.g === g.id);
+  const known = rows.filter(d => d.mw != null);
+  const reported = rows.filter(d => d.b === "reported").length;
+  const b = document.createElement("button");
+  b.className = "status"; b.type = "button"; b.id = "f-" + g.id;
+  b.setAttribute("aria-pressed", String(visible[g.id]));
+  b.innerHTML = `<span class="status-head"><span class="swatch" style="color:var(${g.token});background:${g.hollow ? "transparent" : `var(${g.token})`}"></span>${g.label}</span>
+    <span class="status-n">${rows.length.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--muted)">sites</span></span>
+    <span class="status-mw">${fmtMW(d3.sum(known, d => d.mw))} est. · ${reported} reported, ${known.length - reported} estimated, ${rows.length - known.length} unknown</span>`;
+  b.addEventListener("click", () => { visible[g.id] = !visible[g.id]; b.setAttribute("aria-pressed", String(visible[g.id])); draw(); });
+  ledger.appendChild(b);
+});
+
+// Projection and base layers
+const W = 975, H = 610;
+const states = topojson.feature(US, US.objects.states);
+const counties = topojson.feature(US, US.objects.counties);
+const projection = d3.geoAlbersUsa().fitExtent([[8, 8], [W - 8, H - 8]], states);
+const path = d3.geoPath(projection);
+const base = d3.select("#base");
+const cty = new Map(COUNTIES.map(c => [c.county_fips, c]));
+const countyLayer = base.append("g").selectAll("path").data(counties.features).join("path")
+  .attr("d", path).style("stroke", "none");
+base.append("path").datum(topojson.mesh(US, US.objects.states, (a, b) => a !== b))
+  .attr("d", path).style("fill", "none").style("stroke", "var(--land-edge)").style("stroke-width", "1px");
+base.append("path").datum(topojson.mesh(US, US.objects.nation))
+  .attr("d", path).style("fill", "none").style("stroke", "var(--line)").style("stroke-width", "0.75px");
+
+const BINS = [5, 25, 100, 250];
+const BIN_TOK = ["--q1", "--q2", "--q3", "--q4", "--q5"];
+const binOf = v => v == null || !(v > 0) ? -1 : BINS.findIndex(b => v < b) === -1 ? 4 : BINS.findIndex(b => v < b);
+function paintCounties() {
+  const metric = document.getElementById("metric").value;
+  countyLayer.style("fill", f => {
+    if (mode !== "county") return "var(--land)";
+    const i = binOf(cty.get(f.id)?.[metric]);
+    return i < 0 ? "var(--land)" : `var(${BIN_TOK[i]})`;
+  });
+}
+const binkey = d3.select("#binkey");
+["< 5", "5–25", "25–100", "100–250", "250+"].forEach((lab, i) => {
+  const s = binkey.append("span"); s.append("i").style("background", `var(${BIN_TOK[i]})`); s.append("span").text(lab);
+});
+
+// Size key
+const r = d3.scaleSqrt().domain([0, 5000]).range([0, 17]).clamp(true);
+const radius = d => d.mw != null ? Math.max(4, r(d.mw)) : 3;
+const key = d3.select("#sizekey");
+key.append("span").text("Estimated size");
+[100, 1000, 5000].forEach(mw => {
+  const rr = radius({ mw }), s = rr * 2 + 4;
+  const sv = key.append("span").style("display", "inline-flex").style("align-items", "center").style("gap", "4px");
+  sv.append("svg").attr("width", s).attr("height", s).append("circle")
+    .attr("cx", s / 2).attr("cy", s / 2).attr("r", rr).style("fill", "none").style("stroke", "var(--muted)").style("stroke-width", "1.5px");
+  sv.append("span").text(fmtMW(mw));
+});
+
+const pts = SITES.map(d => { const p = projection([d.x, d.y]); return p ? { ...d, px: p[0], py: p[1], r: radius(d) } : null; })
+  .filter(Boolean).sort((a, b) => b.r - a.r);
+
+const canvas = document.getElementById("dots"), ctx = canvas.getContext("2d");
+let shown = [], tree = null, scale = 1;
+function draw() {
+  paintCounties();
+  const box = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  scale = box.width / W;
+  canvas.width = Math.round(box.width * dpr); canvas.height = Math.round(box.height * dpr);
+  ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  shown = [];
+  if (mode === "sites") {
+    const surface = css("--surface");
+    const k = Math.max(0.7, Math.min(1, scale * 1.15));
+    const color = Object.fromEntries(GROUPS.map(g => [g.id, css(g.token)]));
+    pts.filter(d => visible[d.g]).forEach(d => {
+      ctx.beginPath(); ctx.arc(d.px, d.py, d.r * k, 0, 2 * Math.PI);
+      if (d.g === "cancelled" || d.mw == null) {
+        ctx.strokeStyle = color[d.g]; ctx.lineWidth = 1.25; ctx.stroke();
+      } else {
+        ctx.globalAlpha = d.b === "reported" ? 0.85 : 0.45; ctx.fillStyle = color[d.g]; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = surface; ctx.lineWidth = 1; ctx.stroke();
+      }
+      shown.push(d);
+    });
+  }
+  tree = d3.quadtree(shown, d => d.px, d => d.py);
+}
+
+// Mode switching
+function setMode(m) {
+  mode = m;
+  document.getElementById("m-sites").setAttribute("aria-pressed", String(m === "sites"));
+  document.getElementById("m-county").setAttribute("aria-pressed", String(m === "county"));
+  document.getElementById("metricWrap").hidden = m !== "county";
+  document.getElementById("binkey").hidden = m !== "county";
+  document.getElementById("sizekey").hidden = m !== "sites";
+  document.getElementById("ledger").style.opacity = m === "sites" ? "1" : ".55";
+  canvas.style.pointerEvents = m === "sites" ? "auto" : "none";
+  tip.hidden = true; draw();
+}
+document.getElementById("m-sites").addEventListener("click", () => setMode("sites"));
+document.getElementById("m-county").addEventListener("click", () => setMode("county"));
+document.getElementById("metric").addEventListener("change", draw);
+
+// Hover
+const tip = document.getElementById("tip"), stage = document.getElementById("stage");
+const GL = Object.fromEntries(GROUPS.map(g => [g.id, g]));
+function place(e) {
+  const sb = stage.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let left = e.clientX - sb.left + 14, top = e.clientY - sb.top + 14;
+  if (left + tw > sb.width) left = e.clientX - sb.left - tw - 14;
+  if (top + th > sb.height) top = Math.max(0, e.clientY - sb.top - th - 14);
+  tip.style.left = Math.max(0, left) + "px"; tip.style.top = top + "px";
+}
+const basisText = { reported: "reported", floor_area: "estimated from floor area", land_area: "estimated from land area" };
+stage.addEventListener("pointermove", e => {
+  const box = canvas.getBoundingClientRect();
+  const x = (e.clientX - box.left) / scale, y = (e.clientY - box.top) / scale;
+  if (mode === "county") return; // county hover is handled by the county paths
+  let best = null, bestD = Infinity;
+  tree.visit((node, x0, y0, x1, y1) => {
+    if (!node.length) { let n = node; do { const d = n.data, dist = Math.hypot(d.px - x, d.py - y) - d.r; if (dist < bestD) { bestD = dist; best = d; } } while ((n = n.next)); }
+    return x0 > x + 20 || x1 < x - 20 || y0 > y + 20 || y1 < y - 20;
+  });
+  if (!best || bestD > 6 / scale) { tip.hidden = true; return; }
+  const d = best, g = GL[d.g];
+  const mw = d.mw != null ? `${fmtMW(d.mw)}${d.lo != null && d.hi != null && d.lo !== d.hi ? ` (${fmtMW(d.lo)}–${fmtMW(d.hi)})` : ""}, ${basisText[d.b] || d.b}` : "No size data";
+  tip.innerHTML = `<b>${esc(d.n || "Unnamed site")}</b>
+    <span class="pill"><i style="background:var(${g.token})"></i>${esc(g.label)}</span>
+    ${row("Operator", d.o)}${row("County", [d.c, d.s].filter(Boolean).join(", "))}${row("Power", mw)}${row("Expected online", d.eta)}${row("Sources", (d.src || "").replace(/,/g, ", "))}`;
+  tip.hidden = false; place(e);
+});
+stage.addEventListener("pointerleave", () => { tip.hidden = true; });
+countyLayer.on("pointermove", (e, f) => {
+  if (mode !== "county") return;
+  const c = cty.get(f.id);
+  tip.innerHTML = c ? `<b>${esc(c.county_name)}, ${esc(c.state)}</b>
+    ${row("Households", c.households ? Math.round(c.households).toLocaleString() : null)}
+    ${row("Median income", c.median_hh_income ? "$" + Math.round(c.median_hh_income).toLocaleString() : null)}
+    ${row("Operating", fmtMW(c.mw_op || 0))}${row("Pipeline", fmtMW(c.mw_pipeline || 0))}
+    ${row("Pipeline per 1,000 households", c.mw_pipeline_per_1k_hh != null ? c.mw_pipeline_per_1k_hh.toFixed(1) + " MW" : null)}
+    ${row("Operating per 1,000 households", c.mw_op_per_1k_hh != null ? c.mw_op_per_1k_hh.toFixed(1) + " MW" : null)}`
+    : `<b>${esc(f.properties.name)} County</b><div class="row"><span class="k">No data center sites listed</span></div>`;
+  tip.hidden = false; place(e);
+});
+
+// County table
+const top = COUNTIES.filter(c => (c.households || 0) >= 10000 && c.mw_pipeline_per_1k_hh != null)
+  .sort((a, b) => b.mw_pipeline_per_1k_hh - a.mw_pipeline_per_1k_hh).slice(0, 15);
+const maxV = d3.max(top, c => c.mw_pipeline_per_1k_hh);
+document.getElementById("states").innerHTML = `<thead><tr><th>County</th><th>Households</th><th>Median income</th><th>Operating</th><th>Pipeline</th><th>Pipeline MW per 1,000 households</th></tr></thead><tbody>` +
+  top.map(c => `<tr><td>${esc(c.county_name)}, ${esc(c.state)}</td><td class="num">${Math.round(c.households).toLocaleString()}</td>
+    <td class="num">${c.median_hh_income ? "$" + Math.round(c.median_hh_income).toLocaleString() : "—"}</td>
+    <td class="num">${c.mw_op ? fmtMW(c.mw_op) : "—"}</td><td class="num">${fmtMW(c.mw_pipeline)}</td>
+    <td class="num"><span class="bar" style="width:${Math.round(90 * c.mw_pipeline_per_1k_hh / maxV)}px;background:var(--q3)"></span>${c.mw_pipeline_per_1k_hh.toFixed(1)}</td></tr>`).join("") + "</tbody>";
+
+const s = META.sources;
+const d = k => s[k]?.last_new_data || "—";
+document.getElementById("asof").textContent = `Built ${META.built.slice(0, 10)}. Snapshots: FracTracker ${d("fractracker_datacenters")}, OpenStreetMap ${d("osm_datacenters")}, PNNL ${d("im3_datacenters")}, PeeringDB ${d("peeringdb_facilities")}, Census ACS ${d("acs_county")}. ${SITES.filter(x => x.mw == null).length.toLocaleString()} of ${SITES.length.toLocaleString()} sites have no size data and are drawn as small hollow dots.`;
+
+draw();
+new ResizeObserver(() => draw()).observe(stage);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

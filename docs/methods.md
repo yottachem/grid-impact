@@ -55,6 +55,13 @@ Reported and estimated MW is **capacity** (often full planned build-out), not av
 
 Same-months comparison (Jan-Jul 2026 vs Jan-Jul 2025, inflation-adjusted): Dominion +17.0%, Texas statewide +2.6%, CPS Energy +1.9%, Georgia Power -1.9%. Full-year inflation-adjusted prices 2019-2025 fell or were flat in all three cases despite commercial load growth (Dominion +34%, Texas +22%, Georgia Power +7%). ERCOT has 88.4 GW of planned generation vs 26.7 GW in PJM (EIA-860M). Dominion's 2026 jump coincides with its first delivery year in the PJM auction and a base-rate increase of $11.24/month (SCC order 2025-11-25), which explains about a third of the 3.0¢/kWh nominal rise; fuel and rider changes are not yet decomposed.
 
+## Week 5 additions
+
+- **Maryland case (BGE, Pepco MD):** restructured PJM state with little local data center load. BGE real price 16.10¢ (2019) to 19.38¢ (2025), +20%, with commercial load +4%; Jan-Jul 2026 +14.1% vs same months 2025. Illustrates regional pass-through.
+- **AEP FRR resolved:** AEP's regulated PJM utilities are FRR entities that self-supply capacity (Utility Dive, 2026; they sought a FERC waiver to sell up to 750 MW in a 2026/27 incremental auction).
+- **Site exports** (`site/data/`, `analysis/exports.py`): licensing split keeps FracTracker-primary sites in a separate non-commercial file.
+- **Context for the capacity chart:** 2018/19 capacity cost per home was also high ($161 central); 2027/28 ($242) is the highest in the series, ~5x 2024/25 and ~1.5x 2018/19.
+
 ## Known limitations
 
 - Site-based exposure is a current snapshot; measured commercial load growth is the time-varying counterpart.

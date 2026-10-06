@@ -27,11 +27,11 @@ utility_id_eia,utility_name,state,zone,lda_chain,supply,note
 4922,Dayton Power & Light Co,OH,DAY,RTO,default_service,
 19876,Virginia Electric & Power Co,VA,DOM,DOM>RTO,regulated,FRR (self-supply) through 2024/25; in RPM from 2025/26
 19876,Virginia Electric & Power Co,NC,DOM,DOM>RTO,regulated,FRR (self-supply) through 2024/25; in RPM from 2025/26
-733,Appalachian Power Co,VA,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
-733,Appalachian Power Co,WV,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
-9324,Indiana Michigan Power Co,IN,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
-9324,Indiana Michigan Power Co,MI,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
-22053,Kentucky Power Co,KY,AEP,RTO,regulated,AEP regulated utilities reported to use FRR (self-supply); verify election by delivery year
+733,Appalachian Power Co,VA,AEP,RTO,regulated,AEP utilities are FRR entities that self-supply capacity outside RPM (Utility Dive 2026; sought FERC waiver to sell up to 750 MW in a 2026/27 incremental auction)
+733,Appalachian Power Co,WV,AEP,RTO,regulated,AEP utilities are FRR entities that self-supply capacity outside RPM (Utility Dive 2026; sought FERC waiver to sell up to 750 MW in a 2026/27 incremental auction)
+9324,Indiana Michigan Power Co,IN,AEP,RTO,regulated,AEP utilities are FRR entities that self-supply capacity outside RPM (Utility Dive 2026; sought FERC waiver to sell up to 750 MW in a 2026/27 incremental auction)
+9324,Indiana Michigan Power Co,MI,AEP,RTO,regulated,AEP utilities are FRR entities that self-supply capacity outside RPM (Utility Dive 2026; sought FERC waiver to sell up to 750 MW in a 2026/27 incremental auction)
+22053,Kentucky Power Co,KY,AEP,RTO,regulated,AEP utilities are FRR entities that self-supply capacity outside RPM (Utility Dive 2026; sought FERC waiver to sell up to 750 MW in a 2026/27 incremental auction)
 12796,Monongahela Power Co,WV,APS,RTO,regulated,
 15263,The Potomac Edison Company,WV,APS,RTO,regulated,
 19446,Duke Energy Kentucky,KY,DEOK,DEOK>RTO,regulated,

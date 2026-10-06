@@ -420,6 +420,279 @@
       "as_of": "2026-10-05"
     }
   },
+  "maryland": {
+    "title": "Maryland (BGE and Pepco)",
+    "context": "Restructured state: default (standard offer) supply is bought at auction, so PJM capacity prices pass through to residential bills. BGE's zone cleared at $466.35/MW-day in 2025/26 vs $269.92 for the rest of PJM; all zones cleared at the cap in 2026/27 ($329.17) and 2027/28 ($333.44). Maryland has few large data centers of its own.",
+    "units": {
+      "Baltimore Gas & Electric": {
+        "2019": {
+          "months": 12.0,
+          "rev": 1177594.165,
+          "real_rev": 1547558.817,
+          "mwh": 9612034.134,
+          "cust": 894919.083,
+          "com": 2757009.382,
+          "price_cents": 12.251,
+          "real_price_cents": 16.1,
+          "kwh_per_home": 10740.674,
+          "real_bill_per_home_yr": 1729.272,
+          "com_growth_vs_2019": 0.0
+        },
+        "2020": {
+          "months": 12.0,
+          "rev": 1185560.248,
+          "real_rev": 1541623.5,
+          "mwh": 9787117.59,
+          "cust": 916332.667,
+          "com": 2485486.91,
+          "price_cents": 12.113,
+          "real_price_cents": 15.752,
+          "kwh_per_home": 10680.747,
+          "real_bill_per_home_yr": 1682.384,
+          "com_growth_vs_2019": -0.098
+        },
+        "2021": {
+          "months": 12.0,
+          "rev": 1237491.194,
+          "real_rev": 1532357.855,
+          "mwh": 10065408.179,
+          "cust": 933918.917,
+          "com": 2788104.251,
+          "price_cents": 12.294,
+          "real_price_cents": 15.224,
+          "kwh_per_home": 10777.604,
+          "real_bill_per_home_yr": 1640.783,
+          "com_growth_vs_2019": 0.011
+        },
+        "2022": {
+          "months": 12.0,
+          "rev": 1423637.137,
+          "real_rev": 1624440.912,
+          "mwh": 10474761.02,
+          "cust": 965222.833,
+          "com": 3012620.15,
+          "price_cents": 13.591,
+          "real_price_cents": 15.508,
+          "kwh_per_home": 10852.169,
+          "real_bill_per_home_yr": 1682.97,
+          "com_growth_vs_2019": 0.093
+        },
+        "2023": {
+          "months": 12.0,
+          "rev": 1649879.035,
+          "real_rev": 1799826.544,
+          "mwh": 10019432.711,
+          "cust": 1002774.5,
+          "com": 2693029.622,
+          "price_cents": 16.467,
+          "real_price_cents": 17.963,
+          "kwh_per_home": 9991.711,
+          "real_bill_per_home_yr": 1794.847,
+          "com_growth_vs_2019": -0.023
+        },
+        "2024": {
+          "months": 12.0,
+          "rev": 1915002.32,
+          "real_rev": 2030016.42,
+          "mwh": 10693908.932,
+          "cust": 1025744.917,
+          "com": 2822301.075,
+          "price_cents": 17.907,
+          "real_price_cents": 18.983,
+          "kwh_per_home": 10425.505,
+          "real_bill_per_home_yr": 1979.066,
+          "com_growth_vs_2019": 0.024
+        },
+        "2025": {
+          "months": 12.0,
+          "rev": 2431819.1,
+          "real_rev": 2334861.399,
+          "mwh": 12045942.955,
+          "cust": 1143710.083,
+          "com": 2865173.378,
+          "price_cents": 20.188,
+          "real_price_cents": 19.383,
+          "kwh_per_home": 10532.34,
+          "real_bill_per_home_yr": 2041.48,
+          "com_growth_vs_2019": 0.039
+        },
+        "2026": {
+          "months": 7.0,
+          "rev": 1752442.77,
+          "real_rev": 1772271.659,
+          "mwh": 7875309.196,
+          "cust": 1225214.857,
+          "com": 1766425.535,
+          "price_cents": 22.252,
+          "real_price_cents": 22.504,
+          "kwh_per_home": 6427.696,
+          "real_bill_per_home_yr": null,
+          "com_growth_vs_2019": null
+        }
+      },
+      "Baltimore Gas & Electric YTD": {
+        "year": 2026,
+        "months": "Jan-Jul",
+        "real_price": 22.504153356513076,
+        "prev_real_price": 19.72623204013034,
+        "pct": 14.082371690302686,
+        "price": 22.252367829444648,
+        "prev_price": 18.967661418785532
+      },
+      "Pepco Maryland": {
+        "2019": {
+          "months": 12.0,
+          "rev": 671824.713,
+          "real_rev": 882410.325,
+          "mwh": 4568892.546,
+          "cust": 427721.583,
+          "com": 1342148.099,
+          "price_cents": 14.704,
+          "real_price_cents": 19.313,
+          "kwh_per_home": 10681.931,
+          "real_bill_per_home_yr": 2063.048,
+          "com_growth_vs_2019": 0.0
+        },
+        "2020": {
+          "months": 12.0,
+          "rev": 666635.112,
+          "real_rev": 867030.446,
+          "mwh": 4562335.327,
+          "cust": 436852.417,
+          "com": 1251634.748,
+          "price_cents": 14.612,
+          "real_price_cents": 19.004,
+          "kwh_per_home": 10443.654,
+          "real_bill_per_home_yr": 1984.722,
+          "com_growth_vs_2019": -0.067
+        },
+        "2021": {
+          "months": 12.0,
+          "rev": 664317.448,
+          "real_rev": 822630.065,
+          "mwh": 4757194.89,
+          "cust": 445521.25,
+          "com": 1362876.208,
+          "price_cents": 13.964,
+          "real_price_cents": 17.292,
+          "kwh_per_home": 10677.818,
+          "real_bill_per_home_yr": 1846.444,
+          "com_growth_vs_2019": 0.015
+        },
+        "2022": {
+          "months": 12.0,
+          "rev": 730532.743,
+          "real_rev": 832849.393,
+          "mwh": 4769046.206,
+          "cust": 458432.833,
+          "com": 1610570.034,
+          "price_cents": 15.318,
+          "real_price_cents": 17.464,
+          "kwh_per_home": 10402.933,
+          "real_bill_per_home_yr": 1816.732,
+          "com_growth_vs_2019": 0.2
+        },
+        "2023": {
+          "months": 12.0,
+          "rev": 832526.25,
+          "real_rev": 907849.993,
+          "mwh": 4584838.485,
+          "cust": 473603.417,
+          "com": 1417154.013,
+          "price_cents": 18.158,
+          "real_price_cents": 19.801,
+          "kwh_per_home": 9680.755,
+          "real_bill_per_home_yr": 1916.899,
+          "com_growth_vs_2019": 0.056
+        },
+        "2024": {
+          "months": 12.0,
+          "rev": 970730.637,
+          "real_rev": 1028733.05,
+          "mwh": 4834630.509,
+          "cust": 485483.417,
+          "com": 1425480.252,
+          "price_cents": 20.079,
+          "real_price_cents": 21.278,
+          "kwh_per_home": 9958.384,
+          "real_bill_per_home_yr": 2118.987,
+          "com_growth_vs_2019": 0.062
+        },
+        "2025": {
+          "months": 12.0,
+          "rev": 1157217.847,
+          "real_rev": 1117808.274,
+          "mwh": 5322637.483,
+          "cust": 531090.167,
+          "com": 1518213.832,
+          "price_cents": 21.741,
+          "real_price_cents": 21.001,
+          "kwh_per_home": 10022.098,
+          "real_bill_per_home_yr": 2104.743,
+          "com_growth_vs_2019": 0.131
+        },
+        "2026": {
+          "months": 7.0,
+          "rev": 791365.574,
+          "real_rev": 800235.865,
+          "mwh": 3372333.977,
+          "cust": 560296.571,
+          "com": 963991.12,
+          "price_cents": 23.466,
+          "real_price_cents": 23.729,
+          "kwh_per_home": 6018.837,
+          "real_bill_per_home_yr": null,
+          "com_growth_vs_2019": null
+        }
+      },
+      "Pepco Maryland YTD": {
+        "year": 2026,
+        "months": "Jan-Jul",
+        "real_price": 23.72943695625407,
+        "prev_real_price": 22.003369115506125,
+        "pct": 7.844561583669285,
+        "price": 23.466405741461944,
+        "prev_price": 21.161735873934695
+      }
+    },
+    "exposure": {
+      "sites_by_status": {
+        "operating": 15,
+        "proposed": 9,
+        "construction": 1
+      },
+      "mw_by_status": {
+        "construction": 0.1,
+        "operating": 0.1,
+        "proposed": 1.9
+      },
+      "state": "MD",
+      "Baltimore Gas & Electric": {
+        "mw_op": 39,
+        "mw_pipeline": 562,
+        "mw_pipeline_per_1k_res": 0.5
+      },
+      "Pepco Maryland": {
+        "mw_op": 39,
+        "mw_pipeline": 0,
+        "mw_pipeline_per_1k_res": 0.0
+      }
+    },
+    "generation": {
+      "planned_gw_by_tech": {
+        "Solar Photovoltaic": 13.6,
+        "Natural Gas Fired Combined Cycle": 5.0,
+        "Offshore Wind Turbine": 2.6,
+        "Onshore Wind Turbine": 2.2,
+        "Natural Gas Fired Combustion Turbine": 2.0,
+        "Batteries": 0.7
+      },
+      "planned_gw_total": 26.7,
+      "planned_gas_gw": 7.2,
+      "retiring_2026_2030_gw": 8.2,
+      "as_of": "2026-10-05"
+    }
+  },
   "georgia": {
     "title": "Georgia Power",
     "context": "Regulated utility in the Southeast; no capacity market. Large-load growth is planned through the utility's integrated resource plan and certified by the state PSC.",
