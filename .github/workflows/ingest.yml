@@ -13,9 +13,17 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
 
 jobs:
   ingest:
+    outputs:
+      publish: ${{ steps.diff.outputs.publish }}
     runs-on: ubuntu-24.04  # pinned: ubuntu-latest moves to 26 on 2026-10-19
     timeout-minutes: 180  # first EAGLE-I backfill streams ~15 GB
     steps:
@@ -48,15 +56,19 @@ jobs:
       - name: Detect new data
         id: diff
         if: always()
-        run: echo "changed=$( [ -s data/raw/_changed.txt ] && echo true || echo false )" >> "$GITHUB_OUTPUT"
+        run: |
+          changed=$( [ -s data/raw/_changed.txt ] && echo true || echo false )
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          # Manual runs always rebuild and republish; scheduled runs only when a source changed
+          if [ "$changed" = true ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then echo "publish=true" >> "$GITHUB_OUTPUT"; else echo "publish=false" >> "$GITHUB_OUTPUT"; fi
       - name: Build marts
-        if: always() && steps.diff.outputs.changed == 'true'
+        if: always() && steps.diff.outputs.publish == 'true'
         run: uv run python -m transform.run
       - name: Run analysis
-        if: always() && steps.diff.outputs.changed == 'true'
+        if: always() && steps.diff.outputs.publish == 'true'
         run: uv run python -m analysis.run
       - name: Upload marts and results
-        if: always() && steps.diff.outputs.changed == 'true'
+        if: always() && steps.diff.outputs.publish == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: marts-${{ github.run_id }}
@@ -65,7 +77,14 @@ jobs:
             analysis/results/
             data/raw/eia930_annual/
           retention-days: 30
-      # Week 6: redeploy site after marts build
+      - name: Build site
+        if: always() && steps.diff.outputs.publish == 'true'
+        run: uv run python site/build.py
+      - name: Upload site
+        if: always() && steps.diff.outputs.publish == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
       - name: Freshness check
         id: fresh
         if: always()
@@ -76,3 +95,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "Stale data sources $(date -u +%F)" --body-file freshness.txt
+
+  deploy:
+    needs: ingest
+    if: always() && needs.ingest.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

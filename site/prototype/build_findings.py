@@ -42,7 +42,7 @@ def payload() -> tuple[dict, int]:
 
 def main(out: str = "findings.html") -> None:
     data, n_units = payload()
-    t = (HERE / "findings.html.tmpl").read_text().replace("__DATA__", json.dumps(data, separators=(",", ":"))).replace("__NUNITS__", str(n_units))
+    t = (HERE.parent / "templates" / "findings.html.tmpl").read_text().replace("__DATA__", json.dumps(data, separators=(",", ":"))).replace("__NUNITS__", str(n_units))
     Path(out).write_text(t)
     print(f"wrote {out} ({len(t) / 1e3:.0f} KB)")
 

@@ -72,11 +72,13 @@ def utilities() -> None:
                        kwh_per_home=full.mwh * 1000 / full.cust, bill=full.rev * 1000 / full.cust,
                        real_bill=full.rr * 1000 / full.cust)
     cols = ["utility_id_eia", "state", "year", "name", "ba", "tier", "cust", "price", "real_price", "kwh_per_home", "bill", "real_bill"]
-    dump("utility_usage_bill", records(full[cols].round(2)))
+    full = full[cols].round(2).assign(utility_id_eia=full.utility_id_eia.astype(int), cust=full.cust.round(0))
+    dump("utility_usage_bill", records(full))
     u = pd.read_parquet(MARTS / "utility_exposure.parquet")
     ucols = ["utility_id_eia", "state", "utility_name", "balancing_authority", "res_customers", "mw_op", "mw_uc", "mw_pr",
              "mw_pipeline", "mw_op_per_1k_res", "mw_pipeline_per_1k_res"]
-    dump("utility_exposure", records(u[ucols][(u.mw_op + u.mw_pipeline) > 0].round(2)))
+    ux = u[ucols][(u.mw_op + u.mw_pipeline) > 0].round(2)
+    dump("utility_exposure", records(ux.assign(utility_id_eia=ux.utility_id_eia.astype(int))))
 
 
 def analysis() -> None:
@@ -99,7 +101,9 @@ def meta() -> None:
         through[m.parent.name] = {"last_checked": lines[-1]["checked_at"][:10] if lines else None,
                                   "last_new_data": changed[-1]["checked_at"][:10] if changed else None,
                                   "data_through": next((l.get("data_through") for l in reversed(lines) if l.get("data_through")), None)}
-    dump("meta", {"built": datetime.now(timezone.utc).isoformat(timespec="seconds"), "sources": through})
+    um = pd.read_parquet(MARTS / "utility_month.parquet", columns=["real_dollars_of"])
+    real = pd.Timestamp(um.real_dollars_of.dropna().iloc[0] + "-01").strftime("%B %Y") if len(um) else None
+    dump("meta", {"built": datetime.now(timezone.utc).isoformat(timespec="seconds"), "real_dollars_of": real, "sources": through})
 
 
 def run() -> None:

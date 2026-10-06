@@ -1,0 +1,170 @@
+<title>Your Utility</title>
+<style>
+/* Layout: picker, a summary strip, three small multiples (price, usage, bill), then capacity cost for PJM default-service utilities. */
+.u-wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 22px; }
+.u-head { display: grid; gap: 8px; }
+.u-head h1 { font: 600 clamp(28px, 4vw, 40px)/1.05 var(--font-display); margin: 0; text-wrap: balance; }
+.u-head p { margin: 0; color: var(--muted); max-width: 68ch; }
+.picker { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.picker label { font-size: 13px; color: var(--muted); }
+.picker input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; width: min(460px, 100%); }
+.picker input:focus-visible { outline: 2px solid var(--s1); outline-offset: 1px; }
+.picker .hint { font-size: 13px; color: var(--muted); }
+.summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.sum { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
+.sum-n { font: 600 24px/1.05 var(--font-display); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.sum-l { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); width: fit-content; }
+.pill i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.reading { margin: 0; font-size: 16px; max-width: 70ch; }
+.multiples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 14px 8px; display: grid; gap: 4px; min-width: 0; position: relative; }
+.panel h2 { font: 600 17px/1.2 var(--font-display); margin: 0; }
+.panel .sub { font-size: 12px; color: var(--muted); }
+.panel svg { width: 100%; height: auto; display: block; overflow: visible; }
+.panel text { font: 11px var(--font-data); fill: var(--muted); }
+.panel .end { font: 600 12px var(--font-data); fill: var(--fg); }
+.cap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; }
+.cap h2 { font: 600 20px/1.2 var(--font-display); margin: 0; }
+.cap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cap th, .cap td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cap th:first-child, .cap td:first-child { text-align: left; }
+.cap thead th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.cap .bar { display: inline-block; height: 8px; border-radius: 0 4px 4px 0; vertical-align: middle; margin-right: 8px; background: var(--s1); }
+.cap .tablewrap { overflow-x: auto; }
+.u-note { font-size: 13px; color: var(--muted); margin: 0; max-width: 78ch; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.14); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 800px) { .multiples { grid-template-columns: 1fr; } .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+
+<div class="u-wrap">
+  <div class="u-head">
+    <h1>How your utility's residential bills have changed</h1>
+    <p>Price, usage, and the annual bill for an average home, from EIA's monthly utility reports, adjusted for inflation. Data center load is what each utility's service territory carries today.</p>
+  </div>
+  <div class="picker">
+    <label for="q">Utility</label>
+    <input id="q" list="ulist" autocomplete="off" placeholder="Start typing a utility or state">
+    <datalist id="ulist"></datalist>
+    <span class="hint" id="qhint"></span>
+  </div>
+  <section class="summary" id="summary" aria-label="Utility summary"></section>
+  <p class="reading" id="reading"></p>
+  <section class="multiples" aria-label="Price, usage, and bill by year">
+    <div class="panel" id="p-price"><h2>Price</h2><span class="sub">¢ per kWh, inflation-adjusted</span></div>
+    <div class="panel" id="p-kwh"><h2>Usage per home</h2><span class="sub">kWh per year</span></div>
+    <div class="panel" id="p-bill"><h2>Annual bill per home</h2><span class="sub">dollars, inflation-adjusted</span></div>
+  </section>
+  <section class="cap" id="cap" hidden>
+    <h2>PJM capacity cost for an average home</h2>
+    <p class="u-note" id="capnote"></p>
+    <div class="tablewrap"><table id="captable"></table></div>
+  </section>
+  <p class="u-note">Inflation adjustment uses the BLS CPI for the utility's Census region, in dollars of __REALMONTH__. Full calendar years only. EIA's monthly survey covers about 375 larger utilities; smaller co-ops and municipal utilities report annually and are not shown. In restructured states, the utility's figures cover customers on its default supply.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const UB = __USAGE__;
+const UX = __EXPOSURE__;
+const CC = __CAPACITY__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const key = d => d.utility_id_eia + "|" + d.state;
+const byUtil = d3.group(UB, key);
+const expo = new Map(UX.map(d => [key(d), d]));
+const cap = d3.group(CC, key);
+const label = rows => `${rows[rows.length - 1].name} (${rows[0].state})`;
+const options = [...byUtil.entries()].filter(([, r]) => r.length >= 3)
+  .map(([k, r]) => ({ k, label: label(r), cust: r[r.length - 1].cust }))
+  .sort((a, b) => b.cust - a.cust);
+const byLabel = new Map(options.map(o => [o.label.toLowerCase(), o.k]));
+document.getElementById("ulist").innerHTML = options.map(o => `<option value="${o.label.replace(/"/g, "&quot;")}">`).join("");
+document.getElementById("qhint").textContent = `${options.length} utilities`;
+
+const TIER = { high: ["High", "--s2"], medium: ["Medium", "--s4"], low: ["Low", "--s1"], none: ["None", "--muted"] };
+const pct = (a, b) => ((b / a - 1) * 100);
+const sgn = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(0) + "%";
+const fmtMW = mw => mw >= 1000 ? (mw / 1000).toFixed(1) + " GW" : Math.round(mw).toLocaleString() + " MW";
+
+function small(id, rows, acc, fmt, color) {
+  const host = document.getElementById(id);
+  host.querySelector("svg")?.remove(); host.querySelector(".tip")?.remove();
+  const W = 300, H = 170, m = { t: 12, r: 44, b: 22, l: 40 };
+  const svg = d3.select(host).append("svg").attr("viewBox", `0 0 ${W} ${H}`);
+  const x = d3.scaleLinear().domain(d3.extent(rows, d => d.year)).range([m.l, W - m.r]);
+  const ext = d3.extent(rows, acc), pad = (ext[1] - ext[0]) * 0.15 || ext[1] * 0.05;
+  const y = d3.scaleLinear().domain([Math.max(0, ext[0] - pad), ext[1] + pad]).nice(4).range([H - m.b, m.t]);
+  svg.append("g").selectAll("line").data(y.ticks(4)).join("line").attr("x1", m.l).attr("x2", W - m.r)
+    .attr("y1", d => y(d)).attr("y2", d => y(d)).style("stroke", "var(--grid)");
+  svg.append("g").selectAll("text").data(y.ticks(4)).join("text").attr("x", m.l - 6).attr("y", d => y(d) + 4)
+    .attr("text-anchor", "end").text(d => fmt(d, true));
+  const xt = [rows[0].year, rows[rows.length - 1].year];
+  svg.append("g").selectAll("text").data(xt).join("text").attr("x", d => x(d)).attr("y", H - 6)
+    .attr("text-anchor", (d, i) => i ? "end" : "start").text(d => d);
+  svg.append("path").datum(rows).attr("d", d3.area().x(d => x(d.year)).y0(H - m.b).y1(d => y(acc(d))))
+    .style("fill", color).style("opacity", 0.12);
+  svg.append("path").datum(rows).attr("d", d3.line().x(d => x(d.year)).y(d => y(acc(d))))
+    .style("fill", "none").style("stroke", color).style("stroke-width", "2px");
+  const e = rows[rows.length - 1];
+  svg.append("circle").attr("cx", x(e.year)).attr("cy", y(acc(e))).attr("r", 4).style("fill", color).style("stroke", "var(--surface)").style("stroke-width", "2px");
+  svg.append("text").attr("class", "end").attr("x", x(e.year) + 7).attr("y", y(acc(e)) + 4).text(fmt(acc(e)));
+  const tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; host.appendChild(tip);
+  const cross = svg.append("line").attr("y1", m.t).attr("y2", H - m.b).style("stroke", "var(--muted)").style("opacity", 0);
+  const dot = svg.append("circle").attr("r", 4).style("fill", color).style("opacity", 0);
+  svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).style("fill", "transparent")
+    .on("pointermove", function (ev) {
+      const [px] = d3.pointer(ev, this); const yr = Math.round(x.invert(px)); const d = rows.find(r => r.year === yr); if (!d) return;
+      cross.attr("x1", x(yr)).attr("x2", x(yr)).style("opacity", 1); dot.attr("cx", x(yr)).attr("cy", y(acc(d))).style("opacity", 1);
+      tip.textContent = `${yr}: ${fmt(acc(d))}`; tip.hidden = false;
+      const b = host.getBoundingClientRect(); let lx = ev.clientX - b.left + 10;
+      if (lx + tip.offsetWidth > b.width) lx = ev.clientX - b.left - tip.offsetWidth - 10;
+      tip.style.left = lx + "px"; tip.style.top = (ev.clientY - b.top - 34) + "px";
+    })
+    .on("pointerleave", () => { tip.hidden = true; cross.style("opacity", 0); dot.style("opacity", 0); });
+}
+
+let current = "19876|VA";
+function show(k) {
+  const rows = byUtil.get(k); if (!rows) return;
+  current = k;
+  rows.sort((a, b) => a.year - b.year);
+  const last = rows[rows.length - 1], x = expo.get(k);
+  document.getElementById("q").value = label(rows);
+  const [tName, tTok] = TIER[last.tier] || TIER.none;
+  const per1k = x && x.res_customers ? (x.mw_op + x.mw_pipeline) / x.res_customers * 1000 : 0;
+  document.getElementById("summary").innerHTML = [
+    [Math.round(last.cust).toLocaleString(), `residential customers (${last.year})`],
+    [last.ba || "—", "regional grid (balancing authority)"],
+    [x ? `${fmtMW(x.mw_op)} · ${fmtMW(x.mw_pipeline)}` : "None listed", "data center load in territory: operating · proposed or under construction"],
+    [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],
+  ].map(([n, l]) => `<div class="sum"><span class="sum-n">${n}</span><span class="sum-l">${l}</span></div>`).join("");
+  const b19 = rows.find(r => r.year === 2019) || rows[0];
+  const dp = pct(b19.real_price, last.real_price), du = pct(b19.kwh_per_home, last.kwh_per_home), db = pct(b19.real_bill, last.real_bill);
+  const driver = Math.abs(dp) > Math.abs(du) * 1.5 ? "Price, not usage, drove the change." : Math.abs(du) > Math.abs(dp) * 1.5 ? "Usage, more than price, drove the change." : "Price and usage both contributed.";
+  document.getElementById("reading").innerHTML = `From ${b19.year} to ${last.year}, after inflation, the average home's annual bill changed <b>${sgn(db)}</b> (to $${Math.round(last.real_bill).toLocaleString()}): price per kWh ${sgn(dp)}, usage per home ${sgn(du)}. ${driver}`;
+  small("p-price", rows, d => d.real_price, (v, t) => t ? v.toFixed(0) : v.toFixed(1) + "¢", css("--s1"));
+  small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(0) + "k" : Math.round(v).toLocaleString(), css("--s3"));
+  small("p-bill", rows, d => d.real_bill, (v, t) => "$" + (t ? Math.round(v) : Math.round(v).toLocaleString()), css("--s2"));
+  const c = cap.get(k);
+  const capEl = document.getElementById("cap");
+  if (c && c[0].supply === "default_service") {
+    capEl.hidden = false;
+    const max = d3.max(c, d => d.usd_per_home_yr_high);
+    document.getElementById("capnote").textContent = `Default supply in ${last.state} passes PJM capacity auction prices through to bills. Estimated cost for a home using ${Math.round(c[0].kwh_per_home_yr).toLocaleString()} kWh a year, by delivery year (June to May). Zone: ${c[0].zone}.`;
+    document.getElementById("captable").innerHTML = `<thead><tr><th>Delivery year</th><th>Zone price ($/MW-day)</th><th>Cost per home per year</th><th>Range</th><th>Attributed to data centers</th></tr></thead><tbody>` +
+      c.filter(d => d.delivery_year >= "2021/22").map(d => `<tr><td>${d.delivery_year}</td><td>$${d.zone_price_usd_mw_day.toFixed(2)}</td>
+        <td><span class="bar" style="width:${Math.round(80 * d.usd_per_home_yr_central / max)}px"></span>$${Math.round(d.usd_per_home_yr_central)}</td>
+        <td>$${Math.round(d.usd_per_home_yr_low)}–$${Math.round(d.usd_per_home_yr_high)}</td>
+        <td>${d.usd_per_home_yr_dc_central != null ? "$" + Math.round(d.usd_per_home_yr_dc_central) : "—"}</td></tr>`).join("") + "</tbody>";
+  } else capEl.hidden = true;
+  try { localStorage.setItem("gi-utility", k); } catch (e) {}
+}
+
+const input = document.getElementById("q");
+input.addEventListener("change", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
+input.addEventListener("input", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
+try { const s = localStorage.getItem("gi-utility"); if (s && byUtil.has(s)) current = s; } catch (e) {}
+show(current);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => show(current));
+new MutationObserver(() => show(current)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

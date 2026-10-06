@@ -279,6 +279,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "duckdb" },
     { name = "geopandas" },
+    { name = "markdown" },
     { name = "openpyxl" },
     { name = "pandas" },
     { name = "pyarrow" },
@@ -298,6 +299,7 @@ dev = [
 requires-dist = [
     { name = "duckdb", specifier = ">=1.1" },
     { name = "geopandas", specifier = ">=1.0" },
+    { name = "markdown", specifier = ">=3.11" },
     { name = "openpyxl", specifier = ">=3.1" },
     { name = "pandas", specifier = ">=2.2" },
     { name = "pyarrow", specifier = ">=17" },
@@ -496,6 +498,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/9a/cd/a61ab0cd638ca311367eec31d8ef633600322d8de4780de44ae781352d6f/maketables-0.1.9.tar.gz", hash = "sha256:6701266f815b92b5612c057a10580d07e77c66c69a77e68139d441bf14c3429c", size = 73216, upload-time = "2026-10-02T10:25:44.712Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2a/90/f666d68aef8c01a50d88fa86e5ff4ffc68f0ecb785a076d58f4ffaab85f3/maketables-0.1.9-py3-none-any.whl", hash = "sha256:a577b29d7da1ae226409c4d4975e7f1f67947e7cd1cbf8d09a344aafb8269ccc", size = 76201, upload-time = "2026-10-02T10:25:43.572Z" },
+]
+
+[[package]]
+name = "markdown"
+version = "3.11"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f8/4f/700155c8c20d9e655dd0732b5fc3c7614f291b9148da271d7388e50bf774/markdown-3.11.tar.gz", hash = "sha256:180224db6aed87ba9ce1f2781ebcd5826253de8ff637112090e24b84502bbf9f", size = 485623, upload-time = "2026-09-25T13:46:23.473Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/1e/32971905a7ab47f8b66866ed949fa48b104ba1c4a6fa57794c4f2c4b2cb8/markdown-3.11-py3-none-any.whl", hash = "sha256:cd6c89e7eb308c8b332ed673215a52d208a43f8bacc030b1419376129408719e", size = 111296, upload-time = "2026-09-25T13:46:22.163Z" },
 ]
 
 [[package]]

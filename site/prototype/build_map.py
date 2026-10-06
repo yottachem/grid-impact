@@ -12,10 +12,10 @@ DATA = HERE.parent / "data"
 
 def main(out: str = "us-data-center-buildout.html") -> None:
     sites = json.loads((DATA / "sites_open.json").read_text()) + json.loads((DATA / "sites_fractracker.json").read_text())
-    t = (HERE / "map.html.tmpl").read_text()
+    t = (HERE.parent / "templates" / "map.html.tmpl").read_text()
     t = (t.replace("__SITES__", json.dumps(sites, separators=(",", ":")))
           .replace("__COUNTIES__", (DATA / "counties.json").read_text())
-          .replace("__TOPO__", (HERE / "counties-10m.json").read_text())
+          .replace("__TOPO__", (HERE.parent / "templates" / "counties-10m.json").read_text())
           .replace("__META__", (DATA / "meta.json").read_text()))
     Path(out).write_text(t)
     print(f"wrote {out} ({len(t) / 1e6:.2f} MB, {len(sites):,} sites)")
