@@ -8,3 +8,4 @@ data/marts/
 !data/**/.gitkeep
 site/dist/
 .DS_Store
+site/lab/
