@@ -32,6 +32,15 @@
 .cap thead th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .cap .bar { display: inline-block; height: 8px; border-radius: 0 4px 4px 0; vertical-align: middle; margin-right: 8px; background: var(--s1); }
 .cap .tablewrap { overflow-x: auto; }
+.crowd { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; }
+.crowd h2 { font: 600 20px/1.2 var(--font-display); margin: 0; }
+.crowd .row2 { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.crowd input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; width: 9em; }
+.crowd .btn { display: inline-block; background: var(--s1); color: #fff; text-decoration: none; padding: 9px 14px; border-radius: 6px; font-weight: 600; font-size: 14px; }
+.crowd .btn[aria-disabled="true"] { background: var(--line); color: var(--muted); pointer-events: none; }
+.crowd .meter { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; width: min(320px, 100%); }
+.crowd .meter i { display: block; height: 100%; background: var(--s3); }
+.crowd #zipout { font-size: 15px; }
 .u-note { font-size: 13px; color: var(--muted); margin: 0; max-width: 78ch; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.14); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
 @media (max-width: 800px) { .multiples { grid-template-columns: 1fr; } .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -60,6 +69,17 @@
     <p class="u-note" id="capnote"></p>
     <div class="tablewrap"><table id="captable"></table></div>
   </section>
+  <section class="crowd" aria-labelledby="crowdh">
+    <h2 id="crowdh">Add your bill</h2>
+    <p class="u-note" style="margin:0">EIA reports utility averages. Your bills fill in what neighborhoods actually pay. Share the numbers from a recent bill: ZIP code, utility, kWh, and total. No name, email, address, or account number. Each ZIP code's results appear once <span id="thr">10</span> bills from the past 12 months are in; until then you can see how many are pending.</p>
+    <div class="row2">
+      <a class="btn" id="formlink" href="#" target="_blank" rel="noopener" aria-disabled="true">Add a bill</a>
+      <label for="zip" class="u-note">Check a ZIP code</label>
+      <input id="zip" inputmode="numeric" maxlength="5" placeholder="e.g. 20147" autocomplete="postal-code">
+    </div>
+    <div id="zipout" aria-live="polite"></div>
+    <p class="u-note" id="crowdsrc" style="margin:0"></p>
+  </section>
   <p class="u-note">Inflation adjustment uses the BLS CPI for the utility's Census region, in dollars of __REALMONTH__. Full calendar years only. EIA's monthly survey covers about 375 larger utilities; smaller co-ops and municipal utilities report annually and are not shown. In restructured states, the utility's figures cover customers on its default supply.</p>
 </div>
 
@@ -68,6 +88,7 @@
 const UB = __USAGE__;
 const UX = __EXPOSURE__;
 const CC = __CAPACITY__;
+let CROWD = __CROWD__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const key = d => d.utility_id_eia + "|" + d.state;
 const byUtil = d3.group(UB, key);
@@ -163,6 +184,27 @@ function show(k) {
 const input = document.getElementById("q");
 input.addEventListener("change", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
 input.addEventListener("input", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
+// Resident bills: counts and medians only. Live from the endpoint when reachable, else the last pipeline copy.
+function crowdRender(src) {
+  document.getElementById("thr").textContent = CROWD.threshold;
+  const link = document.getElementById("formlink");
+  if (CROWD.form_url) { link.href = CROWD.form_url; link.removeAttribute("aria-disabled"); }
+  else link.textContent = "Bill form opening soon";
+  const pend = CROWD.pending.reduce((a, p) => a + p.n, 0), pub = CROWD.published.reduce((a, p) => a + p.n, 0);
+  document.getElementById("crowdsrc").textContent = `${(pend + pub).toLocaleString()} valid bills so far: ${CROWD.published.length} ZIP codes published, ${CROWD.pending.length} pending. ${src}`;
+  zipCheck();
+}
+function zipCheck() {
+  const z = document.getElementById("zip").value.trim(), out = document.getElementById("zipout");
+  if (!/^[0-9]{5}$/.test(z)) { out.innerHTML = ""; return; }
+  const pub = CROWD.published.find(p => p.zip === z), pen = CROWD.pending.find(p => p.zip === z), t = CROWD.threshold;
+  if (pub) out.innerHTML = `<b>ZIP ${z}:</b> ${pub.n} bills. Typical month: $${pub.median_monthly_bill} for ${pub.median_monthly_kwh.toLocaleString()} kWh (${pub.median_cents_per_kwh}¢ per kWh, medians).`;
+  else { const n = pen ? pen.n : 0;
+    out.innerHTML = `<b>ZIP ${z}:</b> ${n} of ${t} bills needed (pending). <div class="meter" aria-hidden="true"><i style="width:${Math.min(100, 100 * n / t)}%"></i></div>`; }
+}
+document.getElementById("zip").addEventListener("input", zipCheck);
+crowdRender("As of the last site update.");
+if (CROWD.endpoint) fetch(CROWD.endpoint).then(r => r.json()).then(d => { CROWD = { ...d, endpoint: CROWD.endpoint }; crowdRender("Live counts."); }).catch(() => {});
 try { const s = localStorage.getItem("gi-utility"); if (s && byUtil.has(s)) current = s; } catch (e) {}
 show(current);
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => show(current));

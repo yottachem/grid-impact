@@ -202,8 +202,21 @@ def meta() -> None:
                   "summary": summary, "sources": sources})
 
 
+def crowd() -> None:
+    """Latest resident-bill aggregates (counts and medians only), or an empty placeholder."""
+    from ingest.common import load_sources
+    from transform.common import latest
+    url = load_sources()["crowd_bills"]["url"]
+    try:
+        data = json.loads(open(latest("crowd_bills", "aggregates.json")).read())
+    except FileNotFoundError:
+        data = {"threshold": 10, "window_days": 365, "pending": [], "published": [], "form_url": None}
+    data["endpoint"] = url if url.startswith("https://") else None
+    dump("crowd", data)
+
+
 def run() -> None:
-    sites(); counties(); utilities(); map_layers(); analysis(); meta()
+    sites(); counties(); utilities(); map_layers(); analysis(); crowd(); meta()
 
 
 if __name__ == "__main__":

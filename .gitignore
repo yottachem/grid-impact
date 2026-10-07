@@ -12,3 +12,5 @@ site/lab/
 # Generated site data: built in CI and deployed with the site (not committed)
 site/data/*.json
 site/data/tracts/
+crowd/.tools/
+crowd/apps-script/.clasp.json
