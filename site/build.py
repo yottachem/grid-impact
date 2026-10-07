@@ -224,6 +224,7 @@ def main() -> None:
           .replace("__EXPOSURE__", (DATA / "utility_exposure.json").read_text())
           .replace("__CAPACITY__", (DATA / "capacity_household_cost.json").read_text())
           .replace("__CROWD__", (DATA / "crowd.json").read_text())
+          .replace("__RELIABILITY__", (DATA / "utility_reliability.json").read_text())
           .replace("__REALMONTH__", html.escape(meta.get("real_dollars_of", "the latest CPI month"))))
     (DIST / "utility.html").write_text(shell("utility.html", title, t, foot,
         "Residential price, usage, and bill by utility, adjusted for inflation, with data center load in each territory."))

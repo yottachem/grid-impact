@@ -36,10 +36,11 @@ def payload() -> tuple[dict, int]:
     es = json.loads((DATA / "event_studies.json").read_text())["pjm_vs_rest"]
     um = pd.DataFrame(json.loads((DATA / "utility_usage_bill.json").read_text()))
     run = json.loads((RESULTS / "run.json").read_text()) if (RESULTS / "run.json").exists() else {}
+    rel = json.loads((RESULTS / "reliability.json").read_text()) if (RESULTS / "reliability.json").exists() else None
     gen = {k: cs[k]["generation"]["planned_gw_total"] for k in ("texas", "dominion", "georgia") if k in cs}
     ytd = {unit: cs[key]["units"].get(unit + " YTD", {}).get("pct") for key, unit in CASES}
     return {"capacity": capacity, "event_pjm": es, "cases": cases, "run": run, "gen": gen, "ytd": ytd,
-            "local": le,
+            "local": le, "rel": rel,
             "local40": {"pct": le["pct_at_40pct_load"], "lo": le["pct_at_40pct_load_lo"], "hi": le["pct_at_40pct_load_hi"]},
             "built": meta["built"][:10], "price_through": meta["sources"]["eia861m"]["last_new_data"] or ""}, le["n_units"]
 

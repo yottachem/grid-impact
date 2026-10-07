@@ -17,7 +17,7 @@
 .pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); width: fit-content; }
 .pill i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .reading { margin: 0; font-size: 16px; max-width: 70ch; }
-.multiples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.multiples { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 14px 8px; display: grid; gap: 4px; min-width: 0; position: relative; }
 .panel h2 { font: 600 17px/1.2 var(--font-display); margin: 0; }
 .panel .sub { font-size: 12px; color: var(--muted); }
@@ -63,6 +63,7 @@
     <div class="panel" id="p-price"><h2>Price</h2><span class="sub">¢ per kWh, inflation-adjusted</span></div>
     <div class="panel" id="p-kwh"><h2>Usage per home</h2><span class="sub">kWh per year</span></div>
     <div class="panel" id="p-bill"><h2>Annual bill per home</h2><span class="sub">dollars, inflation-adjusted</span></div>
+    <div class="panel" id="p-rel"><h2>Outage minutes per customer</h2><span class="sub" id="relsub">SAIDI, excluding major storms (EIA-861)</span></div>
   </section>
   <section class="cap" id="cap" hidden>
     <h2>PJM capacity cost for an average home</h2>
@@ -88,6 +89,7 @@
 const UB = __USAGE__;
 const UX = __EXPOSURE__;
 const CC = __CAPACITY__;
+const REL = d3.group(__RELIABILITY__, d => d.utility_id_eia + "|" + d.state);
 let CROWD = __CROWD__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const key = d => d.utility_id_eia + "|" + d.state;
@@ -166,6 +168,14 @@ function show(k) {
   small("p-price", rows, d => d.real_price, (v, t) => t ? v.toFixed(0) : v.toFixed(1) + "¢", css("--s1"));
   small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(0) + "k" : Math.round(v).toLocaleString(), css("--s3"));
   small("p-bill", rows, d => d.real_bill, (v, t) => "$" + (t ? Math.round(v) : Math.round(v).toLocaleString()), css("--s2"));
+  const rel = (REL.get(k) || []).filter(d => d.saidi != null).sort((a, b) => a.year - b.year);
+  const relHost = document.getElementById("p-rel");
+  relHost.querySelector(".none")?.remove();
+  if (rel.length >= 3) {
+    small("p-rel", rel, d => d.saidi, (v, t) => Math.round(v) + (t ? "" : " min"), css("--s4"));
+    document.getElementById("relsub").textContent = "SAIDI, excluding major storms (EIA-861, " + (rel[rel.length - 1].standard === "ieee_standard" ? "IEEE method" : "state method") + ")";
+  }
+  else { relHost.querySelector("svg")?.remove(); relHost.insertAdjacentHTML("beforeend", '<p class="u-note none" style="margin:8px 0">Not reported to EIA for enough years.</p>'); }
   const c = cap.get(k);
   const capEl = document.getElementById("cap");
   if (c && c[0].supply === "default_service") {

@@ -1,5 +1,5 @@
 """Run analyses after marts are built: capacity cost per household, panel regressions."""
-from analysis import capacity_cost, case_studies, exports, panel
+from analysis import capacity_cost, case_studies, exports, panel, reliability
 from transform import tracts
 
 
@@ -8,6 +8,7 @@ def main() -> None:
     print("== tracts"); tracts.run()
     print("== panel"); print(panel.run())
     print("== case_studies"); case_studies.run()
+    print("== reliability"); reliability.run()
     print("== exports"); exports.run()
     stamp()
 

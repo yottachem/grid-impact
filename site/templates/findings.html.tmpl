@@ -94,6 +94,7 @@ h2 { font: 600 23px/1.15 var(--font-display); margin: 0; text-wrap: balance; }
 
   <section class="notes">
     <p><b style="color:var(--fg)">What doesn't explain it.</b> Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a <span id="elast"></span> change in residential price. More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.</p>
+    <p id="relpara"></p>
     <p><b style="color:var(--fg)">Caveats.</b> The PJM premium began in 2023, before capacity prices spiked, which is consistent with 2022 gas prices being locked into default-service supply contracts; capacity costs explain its widening in 2025 and 2026. Auction totals are cleared MW times price, which PJM notes overstates cost to load because some load is hedged or self-supplied, so household figures are upper-bound averages. Dominion's 2026 increase also includes an approved base-rate increase of $11.24 a month.</p>
     <p id="built"></p>
     <p>Sources: EIA-861M, EIA-930, EIA-860M; PJM Base Residual Auction reports; Monitoring Analytics (PJM Independent Market Monitor); BLS CPI; NOAA nClimDiv; Census ACS. Data center locations: FracTracker Alliance, PNNL IM3, OpenStreetMap contributors, PeeringDB. Code and methods: github.com/yottachem/grid-impact.</p>
@@ -123,6 +124,13 @@ document.getElementById("c2r").textContent = `PJM prices tracked the rest of the
 const s3 = D.cases, endOf = n => s3[n][s3[n].length - 1];
 const ytd = n => D.ytd[n] != null ? pct(D.ytd[n]) : "n/a";
 document.getElementById("c3r").textContent = `Baltimore Gas & Electric's customers, in a PJM state with few large data centers of its own, saw real prices rise ${(endOf("Baltimore Gas & Electric").idx - 100).toFixed(0)}% between 2019 and this year (${ytd("Baltimore Gas & Electric")} versus the same months last year). Dominion's real price changed ${pct(endOf("Dominion Energy Virginia").idx - 100)} between 2019 and this year (${ytd("Dominion Energy Virginia")} versus the same months last year, its first full year inside the PJM capacity auction). Texas, an energy-only market with ${D.gen.texas} GW of new generation planned (PJM: ${D.gen.dominion} GW), was at ${endOf("Texas statewide").idx.toFixed(0)}, and Georgia Power at ${endOf("Georgia Power").idx.toFixed(0)}, on a 2019 = 100 scale.`;
+// Reliability, from the latest run
+if (D.rel) {
+  const u = D.rel.utility, s = u.saidi, f = u.saifi, m = u.saidi_med, c = D.rel.county;
+  const verdict = s.lo > 0 ? "has gone with more outage time" : s.hi < 0 ? "has gone with less outage time" : "has not gone with more outages";
+  const last = c.event_study[c.event_study.length - 1];
+  document.getElementById("relpara").innerHTML = `<b style="color:var(--fg)">What about reliability?</b> Across ${u.saidi.n_units} utilities (${s.years}), a 40% rise in a utility's own commercial load ${verdict}: ${pct(s.pct_at_40pct_load)} in everyday outage minutes per customer (95% CI ${pct(s.lo)} to ${pct(s.hi)}) and ${pct(f.pct_at_40pct_load)} in the number of outages, compared with utilities in the same regional grid and year. Including major storms, ${pct(m.pct_at_40pct_load)}. The ${c.high_dc_counties} counties with the most operating data center load had ${last.pct < 0 ? "no more" : "more"} outage hours than other counties in their state (${last.year}: ${pct(last.pct)}). These are local outages that have already happened; the forward risk is supply: PJM's 2027/28 auction cleared about 6,500 MW short of its reliability target.`;
+}
 // Headline and lede follow the current results rather than fixed wording
 const L = D.local, mon = s => new Date(s + "-01T12:00:00").toLocaleString("en-US", { month: "long", year: "numeric" });
 document.getElementById("ld-through").textContent = D.run.prices_through ? mon(D.run.prices_through) : D.price_through;

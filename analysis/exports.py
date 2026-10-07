@@ -144,6 +144,19 @@ def map_layers() -> None:
                                       "chg": "chg", "cap": "cap"}, 0.004))
 
 
+def reliability_by_utility() -> None:
+    """Per-utility SAIDI/SAIFI excluding major event days (IEEE where reported, else state method)."""
+    from transform.common import latest
+    rel = pd.read_parquet(latest("pudl_eia861_annual", "core_eia861__yearly_reliability.parquet"))
+    from analysis.reliability import combined_standard
+    rel = combined_standard(rel)
+    out = rel[["utility_id_eia", "state", "year", "standard", "saidi_wo_major_event_days_minutes", "saifi_wo_major_event_days_customers",
+               "saidi_w_major_event_days_minutes"]].rename(columns={"saidi_wo_major_event_days_minutes": "saidi",
+               "saifi_wo_major_event_days_customers": "saifi", "saidi_w_major_event_days_minutes": "saidi_med"}).round(2)
+    out = out.assign(utility_id_eia=out.utility_id_eia.astype(int))
+    dump("utility_reliability", records(out))
+
+
 def analysis() -> None:
     cc = pd.read_parquet(MARTS / "capacity_household_cost.parquet")
     cols = ["utility_id_eia", "state", "utility_name", "zone", "supply", "delivery_year", "zone_price_usd_mw_day",
@@ -154,6 +167,8 @@ def analysis() -> None:
           [("pjm_vs_rest", "event_study_pjm.csv"), ("pjm_restructured_vs_regulated", "event_study_pjm_restructured.csv")]}
     dump("event_studies", es)
     dump("case_studies", json.loads((RESULTS / "case_studies.json").read_text()))
+    if (RESULTS / "reliability.json").exists():
+        dump("reliability", json.loads((RESULTS / "reliability.json").read_text()))
 
 
 def meta() -> None:
@@ -216,7 +231,7 @@ def crowd() -> None:
 
 
 def run() -> None:
-    sites(); counties(); utilities(); map_layers(); analysis(); crowd(); meta()
+    sites(); counties(); utilities(); reliability_by_utility(); map_layers(); analysis(); crowd(); meta()
 
 
 if __name__ == "__main__":

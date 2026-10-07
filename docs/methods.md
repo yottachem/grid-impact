@@ -108,6 +108,14 @@ The outcome is the log of inflation-adjusted residential price for 326 utility s
 - **PJM vs. the rest of the US** (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023 and 2024, +12.7% in 2025, +15.7% in 2026. The gap opened **before** capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened in 2025 and 2026 as capacity costs reached bills.
 - **Within PJM, restructured vs. regulated:** +18.3% in 2026, but the two groups were not on parallel paths before 2020, so this comparison is weaker evidence.
 
+## Reliability
+
+*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page shows current values.*
+
+- **Utility test.** EIA-861 SAIDI (outage minutes per customer per year) and SAIFI (outages per customer), excluding major event days, 2013-2025, for 1,339 utility-state units. The IEEE 1366 figure is used where reported, otherwise the utility's state-method figure (25% of utility-years, including Dominion); each utility and method gets its own fixed effect. Regressed on the log of the utility's commercial sales with balancing authority x year fixed effects. A 40% rise in commercial load goes with **-2.3%** outage minutes (95% CI -4.8% to +0.3%) and -1.8% outages; including major storms, -4.6% (-7.5% to -1.6%). IEEE-only check: -0.7% (-4.1% to +2.9%). No sign that reliability has worsened where commercial load grew.
+- **County check.** ORNL EAGLE-I customer-hours without power per customer, 2018 onward. The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: -36%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.
+- **Limits.** These measure local distribution outages that have already happened. Bulk-supply risk is forward-looking: PJM's 2027/28 capacity auction cleared about 6,500 MW below its reliability requirement.
+
 ## Case studies
 
 *Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
@@ -144,6 +152,7 @@ Residents can add the numbers from a recent electric bill through a Google Form 
 
 - **2026-10-07:** Bill form adds optional supply, delivery, fixed charge, and taxes questions; published medians split supply vs. delivery.
 - **2026-10-07:** Resident bill form launched with per-ZIP pending counts and medians at 10+ bills.
+- **2026-10-07:** Reliability analysis added (utility SAIDI/SAIFI and county outages); outage minutes per customer added to the Your utility page.
 - **2026-10-07:** Manual review of the 30 flagged pairs carrying the most MW: 14 duplicate or component records removed (about 6.9 GW, mostly proposed campuses listed twice), 16 pairs confirmed as separate.
 - **2026-10-07:** Data center quality checks: duplicate merging (9 listings, 927 MW), network facilities typed and hidden by default, pairs pending review published, correction form added.
 - **2026-10-07:** Household cost layer extended to all 50 states and DC (84,119 tracts). Data status page and footer added. Texas utility assignment corrected (see "Data center load by county and utility"), which moved about 4.6 GW of operating and 22.5 GW of pipeline data center load in Texas to Oncor.
