@@ -9,3 +9,6 @@ data/marts/
 site/dist/
 .DS_Store
 site/lab/
+# Generated site data: built in CI and deployed with the site (not committed)
+site/data/*.json
+site/data/tracts/

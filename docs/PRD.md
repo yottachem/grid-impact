@@ -50,6 +50,8 @@ No public, regularly refreshed, method-transparent source connects **data center
 | R5 | Data center records carry status, MW (reported/estimated), sources, confidence, first/last seen | Must |
 | R6 | Weather, fuel, and inflation controls in the panel analysis | Must |
 | R7 | Crowdsourced bills: publish only aggregates with n ≥ 10 per ZIP/utility-month; no PII retained | Later |
+| R8 | Pending visibility: before an area reaches the threshold, anyone can see how many bill entries from that ZIP/utility-month are pending (e.g. "6 of 10 needed"); counts only, no values, until the threshold is met and the aggregate is published | Later |
+| R9 | Data status: every page shows sources tracked, newest data, sources updated recently and added recently; a status page lists each source's added date, last check, last new data, and current/late state | Must (done 2026-10-07) |
 
 ## Key decisions
 

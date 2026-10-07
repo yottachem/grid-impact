@@ -3,14 +3,16 @@
 County: estimated MW by status, per 1,000 households (Census ACS 5-year), with median
 household income for energy-burden work and ORNL EAGLE-I modeled electricity customers
 as a secondary denominator (it is missing ~65 counties, including Fairfax VA and DC). Utility: each site is placed in the retail service territories (HIFLD polygons) that
-contain it. Where territories overlap, its MW is split by each utility's customer density
-(customers per unit area), a proxy for who serves that spot. Sites outside every polygon
+contain it, corrected as described in transform/territories.py. Where territories
+overlap, its MW is split by each utility's customer density (customers per unit area),
+a proxy for who serves that spot. Sites outside every polygon
 fall back to a county method: the county's MW is shared among the utilities serving it
 (EIA-861 via PUDL) by population-weighted residential customer shares. Either way this
 is an approximation: EIA does not publish which utility serves a given site."""
 import geopandas as gpd
 import pandas as pd
 
+from transform import territories
 from transform.common import MARTS, latest, write
 
 LIVE = {"operating": "op", "construction": "uc", "proposed": "pr"}
@@ -60,24 +62,12 @@ def _latest_per_utility(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def site_utility_shares() -> pd.DataFrame:
-    """One row per (site, utility) with share in (0, 1]; method 'territory' or missing."""
+    """One row per (site, utility) with share in (0, 1]; see transform/territories.py."""
     s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
     s = s[s.status_group.isin(LIVE) & s.mw_est.notna()]
     pts = gpd.GeoDataFrame(s[["site_id", "state"]], geometry=gpd.points_from_xy(s.lon, s.lat), crs="EPSG:4326")
-    terr = gpd.read_parquet(latest("hifld_territories", "*.parquet"))
-    terr = terr.assign(utility_id_eia=pd.to_numeric(terr.source_ID, errors="coerce"),
-                       density=pd.to_numeric(terr.CUSTOMERS, errors="coerce").clip(lower=1) / terr.Shape__Area)
-    terr = terr.rename(columns={"STATE": "terr_state"})
-    terr = terr.dropna(subset=["utility_id_eia"])[["utility_id_eia", "terr_state", "density", "geometry"]].to_crs("EPSG:4326")
-    j = gpd.sjoin(pts, terr, how="inner", predicate="within")
-    j = j.drop_duplicates(["site_id", "utility_id_eia"])
-    # Polygons are coarse at state lines: when any containing territory is based in the
-    # site's state, drop out-of-state ones (multi-state utilities keep their other states
-    # when no in-state territory contains the site).
-    j["in_state"] = j.terr_state.eq(j.state)
-    j = j[j.in_state | ~j.groupby("site_id").in_state.transform("any")]
-    j["share"] = j.density / j.groupby("site_id").density.transform("sum")
-    return pd.DataFrame(j[["site_id", "state", "utility_id_eia", "share"]]).assign(utility_id_eia=lambda d: d.utility_id_eia.astype(int))
+    sh = territories.shares(pts, "site_id", "state")
+    return sh[["site_id", "state", "utility_id_eia", "share"]]
 
 
 def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
@@ -118,6 +108,11 @@ def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
     u = res.set_index(["utility_id_eia", "state"]).join(mw, how="outer").reset_index()
     u[[c for c in u.columns if c.startswith("mw_")]] = u[[c for c in u.columns if c.startswith("mw_")]].fillna(0)
     u["mw_pipeline"] = u.mw_uc + u.mw_pr
+    # Utilities with no recent EIA residential record (e.g. Texas wires utilities): name from HIFLD
+    h = pd.read_parquet(latest("hifld_territories", "*.parquet"), columns=["source_ID", "NAME"])
+    h = h.assign(utility_id_eia=pd.to_numeric(h.source_ID, errors="coerce")).dropna(subset=["utility_id_eia"])
+    names = h.drop_duplicates("utility_id_eia").set_index(h.drop_duplicates("utility_id_eia").utility_id_eia.astype(int)).NAME.str.title()
+    u["utility_name"] = u.utility_name.fillna(u.utility_id_eia.astype(int).map(names))
     u["sites_in_territory"] = u.set_index(["utility_id_eia", "state"]).index.map(
         shares.groupby(["utility_id_eia", "state"]).site_id.nunique()).fillna(0).astype(int)
     per = u.res_customers.where(u.res_customers > 0) / 1000

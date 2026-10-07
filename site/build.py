@@ -18,6 +18,7 @@ import build_findings  # noqa: E402  (payload for the findings page)
 
 REPO = "https://github.com/yottachem/grid-impact"
 PAGES = [("index.html", "Findings"), ("map.html", "Map"), ("utility.html", "Your utility"), ("methods.html", "Methods")]
+FRIENDLY_DATE = lambda d: __import__("datetime").date.fromisoformat(d).strftime("%b %-d, %Y") if d else "—"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600'
          '&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">')
@@ -48,6 +49,11 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 var(-
 .prose th, .prose td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
 .prose th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .prose a { color: var(--s1); }
+.prose.wide { max-width: 1060px; }
+.src-pub { font-size: 12px; color: var(--muted); }
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .05em; }
+.badge i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.status-line { color: var(--fg); }
 """
 
 
@@ -71,10 +77,41 @@ def split_template(t: str) -> tuple[str, str]:
     return title, t
 
 
+def status_line(meta: dict) -> str:
+    """One-line data status for every page footer, linking to the full status page."""
+    sm, src = meta["summary"], meta["sources"]
+    late = f"{len(sm['late'])} late" if sm["late"] else "all current"
+    return (f'<span class="status-line"><a href="status.html">Data status</a>: {sm["sources"]} sources tracked, {late} · '
+            f'newest data {FRIENDLY_DATE(sm["newest_data"])} ({html.escape(src[sm["newest_source"]]["name"].split(" (")[0])}) · '
+            f'{len(sm["updated_last_7_days"])} updated in the past 7 days · {len(sm["added_last_30_days"])} added in the past 30 days</span>')
+
+
+def status_page(meta: dict) -> str:
+    rows = sorted(meta["sources"].items(), key=lambda kv: (kv[1]["last_new_data"] or "", kv[1]["added"]), reverse=True)
+    badge = {"current": ("Current", "var(--s3)"), "late": ("Late", "var(--s2)"), "pending": ("Not yet fetched", "var(--muted)")}
+    trs = "".join(
+        f"<tr><td>{html.escape(v['name'])}<br><span class='src-pub'>{html.escape(v.get('publisher') or '')}</span></td>"
+        f"<td><span class='badge'><i style='background:{badge[v['status']][1]}'></i>{badge[v['status']][0]}</span></td>"
+        f"<td>{FRIENDLY_DATE(v['last_new_data'])}</td><td>{html.escape(str(v['data_through'] or '—'))}</td>"
+        f"<td>{FRIENDLY_DATE(v['last_checked'])}</td><td>{html.escape(v['check'])}</td><td>{FRIENDLY_DATE(v['added'])}</td></tr>"
+        for k, v in rows)
+    sm = meta["summary"]
+    return (f'<article class="prose wide"><h1>Data status</h1>'
+            f"<p>{sm['sources']} sources are checked on a schedule; when one publishes new data, the site rebuilds and republishes. "
+            f"Last build: {meta['built'][:16].replace('T', ' ')} UTC. "
+            f"{len(sm['updated_last_7_days'])} sources brought new data in the past 7 days; "
+            f"{len(sm['added_last_30_days'])} were added in the past 30 days. "
+            f"A source is marked late when it goes longer than expected without new data.</p>"
+            f"<table><thead><tr><th>Source</th><th>Status</th><th>Last new data</th><th>Data through</th><th>Last checked</th>"
+            f"<th>Checked</th><th>Added</th></tr></thead><tbody>{trs}</tbody></table>"
+            f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
+            f'when published; see <a href="methods.html">Methods</a>.</p></article>')
+
+
 def footer(meta: dict, price_through: str) -> str:
     s = meta["sources"]
     fresh = lambda k: s.get(k, {}).get("last_new_data") or "—"
-    return (f"<span>Updated automatically when sources publish new data. Last build {meta['built'][:10]}. "
+    return (status_line(meta) + f"<span>Updated automatically when sources publish new data. Last build {meta['built'][:10]}. "
             f"Residential prices through {price_through}; data center sites as of {fresh('fractracker_datacenters')}; "
             f"PJM auctions through 2028/29.</span>"
             f"<span>Data: EIA, PJM, PJM Independent Market Monitor, BLS, NOAA, Census, ORNL; data center locations from "
@@ -134,6 +171,9 @@ def main() -> None:
     body = '<article class="prose">' + markdown.markdown(md, extensions=["tables"]) + "</article>"
     (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, foot,
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
+    (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta), foot,
+        "When each data source was added, last checked, and last brought new data."))
+    shutil.copytree(DATA / "tracts", DIST / "data" / "tracts")
     (DIST / ".nojekyll").write_text("")
     for f in sorted(DIST.glob("*.html")):
         print(f"wrote site/dist/{f.name}  {f.stat().st_size / 1024:,.0f} KB")

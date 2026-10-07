@@ -35,6 +35,7 @@ footer.mf p { margin: 2px 0; max-width: 120ch; }
 
 footer.mf a { color: inherit; }
 optgroup { font-style: normal; color: var(--muted); }
+.hint { font-size: 12px; color: var(--muted); }
 .dots { display: inline-flex; gap: 10px; align-items: center; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
 .dots i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 4px; vertical-align: -1px; }
 </style>
@@ -44,32 +45,34 @@ optgroup { font-style: normal; color: var(--muted); }
   <h1>Data centers and what electricity costs nearby</h1>
   <div class="controls">
     <label for="metric">Shade by <select id="metric">
-      <optgroup label="Neighborhoods: Virginia, Maryland, DC">
+      <optgroup label="Household costs: counties, neighborhoods when zoomed in">
         <option value="burden">Energy burden: annual bill as % of median income</option>
         <option value="bill">Average annual residential bill</option>
         <option value="chg">Bill change since 2018-19, after inflation</option>
         <option value="cap">PJM capacity cost per home, 2026/27</option>
       </optgroup>
-      <optgroup label="Counties: United States">
+      <optgroup label="Data center load: counties">
         <option value="pipe1k">Data center pipeline MW per 1,000 households</option>
         <option value="op1k">Operating data center MW per 1,000 households</option>
       </optgroup>
     </select></label>
     <label for="dc"><input type="checkbox" id="dc" checked> Data center sites</label>
     <span class="dots"><span><i style="background:var(--op)"></i>Operating</span><span><i style="background:var(--uc)"></i>Under construction</span><span><i style="background:var(--pr)"></i>Proposed</span></span>
+    <span class="hint" id="hint" aria-live="polite"></span>
     <span class="legend" id="legend" aria-label="Legend"></span>
   </div>
 </header>
 <div id="map" role="region" aria-label="Zoomable map of census tracts and data center sites"></div>
 <footer class="mf">
-  <p>Neighborhood layer (Virginia, Maryland, DC; more states to follow): bills and bill changes are utility averages for full-service residential customers (EIA-861), so every tract a utility serves shares them; energy burden varies by tract because income does (Census ACS 2024 5-year). Each tract is assigned the utility whose service territory contains it. Bill change compares two-year averages, 2018-19 vs. the latest two years. Capacity cost appears only where default supply passes PJM auction prices through (Maryland and DC). County layer: estimated data center MW per 1,000 households. Sites: merged from FracTracker (non-commercial use), PNNL, OpenStreetMap, PeeringDB; clusters split as you zoom. <a href="methods.html">Methods</a></p>
+  <p>Household costs cover all 50 states and DC: counties when zoomed out, census tracts (about 4,000 people each) when zoomed in. Bills and bill changes are utility averages for full-service residential customers (EIA-861), so every tract a utility serves shares them; energy burden varies by tract because income does (Census ACS 2024 5-year). Where the local utility sells no power to homes (most of Texas, some other areas), the state's average full residential bill is used and labeled. Bill change compares two-year averages, 2018-19 vs. the latest two years, after inflation. Capacity cost appears where default supply passes PJM auction prices through. County values are household-weighted averages of their tracts. Sites: merged from FracTracker (non-commercial use), PNNL, OpenStreetMap, PeeringDB; clusters split as you zoom. <a href="methods.html">Methods</a></p>
   <p>Basemap © OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors.</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.js"></script>
 <script>
 const SITES = __SITES__;
-const TRACTS_URL = "data/tracts.json", COUNTIES_URL = "data/counties_geo.json";
+const COUNTIES_URL = "data/counties_geo.json", TRACT_INDEX_URL = "data/tracts/index.json";
+const TRACT_ZOOM = 6.5;  // below this, household costs show by county
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const dark = () => matchMedia("(prefers-color-scheme: dark)").matches;
@@ -84,7 +87,7 @@ const METRICS = {
   pipe1k: { bins: [5, 25, 100, 250], colors: SEQ.slice(1), labels: ["< 5", "5–25", "25–100", "100–250", "250+ MW"], fmt: v => v.toFixed(1) + " MW", county: true },
   op1k: { bins: [5, 25, 100, 250], colors: SEQ.slice(1), labels: ["< 5", "5–25", "25–100", "100–250", "250+ MW"], fmt: v => v.toFixed(1) + " MW", county: true },
 };
-const DMV = [[-83.7, 36.5], [-75.0, 39.8]], USA = [[-125, 24.5], [-66.9, 49.5]];
+const USA = [[-125, 24.5], [-66.9, 49.5]];
 
 function fillExpr(m) {
   const { bins, colors } = METRICS[m];
@@ -107,20 +110,21 @@ const sites = { type: "FeatureCollection", features: SITES.filter(s => ["operati
 const map = new maplibregl.Map({
   container: "map",
   style: dark() ? "https://tiles.openfreemap.org/styles/dark" : "https://tiles.openfreemap.org/styles/positron",
-  bounds: DMV, fitBoundsOptions: { padding: 20 }, attributionControl: { compact: true },
+  bounds: USA, fitBoundsOptions: { padding: 20 }, attributionControl: { compact: true },
 });
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 map.addControl(new maplibregl.ScaleControl({ unit: "imperial" }), "bottom-left");
 
 map.on("load", () => {
   const firstLabel = map.getStyle().layers.find(l => l.type === "symbol")?.id;
-  map.addSource("tracts", { type: "geojson", data: TRACTS_URL });
+  const tractFC = { type: "FeatureCollection", features: [] };
+  map.addSource("tracts", { type: "geojson", data: tractFC });
   map.addSource("counties", { type: "geojson", data: COUNTIES_URL });
-  map.addLayer({ id: "counties-fill", type: "fill", source: "counties", layout: { visibility: "none" }, paint: { "fill-color": fillExpr("pipe1k"), "fill-opacity": 0.7 } }, firstLabel);
-  map.addLayer({ id: "counties-line", type: "line", source: "counties", layout: { visibility: "none" }, paint: { "line-color": dark() ? "#11151a" : "#ffffff", "line-width": 0.3 } }, firstLabel);
-  map.addLayer({ id: "tracts-fill", type: "fill", source: "tracts", paint: { "fill-color": fillExpr("burden"), "fill-opacity": 0.68 } }, firstLabel);
-  map.addLayer({ id: "tracts-line", type: "line", source: "tracts", paint: { "line-color": dark() ? "#11151a" : "#ffffff", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 11, 0.8] } }, firstLabel);
-  map.addLayer({ id: "tracts-hover", type: "line", source: "tracts", paint: { "line-color": css("--fg"), "line-width": 2 }, filter: ["==", ["get", "id"], ""] });
+  map.addLayer({ id: "counties-fill", type: "fill", source: "counties", maxzoom: TRACT_ZOOM, paint: { "fill-color": fillExpr("burden"), "fill-opacity": 0.7 } }, firstLabel);
+  map.addLayer({ id: "counties-line", type: "line", source: "counties", maxzoom: TRACT_ZOOM, paint: { "line-color": dark() ? "#11151a" : "#ffffff", "line-width": 0.3 } }, firstLabel);
+  map.addLayer({ id: "tracts-fill", type: "fill", source: "tracts", minzoom: TRACT_ZOOM, paint: { "fill-color": fillExpr("burden"), "fill-opacity": 0.68 } }, firstLabel);
+  map.addLayer({ id: "tracts-line", type: "line", source: "tracts", minzoom: TRACT_ZOOM, paint: { "line-color": dark() ? "#11151a" : "#ffffff", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 11, 0.8] } }, firstLabel);
+  map.addLayer({ id: "tracts-hover", type: "line", source: "tracts", minzoom: TRACT_ZOOM, paint: { "line-color": css("--fg"), "line-width": 2 }, filter: ["==", ["get", "id"], ""] });
 
   map.addSource("sites", { type: "geojson", data: sites, cluster: true, clusterMaxZoom: 9, clusterRadius: 40,
     clusterProperties: { mw: ["+", ["get", "mw"]] } });
@@ -149,7 +153,7 @@ map.on("load", () => {
     pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>Tract ${p.id.slice(5)}, ${esc(p.county)}, ${p.st}</b>
       ${row("Utility", p.util ? esc(p.util) : "not matched")}
       ${row("Median household income", p.inc ? "$" + Math.round(p.inc).toLocaleString() : "—")}
-      ${row(`Avg annual bill (${p.by || "—"})`, p.bill ? "$" + Math.round(p.bill).toLocaleString() : "—")}
+      ${row(`Avg annual bill (${p.by || "—"})`, p.bill ? "$" + Math.round(p.bill).toLocaleString() + (p.bb === "state" ? " (state average)" : "") : "—")}
       ${row("Energy burden", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : "—")}
       ${row("Bill change since 2019", p.chg != null ? METRICS.chg.fmt(p.chg) : "—")}
       ${row("Capacity cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
@@ -161,6 +165,10 @@ map.on("load", () => {
     const p = e.features[0].properties;
     pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${esc(p.name || "County " + p.id)}${p.st ? ", " + p.st : ""}</b>
       ${row("Households", p.hh ? Math.round(p.hh).toLocaleString() : "—")}
+      ${row("Energy burden (household-weighted)", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : null)}
+      ${row("Avg annual bill", p.bill != null ? "$" + Math.round(p.bill).toLocaleString() : null)}
+      ${row("Bill change since 2018-19", p.chg != null ? METRICS.chg.fmt(p.chg) : null)}
+      ${row("Capacity cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) : null)}
       ${row("Operating data centers", p.op ? fmtMW(p.op) : "none listed")}
       ${row("Pipeline (proposed + construction)", p.pipe ? fmtMW(p.pipe) : "none listed")}
       ${row("Pipeline per 1,000 households", p.pipe1k ? p.pipe1k.toFixed(1) + " MW" : null)}
@@ -188,21 +196,41 @@ map.on("load", () => {
   map.on("mouseleave", "clusters", () => { pop.remove(); map.getCanvas().style.cursor = ""; });
 
   const metric = document.getElementById("metric");
-  let geo = "tracts";
-  metric.addEventListener("change", () => {
-    const m = metric.value, next = METRICS[m].county ? "counties" : "tracts";
-    map.setPaintProperty(next + "-fill", "fill-color", fillExpr(m));
-    if (next !== geo) {
-      for (const id of ["tracts-fill", "tracts-line", "tracts-hover"]) map.setLayoutProperty(id, "visibility", next === "tracts" ? "visible" : "none");
-      for (const id of ["counties-fill", "counties-line"]) map.setLayoutProperty(id, "visibility", next === "counties" ? "visible" : "none");
-      map.fitBounds(next === "tracts" ? DMV : USA, { padding: 20, duration: 900 });
-      geo = next;
-    }
-    legend(m);
-  });
+  const hint = document.getElementById("hint");
+  function applyMetric() {
+    const m = metric.value, countyOnly = !!METRICS[m].county;
+    map.setPaintProperty("counties-fill", "fill-color", fillExpr(m));
+    map.setPaintProperty("tracts-fill", "fill-color", fillExpr(m));
+    map.setLayerZoomRange("counties-fill", 0, countyOnly ? 24 : TRACT_ZOOM);
+    map.setLayerZoomRange("counties-line", 0, countyOnly ? 24 : TRACT_ZOOM);
+    for (const id of ["tracts-fill", "tracts-line", "tracts-hover"]) map.setLayoutProperty(id, "visibility", countyOnly ? "none" : "visible");
+    legend(m); updateHint(); loadVisibleTracts();
+  }
+  function updateHint() {
+    const countyOnly = !!METRICS[metric.value].county;
+    hint.textContent = countyOnly ? "By county" : map.getZoom() < TRACT_ZOOM ? "By county · zoom in for neighborhoods" : "By neighborhood (census tract)";
+  }
+  // Tracts load one state at a time, only for states in view once zoomed in
+  const loaded = new Set();
+  let tindex = null;
+  async function loadVisibleTracts() {
+    if (METRICS[metric.value].county || map.getZoom() < TRACT_ZOOM - 0.5) return;
+    if (!tindex) tindex = await fetch(TRACT_INDEX_URL).then(r => r.json()).catch(() => ({}));
+    const b = map.getBounds(), W = b.getWest(), S = b.getSouth(), E = b.getEast(), N = b.getNorth();
+    const need = Object.entries(tindex).filter(([st, v]) => !loaded.has(st) && v.bbox[0] < E && v.bbox[2] > W && v.bbox[1] < N && v.bbox[3] > S).map(([st]) => st);
+    if (!need.length) return;
+    need.forEach(st => loaded.add(st));
+    hint.textContent = `Loading neighborhoods: ${need.join(", ")}…`;
+    const parts = await Promise.all(need.map(st => fetch(`data/tracts/${st}.json`).then(r => r.json()).catch(() => null)));
+    parts.forEach((p, i) => { if (p) tractFC.features.push(...p.features); else loaded.delete(need[i]); });
+    map.getSource("tracts").setData(tractFC);
+    updateHint();
+  }
+  metric.addEventListener("change", applyMetric);
+  map.on("moveend", () => { updateHint(); loadVisibleTracts(); });
   document.getElementById("dc").addEventListener("change", e => {
     for (const id of ["clusters", "cluster-n", "sites"]) map.setLayoutProperty(id, "visibility", e.target.checked ? "visible" : "none");
   });
-  legend("burden");
+  applyMetric();
 });
 </script>

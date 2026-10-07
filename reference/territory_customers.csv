@@ -1,0 +1,6 @@
+utility_id_eia,utility_name,customers,basis,source
+44372,Oncor Electric Delivery,4000000,approximate,"Company-reported: more than 4 million homes and businesses (oncor.com, 2025-2026)"
+8901,CenterPoint Energy Houston Electric,2800000,approximate,"Company-reported: about 2.8 million metered customers in the Houston area (centerpointenergy.com, 2025-2026)"
+3278,AEP Texas Central,870000,approximate,"AEP Texas reports about 1.1 million customers across Central and North divisions; split by approximate division size (verify)"
+20404,AEP Texas North,230000,approximate,"AEP Texas reports about 1.1 million customers across Central and North divisions; split by approximate division size (verify)"
+40051,Texas-New Mexico Power,280000,approximate,"Company-reported: about 280,000 customers (tnmp.com, 2025-2026; verify)"

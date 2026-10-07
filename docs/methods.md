@@ -33,7 +33,10 @@ This project measures how the growth of US data centers is affecting what reside
 
 ## How the site stays current
 
-Each source is checked on the schedule above. When a check finds new data, the pipeline stores a dated copy, rebuilds the tables and analysis, and republishes the site in the same run. Each page footer shows the latest data month. A freshness monitor opens an issue when a source goes quiet longer than expected. Temporary upstream outages (timeouts, rate limits, server errors) are retried on the next run; real errors stop the run.
+The [Data status](status.html) page and every page footer show how many sources are tracked, which brought new data recently, when each was added, and whether any is late.
+
+
+Sixteen automated sources are checked on the schedule above (the PJM and market monitor entries are entered by hand). When a check finds new data, the pipeline stores a dated copy, rebuilds the tables and analysis, and republishes the site in the same run. Each page footer shows the latest data month. A freshness monitor opens an issue when a source goes quiet longer than expected. Temporary upstream outages (timeouts, rate limits, server errors) are retried on the next run; real errors stop the run.
 
 Some sources publish with a lag: monthly utility sales arrive about two months after the month ends, annual utility data about ten months after year end, and outage history once a year. Capacity auction results and market monitor findings are entered by hand when they are published.
 
@@ -51,20 +54,21 @@ Result: 6,350 records merge into 2,792 sites. Power is **planned capacity**, oft
 ## Data center load by county and utility
 
 - **County:** estimated MW by status per 1,000 households (ACS 2024 5-year).
-- **Utility:** each site is placed in the retail service territories that contain it. Where territories overlap, those based in the site's own state are preferred (territory boundaries are coarse at state lines), and the site's MW is split by each utility's customer density. Sites outside every territory (0.2% of MW) fall back to population-weighted shares of the utilities serving their county. EIA does not publish which utility serves a given site, so this is an approximation.
+- **Utility:** each site is placed in the retail service territories that contain it. Where territories overlap, those serving the site's state are preferred (territory boundaries are coarse at state lines), and the site's MW is split by each utility's customer density. Two corrections apply: "serving the state" uses the states EIA lists for the utility (the territory file records headquarters, so AEP Texas appears under Oklahoma), and where the territory file has no customer count (Texas wires utilities such as Oncor and CenterPoint) a company-reported count from `reference/territory_customers.csv` is used. Before this correction (2026-10-07), Texas data center load was mis-assigned to overlapping co-ops. Sites outside every territory (0.2% of MW) fall back to population-weighted shares of the utilities serving their county. EIA does not publish which utility serves a given site, so this is an approximation.
 - **Denominator:** residential customers from each utility's most recent EIA-861 year within the last three. About 4% of operating MW sits at utilities with no residential count; it stays in totals, but those utilities have no per-customer figure.
 - **Tiers:** operating plus pipeline MW per 1,000 residential customers: high 10 or more, medium 1-10, low under 1, none 0.
 
 ## Neighborhood costs (map)
 
-The map's neighborhood layer covers census tracts (about 4,000 people each) in Virginia, Maryland, and DC; more states will be added.
+The map shows household costs for all 50 states and DC: by county when zoomed out, and by census tract (about 4,000 people each; 84,119 tracts) when zoomed in. Tract data loads one state at a time as you zoom in.
 
 - **Utility:** each tract is assigned the utility whose retail service territory contains the tract's representative point, using the same overlap rule as data center allocation.
 - **Average annual bill:** that utility's residential revenue divided by customers for full-service customers (EIA-861, latest year). Customers who buy power from third-party suppliers are excluded, because the utility bills them only for delivery.
+- **State-average fallback:** where the tract's utility has sold no power to homes in the last three years (most of Texas, where the wires utility only delivers, and about 2,900 other tracts nationwide), the state's average full residential bill is used and labeled "state average" (6,413 tracts, 3,511 of them in Texas).
 - **Bill change:** inflation-adjusted (Census-region CPI), comparing the 2018-2019 average with the average of the latest two years. Two-year averages damp one-year swings such as co-op refunds and fuel true-ups.
-- **Energy burden:** latest annual bill divided by the tract's median household income (ACS 2024 5-year). It is the only measure on the layer that varies within a utility, because income varies; bills are utility averages, so every tract a utility serves shares them. Across the three states the middle 90% of tracts fall between 0.9% and 4.7% (median 2.1%).
+- **Energy burden:** latest annual bill divided by the tract's median household income (ACS 2024 5-year). It is the only measure on the layer that varies within a utility, because income varies; bills are utility averages, so every tract a utility serves shares them. Nationally the middle 90% of tracts fall between 1.0% and 5.0% (median 2.2%).
 - **Capacity cost per home:** shown for 2026/27 where default supply passes PJM auction prices through (Maryland and DC).
-- **County layer (national):** estimated operating and pipeline data center MW per 1,000 households.
+- **County layer:** household-weighted averages of its tracts' costs, plus estimated operating and pipeline data center MW per 1,000 households.
 
 ## Prices, controls, and measured load
 
@@ -115,6 +119,7 @@ Inflation-adjusted residential price, January to July 2026 compared with the sam
 
 ## Changelog
 
+- **2026-10-07:** Household cost layer extended to all 50 states and DC (84,119 tracts). Data status page and footer added. Texas utility assignment corrected (see "Data center load by county and utility"), which moved about 4.6 GW of operating and 22.5 GW of pipeline data center load in Texas to Oncor.
 - **2026-10-07:** Map replaced with a zoomable map (MapLibre, OpenFreeMap basemap) with clustered data center sites, a neighborhood cost layer for Virginia, Maryland, and DC, and a national county layer.
 - **2026-10-06:** Public site launched.
 - **2026-10-05:** First descriptive comparison (customer-weighted, no controls): residential prices rose 49.6% in PJM vs. 33.7% elsewhere between Aug 2020-Jul 2021 and Aug 2025-Jul 2026. Superseded by the panel regressions above.

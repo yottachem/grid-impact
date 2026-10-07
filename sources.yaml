@@ -3,6 +3,7 @@
 # marts rebuild + site redeploy. `expected_max_gap_days` drives the freshness monitor.
 sources:
   eia930_daily:
+    added: 2026-10-05
     name: EIA-930 daily balancing authority demand
     publisher: U.S. EIA
     url: https://api.eia.gov/v2/electricity/rto/daily-region-data/
@@ -11,6 +12,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.eia930
   eia861m:
+    added: 2026-10-05
     name: EIA-861M monthly utility sales, revenue, customers
     publisher: U.S. EIA
     url: https://www.eia.gov/electricity/data/eia861m/
@@ -19,6 +21,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.eia861m
   pudl_eia861_annual:
+    added: 2026-10-05
     name: PUDL EIA-861 annual (sales, service territory, reliability)
     publisher: Catalyst Cooperative
     url: https://s3.us-west-2.amazonaws.com/pudl.catalyst.coop/stable/
@@ -27,6 +30,7 @@ sources:
     license: CC-BY-4.0
     module: ingest.pudl
   im3_datacenters:
+    added: 2026-10-05
     name: PNNL IM3 Open Source Data Center Atlas (existing)
     publisher: PNNL
     url: https://github.com/IMMM-SFA/datacenter-atlas
@@ -35,6 +39,7 @@ sources:
     license: BSD-2-Clause (verify; see repo LICENSE)
     module: ingest.im3
   peeringdb_facilities:
+    added: 2026-10-05
     name: PeeringDB facilities (US)
     publisher: PeeringDB
     url: https://www.peeringdb.com/api/fac
@@ -43,6 +48,7 @@ sources:
     license: PeeringDB AUP (verify redistribution terms)
     module: ingest.peeringdb
   osm_datacenters:
+    added: 2026-10-05
     name: OpenStreetMap data center features (Overpass)
     publisher: OpenStreetMap contributors
     url: https://overpass-api.de/api/interpreter
@@ -51,6 +57,7 @@ sources:
     license: ODbL-1.0 (attribution + share-alike on derived databases)
     module: ingest.osm
   fractracker_datacenters:
+    added: 2026-10-05
     name: FracTracker Open U.S. Data Centers Tracker (existing + proposed)
     publisher: FracTracker Alliance
     url: https://fractracker.org/data-centers-tracker/
@@ -60,6 +67,7 @@ sources:
     redistribution: separate CC-BY-NC download with attribution; excluded from CC-BY marts
     module: ingest.fractracker
   eaglei_outages:
+    added: 2026-10-05
     name: ORNL EAGLE-I county outages, 15-min (aggregated to county-day)
     publisher: Oak Ridge National Laboratory
     url: https://doi.org/10.6084/m9.figshare.24237376
@@ -68,6 +76,7 @@ sources:
     license: CC-BY-4.0
     module: ingest.eaglei
   census_counties:
+    added: 2026-10-05
     name: Census cartographic boundary counties, 1:500k
     publisher: U.S. Census Bureau
     url: https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html
@@ -76,6 +85,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.census_counties
   acs_county:
+    added: 2026-10-05
     name: Census ACS 5-year households and median household income (counties; tracts in cost-layer states)
     publisher: U.S. Census Bureau
     url: https://www2.census.gov/programs-surveys/acs/summary_file/
@@ -84,6 +94,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.acs
   hifld_territories:
+    added: 2026-10-05
     name: Electric retail service territories (HIFLD mirror)
     publisher: HIFLD via hifld.publicenvirodata.org
     url: https://hifld.publicenvirodata.org/collections/hifld/datasets/electric-retail-service-territories
@@ -92,6 +103,7 @@ sources:
     license: Public domain (US Gov, HIFLD Open)
     module: ingest.hifld
   bls_cpi:
+    added: 2026-10-05
     name: BLS CPI-U all items and electricity (US, regions, metros)
     publisher: U.S. Bureau of Labor Statistics
     url: https://api.bls.gov/publicAPI/v1/timeseries/data/
@@ -100,6 +112,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.bls_cpi
   noaa_degree_days:
+    added: 2026-10-05
     name: NOAA nClimDiv county heating and cooling degree days, monthly
     publisher: NOAA NCEI
     url: https://www.ncei.noaa.gov/monitoring-content/data/us/climdiv/monthly/current/
@@ -108,6 +121,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.noaa_degree_days
   eia860m:
+    added: 2026-10-05
     name: EIA-860M monthly generator inventory (operating, planned, retired, canceled)
     publisher: U.S. EIA
     url: https://www.eia.gov/electricity/data/eia860m/
@@ -116,6 +130,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.eia860m
   eia930_annual:
+    added: 2026-10-05
     name: EIA-930 annual energy by ISO/RTO (sum of daily demand)
     publisher: U.S. EIA
     url: https://api.eia.gov/v2/electricity/rto/daily-region-data/
@@ -124,6 +139,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.eia930_annual
   census_tracts:
+    added: 2026-10-07
     name: Census cartographic boundary tracts, 1:500k (neighborhood cost layer states)
     publisher: U.S. Census Bureau
     url: https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html
