@@ -121,20 +121,20 @@
     },
     "exposure": {
       "sites_by_status": {
-        "operating": 228,
-        "proposed": 220,
+        "operating": 227,
+        "proposed": 214,
         "construction": 13
       },
       "mw_by_status": {
         "construction": 4.9,
-        "operating": 14.4,
-        "proposed": 64.4
+        "operating": 14.2,
+        "proposed": 60.8
       },
       "state": "VA",
       "Dominion Energy Virginia": {
-        "mw_op": 10626,
-        "mw_pipeline": 41080,
-        "mw_pipeline_per_1k_res": 17.1
+        "mw_op": 10483,
+        "mw_pipeline": 39625,
+        "mw_pipeline_per_1k_res": 16.4
       }
     },
     "generation": {
@@ -658,13 +658,13 @@
     "exposure": {
       "sites_by_status": {
         "operating": 15,
-        "proposed": 9,
+        "proposed": 8,
         "construction": 1
       },
       "mw_by_status": {
         "construction": 0.1,
         "operating": 0.1,
-        "proposed": 1.9
+        "proposed": 1.5
       },
       "state": "MD",
       "Baltimore Gas & Electric": {
@@ -816,19 +816,19 @@
     "exposure": {
       "sites_by_status": {
         "operating": 103,
-        "proposed": 76,
+        "proposed": 73,
         "construction": 11
       },
       "mw_by_status": {
         "construction": 4.8,
         "operating": 5.0,
-        "proposed": 30.1
+        "proposed": 29.3
       },
       "state": "GA",
       "Georgia Power": {
         "mw_op": 2523,
-        "mw_pipeline": 26044,
-        "mw_pipeline_per_1k_res": 10.5
+        "mw_pipeline": 25610,
+        "mw_pipeline_per_1k_res": 10.3
       }
     },
     "generation": {

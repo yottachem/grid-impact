@@ -1,0 +1,31 @@
+source_a,id_a,name_a,source_b,id_b,name_b,decision,drop,evidence,decided
+FracTracker,1040,George Washington Village Data Center,FracTracker,1058,George Washington Village Data Center,duplicate,,Same project listed twice at two parcel points 1.2 km apart,2026-10-07
+FracTracker,514,Lancium Childress,FracTracker,515,Childress Data Center,distinct,,Lancium/Crusoe 270-acre campus is separate from IREN's neighboring 420-acre Childress site (Baxtel; DCD),2026-10-07
+FracTracker,1773463314386-4370,Meta Data Center,FracTracker,1781207393087-6372,Project Cornmaze,duplicate,,"Project Cornmaze is the code name for Meta's Beaver Dam, WI data center",2026-10-07
+FracTracker,1054,North Creek Tech Campus,FracTracker,669,Amazon Data Center,duplicate,,"Amazon North Creek / Northeast Creek Technology Campus, Louisa County VA (DCD; Compute Atlas)",2026-10-07
+FracTracker,1780878907875-4992,WestDulles Data Center,FracTracker,716,Ironhorse East Ashland,distinct,,Different developers and sites,2026-10-07
+FracTracker,750,Gainsville Tech Park,FracTracker,752,Wellington Data Center / University Business Park,distinct,,Separate developments about 2 km apart,2026-10-07
+FracTracker,1766107717961-7593,Microsoft Grand Rapids Data Center,FracTracker,1775150502593-4665,Microsoft Caledonia Data Center,duplicate,,"One Microsoft project: 7174 Patterson Ave, Gaines Township near Caledonia (WOOD-TV; DCD)",2026-10-07
+FracTracker,388,Meta Bowling Green Data Center/ Project Accordion,PNNL,campus/01377162298,Meta Bowling Green Data Center,duplicate,b,"Only one Meta Bowling Green campus (Project Accordion), under construction, opening 2027; the 'operating' record is the same campus (BG Independent; JobsOhio)",2026-10-07
+FracTracker,1073,Carter's Store Tech Campus,FracTracker,1769229467675-4233,Amazon Data Services: Carter's Store Tech Campus,duplicate,,Same Amazon campus listed with and without the developer prefix,2026-10-07
+FracTracker,1770095942461-7275,TeraWulf Data Center,FracTracker,1772196086818-9993,Morgantown Data Center,duplicate,,"TeraWulf's Morgantown, MD site listed twice",2026-10-07
+FracTracker,1073,Carter's Store Tech Campus,FracTracker,653,Amazon Summit Crossing Data Center,distinct,,Different Amazon campuses,2026-10-07
+FracTracker,1063,Summit Crossing Tech Campus,FracTracker,653,Amazon Summit Crossing Data Center,duplicate,a,Same Amazon campus; keep the under-construction record,2026-10-07
+FracTracker,144,QTS Atlanta Fayetteville Campus/ Project Excalibur,FracTracker,1780668053834-5680,QTS ATL2 East,distinct,,ATL2 East is a separate 313-acre expansion beside the 615-acre Excalibur campus (DCD),2026-10-07
+FracTracker,658,Hunters Ridge South Data Center (Amazon Data Services),FracTracker,896,Cosner Tech Campus,distinct,,Different Amazon campuses,2026-10-07
+FracTracker,1769228948240-5975,Amazon Data Services: Cosner Tech Campus,FracTracker,658,Hunters Ridge South Data Center (Amazon Data Services),distinct,,Different Amazon campuses,2026-10-07
+FracTracker,1769228948240-5975,Amazon Data Services: Cosner Tech Campus,FracTracker,896,Cosner Tech Campus,duplicate,,Same Amazon campus listed with and without the developer prefix,2026-10-07
+FracTracker,1769228948240-5975,Amazon Data Services: Cosner Tech Campus,FracTracker,1769229467675-4233,Amazon Data Services: Carter's Store Tech Campus,distinct,,Different Amazon campuses,2026-10-07
+FracTracker,119,Microsoft Union City Data Center Campus,FracTracker,1790134144831-4805,Microsoft Data Center,duplicate,b,"Same Microsoft Union City campus (4810 Stonewall Tell Rd), 59 m apart; keep the under-construction record",2026-10-07
+FracTracker,1062,Mattameade Tech Campus - Spotsylvania,FracTracker,1074,Mattameade Tech Campus- Caroline,distinct,,"Spotsylvania and Caroline County portions of the campus, each with its own buildings",2026-10-07
+FracTracker,152,0 Rocky Creek Data Center Campus,FracTracker,215,Rocky Creek,duplicate,,"Same project listed twice, 30 m apart, near-identical MW",2026-10-07
+FracTracker,1055,VALCO Data Center Park,FracTracker,1769230835913-8005,VALCO Data Center Park,duplicate,,One 855-acre VALCO park in Caroline County listed at two points (Cleanview; Fredericksburg Free Press),2026-10-07
+FracTracker,919,Digital Realty Northern Virginia IAD35,FracTracker,923,IAD Round Table Campus,distinct,,"IAD35 is at Digital Loudoun Plaza, a different campus from Round Table Plaza (Digital Realty)",2026-10-07
+FracTracker,682,Convergent Technology Park,FracTracker,976,Remington Technology Park,distinct,,Different named parks,2026-10-07
+FracTracker,231,Project Alluvion,FracTracker,233,Project Ginger East (Microsoft),distinct,,Different named Microsoft projects,2026-10-07
+FracTracker,119,Microsoft Union City Data Center Campus,FracTracker,1790133976519-8971,Microsoft Data Center ATL50,distinct,,ATL50 is a separate 88-acre site at 5235 Stonewall Tell Rd; Union City campus is at 4810 (DCD),2026-10-07
+FracTracker,1790133976519-8971,Microsoft Data Center ATL50,FracTracker,1790134144831-4805,Microsoft Data Center,distinct,,ATL50 vs. the Union City campus: separate sites (DCD),2026-10-07
+FracTracker,133,Douglasville Campus,FracTracker,162,Microsoft: FTY101,duplicate,,Both are Microsoft's four-building Douglasville campus at 1601 North River Rd (DCD),2026-10-07
+FracTracker,1775353554262-6428,xAI,FracTracker,500,xAI Colossus 2,distinct,,Third building beside Colossus 2 in Southaven adds capacity (Techzine; DCD),2026-10-07
+FracTracker,833,DIGITAL LOUDOUN IV,FracTracker,923,IAD Round Table Campus,distinct,,Digital Loudoun Plaza vs. Round Table Plaza: different campuses,2026-10-07
+FracTracker,923,IAD Round Table Campus,FracTracker,937,Digital Realty Northern Virginia IAD41,component,b,IAD41 is Building P at 44751 Round Table Plaza; the campus record already includes it (Digital Realty; DatacenterHawk),2026-10-07

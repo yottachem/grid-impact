@@ -8,7 +8,10 @@ similarity alone are not enough. Rules for a pair within 300 m with the same sta
   - different building codes (ATL01-1 vs ATL01-3, Landbay A vs B) -> distinct
   - no codes, name overlap >= 0.8, and MW within 25% -> duplicate
 Everything else within 2 km that shares an operator or most of its name goes to a review
-list (marts/datacenter_review.csv) and is not merged. The duplicate with less information
+list (marts/datacenter_review.csv) and is not merged. Reviewed pairs are recorded in
+reference/datacenter_pair_decisions.csv (keyed on each record's source ID, with evidence)
+and override the rules: duplicate or component pairs drop one record, distinct pairs are
+kept and leave the review list. The duplicate with less information
 (no reported MW, then smaller MW) is dropped from counts and the map.
 
 Facility type. PeeringDB lists network interconnection points as well as data centers.
@@ -18,6 +21,10 @@ import re
 
 import numpy as np
 import pandas as pd
+
+from transform.common import ROOT
+
+DECISIONS = ROOT / "reference" / "datacenter_pair_decisions.csv"
 
 AUTO_RADIUS_M, REVIEW_RADIUS_M = 300, 2000
 STOP = {"data", "center", "centre", "campus", "inc", "llc", "the", "of", "dc", "building", "facility",
@@ -85,11 +92,41 @@ def facility_type(s: pd.DataFrame) -> pd.Series:
     return np.select([unsized & carrier, unsized], ["network", "unsized"], "data_center")
 
 
+def reviewed(sites: pd.DataFrame) -> tuple[set, set, int]:
+    """Apply reviewed decisions. Returns (pairs decided, sites to drop, decisions matched)."""
+    if not DECISIONS.exists():
+        return set(), set(), 0
+    dec = pd.read_csv(DECISIONS, dtype={"id_a": str, "id_b": str}).fillna({"drop": ""})
+    key = {(src, str(i)): sid for src, i, sid in zip(sites.primary_source, sites.primary_source_id, sites.site_id)}
+    by_id = sites.set_index("site_id")
+    decided, drops, matched = set(), set(), 0
+    for d in dec.itertuples():
+        a, b = key.get((d.source_a, d.id_a)), key.get((d.source_b, d.id_b))
+        if a is None or b is None:
+            continue  # a record left a source or was renumbered; the pair falls back to the rules
+        matched += 1
+        decided.add(frozenset((a, b)))
+        if d.decision in ("duplicate", "component"):
+            if d.drop == "a":
+                drops.add(a)
+            elif d.drop == "b":
+                drops.add(b)
+            else:
+                drops.add(drop_target(by_id.loc[a].rename(a).to_frame().T.assign(site_id=a).iloc[0],
+                                      by_id.loc[b].rename(b).to_frame().T.assign(site_id=b).iloc[0]))
+    return decided, drops, matched
+
+
 def apply(sites: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     live = sites[sites.status_group.isin(["operating", "construction", "proposed"])]
     pairs = find_pairs(live)
     by_id = sites.set_index("site_id")
-    drops = set()
+    decided, drops, matched = reviewed(sites)
+    review_drops = len(drops)
+    review_mw = float(sites[sites.site_id.isin(drops)].mw_est.fillna(0).sum())
+    if len(pairs):
+        is_decided = [frozenset((a, b)) in decided for a, b in zip(pairs.site_a, pairs.site_b)]
+        pairs.loc[is_decided, "verdict"] = "reviewed"
     for p in pairs[pairs.verdict == "duplicate"].itertuples() if len(pairs) else []:
         if p.site_a in drops or p.site_b in drops:
             continue
@@ -107,8 +144,10 @@ def apply(sites: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
         "mw_unknown": int((kept.mw_basis == "unknown").sum()),
         "network_facilities": int((kept.facility_type == "network").sum()),
         "duplicates_removed": int(len(dup)), "duplicate_mw_removed": round(float(dup.mw_est.fillna(0).sum())),
+        "pairs_reviewed": int(matched), "review_records_removed": int(review_drops), "review_mw_removed": round(review_mw),
         "pairs_checked": int(len(pairs)), "pairs_distinct": int((pairs.verdict == "distinct").sum()) if len(pairs) else 0,
         "pairs_for_review": int(len(review)),
-        "review_mw_upper_bound": round(float(review[["mw_a", "mw_b"]].min(axis=1).fillna(0).sum())) if len(review) else 0,
+        # Only pairs where both records carry MW can double count
+        "review_mw_upper_bound": round(float(review[["mw_a", "mw_b"]].min(axis=1, skipna=False).fillna(0).sum())) if len(review) else 0,
     }
     return sites, review, qa
