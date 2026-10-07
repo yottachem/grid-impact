@@ -146,7 +146,13 @@ function median_(xs) {
 function aggregates_() {
   const p = PropertiesService.getScriptProperties();
   const ss = SpreadsheetApp.openById(p.getProperty("spreadsheetId"));
-  const sheet = ss.getSheetByName(RESPONSES_SHEET);
+  // Responses tab: the tab with the form's columns that holds the most responses. Google can
+  // start a new tab (e.g. "Form Responses 1") after the form changes, leaving an older,
+  // empty one behind; neither is renamed or deleted.
+  const tabs = ss.getSheets().filter(sh => sh.getLastColumn() > 0 &&
+    sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].indexOf(Q.zip) >= 0);
+  tabs.sort((a, b) => (b.getLastRow() - a.getLastRow()) || (b.getLastColumn() - a.getLastColumn()));
+  const sheet = tabs[0];
   const out = { threshold: THRESHOLD, window_days: WINDOW_DAYS, updated: new Date().toISOString(),
                 form_url: p.getProperty("formUrl"), pending: [], published: [], invalid: 0, total: 0 };
   if (!sheet) return out;
