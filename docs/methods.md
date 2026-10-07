@@ -36,7 +36,7 @@ This project measures how the growth of US data centers is affecting what reside
 The [Data status](status.html) page and every page footer show how many sources are tracked, which brought new data recently, when each was added, and whether any is late.
 
 
-Sixteen automated sources are checked on the schedule above (the PJM and market monitor entries are entered by hand). When a check finds new data, the pipeline stores a dated copy, rebuilds the tables and analysis, and republishes the site in the same run. Each page footer shows the latest data month. A freshness monitor opens an issue when a source goes quiet longer than expected. Temporary upstream outages (timeouts, rate limits, server errors) are retried on the next run; real errors stop the run.
+Seventeen automated sources are checked on the schedule above (the PJM and market monitor entries are entered by hand). Whenever any source brings new data, the full analysis reruns and the Findings page figures and wording are regenerated from it. When a check finds new data, the pipeline stores a dated copy, rebuilds the tables and analysis, and republishes the site in the same run. Each page footer shows the latest data month. A freshness monitor opens an issue when a source goes quiet longer than expected. Temporary upstream outages (timeouts, rate limits, server errors) are retried on the next run; real errors stop the run.
 
 Some sources publish with a lag: monthly utility sales arrive about two months after the month ends, annual utility data about ten months after year end, and outage history once a year. Capacity auction results and market monitor findings are entered by hand when they are published.
 
@@ -86,6 +86,8 @@ The map shows household costs for all 50 states and DC: by county when zoomed ou
 
 ## Capacity cost per household (PJM)
 
+*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
+
 PJM, the grid operator for 13 states and DC, buys generating capacity ahead of time in its Base Residual Auction. Prices rose from $28.92 per MW-day for 2024/25 to $269.92 for 2025/26, then reached the price cap in each of the next three auctions ($329.17, $333.44, $325.00). Without the cap, the 2028/29 auction would have cleared at $554.72.
 
 - **Cost per home per year** = (auction total ÷ PJM annual energy) × (zone price ÷ PJM-wide price) × household kWh per year × residential peak factor.
@@ -98,6 +100,8 @@ PJM, the grid operator for 13 states and DC, buys generating capacity ahead of t
 
 ## Panel regressions
 
+*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
+
 The outcome is the log of inflation-adjusted residential price for 326 utility service areas, January 2015 to July 2026, with utility and month fixed effects, heating and cooling degree days, and standard errors clustered by utility.
 
 - **Local load:** comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a **0.9% lower** residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.
@@ -105,6 +109,8 @@ The outcome is the log of inflation-adjusted residential price for 326 utility s
 - **Within PJM, restructured vs. regulated:** +18.3% in 2026, but the two groups were not on parallel paths before 2020, so this comparison is weaker evidence.
 
 ## Case studies
+
+*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
 
 Inflation-adjusted residential price, January to July 2026 compared with the same months of 2025:
 

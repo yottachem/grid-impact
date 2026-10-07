@@ -61,8 +61,9 @@ h2 { font: 600 23px/1.15 var(--font-display); margin: 0; text-wrap: balance; }
 <div class="wrap">
   <header>
     <div class="eyebrow">Grid Impact Tracker · findings draft</div>
-    <h1>Data centers raise power bills through the regional market, not the utility next door</h1>
-    <p class="lede">Across __NUNITS__ US utility service areas from 2015 to July 2026, a utility's own data center load has not pushed up its residential prices relative to neighbors in the same market. The cost shows up regionally: in PJM, the 13-state grid with the most data center growth, a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state <strong>about $190 a year more</strong> than in 2024/25.</p>
+    <h1 id="headline">Data centers raise power bills through the regional market, not the utility next door</h1>
+    <p class="lede">Across __NUNITS__ US utility service areas from 2015 to <span id="ld-through">the latest month</span>, <span id="ld-local">a utility's own data center load has not pushed up its residential prices relative to neighbors in the same market</span>. The cost shows up regionally: in PJM, the 13-state grid with the most data center growth, a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state <strong id="ld-increase">more</strong> than in 2024/25.</p>
+    <p class="lede" id="stamp" style="font-size:13px"></p>
   </header>
 
   <section class="figures" aria-label="Headline figures" id="figures"></section>
@@ -120,7 +121,19 @@ document.getElementById("elast").textContent = `${pct(D.local40.pct)} (95% CI ${
 document.getElementById("c1r").textContent = `Capacity costs for a typical home fell to ${usd(cap.find(d => d.dy === "2023/24").central)} a year in 2023/24, then jumped to ${usd(cap.find(d => d.dy === "2025/26").central)} when the 2025/26 auction cleared at $269.92 per MW-day, and reached ${usd(last.central)} as the next three auctions cleared at their price caps. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly ${usd(cap.find(d => d.dy === "2026/27").dc)} to ${usd(cap.find(d => d.dy === "2025/26").dc)} a year of it to data center load.`;
 document.getElementById("c2r").textContent = `PJM prices tracked the rest of the country through 2021. The gap opened in 2023 (${pct(es.find(d => d.year === 2023).pct)}) and widened to ${pct(es26.pct)} in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.`;
 const s3 = D.cases, endOf = n => s3[n][s3[n].length - 1];
-document.getElementById("c3r").textContent = `Baltimore Gas & Electric's customers, in a PJM state with few large data centers of its own, saw real prices rise ${(endOf("Baltimore Gas & Electric").idx - 100).toFixed(0)}% from 2019. Dominion's prices fell in real terms until its first year inside the PJM capacity auction, then jumped. Texas, an energy-only market building 88 GW of new generation, and Georgia Power, which has frozen base rates, stayed near 2019 levels.`;
+const ytd = n => D.ytd[n] != null ? pct(D.ytd[n]) : "n/a";
+document.getElementById("c3r").textContent = `Baltimore Gas & Electric's customers, in a PJM state with few large data centers of its own, saw real prices rise ${(endOf("Baltimore Gas & Electric").idx - 100).toFixed(0)}% between 2019 and this year (${ytd("Baltimore Gas & Electric")} versus the same months last year). Dominion's real price changed ${pct(endOf("Dominion Energy Virginia").idx - 100)} between 2019 and this year (${ytd("Dominion Energy Virginia")} versus the same months last year, its first full year inside the PJM capacity auction). Texas, an energy-only market with ${D.gen.texas} GW of new generation planned (PJM: ${D.gen.dominion} GW), was at ${endOf("Texas statewide").idx.toFixed(0)}, and Georgia Power at ${endOf("Georgia Power").idx.toFixed(0)}, on a 2019 = 100 scale.`;
+// Headline and lede follow the current results rather than fixed wording
+const L = D.local, mon = s => new Date(s + "-01T12:00:00").toLocaleString("en-US", { month: "long", year: "numeric" });
+document.getElementById("ld-through").textContent = D.run.prices_through ? mon(D.run.prices_through) : D.price_through;
+document.getElementById("ld-increase").textContent = `about ${usd(last.central - base.central)} a year more`;
+if (L.ci_low > 0) {
+  document.getElementById("ld-local").textContent = "a utility's own data center load has raised its residential prices relative to neighbors in the same market";
+  document.getElementById("headline").textContent = "Data centers are raising power bills locally and through the regional market";
+} else if (L.ci_high >= 0) {
+  document.getElementById("ld-local").textContent = "a utility's own data center load has not measurably changed its residential prices relative to neighbors in the same market";
+}
+if (D.run.ran_at) document.getElementById("stamp").textContent = `Analysis updated ${new Date(D.run.ran_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}, with residential prices through ${mon(D.run.prices_through)}. PJM auction results through ${D.run.capacity_auctions_through}. See Data status for each source.`;
 document.getElementById("built").textContent = `Draft built ${D.built}. Prices through ${D.price_through}.`;
 
 // Shared tooltip

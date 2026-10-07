@@ -17,7 +17,7 @@ sys.path.insert(0, str(HERE / "prototype"))
 import build_findings  # noqa: E402  (payload for the findings page)
 
 REPO = "https://github.com/yottachem/grid-impact"
-PAGES = [("index.html", "Findings"), ("map.html", "Map"), ("utility.html", "Your utility"), ("methods.html", "Methods")]
+PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods")]
 FRIENDLY_DATE = lambda d: __import__("datetime").date.fromisoformat(d).strftime("%b %-d, %Y") if d else "—"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600'
@@ -122,6 +122,27 @@ def quality_section() -> str:
             + bench)
 
 
+def analysis_section() -> str:
+    """When the analysis last ran and which parts update automatically vs. by hand."""
+    run_path = ROOT / "analysis" / "results" / "run.json"
+    if not run_path.exists():
+        return ""
+    r = json.loads(run_path.read_text())
+    month = __import__("datetime").datetime.strptime(r["prices_through"], "%Y-%m").strftime("%B %Y")
+    return (f"<h2>Analysis</h2><table><tbody>"
+            f"<tr><td>Analysis last run</td><td>{r['ran_at'][:16].replace('T', ' ')} UTC</td></tr>"
+            f"<tr><td>Residential prices through</td><td>{month}</td></tr>"
+            f"<tr><td>PJM capacity auctions through</td><td>{html.escape(r['capacity_auctions_through'])} (entered by hand)</td></tr>"
+            f"<tr><td>Data center share of capacity cost through</td><td>{html.escape(r['dc_attribution_through'])} (entered by hand)</td></tr>"
+            f"</tbody></table>"
+            f"<p>The analysis reruns in full whenever any source brings new data: capacity cost per home, the regressions, the "
+            f"case studies, county and utility data center load, and neighborhood costs. Findings page figures and wording come "
+            f"from that run. Results change mainly when EIA publishes a new month of utility sales (about two months after the "
+            f"month ends). Three inputs are entered by hand when published, so they lag until then: PJM capacity auction results, "
+            f"the market monitor's data center share, and the curated utility tables. The Methods page describes the method; its "
+            f"example figures carry an as-of date.</p>")
+
+
 def status_page(meta: dict) -> str:
     rows = sorted(meta["sources"].items(), key=lambda kv: (kv[1]["last_new_data"] or "", kv[1]["added"]), reverse=True)
     badge = {"current": ("Current", "var(--s3)"), "late": ("Late", "var(--s2)"), "pending": ("Not yet fetched", "var(--muted)")}
@@ -140,6 +161,7 @@ def status_page(meta: dict) -> str:
             f"A source is marked late when it goes longer than expected without new data.</p>"
             f"<table><thead><tr><th>Source</th><th>Status</th><th>Last new data</th><th>Data through</th><th>Last checked</th>"
             f"<th>Checked</th><th>Added</th></tr></thead><tbody>{trs}</tbody></table>"
+            + analysis_section()
             + quality_section()
             + f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
             f'when published; see <a href="methods.html">Methods</a>.</p></article>')
@@ -181,15 +203,19 @@ def main() -> None:
     t = t.replace("__DATA__", json.dumps(payload, separators=(",", ":"))).replace("__NUNITS__", str(n_units))
     t = t.replace("Grid Impact Tracker · findings draft", "Grid Impact Tracker · findings")
     t = t.replace("Draft built", "Built")
-    (DIST / "index.html").write_text(shell("index.html", title, t, foot,
+    (DIST / "findings.html").write_text(shell("findings.html", title, t, foot,
         "How US data center growth is affecting residential electricity bills, from utility data 2015 to present."))
 
     # Map (MapLibre; tract and county layers load from data/*.json at runtime)
     sites = json.loads((DATA / "sites_open.json").read_text()) + json.loads((DATA / "sites_fractracker.json").read_text())
     title, t = split_template((TEMPLATES / "map.html.tmpl").read_text())
     t = t.replace("__SITES__", json.dumps(sites, separators=(",", ":")))
-    (DIST / "map.html").write_text(shell("map.html", title, t, foot,
+    (DIST / "index.html").write_text(shell("index.html", title, t, foot,
         "Zoomable map of US data centers with neighborhood electricity costs and county data center load per household."))
+    # Old links to map.html land on the map (now the home page)
+    (DIST / "map.html").write_text('<!doctype html><meta charset="utf-8"><title>Data Center Map</title>'
+                                   '<meta http-equiv="refresh" content="0; url=./"><link rel="canonical" href="./">'
+                                   '<p><a href="./">Go to the map</a></p>')
 
     # Your utility
     title, t = split_template((TEMPLATES / "utility.html.tmpl").read_text())

@@ -30,12 +30,14 @@ const Q = {
   taxes: "Taxes and other fees ($)",
 };
 const BREAKDOWN_HEADER = "Cost breakdown (optional)";
+const EXCLUDE_HEADER = "Exclude (owner use)";  // any value in this column removes the row from all counts
 const BREAKDOWN_TOLERANCE = 0.08;  // supply + delivery + taxes must be within 8% of the total
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu("Grid Impact")
     .addItem("Set up form (run once)", "setup")
     .addItem("Add cost breakdown questions", "addCostBreakdown")
+    .addItem("Add exclude column", "addExcludeColumn")
     .addItem("Show form and data links", "showLinks")
     .addToUi();
 }
@@ -133,6 +135,31 @@ function addCostBreakdown_() {
   return added;
 }
 
+/** Adds an "Exclude (owner use)" column to the responses tab. Never edits or deletes responses. */
+function addExcludeColumn() {
+  const r = addExcludeColumn_();
+  SpreadsheetApp.getUi().alert(r.added ? "Added column \"" + EXCLUDE_HEADER + "\" to " + r.tab + ". Type x in a row to exclude it." :
+    "The exclude column already exists in " + r.tab + ".");
+}
+
+function responsesTab_(ss) {
+  // The tab with the form's columns that holds the most responses. Google can start a new tab
+  // (e.g. "Form Responses 1") after the form changes; neither tab is renamed or deleted.
+  const tabs = ss.getSheets().filter(sh => sh.getLastColumn() > 0 &&
+    sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].indexOf(Q.zip) >= 0);
+  tabs.sort((a, b) => (b.getLastRow() - a.getLastRow()) || (b.getLastColumn() - a.getLastColumn()));
+  return tabs[0];
+}
+
+function addExcludeColumn_() {
+  const ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("spreadsheetId"));
+  const sh = responsesTab_(ss);
+  const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  if (head.indexOf(EXCLUDE_HEADER) >= 0) return { added: false, tab: sh.getName() };
+  sh.getRange(1, sh.getLastColumn() + 1).setValue(EXCLUDE_HEADER).setNote("Type x (or anything) to leave this row out of all public counts. Rows are never deleted.");
+  return { added: true, tab: sh.getName() };
+}
+
 function showLinks() {
   const p = PropertiesService.getScriptProperties();
   SpreadsheetApp.getUi().alert("Form: " + (p.getProperty("formUrl") || "not set up yet"));
@@ -149,12 +176,9 @@ function aggregates_() {
   // Responses tab: the tab with the form's columns that holds the most responses. Google can
   // start a new tab (e.g. "Form Responses 1") after the form changes, leaving an older,
   // empty one behind; neither is renamed or deleted.
-  const tabs = ss.getSheets().filter(sh => sh.getLastColumn() > 0 &&
-    sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].indexOf(Q.zip) >= 0);
-  tabs.sort((a, b) => (b.getLastRow() - a.getLastRow()) || (b.getLastColumn() - a.getLastColumn()));
-  const sheet = tabs[0];
+  const sheet = responsesTab_(ss);
   const out = { threshold: THRESHOLD, window_days: WINDOW_DAYS, updated: new Date().toISOString(),
-                form_url: p.getProperty("formUrl"), pending: [], published: [], invalid: 0, total: 0 };
+                form_url: p.getProperty("formUrl"), pending: [], published: [], invalid: 0, excluded: 0, total: 0 };
   if (!sheet) return out;
   const rows = sheet.getDataRange().getValues();
   const head = rows.shift() || [];
@@ -162,6 +186,7 @@ function aggregates_() {
   const cutoff = new Date(Date.now() - WINDOW_DAYS * 86400000);
   const byZip = {};
   rows.forEach(r => {
+    if (col(EXCLUDE_HEADER) >= 0 && String(r[col(EXCLUDE_HEADER)]).trim() !== "") { out.excluded++; return; }
     out.total++;
     const zip = String(r[col(Q.zip)]).padStart(5, "0");
     const kwh = Number(r[col(Q.kwh)]), total = Number(r[col(Q.total)]);
@@ -175,11 +200,15 @@ function aggregates_() {
     if (!valid) { out.invalid++; return; }
     const num = name => { const i = col(name); const v = i >= 0 ? Number(r[i]) : NaN; return r[i] === "" ? NaN : v; };
     const supply = num(Q.supply), delivery = num(Q.delivery), fixed = num(Q.fixed), taxes = num(Q.taxes);
-    const parts = supply + delivery + (isNaN(taxes) ? 0 : taxes);
-    const split = supply >= 0 && delivery >= 0 && Math.abs(parts - total) <= BREAKDOWN_TOLERANCE * total;
+    // If only supply or only delivery is given, derive the other from the total (minus taxes if given)
+    const tx = isNaN(taxes) ? 0 : taxes;
+    let sup = supply, del = delivery, derived = false;
+    if (sup >= 0 && isNaN(del)) { del = total - sup - tx; derived = true; }
+    else if (del >= 0 && isNaN(sup)) { sup = total - del - tx; derived = true; }
+    const split = sup >= 0 && del >= 0 && (derived || Math.abs(sup + del + tx - total) <= BREAKDOWN_TOLERANCE * total);
     const k = 30 / days;
     (byZip[zip] = byZip[zip] || []).push({ kwh: monthlyKwh, bill: total * k, cents,
-      split, supply_cents: split ? supply * 100 / kwh : null, delivery_cents: split ? delivery * 100 / kwh : null,
+      split, derived: split && derived, supply_cents: split ? sup * 100 / kwh : null, delivery_cents: split ? del * 100 / kwh : null,
       fees_share: split && !isNaN(taxes) ? taxes / total : null, fixed: split && fixed >= 0 ? fixed * k : null });
   });
   Object.keys(byZip).sort().forEach(zip => {
@@ -191,6 +220,7 @@ function aggregates_() {
         median_cents_per_kwh: Math.round(median_(b.map(x => x.cents)) * 10) / 10 };
       const sp = b.filter(x => x.split);
       rec.n_breakdown = sp.length;
+      rec.n_breakdown_derived = sp.filter(x => x.derived).length;
       if (sp.length >= THRESHOLD) {
         const r1 = v => Math.round(v * 10) / 10;
         rec.median_supply_cents_per_kwh = r1(median_(sp.map(x => x.supply_cents)));
@@ -201,7 +231,7 @@ function aggregates_() {
       }
       out.published.push(rec);
     } else {
-      out.pending.push({ zip, n: b.length, n_breakdown: b.filter(x => x.split).length });
+      out.pending.push({ zip, n: b.length, n_breakdown: b.filter(x => x.split).length });  // derived splits included
     }
   });
   return out;
