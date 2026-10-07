@@ -76,7 +76,7 @@ sources:
     license: Public domain (US Gov)
     module: ingest.census_counties
   acs_county:
-    name: Census ACS 5-year county households and median household income
+    name: Census ACS 5-year households and median household income (counties; tracts in cost-layer states)
     publisher: U.S. Census Bureau
     url: https://www2.census.gov/programs-surveys/acs/summary_file/
     check: monthly
@@ -123,3 +123,11 @@ sources:
     expected_max_gap_days: 400
     license: Public domain (US Gov)
     module: ingest.eia930_annual
+  census_tracts:
+    name: Census cartographic boundary tracts, 1:500k (neighborhood cost layer states)
+    publisher: U.S. Census Bureau
+    url: https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html
+    check: monthly
+    expected_max_gap_days: 800
+    license: Public domain (US Gov)
+    module: ingest.census_tracts

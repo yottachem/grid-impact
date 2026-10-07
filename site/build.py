@@ -110,13 +110,12 @@ def main() -> None:
     (DIST / "index.html").write_text(shell("index.html", title, t, foot,
         "How US data center growth is affecting residential electricity bills, from utility data 2015 to present."))
 
-    # Map
+    # Map (MapLibre; tract and county layers load from data/*.json at runtime)
     sites = json.loads((DATA / "sites_open.json").read_text()) + json.loads((DATA / "sites_fractracker.json").read_text())
     title, t = split_template((TEMPLATES / "map.html.tmpl").read_text())
-    t = (t.replace("__SITES__", json.dumps(sites, separators=(",", ":"))).replace("__COUNTIES__", (DATA / "counties.json").read_text())
-          .replace("__TOPO__", (TEMPLATES / "counties-10m.json").read_text()).replace("__META__", json.dumps(meta)))
+    t = t.replace("__SITES__", json.dumps(sites, separators=(",", ":")))
     (DIST / "map.html").write_text(shell("map.html", title, t, foot,
-        "Existing and proposed US data centers with estimated power, and data center load per household by county."))
+        "Zoomable map of US data centers with neighborhood electricity costs and county data center load per household."))
 
     # Your utility
     title, t = split_template((TEMPLATES / "utility.html.tmpl").read_text())

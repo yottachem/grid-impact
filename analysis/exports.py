@@ -81,6 +81,40 @@ def utilities() -> None:
     dump("utility_exposure", records(ux.assign(utility_id_eia=ux.utility_id_eia.astype(int))))
 
 
+def _geojson(gdf, props: dict, tolerance: float) -> dict:
+    """Simplify, keep `props` (renamed), round coordinates to 5 decimals (~1 m)."""
+    g = gdf[list(props) + ["geometry"]].rename(columns=props).copy()
+    g["geometry"] = g.geometry.simplify(tolerance, preserve_topology=True)
+    gj = json.loads(g.to_json(drop_id=True, na="drop"))
+    def rnd(c):
+        return [rnd(x) for x in c] if isinstance(c[0], (list, tuple)) else [round(c[0], 5), round(c[1], 5)]
+    for f in gj["features"]:
+        f["geometry"]["coordinates"] = rnd(f["geometry"]["coordinates"])
+    return gj
+
+
+def map_layers() -> None:
+    import geopandas as gpd
+    from transform.common import latest
+    t = gpd.read_parquet(MARTS / "tract_costs.parquet")
+    for c, nd in [("income", 0), ("households", 0), ("bill", 0), ("kwh", 0), ("bill_change_real", 4),
+                  ("energy_burden", 4), ("capacity_cost", 0), ("capacity_cost_dc", 0), ("dc_mw", 0)]:
+        t[c] = t[c].round(nd)
+    dump("tracts", _geojson(t, {"tract_geoid": "id", "county_name": "county", "state": "st", "income": "inc",
+                                "households": "hh", "utility_name": "util", "bill_year": "by", "bill": "bill", "kwh": "kwh",
+                                "bill_change_real": "chg", "energy_burden": "burden", "capacity_cost": "cap",
+                                "capacity_cost_dc": "capdc", "dc_mw": "dcmw"}, 0.0004))
+    c = gpd.read_file(f"zip://{latest('census_counties', '*.zip')}")[["GEOID", "geometry"]].to_crs("EPSG:4326")
+    ce = pd.read_parquet(MARTS / "county_exposure.parquet")
+    c = c.merge(ce, left_on="GEOID", right_on="county_fips", how="left")
+    for col in ["mw_op", "mw_pipeline", "mw_op_per_1k_hh", "mw_pipeline_per_1k_hh"]:
+        c[col] = c[col].round(1)
+    c["households"] = c.households.round(0)
+    dump("counties_geo", _geojson(c, {"GEOID": "id", "county_name": "name", "state": "st", "households": "hh",
+                                      "mw_op": "op", "mw_pipeline": "pipe", "mw_op_per_1k_hh": "op1k",
+                                      "mw_pipeline_per_1k_hh": "pipe1k"}, 0.004))
+
+
 def analysis() -> None:
     cc = pd.read_parquet(MARTS / "capacity_household_cost.parquet")
     cols = ["utility_id_eia", "state", "utility_name", "zone", "supply", "delivery_year", "zone_price_usd_mw_day",
@@ -107,7 +141,7 @@ def meta() -> None:
 
 
 def run() -> None:
-    sites(); counties(); utilities(); analysis(); meta()
+    sites(); counties(); utilities(); map_layers(); analysis(); meta()
 
 
 if __name__ == "__main__":
