@@ -4,7 +4,7 @@
 /* Layout: control bar over a full-height zoomable map; legend and notes beneath. Same identity as the public site. */
 :root {
   --bg: #f5f7f9; --surface: #ffffff; --fg: #11161d; --muted: #586271; --line: #d8dee6;
-  --op: #2a78d6; --uc: #eb6834; --pr: #1baf7a; --cluster: #3a4250;
+  --op: #2a78d6; --uc: #eb6834; --pr: #1baf7a; --cluster: #3a4250; --net: #8a93a0;
   --font-display: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
   --font-body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
   --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -12,7 +12,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root { --bg: #11151a; --surface: #181d23; --fg: #eef1f4; --muted: #9aa5b2; --line: #2b323b;
-    --op: #3987e5; --uc: #d95926; --pr: #199e70; --cluster: #c9d1db; color-scheme: dark; }
+    --op: #3987e5; --uc: #d95926; --pr: #199e70; --cluster: #c9d1db; --net: #7d8794; color-scheme: dark; }
 }
 * { box-sizing: border-box; }
 header.mh { padding: 14px 20px 10px; display: grid; gap: 6px; border-bottom: 1px solid var(--line); background: var(--surface); }
@@ -57,14 +57,15 @@ optgroup { font-style: normal; color: var(--muted); }
       </optgroup>
     </select></label>
     <label for="dc"><input type="checkbox" id="dc" checked> Data center sites</label>
-    <span class="dots"><span><i style="background:var(--op)"></i>Operating</span><span><i style="background:var(--uc)"></i>Under construction</span><span><i style="background:var(--pr)"></i>Proposed</span></span>
+    <label for="net"><input type="checkbox" id="net"> Network facilities</label>
+    <span class="dots"><span><i style="background:var(--op)"></i>Operating</span><span><i style="background:var(--uc)"></i>Under construction</span><span><i style="background:var(--pr)"></i>Proposed</span><span><i style="background:var(--net)"></i>Network facility</span></span>
     <span class="hint" id="hint" aria-live="polite"></span>
     <span class="legend" id="legend" aria-label="Legend"></span>
   </div>
 </header>
 <div id="map" role="region" aria-label="Zoomable map of census tracts and data center sites"></div>
 <footer class="mf">
-  <p>Household costs cover all 50 states and DC: counties when zoomed out, census tracts (about 4,000 people each) when zoomed in. Bills and bill changes are utility averages for full-service residential customers (EIA-861), so every tract a utility serves shares them; energy burden varies by tract because income does (Census ACS 2024 5-year). Where the local utility sells no power to homes (most of Texas, some other areas), the state's average full residential bill is used and labeled. Bill change compares two-year averages, 2018-19 vs. the latest two years, after inflation. Capacity cost appears where default supply passes PJM auction prices through. County values are household-weighted averages of their tracts. Sites: merged from FracTracker (non-commercial use), PNNL, OpenStreetMap, PeeringDB; clusters split as you zoom. <a href="methods.html">Methods</a></p>
+  <p>Household costs cover all 50 states and DC: counties when zoomed out, census tracts (about 4,000 people each) when zoomed in. Bills and bill changes are utility averages for full-service residential customers (EIA-861), so every tract a utility serves shares them; energy burden varies by tract because income does (Census ACS 2024 5-year). Where the local utility sells no power to homes (most of Texas, some other areas), the state's average full residential bill is used and labeled. Bill change compares two-year averages, 2018-19 vs. the latest two years, after inflation. Capacity cost appears where default supply passes PJM auction prices through. County values are household-weighted averages of their tracts. Sites: merged from FracTracker (non-commercial use), PNNL, OpenStreetMap, PeeringDB; clusters split as you zoom. Network facilities are carrier interconnection points listed in PeeringDB with no size data; they are hidden by default and left out of totals. Records the same building appears under twice are merged; see <a href="status.html">Data status</a> for data quality checks. Spot an error? <a href="https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml">Report a correction</a>. <a href="methods.html">Methods</a></p>
   <p>Basemap © OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors.</p>
 </footer>
 
@@ -103,9 +104,12 @@ function legend(m) {
     + (m === "cap" ? `<span><i style="background:transparent;outline:1px dashed var(--muted);outline-offset:-1px"></i>not passed through</span>` : "");
 }
 
-const sites = { type: "FeatureCollection", features: SITES.filter(s => ["operating", "construction", "proposed"].includes(s.g)).map(s => ({
+const toFeature = s => ({
   type: "Feature", geometry: { type: "Point", coordinates: [s.x, s.y] },
-  properties: { g: s.g, mw: s.mw ?? 0, known: s.mw != null ? 1 : 0, n: s.n || "Unnamed site", o: s.o || "", c: s.c || "", s: s.s || "", b: s.b || "" } })) };
+  properties: { g: s.g, mw: s.mw ?? 0, known: s.mw != null ? 1 : 0, n: s.n || "Unnamed site", o: s.o || "", c: s.c || "", s: s.s || "", b: s.b || "", t: s.t || "" } });
+const LIVE = SITES.filter(s => ["operating", "construction", "proposed"].includes(s.g));
+const sites = { type: "FeatureCollection", features: LIVE.filter(s => s.t !== "network").map(toFeature) };
+const network = { type: "FeatureCollection", features: LIVE.filter(s => s.t === "network").map(toFeature) };
 
 const map = new maplibregl.Map({
   container: "map",
@@ -126,6 +130,15 @@ map.on("load", () => {
   map.addLayer({ id: "tracts-line", type: "line", source: "tracts", minzoom: TRACT_ZOOM, paint: { "line-color": dark() ? "#11151a" : "#ffffff", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 11, 0.8] } }, firstLabel);
   map.addLayer({ id: "tracts-hover", type: "line", source: "tracts", minzoom: TRACT_ZOOM, paint: { "line-color": css("--fg"), "line-width": 2 }, filter: ["==", ["get", "id"], ""] });
 
+  map.addSource("network", { type: "geojson", data: network });
+  map.addLayer({ id: "network", type: "circle", source: "network", layout: { visibility: "none" }, paint: {
+    "circle-color": css("--net"), "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2.5, 12, 5],
+    "circle-stroke-color": css("--surface"), "circle-stroke-width": 1 } });
+  map.on("mousemove", "network", e => {
+    const p = e.features[0].properties;
+    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${esc(p.n)}</b>${row("Type", "Network facility (PeeringDB)")}${row("Operator", esc(p.o))}${row("County", esc([p.c, p.s].filter(Boolean).join(", ")))}<div class="row"><span class="k">No size data; not counted in totals</span></div></div>`).addTo(map);
+  });
+  map.on("mouseleave", "network", () => pop.remove());
   map.addSource("sites", { type: "geojson", data: sites, cluster: true, clusterMaxZoom: 9, clusterRadius: 40,
     clusterProperties: { mw: ["+", ["get", "mw"]] } });
   map.addLayer({ id: "clusters", type: "circle", source: "sites", filter: ["has", "point_count"], paint: {
@@ -228,6 +241,7 @@ map.on("load", () => {
   }
   metric.addEventListener("change", applyMetric);
   map.on("moveend", () => { updateHint(); loadVisibleTracts(); });
+  document.getElementById("net").addEventListener("change", e => map.setLayoutProperty("network", "visibility", e.target.checked ? "visible" : "none"));
   document.getElementById("dc").addEventListener("change", e => {
     for (const id of ["clusters", "cluster-n", "sites"]) map.setLayoutProperty(id, "visibility", e.target.checked ? "visible" : "none");
   });

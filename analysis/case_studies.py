@@ -84,7 +84,7 @@ def generation(ba: str) -> dict:
 
 def exposure(case: dict) -> dict:
     sites = pd.read_parquet(MARTS / "datacenter_sites.parquet")
-    s = sites[sites.state == case["sites_state"]]
+    s = sites[(sites.state == case["sites_state"]) & ~sites.duplicate]
     live = s[s.status_group.isin(["operating", "construction", "proposed"])]
     out = {"sites_by_status": live.status_group.value_counts().to_dict(),
            "mw_by_status": (live.groupby("status_group").mw_est.sum() / 1000).round(1).to_dict(),

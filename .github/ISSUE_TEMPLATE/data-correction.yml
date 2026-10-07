@@ -1,0 +1,33 @@
+name: Data correction
+description: Report a wrong, missing, duplicated, or outdated data center, utility, or cost figure
+title: "Data correction: "
+labels: ["data-correction"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Data center listed twice (duplicate)
+        - Data center missing
+        - Wrong status (operating, under construction, proposed, cancelled)
+        - Wrong size (MW) or location
+        - Not a data center (e.g. network room, office)
+        - Utility, bill, or cost figure looks wrong
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: what
+    attributes:
+      label: Site, utility, or place
+      description: Name as shown on the map, plus city and state
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What's wrong and what's correct
+      description: Include a source if you have one (operator website, county filing, news article)
+    validations:
+      required: true

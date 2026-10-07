@@ -49,7 +49,14 @@ Some sources publish with a lag: monthly utility sales arrive about two months a
 | Floor vs. land area | PNNL campus polygons, and any floor area over 5 million sq ft, are treated as land area | PNNL campus area measures land; the largest real buildings are about 1-3 million sq ft |
 | Power | Reported MW where available; otherwise floor area × 180 W per sq ft, or land area × 1.67 MW per acre, capped at 1,455 MW. Ranges use the 25th and 75th percentiles (102-298 W per sq ft; 0.86-2.96 MW per acre). Sites with no size data are counted but left out of MW totals. | Ratios fitted on 347 and 293 FracTracker sites that report both MW and size; the cap is the 95th percentile of reported site MW |
 
-Result: 6,350 records merge into 2,792 sites. Power is **planned capacity**, often a full build-out, not average load. The operating total (about 62 GW, range 46-107 GW) is above published estimates of actual US data center load (about 20-45 GW).
+Result: 6,350 records merge into 2,792 sites.
+
+**Quality checks** (every build; figures on the [Data status](status.html) page):
+
+- *Duplicates.* Sources sometimes list one building twice (an owner LLC and an operator name, or a renamed listing). Nearby buildings of one operator are usually distinct (Stack NVA05 and NVA08), so pairs within 300 m with the same status are merged only when they share a building code (both "ATL1") or have nearly identical names and power within 25%. Pairs with different building codes (ATL01-1 and ATL01-3, Landbay A and B) are kept separate. Other nearby pairs with a shared operator or similar name are listed for review and kept, so some double counting can remain, most often a campus total listed next to its buildings.
+- *Network facilities.* PeeringDB lists carrier interconnection points (for example Cogent or Lumen rooms in office buildings) alongside data centers. Unsized records from network carriers are typed as network facilities, hidden on the map by default, and left out of totals.
+- *Benchmark.* Operating capacity is compared with Lawrence Berkeley National Laboratory's estimate of national data center electricity use (176 TWh in 2023); listed capacity at typical utilization exceeds it by 1.5-2x, consistent with capacity being planned build-out.
+- *Corrections.* Anyone can report an error through the [correction form](https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml). Power is **planned capacity**, often a full build-out, not average load. The operating total (about 62 GW, range 46-107 GW) is above published estimates of actual US data center load (about 20-45 GW).
 
 ## Data center load by county and utility
 
@@ -119,6 +126,7 @@ Inflation-adjusted residential price, January to July 2026 compared with the sam
 
 ## Changelog
 
+- **2026-10-07:** Data center quality checks: duplicate merging (9 listings, 927 MW), network facilities typed and hidden by default, pairs pending review published, correction form added.
 - **2026-10-07:** Household cost layer extended to all 50 states and DC (84,119 tracts). Data status page and footer added. Texas utility assignment corrected (see "Data center load by county and utility"), which moved about 4.6 GW of operating and 22.5 GW of pipeline data center load in Texas to Oncor.
 - **2026-10-07:** Map replaced with a zoomable map (MapLibre, OpenFreeMap basemap) with clustered data center sites, a neighborhood cost layer for Virginia, Maryland, and DC, and a national county layer.
 - **2026-10-06:** Public site launched.

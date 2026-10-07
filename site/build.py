@@ -86,6 +86,42 @@ def status_line(meta: dict) -> str:
             f'{len(sm["updated_last_7_days"])} updated in the past 7 days · {len(sm["added_last_30_days"])} added in the past 30 days</span>')
 
 
+def quality_section() -> str:
+    """Data center data quality figures from transform/datacenter_qa.py and a national benchmark."""
+    qa_path = ROOT / "data" / "marts" / "datacenter_qa.json"
+    if not qa_path.exists():
+        return ""
+    q = json.loads(qa_path.read_text())
+    bench = ""
+    try:
+        import pandas as pd
+        s = pd.read_parquet(ROOT / "data" / "marts" / "datacenter_sites.parquet")
+        op = s[(s.status_group == "operating") & ~s.duplicate].mw_est.sum() / 1000
+        lo, hi = op * 0.5 * 8.76, op * 0.7 * 8.76
+        bench = (f"<p><b>Consistency check.</b> Operating sites total about {op:,.0f} GW of estimated capacity. At typical 50-70% "
+                 f"utilization that is roughly {lo:,.0f}-{hi:,.0f} TWh a year, versus Lawrence Berkeley National Laboratory's estimate "
+                 f"of 176 TWh of US data center use in 2023 (December 2024 report). The gap is expected: listed capacity is often "
+                 f"full planned build-out, and use has grown since 2023. Totals are best read as upper bounds.</p>")
+    except Exception:
+        pass
+    return (f"<h2>Data center data quality</h2>"
+            f"<table><tbody>"
+            f"<tr><td>Sites shown (operating, under construction, proposed)</td><td>{q['sites']:,}</td></tr>"
+            f"<tr><td>Power reported by source</td><td>{q['mw_reported']:,}</td></tr>"
+            f"<tr><td>Power estimated from floor or land area</td><td>{q['mw_estimated']:,}</td></tr>"
+            f"<tr><td>No size data (shown, not in MW totals)</td><td>{q['mw_unknown']:,}</td></tr>"
+            f"<tr><td>Network facilities (hidden by default)</td><td>{q['network_facilities']:,}</td></tr>"
+            f"<tr><td>Duplicate listings merged</td><td>{q['duplicates_removed']:,} ({q['duplicate_mw_removed']:,} MW removed)</td></tr>"
+            f"<tr><td>Nearby similar pairs confirmed as separate buildings</td><td>{q['pairs_distinct']:,}</td></tr>"
+            f"<tr><td>Nearby similar pairs pending review</td><td>{q['pairs_for_review']:,}</td></tr>"
+            f"</tbody></table>"
+            f"<p>Pairs pending review are nearby records with a shared operator or similar name that the automatic rules could "
+            f"not settle, such as a campus total listed alongside its buildings, or an operating building next to a proposed "
+            f"expansion. They are kept, so some double counting may remain. "
+            f'<a href="https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml">Report a correction</a>.</p>'
+            + bench)
+
+
 def status_page(meta: dict) -> str:
     rows = sorted(meta["sources"].items(), key=lambda kv: (kv[1]["last_new_data"] or "", kv[1]["added"]), reverse=True)
     badge = {"current": ("Current", "var(--s3)"), "late": ("Late", "var(--s2)"), "pending": ("Not yet fetched", "var(--muted)")}
@@ -104,7 +140,8 @@ def status_page(meta: dict) -> str:
             f"A source is marked late when it goes longer than expected without new data.</p>"
             f"<table><thead><tr><th>Source</th><th>Status</th><th>Last new data</th><th>Data through</th><th>Last checked</th>"
             f"<th>Checked</th><th>Added</th></tr></thead><tbody>{trs}</tbody></table>"
-            f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
+            + quality_section()
+            + f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
             f'when published; see <a href="methods.html">Methods</a>.</p></article>')
 
 

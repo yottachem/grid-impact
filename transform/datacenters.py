@@ -142,9 +142,14 @@ def build_sites(rec: pd.DataFrame, dens: dict) -> pd.DataFrame:
 
 
 def run() -> dict:
+    from transform import datacenter_qa
     rec = merge_sites(assign_counties(load_records()))
     dens = fit_density(rec)
     sites = build_sites(rec, dens)
+    sites, review, qa = datacenter_qa.apply(sites)
+    review.to_csv(MARTS / "datacenter_review.csv", index=False)
+    (MARTS / "datacenter_qa.json").write_text(json.dumps(qa, indent=2))
+    print("QA:", json.dumps(qa))
     snap = {s: snapshot_date(latest(sid, pat)) for s, sid, pat in [
         ("FracTracker", "fractracker_datacenters", "*.geojson"), ("OSM", "osm_datacenters", "*.json"),
         ("PNNL", "im3_datacenters", "*.gpkg"), ("PeeringDB", "peeringdb_facilities", "*.json")]}

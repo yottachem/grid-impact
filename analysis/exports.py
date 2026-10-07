@@ -38,9 +38,10 @@ def dump(name: str, obj) -> None:
 
 def sites() -> None:
     s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
+    s = s[~s.duplicate]
     keep = {"lon": "x", "lat": "y", "status_group": "g", "mw_est": "mw", "mw_est_low": "lo", "mw_est_high": "hi",
             "mw_basis": "b", "name": "n", "operator": "o", "county_name": "c", "state": "s", "sources": "src",
-            "expected_online": "eta"}
+            "expected_online": "eta", "facility_type": "t"}
     out = s[list(keep)].rename(columns=keep)
     out["x"], out["y"] = out.x.round(4), out.y.round(4)
     for c in ("mw", "lo", "hi"):

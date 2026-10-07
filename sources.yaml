@@ -86,7 +86,7 @@ sources:
     module: ingest.census_counties
   acs_county:
     added: 2026-10-05
-    name: Census ACS 5-year households and median household income (counties; tracts in cost-layer states)
+    name: Census ACS 5-year households and median household income (counties and tracts)
     publisher: U.S. Census Bureau
     url: https://www2.census.gov/programs-surveys/acs/summary_file/
     check: monthly
@@ -140,7 +140,7 @@ sources:
     module: ingest.eia930_annual
   census_tracts:
     added: 2026-10-07
-    name: Census cartographic boundary tracts, 1:500k (neighborhood cost layer states)
+    name: Census cartographic boundary tracts, 1:500k (all states + DC)
     publisher: U.S. Census Bureau
     url: https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html
     check: monthly

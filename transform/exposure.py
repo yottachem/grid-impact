@@ -20,7 +20,7 @@ LIVE = {"operating": "op", "construction": "uc", "proposed": "pr"}
 
 def county_mw() -> pd.DataFrame:
     s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
-    s = s[s.status_group.isin(LIVE) & s.county_fips.notna()]
+    s = s[s.status_group.isin(LIVE) & s.county_fips.notna() & ~s.duplicate]
     s["k"] = s.status_group.map(LIVE)
     agg = s.pivot_table(index="county_fips", columns="k", values="mw_est", aggfunc="sum", fill_value=0).add_prefix("mw_")
     n = s.pivot_table(index="county_fips", columns="k", values="site_id", aggfunc="count", fill_value=0).add_prefix("sites_")
@@ -64,7 +64,7 @@ def _latest_per_utility(df: pd.DataFrame) -> pd.DataFrame:
 def site_utility_shares() -> pd.DataFrame:
     """One row per (site, utility) with share in (0, 1]; see transform/territories.py."""
     s = pd.read_parquet(MARTS / "datacenter_sites.parquet")
-    s = s[s.status_group.isin(LIVE) & s.mw_est.notna()]
+    s = s[s.status_group.isin(LIVE) & s.mw_est.notna() & ~s.duplicate]
     pts = gpd.GeoDataFrame(s[["site_id", "state"]], geometry=gpd.points_from_xy(s.lon, s.lat), crs="EPSG:4326")
     sh = territories.shares(pts, "site_id", "state")
     return sh[["site_id", "state", "utility_id_eia", "share"]]
@@ -84,7 +84,7 @@ def build_utility(cmw: pd.DataFrame) -> pd.DataFrame:
     res["sales_year"] = res.sales_year.dt.year
     # Territory method for sites inside a polygon
     sites = pd.read_parquet(MARTS / "datacenter_sites.parquet")
-    sites = sites[sites.status_group.isin(LIVE) & sites.mw_est.notna()]
+    sites = sites[sites.status_group.isin(LIVE) & sites.mw_est.notna() & ~sites.duplicate]
     sites["k"] = sites.status_group.map(LIVE)
     shares = site_utility_shares()
     a = shares.merge(sites[["site_id", "k", "mw_est"]], on="site_id")

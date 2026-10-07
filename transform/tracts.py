@@ -124,7 +124,7 @@ def build() -> gpd.GeoDataFrame:
     tr["capacity_year"] = dy
     tr["energy_burden"] = tr.bill / tr.income
     sites = pd.read_parquet(MARTS / "datacenter_sites.parquet")
-    live = sites[sites.status_group.isin(["operating", "construction", "proposed"])]
+    live = sites[sites.status_group.isin(["operating", "construction", "proposed"]) & ~sites.duplicate]
     sg = gpd.GeoDataFrame(live[["mw_est"]], geometry=gpd.points_from_xy(live.lon, live.lat), crs="EPSG:4326")
     sj = gpd.sjoin(sg, tr[["GEOID", "geometry"]], predicate="within")
     tr = tr.merge(sj.groupby("GEOID").mw_est.sum().rename("dc_mw").reset_index(), on="GEOID", how="left")
