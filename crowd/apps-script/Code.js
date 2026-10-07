@@ -94,10 +94,17 @@ function setup() {
  * Idempotent: skips questions that already exist. Never deletes or edits existing questions.
  */
 function addCostBreakdown() {
-  const p = PropertiesService.getScriptProperties();
   const ui = SpreadsheetApp.getUi();
+  const added = addCostBreakdown_();
+  if (added === null) { ui.alert("Run Grid Impact > Set up form first."); return; }
+  ui.alert(added.length ? "Added: " + added.join(", ") : "Cost breakdown questions are already on the form.");
+}
+
+/** Core of addCostBreakdown without UI. Returns titles added, or null if the form isn't set up. */
+function addCostBreakdown_() {
+  const p = PropertiesService.getScriptProperties();
   const formId = p.getProperty("formId");
-  if (!formId) { ui.alert("Run Grid Impact > Set up form first."); return; }
+  if (!formId) return null;
   const form = FormApp.openById(formId);
   const titles = new Set(form.getItems().map(i => i.getTitle()));
   const totalIdx = form.getItems().findIndex(i => i.getTitle() === Q.total);
@@ -123,7 +130,7 @@ function addCostBreakdown() {
     place(form.addTextItem().setTitle(title).setHelpText(help).setRequired(false).setValidation(money("Enter a dollar amount, numbers only")));
     added.push(title);
   });
-  ui.alert(added.length ? "Added: " + added.join(", ") : "Cost breakdown questions are already on the form.");
+  return added;
 }
 
 function showLinks() {
