@@ -71,7 +71,7 @@
   </section>
   <section class="crowd" aria-labelledby="crowdh">
     <h2 id="crowdh">Add your bill</h2>
-    <p class="u-note" style="margin:0">EIA reports utility averages. Your bills fill in what neighborhoods actually pay. Share the numbers from a recent bill: ZIP code, utility, kWh, and total. No name, email, address, or account number. Each ZIP code's results appear once <span id="thr">10</span> bills from the past 12 months are in; until then you can see how many are pending.</p>
+    <p class="u-note" style="margin:0">EIA reports utility averages. Your bills fill in what neighborhoods actually pay. Share the numbers from a recent bill: ZIP code, utility, kWh, and total, and if your bill splits them, the supply charges (the electricity itself) and delivery charges (the wires and grid). No name, email, address, or account number. Each ZIP code's results appear once <span id="thr">10</span> bills from the past 12 months are in; until then you can see how many are pending.</p>
     <div class="row2">
       <a class="btn" id="formlink" href="#" target="_blank" rel="noopener" aria-disabled="true">Add a bill</a>
       <label for="zip" class="u-note">Check a ZIP code</label>
@@ -198,9 +198,16 @@ function zipCheck() {
   const z = document.getElementById("zip").value.trim(), out = document.getElementById("zipout");
   if (!/^[0-9]{5}$/.test(z)) { out.innerHTML = ""; return; }
   const pub = CROWD.published.find(p => p.zip === z), pen = CROWD.pending.find(p => p.zip === z), t = CROWD.threshold;
-  if (pub) out.innerHTML = `<b>ZIP ${z}:</b> ${pub.n} bills. Typical month: $${pub.median_monthly_bill} for ${pub.median_monthly_kwh.toLocaleString()} kWh (${pub.median_cents_per_kwh}¢ per kWh, medians).`;
-  else { const n = pen ? pen.n : 0;
-    out.innerHTML = `<b>ZIP ${z}:</b> ${n} of ${t} bills needed (pending). <div class="meter" aria-hidden="true"><i style="width:${Math.min(100, 100 * n / t)}%"></i></div>`; }
+  if (pub) {
+    let html = `<b>ZIP ${z}:</b> ${pub.n} bills. Typical month: $${pub.median_monthly_bill} for ${pub.median_monthly_kwh.toLocaleString()} kWh (${pub.median_cents_per_kwh}¢ per kWh, medians).`;
+    if (pub.median_supply_cents_per_kwh != null) {
+      html += `<br>Where the money goes (${pub.n_breakdown} bills with a breakdown): supply ${pub.median_supply_cents_per_kwh}¢ per kWh, delivery ${pub.median_delivery_cents_per_kwh}¢ per kWh`
+        + (pub.median_fixed_charge != null ? `, fixed customer charge $${pub.median_fixed_charge.toFixed(2)} a month` : "")
+        + (pub.median_taxes_fees_share != null ? `, taxes and fees ${(pub.median_taxes_fees_share * 100).toFixed(1)}% of the bill` : "") + ".";
+    } else html += `<br>Supply vs. delivery split: ${pub.n_breakdown || 0} of ${t} bills with a breakdown needed.`;
+    out.innerHTML = html;
+  } else { const n = pen ? pen.n : 0, nb = pen ? (pen.n_breakdown || 0) : 0;
+    out.innerHTML = `<b>ZIP ${z}:</b> ${n} of ${t} bills needed (pending)${n ? `; ${nb} include a supply and delivery breakdown` : ""}. <div class="meter" aria-hidden="true"><i style="width:${Math.min(100, 100 * n / t)}%"></i></div>`; }
 }
 document.getElementById("zip").addEventListener("input", zipCheck);
 crowdRender("As of the last site update.");

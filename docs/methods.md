@@ -120,6 +120,7 @@ Inflation-adjusted residential price, January to July 2026 compared with the sam
 Residents can add the numbers from a recent electric bill through a Google Form (linked from the Your utility page). The form asks for ZIP code, utility, bill date, kWh, total amount, and optionally days billed, supplier, and electric heat. It does not collect names, emails, addresses, account numbers, or files, and does not require sign-in.
 
 - Responses are stored in a private Google Sheet. A small public endpoint (Google Apps Script) returns only aggregates: the exact number of valid bills per ZIP code from the past 12 months, and, for ZIP codes with at least 10, the median monthly bill, median monthly kWh, and median price per kWh. Individual responses are never published.
+- **Supply vs. delivery.** Optional questions split the bill into supply charges (the electricity itself: generation or energy charges, or a retail provider's charges), delivery charges (distribution, transmission, riders, and the fixed customer charge), the fixed customer charge on its own, and separately listed taxes and fees. A bill's split is used only if supply + delivery + taxes is within 8% of its total. Once a ZIP code has at least 10 bills with a usable split, the site shows median supply and delivery cost per kWh, the median fixed charge, and taxes and fees as a share of the bill. Data center growth can raise either part: supply through capacity and energy prices, delivery through new lines and substations.
 - Bills are normalized to a 30-day month. A bill counts as valid if its date is within the past 12 months, normalized usage is 50-8,000 kWh, and the implied price is 5-80¢ per kWh.
 - Pending counts are exact, so in a ZIP code with few homes a count of one or two can reveal that someone nearby submitted.
 - Submissions are not verified; one person can submit more than once. Counts are labeled as pending until a ZIP code reaches the threshold, and medians limit the effect of outliers.
@@ -135,6 +136,7 @@ Residents can add the numbers from a recent electric bill through a Google Form 
 
 ## Changelog
 
+- **2026-10-07:** Bill form adds optional supply, delivery, fixed charge, and taxes questions; published medians split supply vs. delivery.
 - **2026-10-07:** Resident bill form launched with per-ZIP pending counts and medians at 10+ bills.
 - **2026-10-07:** Data center quality checks: duplicate merging (9 listings, 927 MW), network facilities typed and hidden by default, pairs pending review published, correction form added.
 - **2026-10-07:** Household cost layer extended to all 50 states and DC (84,119 tracts). Data status page and footer added. Texas utility assignment corrected (see "Data center load by county and utility"), which moved about 4.6 GW of operating and 22.5 GW of pipeline data center load in Texas to Oncor.

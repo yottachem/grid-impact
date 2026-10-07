@@ -24,11 +24,18 @@ const Q = {
   supply: "Who supplies your electricity?",
   heat: "Do you heat your home mainly with electricity?",
   consent: "Consent",
+  supply: "Supply charges ($)",
+  delivery: "Delivery charges ($)",
+  fixed: "Fixed customer charge ($)",
+  taxes: "Taxes and other fees ($)",
 };
+const BREAKDOWN_HEADER = "Cost breakdown (optional)";
+const BREAKDOWN_TOLERANCE = 0.08;  // supply + delivery + taxes must be within 8% of the total
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu("Grid Impact")
     .addItem("Set up form (run once)", "setup")
+    .addItem("Add cost breakdown questions", "addCostBreakdown")
     .addItem("Show form and data links", "showLinks")
     .addToUi();
 }
@@ -82,6 +89,43 @@ function setup() {
   ui.alert("Form created.\n\nForm link: " + form.getPublishedUrl());
 }
 
+/**
+ * Adds optional supply / delivery / fixed charge / taxes questions after "Total amount".
+ * Idempotent: skips questions that already exist. Never deletes or edits existing questions.
+ */
+function addCostBreakdown() {
+  const p = PropertiesService.getScriptProperties();
+  const ui = SpreadsheetApp.getUi();
+  const formId = p.getProperty("formId");
+  if (!formId) { ui.alert("Run Grid Impact > Set up form first."); return; }
+  const form = FormApp.openById(formId);
+  const titles = new Set(form.getItems().map(i => i.getTitle()));
+  const totalIdx = form.getItems().findIndex(i => i.getTitle() === Q.total);
+  let at = totalIdx >= 0 ? totalIdx + 1 : form.getItems().length;
+  const added = [];
+  const place = item => { form.moveItem(item.getIndex(), at); at += 1; };
+  const money = help => FormApp.createTextValidation().requireNumberBetween(0, 5000).setHelpText(help).build();
+  if (!titles.has(BREAKDOWN_HEADER)) {
+    place(form.addSectionHeaderItem().setTitle(BREAKDOWN_HEADER).setHelpText(
+      "If your bill splits the total, enter the parts. Supply is the cost of the electricity itself; delivery is the cost " +
+      "of the wires and grid that bring it to you. Data center growth can raise either one, so the split shows which. " +
+      "Leave these blank if your bill doesn't break them out."));
+    added.push(BREAKDOWN_HEADER);
+  }
+  const items = [
+    [Q.supply, "Often labeled Supply, Generation, Energy charges, or your retail electricity provider's charges"],
+    [Q.delivery, "Often labeled Delivery, Distribution, Transmission, or your utility's or wires company's charges. Include the fixed customer charge and riders"],
+    [Q.fixed, "The flat monthly charge you pay no matter how much you use (Customer charge, Basic service charge). It is part of delivery"],
+    [Q.taxes, "Taxes, surcharges, and fees listed separately from supply and delivery"],
+  ];
+  items.forEach(([title, help]) => {
+    if (titles.has(title)) return;
+    place(form.addTextItem().setTitle(title).setHelpText(help).setRequired(false).setValidation(money("Enter a dollar amount, numbers only")));
+    added.push(title);
+  });
+  ui.alert(added.length ? "Added: " + added.join(", ") : "Cost breakdown questions are already on the form.");
+}
+
 function showLinks() {
   const p = PropertiesService.getScriptProperties();
   SpreadsheetApp.getUi().alert("Form: " + (p.getProperty("formUrl") || "not set up yet"));
@@ -116,17 +160,35 @@ function aggregates_() {
     const valid = /^[0-9]{5}$/.test(zip) && date >= cutoff && date <= new Date() &&
       monthlyKwh >= 50 && monthlyKwh <= 8000 && cents >= 5 && cents <= 80;
     if (!valid) { out.invalid++; return; }
-    (byZip[zip] = byZip[zip] || []).push({ kwh: monthlyKwh, bill: total * 30 / days, cents });
+    const num = name => { const i = col(name); const v = i >= 0 ? Number(r[i]) : NaN; return r[i] === "" ? NaN : v; };
+    const supply = num(Q.supply), delivery = num(Q.delivery), fixed = num(Q.fixed), taxes = num(Q.taxes);
+    const parts = supply + delivery + (isNaN(taxes) ? 0 : taxes);
+    const split = supply >= 0 && delivery >= 0 && Math.abs(parts - total) <= BREAKDOWN_TOLERANCE * total;
+    const k = 30 / days;
+    (byZip[zip] = byZip[zip] || []).push({ kwh: monthlyKwh, bill: total * k, cents,
+      split, supply_cents: split ? supply * 100 / kwh : null, delivery_cents: split ? delivery * 100 / kwh : null,
+      fees_share: split && !isNaN(taxes) ? taxes / total : null, fixed: split && fixed >= 0 ? fixed * k : null });
   });
   Object.keys(byZip).sort().forEach(zip => {
     const b = byZip[zip];
     if (b.length >= THRESHOLD) {
-      out.published.push({ zip, n: b.length,
+      const rec = { zip, n: b.length,
         median_monthly_bill: Math.round(median_(b.map(x => x.bill))),
         median_monthly_kwh: Math.round(median_(b.map(x => x.kwh))),
-        median_cents_per_kwh: Math.round(median_(b.map(x => x.cents)) * 10) / 10 });
+        median_cents_per_kwh: Math.round(median_(b.map(x => x.cents)) * 10) / 10 };
+      const sp = b.filter(x => x.split);
+      rec.n_breakdown = sp.length;
+      if (sp.length >= THRESHOLD) {
+        const r1 = v => Math.round(v * 10) / 10;
+        rec.median_supply_cents_per_kwh = r1(median_(sp.map(x => x.supply_cents)));
+        rec.median_delivery_cents_per_kwh = r1(median_(sp.map(x => x.delivery_cents)));
+        const fx = sp.filter(x => x.fixed != null), fs = sp.filter(x => x.fees_share != null);
+        if (fx.length >= THRESHOLD) rec.median_fixed_charge = Math.round(median_(fx.map(x => x.fixed)) * 100) / 100;
+        if (fs.length >= THRESHOLD) rec.median_taxes_fees_share = Math.round(median_(fs.map(x => x.fees_share)) * 1000) / 1000;
+      }
+      out.published.push(rec);
     } else {
-      out.pending.push({ zip, n: b.length });
+      out.pending.push({ zip, n: b.length, n_breakdown: b.filter(x => x.split).length });
     }
   });
   return out;
