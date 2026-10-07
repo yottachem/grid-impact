@@ -17,15 +17,17 @@ def run() -> bool:
     if not url.startswith("https://script.google.com/macros/s/"):
         print("crowd_bills: endpoint not configured yet; skipping")
         return False
-    # Apps Script occasionally serves an HTML interstitial (cold start); retry, then treat as transient
-    for attempt in range(3):
+    # Apps Script answers by redirecting to a one-time googleusercontent URL. It can serve an HTML
+    # interstitial on a cold start, or a 404 if that URL expires (e.g. during a redeploy). Each
+    # attempt restarts from the /exec URL; persistent failure is reported as transient.
+    for attempt in range(4):
         try:
-            data = http_get(url).json()
+            data = http_get(url, retries=1).json()
             break
-        except ValueError:
-            time.sleep(10)
+        except (ValueError, requests.HTTPError):
+            time.sleep(10 * (attempt + 1))
     else:
-        raise requests.ConnectionError("crowd_bills endpoint returned non-JSON three times")
+        raise requests.ConnectionError("crowd_bills endpoint failed four times (HTML or expired redirect)")
     data.pop("updated", None)  # changes every call; only content changes should count as new data
     content = json.dumps(data, sort_keys=True, separators=(",", ":")).encode()
     return snapshot(SOURCE_ID, content, "aggregates.json",
