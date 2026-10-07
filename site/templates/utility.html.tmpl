@@ -204,9 +204,13 @@ function zipCheck() {
 }
 document.getElementById("zip").addEventListener("input", zipCheck);
 crowdRender("As of the last site update.");
-if (CROWD.endpoint) fetch(CROWD.endpoint).then(r => r.json()).then(d => { CROWD = { ...d, endpoint: CROWD.endpoint }; crowdRender("Live counts."); }).catch(() => {});
 try { const s = localStorage.getItem("gi-utility"); if (s && byUtil.has(s)) current = s; } catch (e) {}
 show(current);
+// Live bill counts last, isolated, so a network problem can't affect the rest of the page
+try {
+  if (CROWD.endpoint && window.fetch) fetch(CROWD.endpoint).then(r => r.json())
+    .then(d => { CROWD = { ...d, endpoint: CROWD.endpoint }; crowdRender("Live counts."); }).catch(() => {});
+} catch (e) {}
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => show(current));
 new MutationObserver(() => show(current)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

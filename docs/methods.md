@@ -115,6 +115,15 @@ Inflation-adjusted residential price, January to July 2026 compared with the sam
 | Texas (statewide) | +2.6% | Energy-only market with 88 GW of planned generation (vs. 27 GW in PJM). Statewide totals include some areas outside ERCOT. |
 | Georgia Power | -1.9% | Regulated, no capacity market; base rates frozen. |
 
+## Resident bills
+
+Residents can add the numbers from a recent electric bill through a Google Form (linked from the Your utility page). The form asks for ZIP code, utility, bill date, kWh, total amount, and optionally days billed, supplier, and electric heat. It does not collect names, emails, addresses, account numbers, or files, and does not require sign-in.
+
+- Responses are stored in a private Google Sheet. A small public endpoint (Google Apps Script) returns only aggregates: the exact number of valid bills per ZIP code from the past 12 months, and, for ZIP codes with at least 10, the median monthly bill, median monthly kWh, and median price per kWh. Individual responses are never published.
+- Bills are normalized to a 30-day month. A bill counts as valid if its date is within the past 12 months, normalized usage is 50-8,000 kWh, and the implied price is 5-80¢ per kWh.
+- Pending counts are exact, so in a ZIP code with few homes a count of one or two can reveal that someone nearby submitted.
+- Submissions are not verified; one person can submit more than once. Counts are labeled as pending until a ZIP code reaches the threshold, and medians limit the effect of outliers.
+
 ## Known limitations
 
 - Site lists are incomplete, and most sites don't disclose power; estimates carry wide ranges.
@@ -126,6 +135,7 @@ Inflation-adjusted residential price, January to July 2026 compared with the sam
 
 ## Changelog
 
+- **2026-10-07:** Resident bill form launched with per-ZIP pending counts and medians at 10+ bills.
 - **2026-10-07:** Data center quality checks: duplicate merging (9 listings, 927 MW), network facilities typed and hidden by default, pairs pending review published, correction form added.
 - **2026-10-07:** Household cost layer extended to all 50 states and DC (84,119 tracts). Data status page and footer added. Texas utility assignment corrected (see "Data center load by county and utility"), which moved about 4.6 GW of operating and 22.5 GW of pipeline data center load in Texas to Oncor.
 - **2026-10-07:** Map replaced with a zoomable map (MapLibre, OpenFreeMap basemap) with clustered data center sites, a neighborhood cost layer for Virginia, Maryland, and DC, and a national county layer.

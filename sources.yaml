@@ -151,7 +151,7 @@ sources:
     added: 2026-10-07
     name: Resident bill submissions (aggregates only; Google Form via Apps Script)
     publisher: Grid Impact Tracker contributors
-    url: PENDING_DEPLOYMENT
+    url: https://script.google.com/macros/s/AKfycbwqgjZy3ShBLLmRjR-wWXzVU_-67y0LraZV1qqxYiPyrlZme1G6UzxH1l0gaXzngKCY6w/exec
     check: daily
     expected_max_gap_days: 3650  # depends on submissions, not a publisher schedule
     license: CC-BY-4.0 (aggregates only)
