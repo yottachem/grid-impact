@@ -7,6 +7,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW, STAGED, MARTS = (ROOT / "data" / d for d in ("raw", "staged", "marts"))
+for _d in (STAGED, MARTS):  # fresh CI checkouts have neither (data/ is not committed)
+    _d.mkdir(parents=True, exist_ok=True)
 
 
 def latest(source_id: str, pattern: str) -> str:
