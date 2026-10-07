@@ -11,6 +11,7 @@ on:
         default: all
 
 permissions:
+  actions: write
   contents: write
   issues: write
   pages: write
@@ -47,12 +48,24 @@ jobs:
           EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
           PEERINGDB_API_KEY: ${{ secrets.PEERINGDB_API_KEY }}
         run: uv run python -m ingest.run --cadence ${{ steps.cad.outputs.v }}
+      - name: Archive new snapshots to a GitHub Release
+        if: always() && steps.cad.outputs.v != 'daily'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uv run python -m ingest.archive
       - name: Save raw snapshots
         if: always()
         uses: actions/cache/save@v4
         with:
           path: data/raw
           key: raw-${{ github.run_id }}
+      - name: Prune old snapshot caches (keep newest 3)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh cache list -R "$GITHUB_REPOSITORY" --key raw- --sort created_at --order desc --limit 100 --json id -q '.[3:][].id' \
+            | xargs -r -n1 gh cache delete -R "$GITHUB_REPOSITORY"
       - name: Detect new data
         id: diff
         if: always()
