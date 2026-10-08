@@ -21,6 +21,8 @@ import references  # noqa: E402  (site/references.py)
 REPO = "https://github.com/yottachem/grid-impact"
 PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods"),
          ("references.html", "References")]
+if not references.approved():  # the References page appears once the first batch is approved
+    PAGES = PAGES[:-1]
 FRIENDLY_DATE = lambda d: __import__("datetime").date.fromisoformat(d).strftime("%b %-d, %Y") if d else "—"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600'
@@ -281,9 +283,10 @@ def main() -> None:
     body = '<article class="prose">' + markdown.markdown(md, extensions=["tables"]) + "</article>"
     (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, footer(meta, pm, "Methods"),
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
-    refs_body = references.page(nar).replace("__FEEDBACK__", html.escape(build_findings.feedback_url("Other")))
-    (DIST / "references.html").write_text(shell("references.html", "References", refs_body, footer(meta, pm, "Other"),
-        "Research, filings, market reports, and news on data centers, the grid, and household electricity costs."))
+    if references.approved():
+        refs_body = references.page(nar).replace("__FEEDBACK__", html.escape(build_findings.feedback_url("Other")))
+        (DIST / "references.html").write_text(shell("references.html", "References", refs_body, footer(meta, pm, "Other"),
+            "Research, filings, market reports, and news on data centers, the grid, and household electricity costs."))
     (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta, nar), footer(meta, pm, "Data status"),
         "When each data source was added, last checked, and last brought new data."))
     shutil.copytree(DATA / "tracts", DIST / "data" / "tracts")
