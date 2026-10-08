@@ -58,6 +58,7 @@ entries:
     cites: [lbnl-2025-retail-price-trends, epri-2026-powering-intelligence-update]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-06-18 - Have Data Centers Raised Your Electric Bill Causal Evidence from the United States.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -79,6 +80,7 @@ entries:
     use: [benchmark, context]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-10-17 - Recent Retail Electricity Price Trends What Do We Know… or Think We Know.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -99,6 +101,7 @@ entries:
     cites: [lbnl-2025-retail-price-trends]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-03 - Retail Electricity Price Trends and Drivers 2026 Edition.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -120,6 +123,7 @@ entries:
     cites: [imm-2025-bra-2025-26-part-g, imm-2025-bra-2026-27-part-a, imm-2026-bra-2027-28-part-a]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-03-12 - 2025 State of the Market Report for PJM.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -140,6 +144,7 @@ entries:
     cites: [pjm-2024-bra-2025-26]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-06-03 - IMM Analysis of the 20252026 RPM Base Residual Auction, Part G (revised).md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -160,6 +165,7 @@ entries:
     cites: [pjm-2025-bra-2026-27]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-10-01 - IMM Analysis of the 20262027 RPM Base Residual Auction, Part A.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -180,6 +186,7 @@ entries:
     cites: [pjm-2025-bra-2027-28-release]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-01-05 - IMM Analysis of the 20272028 RPM Base Residual Auction, Part A.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -199,6 +206,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2024-07-30 - 20252026 Base Residual Auction Report.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -218,6 +226,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2025-07-22 - 20262027 Base Residual Auction Report.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -238,6 +247,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2026-12-31
+    vault: "wiki/sources/grid-impact/2025-12-17 - PJM Auction Procures 134,479 MW of Generation Resources (20272028 Base Residual Auction).md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -257,6 +267,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2026-07-14 - 20282029 Base Residual Auction Report.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -277,6 +288,7 @@ entries:
     cites: [imm-2025-bra-2025-26-part-g, pjm-2025-bra-2026-27]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2025-07-30 - Projected data center growth spurs PJM capacity prices by factor of 10.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -298,6 +310,7 @@ entries:
     cites: [pjm-2024-bra-2025-26]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-05 - Drivers of PJM's Capacity Market Price Surge and the Impact to DC Electric Customers.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -320,6 +333,7 @@ entries:
     cites: [pjm-2025-bra-2026-27, imm-2025-bra-2025-26-part-g]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2025-07-24 - Data center power demands drive record power auction prices with varying impacts on Maryland customers.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -339,6 +353,7 @@ entries:
     cites: [pjm-2025-bra-2027-28-release]
     accessed: 2026-10-08
     review_by: 2027-07-31
+    vault: "wiki/sources/grid-impact/2025-12-17 - Data center power demands again drive record power auction prices.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -360,6 +375,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-09-29 - Connection Costs Loophole Costs Customers Over $4 Billion to Connect Data Centers to Power Grid.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -380,6 +396,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-03-05 - Extracting Profits from the Public How Utility Ratepayers Are Paying for Big Tech's Power.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -400,6 +417,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2024-12-09 - Data Centers in Virginia (Report 598).md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -420,6 +438,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2027-01-31
+    vault: "wiki/sources/grid-impact/2025-11-25 - SCC Issues Order in Dominion Energy Virginia's 2025 Biennial Review.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -439,6 +458,7 @@ entries:
     use: [fact]
     accessed: 2026-10-08
     review_by: 2026-12-31
+    vault: "wiki/sources/grid-impact/2025-07-01 - Georgia PSC approves plan to freeze Georgia Power base rates through at least 2028.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -459,6 +479,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-06-20 - Texas Senate Bill 6 (89th Legislature) on large loads in ERCOT.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -479,6 +500,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-12 - Study for Amazon on rate design to manage large-load growth.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -500,6 +522,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-07-28 - Electricity Grid Impacts of Rising Demand from Data Centers and Cryptocurrency Mining Operations.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -522,6 +545,7 @@ entries:
     cites: [cmu-2025-oeo-grid-impacts]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-05-18 - Power system costs and emissions from data center and cryptocurrency mining expansion in the United States.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -543,6 +567,7 @@ entries:
     use: [fact, method]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2024-12 - 2024 United States Data Center Energy Usage Report.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -563,6 +588,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2026-12-31
+    vault: "wiki/sources/grid-impact/2026-01 - 2025 Long-Term Reliability Assessment.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -584,6 +610,7 @@ entries:
     use: [benchmark, method]
     accessed: 2026-10-08
     review_by: 2027-09-30
+    vault: "wiki/sources/grid-impact/2024-09 - How High Are Household Energy Burdens An Assessment of National and Metropolitan Energy Burdens across the U.S..md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -604,6 +631,7 @@ entries:
     use: [method]
     accessed: 2026-10-08
     review_by: 2027-04-30
+    vault: "wiki/sources/grid-impact/2026-04 - U.S. Data Centers Tracker.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -623,6 +651,7 @@ entries:
     use: [method]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-06-06 - IM3 Open Source Data Center Atlas.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -644,6 +673,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-09-29 - How AI Data Centers Are Sending Your Power Bill Soaring.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -665,6 +695,7 @@ entries:
     cites: [bloomberg-2025-wholesale-near-dc, imm-2025-bra-2025-26-part-g, mdopc-2025-07-auction, lbnl-2025-retail-price-trends]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-06-12 - How much have data centers increased electricity prices.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -685,6 +716,7 @@ entries:
     cites: [imm-2025-bra-2026-27-part-a, ucs-2025-pjm-transmission]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-10-02 - Data centers 'primary reason' for high PJM capacity prices market monitor.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -704,6 +736,7 @@ entries:
     cites: [imm-2026-bra-2027-28-part-a]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-01-07 - Data centers were 40% of PJM capacity costs in last auction market monitor.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -724,6 +757,7 @@ entries:
     cites: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-07-10 - Data centers lowered electric bills in some places — for now.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -814,6 +848,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-01-31
+    vault: "wiki/sources/grid-impact/2025-07 - Data Center Watch Report, Q2 2025 Update.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -834,6 +869,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-01-31
+    vault: "wiki/sources/grid-impact/2026-01-12 - Local Opposition to Data Centers Is Surging. So Are Canceled Projects..md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -853,6 +889,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-09 - Drained by Data The Cumulative Impact of Data Centers on Regional Water Stress.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -872,6 +909,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-04-30
+    vault: "wiki/sources/grid-impact/2025-04 - Energy and AI.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -891,6 +929,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-02-28
+    vault: "wiki/sources/grid-impact/2024-05 - Powering Intelligence Analyzing Artificial Intelligence and Data Center Energy Consumption.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -911,6 +950,7 @@ entries:
     cites: [epri-2024-powering-intelligence]
     accessed: 2026-10-08
     review_by: 2027-02-28
+    vault: "wiki/sources/grid-impact/2026-02 - Powering Intelligence Updated U.S. Data Center Scenarios.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -932,6 +972,7 @@ entries:
     cites: [crs-2025-r48646]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-03-29 - EIA Launches Pilot Survey on Energy Use at Data Centers.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -1087,6 +1128,7 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-05-31
+    vault: "wiki/sources/grid-impact/2025-05-20 - Power Demand Forecasts How Electricity Demand Will Grow, and Its Impact on Affordability.md"
     added: 2026-10-08
     approved: 2026-10-08
 
@@ -1107,5 +1149,6 @@ entries:
     use: [context]
     accessed: 2026-10-08
     review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-08 - The Cost of Power How Soaring Electric Rates Are Deepening the Energy Affordability Crisis.md"
     added: 2026-10-08
     approved: 2026-10-08
