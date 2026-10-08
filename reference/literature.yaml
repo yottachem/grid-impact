@@ -55,7 +55,7 @@ entries:
     relation: supports
     relation_note: Agrees with this site's local result (more local load goes with slightly lower residential prices); like the site, it flags supply shortfalls as the way costs could rise.
     use: [benchmark]
-    cites: [lbnl-2025-retail-price-trends]
+    cites: [lbnl-2025-retail-price-trends, epri-2026-powering-intelligence-update]
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
@@ -724,5 +724,388 @@ entries:
     cites: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
     accessed: 2026-10-08
     review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  # ------------------------------------------------------------ Batch 1, part 2: Josh's links (2026-10-08) and what they cite
+  - id: cr-2026-ai-data-centers
+    title: "AI Data Centers: Big Tech's Impact on Electric Bills, Water, and More"
+    authors: ["Greenfield, Nicole"]
+    publisher: Consumer Reports
+    date: 2026-03-20
+    url: https://www.consumerreports.org/data-centers/ai-data-centers-impact-on-electric-bills-water-and-more-a1040338678/
+    type: news
+    topics: [siting, retail-rates]
+    summary: Consumer-facing investigation of data centers' effects on bills, water, air, traffic, and local budgets, with a national survey.
+    findings:
+      - In a November 2025 Consumer Reports survey of 2,146 US adults, 78% were concerned new data centers will raise their energy bills.
+      - Residential prices rose 7.1% in 2025, more than double inflation; repeats Bloomberg's 267% figure, which describes wholesale prices.
+      - Large facilities can use up to 5 million gallons of water a day; about two-thirds of data centers built since 2022 are in water-stressed regions.
+      - 25 of 31 Virginia localities with data centers had nondisclosure agreements with developers (University of Mary Washington researchers).
+    relation: mixed
+    relation_note: Broader than this site (water, air, jobs, secrecy); on bills it leans on wholesale price figures, which differ from the retail prices measured here.
+    use: [context]
+    cites: [bloomberg-2025-wholesale-near-dc, lbnl-2024-dc-energy, harvard-eli-2025-extracting-profits, ceres-2025-drained-by-data, datacenterwatch-2025-q2, heatmap-2026-cancellations, iea-2025-energy-ai]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-03-20 - AI Data Centers Big Tech's Impact on Electric Bills, Water, and More.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: crs-2025-r48646
+    title: "Data Centers and Their Energy Consumption: Frequently Asked Questions (R48646)"
+    authors: ["Offutt, Martin C.", "Zhu, Ling"]
+    publisher: Congressional Research Service
+    date: 2025-08-26
+    url: https://www.congress.gov/crs-product/R48646
+    type: government
+    topics: [load-growth, data]
+    summary: Nonpartisan primer for Congress on what data centers are, why they use so much energy, cooling and water, federal rules, and how little official data exists.
+    findings:
+      - US data centers used about 176 TWh in 2023 (4.4% of US electricity); projections show up to 12% by 2028.
+      - No binding federal energy standards apply to private data centers; Energy Star certification is voluntary.
+      - EIA's 2021 pilot survey of 50 data centers received 9 usable responses; federal data on actual use remain thin.
+      - A 100 MW data center's direct water use is roughly that of 2,600 households (IEA illustration).
+    relation: context
+    relation_note: Explains why this site relies on open trackers and estimated power for data center load.
+    use: [context, method]
+    cites: [lbnl-2024-dc-energy, epri-2024-powering-intelligence, iea-2025-energy-ai]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-08-26 - Data Centers and Their Energy Consumption Frequently Asked Questions (R48646).md"
+    added: 2026-10-08
+    approved: null
+
+  - id: hls-2025-peskoe-interview
+    title: How data centers may lead to higher electricity bills
+    authors: ["Reed, Rachel"]
+    publisher: Harvard Law Today
+    date: 2025-09-03
+    url: https://hls.harvard.edu/today/how-data-centers-may-lead-to-higher-electricity-bills/
+    type: news
+    topics: [large-load-tariffs, retail-rates]
+    summary: Interview with Ari Peskoe (Harvard Electricity Law Initiative) on the two ways data centers can raise household bills.
+    findings:
+      - Utilities spread the cost of new lines and plants built for data centers across all customers.
+      - Where utilities buy power in markets, demand growing faster than supply raises prices for everyone.
+    relation: mixed
+    relation_note: The second channel is the one this site measures (PJM capacity costs); the first works through utility rate cases, which the site does not yet track.
+    use: [context]
+    cites: [harvard-eli-2025-extracting-profits]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2025-09-03 - How data centers may lead to higher electricity bills.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: datacenterwatch-2025-q2
+    title: Data Center Watch Report, Q2 2025 Update
+    authors: [Data Center Watch]
+    publisher: Data Center Watch
+    date: 2025-07
+    url: https://www.datacenterwatch.org/q22025
+    type: research-org
+    topics: [siting]
+    summary: Quarterly tally of US data center projects blocked or delayed by local opposition.
+    findings:
+      - From late March to June 2025, 20 projects worth about $98 billion were blocked or delayed, more than in all of 2023 through early 2025 ($64 billion).
+      - 53 active local groups in 17 states targeted 30 projects in the quarter; 188 groups nationwide.
+    relation: context
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-01-31
+    added: 2026-10-08
+    approved: null
+
+  - id: heatmap-2026-cancellations
+    title: "Local Opposition to Data Centers Is Surging. So Are Canceled Projects."
+    authors: ["Meyer, Robinson"]
+    publisher: Heatmap News
+    date: 2026-01-12
+    url: https://heatmap.news/politics/data-center-cancellations-2025
+    type: news
+    topics: [siting]
+    summary: Review of public records and press accounts of data center projects canceled after local opposition.
+    findings:
+      - At least 25 projects were canceled after local opposition in 2025, up from 6 in 2024 and 2 in 2023; together at least 4.7 GW of demand.
+      - About 99 of roughly 770 planned data centers faced organized opposition; water use was the most cited concern (over 40% of contested projects), then electricity prices.
+    relation: context
+    relation_note: Cancellations bear on this site's pipeline totals, which count proposed sites until a source marks them cancelled.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-01-31
+    added: 2026-10-08
+    approved: null
+
+  - id: ceres-2025-drained-by-data
+    title: "Drained by Data: The Cumulative Impact of Data Centers on Regional Water Stress"
+    authors: [Ceres]
+    publisher: Ceres
+    date: 2025-09
+    url: https://www.ceres.org/resources/reports/drained-by-data-the-cumulative-impact-of-data-centers-on-regional-water-stress
+    type: advocacy
+    topics: [siting]
+    summary: Estimates direct and indirect water use from data centers built and planned in the Phoenix area.
+    findings:
+      - Direct cooling water use could rise from 385 million to over 3.7 billion gallons a year (about 870%) as planned centers come online.
+      - Indirect water use from the electricity they consume could grow about 400%, to over 14.5 billion gallons.
+    relation: context
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: iea-2025-energy-ai
+    title: Energy and AI
+    authors: [International Energy Agency]
+    publisher: International Energy Agency
+    date: 2025-04
+    url: https://www.iea.org/reports/energy-and-ai
+    type: government
+    topics: [load-growth, generation]
+    summary: Global outlook for data center and AI electricity demand and how it will be supplied.
+    findings:
+      - Global data center use roughly doubles from 415 TWh (2024) to about 945 TWh by 2030.
+      - US data center use rises by up to 240 TWh (about 130%), the largest increase of any country; natural gas supplies much of it.
+    relation: context
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-04-30
+    added: 2026-10-08
+    approved: null
+
+  - id: epri-2024-powering-intelligence
+    title: "Powering Intelligence: Analyzing Artificial Intelligence and Data Center Energy Consumption"
+    authors: [Electric Power Research Institute]
+    publisher: EPRI
+    date: 2024-05
+    url: https://restservice.epri.com/publicdownload/000000003002028905/0/Product
+    type: research-org
+    topics: [load-growth]
+    summary: EPRI's 2024 scenarios for US data center electricity use through 2030.
+    findings:
+      - Data centers used about 4% of US electricity in 2023 and could reach up to 9% by 2030.
+      - AI queries use roughly ten times the electricity of a traditional web search.
+    relation: context
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-02-28
+    added: 2026-10-08
+    approved: null
+
+  - id: epri-2026-powering-intelligence-update
+    title: "Powering Intelligence: Updated U.S. Data Center Scenarios"
+    authors: [Electric Power Research Institute]
+    publisher: EPRI
+    date: 2026-02
+    url: https://restservice.epri.com/publicattachment/97025
+    type: research-org
+    topics: [load-growth]
+    summary: Updated state-level scenarios for US data center electricity use through 2030.
+    findings:
+      - Data centers could use 9% to 17% of US electricity by 2030, about 60% above EPRI's 2024 estimate.
+      - Eight states would see much higher shares than the national figure.
+    relation: context
+    use: [context]
+    cites: [epri-2024-powering-intelligence]
+    accessed: 2026-10-08
+    review_by: 2027-02-28
+    added: 2026-10-08
+    approved: null
+
+  - id: eia-2026-dc-pilot-survey
+    title: EIA Launches Pilot Survey on Energy Use at Data Centers
+    authors: [American Public Power Association]
+    publisher: American Public Power Association (Public Power Current)
+    date: 2026-03-29
+    url: https://www.publicpower.org/periodical/article/eia-launches-pilot-survey-energy-use-data-centers
+    type: news
+    topics: [data, load-growth]
+    summary: EIA began voluntary pilot surveys of data center energy use in Texas, Washington state, and Northern Virginia and DC.
+    findings:
+      - Targets 196 companies operating data centers in the three regions; web surveys in Texas and Washington, interviews in Virginia and DC.
+      - Asks about energy sources, electricity use, site characteristics, servers, and cooling.
+    relation: context
+    relation_note: If EIA publishes facility-level use, it could replace this site's estimated power for many sites.
+    use: [context]
+    cites: [crs-2025-r48646]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  # ------------------------------------------------------------ Batch 1, part 3: Josh's second set of links (2026-10-08) and what they cite
+  - id: npr-2026-ratepayers-congress
+    title: "AI data centers: How much are ratepayers on the hook for?"
+    authors: ["Neuman, Scott"]
+    publisher: NPR (Morning Edition)
+    date: 2026-10-01
+    url: https://www.npr.org/2026/10/01/nx-s1-5984949/data-centers-ai-ratepayers-congress
+    type: news
+    topics: [large-load-tariffs, capacity-markets, retail-rates]
+    summary: Competing ratepayer-protection bills in Congress, and why no single number captures what households pay for data centers.
+    findings:
+      - The Ratepayer Protection Act (Sen. Jon Husted) passed the House in September 2026; Senate Democrats back the GRID Savings Act (Sen. Martin Heinrich), arguing the first bill's protections are voluntary.
+      - PJM's market monitor estimates data centers have cost PJM's 67 million customers about $29 billion over roughly two years.
+      - One estimate puts Maryland households' added cost at about $168 to $216 a year, mainly from the data center boom.
+      - Experts say pass-through depends on each utility's supply contracts, rates, and regulators, and that nondisclosure agreements hide what data centers pay.
+    relation: supports
+    relation_note: The Maryland estimate is close to this site's capacity cost for a typical restructured-PJM home ($217 to $242 a year), and the story describes the same regional spread of costs.
+    use: [benchmark, context]
+    cites: [imm-2026-som-2025, harvard-eli-2025-extracting-profits]
+    accessed: 2026-10-08
+    review_by: 2026-12-31
+    vault: "wiki/sources/grid-impact/2026-10-01 - AI data centers How much are ratepayers on the hook for.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: eesi-2026-dc-higher-bills
+    title: Data Center Power Demands Are Contributing to Higher Energy Bills
+    authors: ["Yañez-Barnuevo, Miguel"]
+    publisher: Environmental and Energy Study Institute (EESI)
+    date: 2026-02-24
+    url: https://www.eesi.org/articles/view/data-center-power-demands-are-contributing-to-higher-energy-bills
+    type: research-org
+    topics: [retail-rates, energy-burden, generation]
+    summary: Policy explainer tying data center demand to rising generation costs, rate requests, and household arrears.
+    findings:
+      - Utilities received over 700 GW of interconnection requests in 2025 and requested $29 billion in rate increases in the first half of 2025, double a year earlier.
+      - New gas plant costs roughly tripled since 2022 (about $785/kW to $2,400/kW), with turbine waits of up to 7 years.
+      - About 21 million households (1 in 6) were behind on utility bills; arrears reached about $25 billion.
+    relation: mixed
+    relation_note: Documents real cost pressures (new generation, rate cases) but attributes rising bills to data centers without separating other causes; repeats the wholesale 267% figure.
+    use: [context]
+    cites: [bloomberg-2025-wholesale-near-dc, icf-2025-power-demand, neada-2025-cost-of-power, aceee-2024-energy-burden]
+    accessed: 2026-10-08
+    review_by: 2027-02-28
+    vault: "wiki/sources/grid-impact/2026-02-24 - Data Center Power Demands Are Contributing to Higher Energy Bills.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: psu-2026-ask-expert-wiseman
+    title: "Ask an expert: Are data centers driving up my electricity bills?"
+    authors: [Penn State News, interview with Hannah Wiseman]
+    publisher: Penn State University
+    date: 2026-07-07
+    url: https://www.psu.edu/news/research/story/ask-expert-are-data-centers-driving-my-electricity-bills
+    type: news
+    topics: [retail-rates, large-load-tariffs]
+    summary: Penn State law professor Hannah Wiseman explains how data centers can raise household bills and what Pennsylvania has done.
+    findings:
+      - Infrastructure built for a data center is spread across all of a utility's customers, and added demand raises regional wholesale prices.
+      - Cooling is roughly 40% of a data center's electricity use.
+      - Pennsylvania's governor pressed PJM into the capacity price cap that has bound in recent auctions.
+    relation: supports
+    relation_note: "Same two channels the site separates: regional wholesale and capacity costs (measured here) and local infrastructure costs (not yet measured)."
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-07-07 - Ask an expert Are data centers driving up my electricity bills.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: psu-iee-2026-wiseman-bill
+    title: What AI data centers could mean for your electric bill
+    authors: ["Wiseman, Hannah"]
+    publisher: Penn State Institutes of Energy and the Environment
+    date: 2026-06-18
+    url: https://iee.psu.edu/news/blog/what-ai-data-centers-could-mean-your-electric-bill
+    type: research-org
+    topics: [large-load-tariffs, retail-rates]
+    summary: Policy essay recommending how states should assign data center costs.
+    findings:
+      - Residential prices rose from about 13 cents/kWh in 2016 to nearly 20 cents in 2026 (BLS).
+      - Recommends that data centers pay directly for new infrastructure, minimum contract terms with exit fees, and public disclosure of utility agreements.
+    relation: context
+    use: [context]
+    cites: [ucs-2025-pjm-transmission, iea-2025-energy-ai]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2026-06-18 - What AI data centers could mean for your electric bill.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: hk-2026-california-dc-laws
+    title: "California's 2026 Data Center Laws: What You Need to Know"
+    authors: ["Plume, Tamsen", "Brownlow, Bradley B.", "de la Rosa, Daniela", "Targ, Nicholas William"]
+    publisher: Holland & Knight
+    date: 2026-10-05
+    url: https://www.hklaw.com/en/insights/publications/2026/10/californias-2026-data-center-laws-what-you-need-to-know
+    type: industry
+    topics: [large-load-tariffs, siting]
+    summary: Law firm summary of seven California data center laws signed in 2026, most effective January 1, 2027.
+    findings:
+      - SB 886 assigns transmission upgrade costs to data centers, limits refunds, and adds early-exit fees; AB 2383 requires data center generation tariffs (25 MW and up) by 2028; SB 1168 directs the CPUC to study data center rates that protect residential customers.
+      - AB 1577 requires annual energy reporting for facilities of 10 MW or more; AB 2619 requires water-use reporting.
+      - SB 887 ends CEQA exemptions for data centers; AB 2469 requires water-supply assessments.
+    relation: context
+    relation_note: AB 1577's energy reporting could give this site measured data center use in California.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    vault: "wiki/sources/grid-impact/2026-10-05 - California's 2026 Data Center Laws What You Need to Know.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: umich-stpp-2025-dc-come-to-town
+    title: What Happens When Data Centers Come to Town?
+    authors: ["Nguyen, Terry", "Green, Ben"]
+    publisher: University of Michigan, Ford School Science, Technology, and Public Policy Program (with the Michigan Environmental Justice Coalition)
+    date: 2025-07
+    url: https://stpp.fordschool.umich.edu/sites/stpp/files/2025-07/stpp-data-centers-2025.pdf
+    type: research-org
+    topics: [siting, retail-rates, large-load-tariffs]
+    summary: Policy brief on data centers' effects on local utility rates, water, tax revenue, and climate goals, with recommendations for states.
+    findings:
+      - Argues data centers raise local rates through infrastructure costs passed to residents and long-term power deals that tighten supply.
+      - Finds tax incentives deliver few jobs and reduce local revenue, including for schools.
+      - Recommends energy audits, efficiency standards, usage reporting, renewable additionality, and repealing or avoiding tax breaks.
+    relation: differs
+    relation_note: Asserts local rate increases without measuring them; this site's utility-level comparison finds no average local increase relative to regional peers, though individual utilities can differ.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    vault: "wiki/sources/grid-impact/2025-07 - What Happens When Data Centers Come to Town.md"
+    added: 2026-10-08
+    approved: null
+
+  - id: icf-2025-power-demand
+    title: "Power Demand Forecasts: How Electricity Demand Will Grow, and Its Impact on Affordability"
+    authors: [ICF]
+    publisher: ICF
+    date: 2025-05-20
+    url: https://www.utilitydive.com/news/icf-sees-25-load-growth-by-2030-up-to-40-price-increase/748711/
+    type: industry
+    topics: [load-growth, retail-rates]
+    summary: Consulting forecast of US electricity demand to 2050 and the effect on residential rates (link is Utility Dive's coverage).
+    findings:
+      - US electricity demand grows about 25% by 2030 and 78% by 2050, driven by data centers, electrification, and industry.
+      - Residential rates could rise 15% to 40% by 2030, depending on the market.
+    relation: mixed
+    relation_note: A projection; the site will show whether measured prices follow it.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-05-31
+    added: 2026-10-08
+    approved: null
+
+  - id: neada-2025-cost-of-power
+    title: "The Cost of Power: How Soaring Electric Rates Are Deepening the Energy Affordability Crisis"
+    authors: [National Energy Assistance Directors Association]
+    publisher: NEADA
+    date: 2025-08
+    url: https://neada.org/wp-content/uploads/2025/08/costofpower.pdf
+    type: research-org
+    topics: [energy-burden]
+    summary: State energy assistance directors' tally of household utility arrears and shutoffs.
+    findings:
+      - About 21 million households (1 in 6) are behind on energy bills; arrears rose from about $17.5 billion (end of 2023) to $23 billion (mid-2025), heading toward $25 billion.
+      - Shutoffs rose from 3.0 million (2023) to 3.5 million (2024), with about 4.0 million projected for 2025.
+    relation: context
+    relation_note: Measures affordability stress directly; the site's energy burden layer estimates it from average bills and income.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
     added: 2026-10-08
     approved: null
