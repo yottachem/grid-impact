@@ -45,7 +45,8 @@ const FQ = {
   where: "Place, utility, or data center (optional)",
   email: "Email (optional)",
 };
-const SITE_PAGES = ["Map", "Findings", "Your utility", "Methods", "Data status", "Other"];
+const SITE_PAGES = ["Map", "Findings", "Your utility", "Methods", "References", "Data status", "Other"];
+const SUGGEST_REFERENCE = "Suggest a reference (study, filing, or news story)";
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu("Grid Impact")
@@ -203,6 +204,7 @@ function setupFeedback_() {
     "I disagree with a conclusion",
     "Something is broken or hard to use",
     "Suggestion",
+    SUGGEST_REFERENCE,
     "Other"]);
   form.addParagraphTextItem().setTitle(FQ.details).setRequired(true)
     .setHelpText("What you saw, and what you think is right. Include a source if you have one (filing, news article, operator website).");
@@ -218,6 +220,35 @@ function setupFeedback_() {
   const entry = (pre.match(/entry\.(\d+)=/) || [])[1] || "";
   p.setProperties({ feedbackFormId: form.getId(), feedbackFormUrl: form.getPublishedUrl(), feedbackPageEntry: entry });
   return { created: true, url: form.getPublishedUrl(), entry: entry };
+}
+
+/** Adds new page and issue-type choices to an existing feedback form. Keeps every existing choice. */
+function updateFeedbackChoices_() {
+  const id = PropertiesService.getScriptProperties().getProperty("feedbackFormId");
+  if (!id) return { updated: false };
+  const form = FormApp.openById(id);
+  const added = [];
+  form.getItems().forEach(item => {
+    const t = item.getTitle();
+    if (t === FQ.page) {
+      const li = item.asListItem(), have = li.getChoices().map(c => c.getValue());
+      const want = SITE_PAGES.filter(v => have.indexOf(v) < 0);
+      if (want.length) {
+        // keep existing order, insert new pages before "Data status"/"Other"
+        const merged = SITE_PAGES.filter(v => have.indexOf(v) >= 0 || want.indexOf(v) >= 0).concat(have.filter(v => SITE_PAGES.indexOf(v) < 0));
+        li.setChoiceValues(merged); added.push(...want);
+      }
+    }
+    if (t === FQ.kind) {
+      const mc = item.asMultipleChoiceItem(), have = mc.getChoices().map(c => c.getValue());
+      if (have.indexOf(SUGGEST_REFERENCE) < 0) {
+        const i = have.indexOf("Other");
+        const merged = i >= 0 ? have.slice(0, i).concat([SUGGEST_REFERENCE], have.slice(i)) : have.concat([SUGGEST_REFERENCE]);
+        mc.setChoiceValues(merged); added.push(SUGGEST_REFERENCE);
+      }
+    }
+  });
+  return { updated: added.length > 0, added: added };
 }
 
 /** Number of feedback reports (no content). */

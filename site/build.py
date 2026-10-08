@@ -284,8 +284,8 @@ def main() -> None:
     (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, footer(meta, pm, "Methods"),
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
     if references.approved():
-        refs_body = references.page(nar).replace("__FEEDBACK__", html.escape(build_findings.feedback_url("Other")))
-        (DIST / "references.html").write_text(shell("references.html", "References", refs_body, footer(meta, pm, "Other"),
+        refs_body = references.page(nar).replace("__FEEDBACK__", html.escape(build_findings.feedback_url("References")))
+        (DIST / "references.html").write_text(shell("references.html", "References", refs_body, footer(meta, pm, "References"),
             "Research, filings, market reports, and news on data centers, the grid, and household electricity costs."))
     (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta, nar), footer(meta, pm, "Data status"),
         "When each data source was added, last checked, and last brought new data."))
