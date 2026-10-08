@@ -15,6 +15,7 @@ dependencies = [
     "xlrd>=2.0.2",
     "pyfixest>=0.60.0",
     "markdown>=3.11",
+    "pymupdf>=1.28.2",
 ]
 
 [dependency-groups]

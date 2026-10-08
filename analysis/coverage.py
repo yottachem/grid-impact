@@ -78,6 +78,28 @@ def annual() -> tuple[pd.DataFrame, pd.DataFrame, int]:
     return st, ut, year
 
 
+def merge_state_reports(ut: pd.DataFrame, st: pd.DataFrame) -> pd.DataFrame:
+    """Where a state publishes monthly switching counts by utility (transform/state_choice.py), use them for
+    the customer split: they are newer than EIA's annual survey and cover utilities EIA does not split."""
+    path = STAGED / "state_choice.parquet"
+    if not path.exists():
+        return ut
+    sc = pd.read_parquet(path)
+    sc = sc[sc.res_total.fillna(0) >= 1000].sort_values("period").groupby(["state", "utility_id_eia"]).tail(1)
+    sc = sc.assign(own_supply=(sc.res_total - sc.res_competitive).round(), delivery_only=sc.res_competitive.round(),
+                   basis=sc.source + ", " + sc.period.dt.strftime("%B %Y"), as_of=sc.period.dt.strftime("%Y-%m"))
+    keep = ["utility_id_eia", "state", "own_supply", "delivery_only", "basis", "as_of"]
+    eia = ut.set_index(["utility_id_eia", "state"])
+    new = sc[keep].set_index(["utility_id_eia", "state"])
+    cols = ["own_supply", "delivery_only", "basis", "as_of"]
+    for idx, r in new.iterrows():
+        eia.loc[idx, cols] = [r[c] for c in cols]
+        if pd.isna(eia.loc[idx, "supplier_cents"]):
+            eia.loc[idx, "supplier_cents"] = st.supplier_cents.get(idx[1])
+    eia["share"] = eia.own_supply / (eia.own_supply + eia.delivery_only)
+    return eia.reset_index()
+
+
 def run() -> dict:
     mo, (st, ut, year) = monthly_by_state(), annual()
     states = {}
@@ -101,6 +123,8 @@ def run() -> dict:
             comp = min(missing, rec.get("delivery_only", 0))
             rec["missing"], rec["missing_competitive"], rec["missing_annual_only"] = missing, comp, missing - comp
         states[s] = rec
+    ut = ut.assign(basis="EIA-861 " + str(year), as_of=str(year))
+    ut = merge_state_reports(ut, st)
     utils = [{k: (None if pd.isna(v) else (round(float(v), 3 if k == "share" else 1) if isinstance(v, float) else v))
               for k, v in r.items()} for r in ut.assign(utility_id_eia=ut.utility_id_eia.astype(int),
                                                         own_supply=ut.own_supply.fillna(0).astype(int),

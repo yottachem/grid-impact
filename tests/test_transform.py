@@ -31,3 +31,18 @@ def test_noaa_state_codes_map_to_48_distinct_fips():
 def test_exposure_tiers():
     from transform.utility_month import tier
     assert [tier(x) for x in (0, 0.5, 1, 9.9, 10, float("nan"))] == ["none", "low", "medium", "medium", "high", "none"]
+
+
+def test_state_choice_parsers_check_totals():
+    """State switching parsers return one row per utility with plausible shares."""
+    import glob
+    import pytest
+    from transform import state_choice
+    if not glob.glob(str(state_choice.RAW / "state_choice" / "*" / "*")):
+        pytest.skip("no state_choice snapshots")
+    d = state_choice.build()
+    assert set(d.state) >= {"IL", "PA", "NJ"}
+    latest = d.sort_values("period").groupby(["state", "utility_id_eia"]).tail(1)
+    big = latest[latest.res_total > 100000]
+    assert big.competitive_share.between(0, 0.9).all()
+    assert (big.res_competitive < big.res_total).all()

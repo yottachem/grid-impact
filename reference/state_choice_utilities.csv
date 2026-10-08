@@ -1,0 +1,18 @@
+state,source_name,utility_id_eia,note
+IL,Commonwealth Edison Company,4110,ICC monthly switching report (ComEd workbook)
+IL,Ameren Illinois,56697,ICC monthly switching report (Ameren workbook)
+PA,PECO,14940,PA PUC PAPowerSwitch monthly statistics
+PA,PPL,14715,
+PA,Duquesne,5487,
+PA,Met-Ed,66101,FirstEnergy Pennsylvania Electric Co (Met-Ed Penelec Penn Power and West Penn merged in 2024; EIA reports them together)
+PA,Penelec,66101,
+PA,Penn Power,66101,
+PA,West Penn Power,66101,
+PA,UGI,19390,
+PA,Citizens’ Electric,3597,
+PA,Wellsboro Electric,20334,
+PA,Pike County Light & Electric,15045,
+NJ,ACE,963,NJ BPU monthly electric switching statistics
+NJ,JCP&L,9726,
+NJ,PSE&G,15477,
+NJ,RECO,16213,

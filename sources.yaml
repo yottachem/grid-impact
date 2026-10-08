@@ -147,6 +147,15 @@ sources:
     expected_max_gap_days: 800
     license: Public domain (US Gov)
     module: ingest.census_tracts
+  state_choice:
+    added: 2026-10-08
+    name: State competitive supply switching statistics (IL ICC, PA PUC, NJ BPU)
+    publisher: Illinois Commerce Commission; Pennsylvania Public Utility Commission; New Jersey Board of Public Utilities
+    url: https://icc.illinois.gov/industry-reports/electric-switching-statistics
+    check: weekly
+    expected_max_gap_days: 75
+    license: Public records
+    module: ingest.state_choice
   crowd_bills:
     added: 2026-10-07
     name: Resident bill submissions (aggregates only; Google Form via Apps Script)
