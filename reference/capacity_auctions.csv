@@ -1,19 +1,34 @@
-market,delivery_year,dy_start,lda,price_usd_mw_day,cleared_ucap_mw,total_cost_busd,dc_attributable_busd,dc_attribution_note,source
-PJM,2018/19,2018-06-01,RTO,164.77,166836.9,10.9,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2019/20,2019-06-01,RTO,100.00,167305.9,7.0,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2020/21,2020-06-01,RTO,76.53,165109.2,7.0,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2021/22,2021-06-01,RTO,140.00,163627.3,9.3,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2022/23,2022-06-01,RTO,50.00,144477.3,3.9,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2023/24,2023-06-01,RTO,34.13,144870.6,2.2,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2024/25,2024-06-01,RTO,28.92,147478.9,2.2,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
-PJM,2024/25,2024-06-01,MAAC,49.49,,,,,PJM 2024/2025 BRA Report
-PJM,2024/25,2024-06-01,EMAAC,53.60,,,,,PJM 2024/2025 BRA Report
-PJM,2024/25,2024-06-01,BGE,73.00,,,,,PJM 2024/2025 BRA Report
-PJM,2024/25,2024-06-01,DPL-S,426.17,,,,,PJM 2024/2025 BRA Report
-PJM,2024/25,2024-06-01,DEOK,96.24,,,,,PJM 2024/2025 BRA Report
-PJM,2025/26,2025-06-01,RTO,269.92,135684.0,14.7,9.3,IMM: data center load caused 63% of the 2025/26 increase (via IEEFA),PJM 2028/2029 BRA Report Table 2; PJM 2025/2026 BRA Report
-PJM,2025/26,2025-06-01,BGE,466.35,,,,,PJM 2025/2026 BRA Report
-PJM,2025/26,2025-06-01,DOM,444.26,,,,,PJM 2025/2026 BRA Report (Dominion moved from FRR into RPM this year)
-PJM,2026/27,2026-06-01,RTO,329.17,134205.3,16.1,7.27,IMM 2026/27 BRA Part A (2025-10-01): data center load added $7.27B (82.1%) to auction revenues,PJM 2028/2029 BRA Report Table 2; IMM Analysis of the 2026/2027 RPM BRA Part A (2025-10-01)
-PJM,2027/28,2027-06-01,RTO,333.44,134478.1,16.4,6.50,IMM 2027/28 BRA Part A (2026-01-05): data center load $6.50B (40%) of $16.4B,PJM 2028/2029 BRA Report Table 2; IMM Analysis of the 2027/2028 RPM BRA Part A (2026-01-05)
-PJM,2028/29,2028-06-01,RTO,325.00,138317.8,16.4,,No IMM attribution published yet,PJM 2028/2029 BRA Report Table 2 (2026-07-14)
+market,delivery_year,dy_start,lda,price_usd_mw_day,cleared_ucap_mw,total_cost_busd,dc_attributable_busd,dc_attribution_note,source,price_native,price_unit
+PJM,2018/19,2018-06-01,RTO,164.77,166836.9,10.9,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2019/20,2019-06-01,RTO,100.00,167305.9,7.0,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2020/21,2020-06-01,RTO,76.53,165109.2,7.0,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2021/22,2021-06-01,RTO,140.00,163627.3,9.3,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2022/23,2022-06-01,RTO,50.00,144477.3,3.9,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2023/24,2023-06-01,RTO,34.13,144870.6,2.2,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2024/25,2024-06-01,RTO,28.92,147478.9,2.2,,,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+PJM,2024/25,2024-06-01,MAAC,49.49,,,,,PJM 2024/2025 BRA Report,,
+PJM,2024/25,2024-06-01,EMAAC,53.60,,,,,PJM 2024/2025 BRA Report,,
+PJM,2024/25,2024-06-01,BGE,73.00,,,,,PJM 2024/2025 BRA Report,,
+PJM,2024/25,2024-06-01,DPL-S,426.17,,,,,PJM 2024/2025 BRA Report,,
+PJM,2024/25,2024-06-01,DEOK,96.24,,,,,PJM 2024/2025 BRA Report,,
+PJM,2025/26,2025-06-01,RTO,269.92,135684.0,14.7,9.3,IMM: data center load caused 63% of the 2025/26 increase (via IEEFA),PJM 2028/2029 BRA Report Table 2; PJM 2025/2026 BRA Report,,
+PJM,2025/26,2025-06-01,BGE,466.35,,,,,PJM 2025/2026 BRA Report,,
+PJM,2025/26,2025-06-01,DOM,444.26,,,,,PJM 2025/2026 BRA Report (Dominion moved from FRR into RPM this year),,
+PJM,2026/27,2026-06-01,RTO,329.17,134205.3,16.1,7.27,IMM 2026/27 BRA Part A (2025-10-01): data center load added $7.27B (82.1%) to auction revenues,PJM 2028/2029 BRA Report Table 2; IMM Analysis of the 2026/2027 RPM BRA Part A (2025-10-01),,
+PJM,2027/28,2027-06-01,RTO,333.44,134478.1,16.4,6.50,IMM 2027/28 BRA Part A (2026-01-05): data center load $6.50B (40%) of $16.4B,PJM 2028/2029 BRA Report Table 2; IMM Analysis of the 2027/2028 RPM BRA Part A (2026-01-05),,
+PJM,2028/29,2028-06-01,RTO,325.00,138317.8,16.4,,No IMM attribution published yet,PJM 2028/2029 BRA Report Table 2 (2026-07-14),,
+ISONE,2018/19,2018-06-01,RTO,314.01,34695,3.98,,FCA 9; no data center attribution published,ISO-NE FCA 9 final results press release (2015-02-27); SEMA/RI existing-resource price (new resources $17.728),9.551,$/kW-month (Rest-of-Pool / system)
+ISONE,2018/19,2018-06-01,SEMA/RI,364.27,,,,FCA 9,ISO-NE FCA 9 final results press release (2015-02-27); SEMA/RI existing-resource price (new resources $17.728),11.08,$/kW-month
+ISONE,2019/20,2019-06-01,RTO,231.12,35567,3.0,,FCA 10; no data center attribution published,ISO-NE FCA 10 results press release (2016-02-11),7.03,$/kW-month (Rest-of-Pool / system)
+ISONE,2020/21,2020-06-01,RTO,174.15,35835,2.28,,FCA 11; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",5.297,$/kW-month (Rest-of-Pool / system)
+ISONE,2021/22,2021-06-01,RTO,152.25,34828,1.94,,FCA 12; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",4.631,$/kW-month (Rest-of-Pool / system)
+ISONE,2022/23,2022-06-01,RTO,124.93,34839,1.59,,FCA 13; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",3.8,$/kW-month (Rest-of-Pool / system)
+ISONE,2023/24,2023-06-01,RTO,65.79,33956,0.82,,FCA 14; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",2.001,$/kW-month (Rest-of-Pool / system)
+ISONE,2024/25,2024-06-01,RTO,85.84,34621,1.08,,FCA 15; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",2.611,$/kW-month (Rest-of-Pool / system)
+ISONE,2024/25,2024-06-01,SENE,130.85,,,,FCA 15,"ISO New England, Key Stats: Markets (FCA results table)",3.98,$/kW-month
+ISONE,2024/25,2024-06-01,NNE,81.44,,,,FCA 15,"ISO New England, Key Stats: Markets (FCA results table)",2.477,$/kW-month
+ISONE,2025/26,2025-06-01,RTO,85.18,32810,1.02,,FCA 16; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",2.591,$/kW-month (Rest-of-Pool / system)
+ISONE,2025/26,2025-06-01,SENE,86.76,,,,FCA 16,"ISO New England, Key Stats: Markets (FCA results table)",2.639,$/kW-month
+ISONE,2025/26,2025-06-01,NNE,83.21,,,,FCA 16,"ISO New England, Key Stats: Markets (FCA results table)",2.531,$/kW-month
+ISONE,2026/27,2026-06-01,RTO,85.15,31370,0.97,,FCA 17; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",2.59,$/kW-month (Rest-of-Pool / system)
+ISONE,2027/28,2027-06-01,RTO,117.7,31556,1.36,,FCA 18; no data center attribution published,"ISO New England, Key Stats: Markets (FCA results table)",3.58,$/kW-month (Rest-of-Pool / system)

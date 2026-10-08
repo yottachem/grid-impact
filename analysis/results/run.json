@@ -1,7 +1,8 @@
 {
-  "ran_at": "2026-10-08T18:40:39+00:00",
+  "ran_at": "2026-10-08T20:27:17+00:00",
   "prices_through": "2026-07",
   "capacity_auctions_through": "2028/29",
   "dc_attribution_through": "2027/28",
-  "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"
+  "isone_auctions_through": "2027/28",
+  "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/isone_utility_zones.csv, reference/state_choice/ (MA DOER), reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"
 }

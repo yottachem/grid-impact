@@ -1,11 +1,12 @@
-"""PJM capacity auction cost per household, by utility and delivery year.
+"""Capacity auction cost per household, by utility and delivery year, for PJM and ISO New England.
 
-cost/household/yr = (auction total $ / PJM annual energy) x (zone price / RTO price)
+cost/household/yr = (auction total $ / market annual energy) x (zone price / market-wide price)
                     x household kWh/yr x residential peak factor
 
 - Auction totals, zone prices, and data center attribution: reference/capacity_auctions.csv
-  (PJM BRA reports; Monitoring Analytics via IEEFA and Utility Dive).
-- PJM annual energy: EIA-930 (calendar year the delivery year starts in, else latest).
+  (PJM BRA reports; Monitoring Analytics; ISO-NE Forward Capacity Auction results, converted from
+  $/kW-month to $/MW-day). Utility zones: reference/pjm_utility_zones.csv, reference/isone_utility_zones.csv.
+- Market annual energy: EIA-930 (calendar year the delivery year starts in, else latest).
 - Household kWh/yr: utility's latest 12 months of EIA-861M residential sales / customers.
 - Peak factor: capacity is charged on contribution to system peak, and homes peak harder
   than they consume on average. 1.0 (energy share) / 1.2 (central) / 1.4 (high).
@@ -21,6 +22,7 @@ from transform.common import MARTS, ROOT, latest, write
 
 PEAK_FACTORS = {"low": 1.0, "central": 1.2, "high": 1.4}
 REF = ROOT / "reference"
+MARKETS = {"PJM": ("PJM", "pjm_utility_zones.csv"), "ISONE": ("ISNE", "isone_utility_zones.csv")}  # market: (EIA-930 code, zones)
 
 
 def household_kwh() -> pd.DataFrame:
@@ -35,13 +37,18 @@ def household_kwh() -> pd.DataFrame:
 
 
 def build() -> pd.DataFrame:
-    auctions = pd.read_csv(REF / "capacity_auctions.csv")
-    auctions = auctions[auctions.market == "PJM"]
-    rto = auctions[auctions.lda == "RTO"].set_index("delivery_year")
-    energy = pd.DataFrame(json.load(open(latest("eia930_annual", "annual_energy.json"))))
-    energy = energy[(energy.rto == "PJM") & (energy.days >= 365)].set_index("year").energy_mwh
-    zones = pd.read_csv(REF / "pjm_utility_zones.csv")
     homes = household_kwh()
+    all_energy = pd.DataFrame(json.load(open(latest("eia930_annual", "annual_energy.json"))))
+    frames = [build_market(m, code, z, homes, all_energy) for m, (code, z) in MARKETS.items()]
+    return pd.concat(frames, ignore_index=True)
+
+
+def build_market(market: str, code: str, zone_file: str, homes: pd.DataFrame, all_energy: pd.DataFrame) -> pd.DataFrame:
+    auctions = pd.read_csv(REF / "capacity_auctions.csv")
+    auctions = auctions[auctions.market == market]
+    rto = auctions[auctions.lda == "RTO"].set_index("delivery_year")
+    energy = all_energy[(all_energy.rto == code) & (all_energy.days >= 365)].set_index("year").energy_mwh
+    zones = pd.read_csv(REF / zone_file)
 
     rows = []
     for dy, a in rto.iterrows():
@@ -53,12 +60,12 @@ def build() -> pd.DataFrame:
         for z in zones.itertuples():
             chain = z.lda_chain.split(">")
             price = next((lda_prices[l] for l in chain if l in lda_prices), a.price_usd_mw_day)
-            rows.append({"utility_id_eia": z.utility_id_eia, "state": z.state, "zone": z.zone, "supply": z.supply,
+            rows.append({"market": market, "utility_id_eia": z.utility_id_eia, "state": z.state, "zone": z.zone, "supply": z.supply,
                          "delivery_year": dy, "dy_start": a.dy_start, "zone_price_usd_mw_day": price,
                          "rto_price_usd_mw_day": a.price_usd_mw_day,
                          "usd_per_mwh_zone": usd_per_mwh * price / a.price_usd_mw_day,
                          "energy_year": e_year, "dc_share": dc_share,
-                         "frr_not_exposed": z.utility_id_eia == 19876 and year < 2025})
+                         "frr_not_exposed": market == "PJM" and z.utility_id_eia == 19876 and year < 2025})
     df = pd.DataFrame(rows).merge(homes, on=["utility_id_eia", "state"], how="left")
     df = df.merge(zones[["utility_id_eia", "state", "utility_name"]], on=["utility_id_eia", "state"])
     for k, f in PEAK_FACTORS.items():

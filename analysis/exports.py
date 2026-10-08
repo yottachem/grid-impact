@@ -159,7 +159,7 @@ def reliability_by_utility() -> None:
 
 def analysis() -> None:
     cc = pd.read_parquet(MARTS / "capacity_household_cost.parquet")
-    cols = ["utility_id_eia", "state", "utility_name", "zone", "supply", "delivery_year", "zone_price_usd_mw_day",
+    cols = ["market", "utility_id_eia", "state", "utility_name", "zone", "supply", "delivery_year", "zone_price_usd_mw_day",
             "kwh_per_home_yr", "usd_per_home_yr_low", "usd_per_home_yr_central", "usd_per_home_yr_high",
             "usd_per_home_yr_dc_central", "increase_vs_2024_25_central", "frr_not_exposed"]
     dump("capacity_household_cost", records(cc[cols].round(2)))

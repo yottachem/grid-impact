@@ -1,6 +1,6 @@
 <title>Your Utility</title>
 <style>
-/* Layout: picker, a summary strip, three small multiples (price, usage, bill), then capacity cost for PJM default-service utilities. */
+/* Layout: picker, a summary strip, three small multiples (price, usage, bill), then capacity cost for PJM and New England default-service utilities. */
 .u-wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 22px; }
 .u-head { display: grid; gap: 8px; }
 .u-head h1 { font: 600 clamp(28px, 4vw, 40px)/1.05 var(--font-display); margin: 0; text-wrap: balance; }
@@ -68,7 +68,7 @@
     <div class="panel" id="p-rel"><h2>Outage minutes per customer</h2><span class="sub" id="relsub">SAIDI, excluding major storms (EIA-861)</span></div>
   </section>
   <section class="cap" id="cap" hidden>
-    <h2>PJM capacity cost for an average home</h2>
+    <h2 id="caph">Capacity auction cost for an average home</h2>
     <p class="u-note" id="capnote"></p>
     <div class="tablewrap"><table id="captable"></table></div>
   </section>
@@ -200,9 +200,11 @@ function show(k) {
   if (c && c[0].supply === "default_service") {
     capEl.hidden = false;
     const max = d3.max(c, d => d.usd_per_home_yr_high);
-    document.getElementById("capnote").textContent = `Default supply in ${last.state} passes PJM capacity auction prices through to bills. Estimated cost for a home using ${Math.round(c[0].kwh_per_home_yr).toLocaleString()} kWh a year, by delivery year (June to May). Zone: ${c[0].zone}.`;
-    document.getElementById("captable").innerHTML = `<thead><tr><th>Delivery year</th><th>Zone price ($/MW-day)</th><th>Cost per home per year</th><th>Range</th><th>Attributed to data centers</th></tr></thead><tbody>` +
-      c.filter(d => d.delivery_year >= "2021/22").map(d => `<tr><td>${d.delivery_year}</td><td>$${d.zone_price_usd_mw_day.toFixed(2)}</td>
+    const mk = c[0].market === "ISONE" ? "ISO New England's Forward Capacity Auction" : "PJM's capacity auction";
+    const price = d => c[0].market === "ISONE" ? `$${(d.zone_price_usd_mw_day * 365 / 12000).toFixed(2)}/kW-month` : `$${d.zone_price_usd_mw_day.toFixed(2)}/MW-day`;
+    document.getElementById("capnote").textContent = `Default supply in ${last.state} passes ${mk} prices through to bills. Estimated cost for a home using ${Math.round(c[0].kwh_per_home_yr).toLocaleString()} kWh a year, by delivery year (June to May). Zone: ${c[0].zone}.`;
+    document.getElementById("captable").innerHTML = `<thead><tr><th>Delivery year</th><th>Zone price</th><th>Cost per home per year</th><th>Range</th><th>Attributed to data centers</th></tr></thead><tbody>` +
+      c.filter(d => d.delivery_year >= "2021/22").map(d => `<tr><td>${d.delivery_year}</td><td>${price(d)}</td>
         <td><span class="bar" style="width:${Math.round(80 * d.usd_per_home_yr_central / max)}px"></span>$${Math.round(d.usd_per_home_yr_central)}</td>
         <td>$${Math.round(d.usd_per_home_yr_low)}–$${Math.round(d.usd_per_home_yr_high)}</td>
         <td>${d.usd_per_home_yr_dc_central != null ? "$" + Math.round(d.usd_per_home_yr_dc_central) : "—"}</td></tr>`).join("") + "</tbody>";

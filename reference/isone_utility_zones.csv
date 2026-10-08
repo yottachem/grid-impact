@@ -1,0 +1,14 @@
+utility_id_eia,utility_name,state,zone,lda_chain,supply,note
+54913,NSTAR Electric Company (Eversource),MA,SENE,SENE>RTO,default_service,Eastern Massachusetts (NEMA/Boston and SEMA); basic service passes capacity costs through
+11804,Massachusetts Electric Co (National Grid),MA,SENE,SENE>RTO,default_service,Most customers in NEMA and SEMA (SENE); central and western Massachusetts are Rest-of-Pool
+13206,Nantucket Electric Co (National Grid),MA,SENE,SENE>RTO,default_service,
+6374,Fitchburg Gas & Elec Light Co (Unitil),MA,WCMA,RTO,default_service,Rest-of-Pool
+4176,Connecticut Light & Power Co (Eversource),CT,CT,RTO,default_service,Rest-of-Pool; standard service
+19497,United Illuminating Co,CT,CT,RTO,default_service,Rest-of-Pool; standard service
+13214,The Narragansett Electric Co (Rhode Island Energy),RI,SEMA/RI,SEMA/RI>SENE>RTO,default_service,Last resort service
+15472,Public Service Co of NH (Eversource),NH,NNE,NNE>RTO,default_service,Default energy service
+24590,Unitil Energy Systems,NH,NNE,NNE>RTO,default_service,
+26510,Liberty Utilities (Granite State Electric) Corp,NH,NNE,NNE>RTO,default_service,
+3266,Central Maine Power Co,ME,NNE,NNE>RTO,default_service,Standard offer service
+1179,Versant Power,ME,NNE,NNE>RTO,default_service,
+7601,Green Mountain Power Corp,VT,NNE,NNE>RTO,regulated,Vertically integrated; recovers capacity costs through its own rates

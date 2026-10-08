@@ -22,11 +22,14 @@ def stamp() -> None:
     import pandas as pd
     from transform.common import MARTS, ROOT
     ref = pd.read_csv(ROOT / "reference" / "capacity_auctions.csv")
+    ne = ref[ref.market == "ISONE"]
+    ref = ref[ref.market == "PJM"]
     attributed = ref.dropna(subset=["dc_attributable_busd"]).delivery_year.max()
     info = {"ran_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "prices_through": pd.read_parquet(MARTS / "utility_month.parquet", columns=["period"]).period.max().strftime("%Y-%m"),
             "capacity_auctions_through": ref.delivery_year.max(), "dc_attribution_through": attributed,
-            "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/state_choice/ (MA DOER), "
+            "isone_auctions_through": ne.delivery_year.max() if len(ne) else None,
+            "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/isone_utility_zones.csv, reference/state_choice/ (MA DOER), "
                              "reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"}
     (ROOT / "analysis" / "results" / "run.json").write_text(json.dumps(info, indent=2))
     print("analysis stamp:", info["ran_at"], "prices through", info["prices_through"])

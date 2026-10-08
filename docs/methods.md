@@ -84,7 +84,7 @@ The map shows household costs for all 50 states and DC: by county when zoomed ou
 - **Weather:** NOAA county heating and cooling degree days, averaged over each utility's service counties and weighted by population (contiguous US only).
 - **Measured load growth:** trailing-12-month commercial sales compared with the same months of 2019. Data centers usually bill as commercial customers, so this tracks load that has actually arrived. Commercial plus industrial is also kept; it picks up oil field and factory load as well.
 
-## Capacity cost per household (PJM)
+## Capacity cost per household (PJM and New England)
 
 *Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
@@ -97,6 +97,8 @@ PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generatin
 - **Upper bound:** the auction total is cleared MW times price. PJM notes this overstates cost to customers, because some load is hedged or self-supplied.
 
 {{claim:m_capacity_result}}
+
+{{claim:m_capacity_ne}}
 
 ## Panel regressions
 
@@ -172,6 +174,7 @@ Where a state publishes monthly switching counts by utility, those replace EIA's
 
 ## Changelog
 
+- **2026-10-08:** New England (ISO-NE Forward Capacity Auctions, 2018/19 to 2027/28) added to capacity cost per household, the Findings chart, the map, and the Your utility page.
 - **2026-10-08:** Massachusetts DOER customer choice data added (through June 2026): 82% of Eversource and 69% of National Grid residential customers are on competitive supply or municipal aggregation. Utility-level coverage now uses each utility's latest EIA annual year (58 utilities with a customer split).
 - **2026-10-08:** State switching statistics (IL, PA, NJ) added for utility-level coverage, checked weekly.
 - **2026-10-08:** Coverage flags: states and utilities where EIA's monthly figures miss homes on competitive supply or at annual-only utilities are flagged on the Your utility page, the map, and the Data status page, with an estimated price for competitive-supply homes where EIA reports the split.

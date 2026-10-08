@@ -12,7 +12,7 @@
       "where": "findings",
       "values": {
         "cap.increase": 195.94,
-        "local.lo40": -1.5053600531702904,
+        "local.lo40": -1.505360056357885,
         "pjm.latest_lo": 10.957758452167464
       }
     },
@@ -36,9 +36,9 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "local.hi40": -0.23049525962572925,
-        "local.lo40": -1.5053600531702904,
-        "local.pct40": -0.8699770650854588
+        "local.hi40": -0.23049525639687873,
+        "local.lo40": -1.505360056357885,
+        "local.pct40": -0.8699770650854477
       }
     },
     "lede_regional": {
@@ -108,7 +108,7 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "local.pct40": -0.8699770650854588
+        "local.pct40": -0.8699770650854477
       },
       "value": "\u22120.9%"
     },
@@ -138,10 +138,29 @@
         "fact.pjm_capped_auctions": "2026/27 to 2028/29"
       }
     },
+    "c1_compare": {
+      "status": "ok",
+      "html": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 132 GW in PJM), and a typical home&#x27;s capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
+      "text": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 132 GW in PJM), and a typical home's capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "cap.same_dy_as_ne": 241.64,
+        "cap_ne.first": 288.82,
+        "cap_ne.first_dy": "2018/19",
+        "cap_ne.latest": 93.49,
+        "cap_ne.latest_dy": "2027/28",
+        "dc.ne_pipeline_gw": 0.66949,
+        "dc.ne_pipeline_per_1k": 0.12336295193987686,
+        "dc.pjm_pipeline_gw": 132.12607,
+        "dc.pjm_pipeline_per_1k": 5.389336375239822
+      }
+    },
     "c1_note": {
       "status": "ok",
-      "html": "Median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM&#x27;s Independent Market Monitor through 2027/28. Delivery years run June to May.",
-      "text": "Median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM's Independent Market Monitor through 2027/28. Delivery years run June to May.",
+      "html": "PJM: median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. New England: median across 12 utilities in CT, MA, ME, NH, RI, from ISO New England Forward Capacity Auction prices; its next auction is due in 2028. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM&#x27;s Independent Market Monitor through 2027/28. Delivery years run June to May.",
+      "text": "PJM: median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. New England: median across 12 utilities in CT, MA, ME, NH, RI, from ISO New England Forward Capacity Auction prices; its next auction is due in 2028. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM's Independent Market Monitor through 2027/28. Delivery years run June to May.",
       "reason": null,
       "refs": [
         "pjm-2026-bra-2028-29",
@@ -151,6 +170,9 @@
       "values": {
         "cap.n_utilities": 24,
         "cap.states": "DC, DE, IL, MD, NJ, OH, PA",
+        "cap_ne.n_utilities": 12,
+        "cap_ne.states": "CT, MA, ME, NH, RI",
+        "fact.isone_next_auction": 2028.0,
         "run.auctions_through": "2028/29",
         "run.dc_attribution_through": "2027/28"
       }
@@ -239,9 +261,9 @@
       ],
       "where": "findings",
       "values": {
-        "local.hi40": -0.23049525962572925,
-        "local.lo40": -1.5053600531702904,
-        "local.pct40": -0.8699770650854588,
+        "local.hi40": -0.23049525639687873,
+        "local.lo40": -1.505360056357885,
+        "local.pct40": -0.8699770650854477,
         "pjm.latest_lo": 10.957758452167464
       }
     },
@@ -256,7 +278,7 @@
       "where": "findings",
       "values": {
         "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
-        "local.hi40": -0.23049525962572925
+        "local.hi40": -0.23049525639687873
       }
     },
     "rel_utility": {
@@ -267,13 +289,13 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.med.pct": -4.574560912045412,
+        "rel.med.pct": -4.574560912045911,
         "rel.n_units": 1339,
-        "rel.saidi.hi": 0.3213934486601344,
-        "rel.saidi.lo": -4.848154087791712,
-        "rel.saidi.pct": -2.2975651729961633,
-        "rel.saifi.lo": -4.462883087529046,
-        "rel.saifi.pct": -1.84129626827364,
+        "rel.saidi.hi": 0.32139353269300397,
+        "rel.saidi.lo": -4.848154167497687,
+        "rel.saidi.pct": -2.297565172997873,
+        "rel.saifi.lo": -4.462883115886673,
+        "rel.saifi.pct": -1.841296268275483,
         "rel.years": "2013-2025"
       }
     },
@@ -285,9 +307,9 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.county.last": -13.244218938922025,
+        "rel.county.last": -13.244218938922058,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753064305236,
+        "rel.county.max_lo": -17.79975306430528,
         "rel.county.n_high": 34
       }
     },
@@ -409,6 +431,27 @@
         "cap.y2026_27.low": 197.69
       }
     },
+    "m_capacity_ne": {
+      "status": "ok",
+      "html": "<strong>New England.</strong> ISO New England&#x27;s Forward Capacity Auctions run three years ahead with the same June-to-May years. The region-wide price fell from $9.55 per kW-month for 2018/19 to $2.59 for 2026/27, then rose to $3.58 for 2027/28; the next auction, for 2028/29, is due in 2028 after a delay for market redesign. With the same method and New England&#x27;s annual energy, a typical home&#x27;s capacity cost fell from $289 a year to $93. All New England states but Vermont pass auction prices through default supply. No data center attribution has been published; the region has 0.7 GW of data centers planned or under construction, about 0.1 MW per 1,000 homes against 5.4 in PJM.",
+      "text": "New England. ISO New England's Forward Capacity Auctions run three years ahead with the same June-to-May years. The region-wide price fell from $9.55 per kW-month for 2018/19 to $2.59 for 2026/27, then rose to $3.58 for 2027/28; the next auction, for 2028/29, is due in 2028 after a delay for market redesign. With the same method and New England's annual energy, a typical home's capacity cost fell from $289 a year to $93. All New England states but Vermont pass auction prices through default supply. No data center attribution has been published; the region has 0.7 GW of data centers planned or under construction, about 0.1 MW per 1,000 homes against 5.4 in PJM.",
+      "reason": null,
+      "refs": [],
+      "where": "methods",
+      "values": {
+        "auc_ne.y2018_19": 9.551,
+        "auc_ne.y2026_27": 2.59,
+        "auc_ne.y2027_28": 3.58,
+        "cap_ne.first": 288.82,
+        "cap_ne.first_dy": "2018/19",
+        "cap_ne.latest": 93.49,
+        "cap_ne.latest_dy": "2027/28",
+        "dc.ne_pipeline_gw": 0.66949,
+        "dc.ne_pipeline_per_1k": 0.12336295193987686,
+        "dc.pjm_pipeline_per_1k": 5.389336375239822,
+        "fact.isone_next_auction": 2028.0
+      }
+    },
     "m_local": {
       "status": "ok",
       "html": "<strong>Local load:</strong> comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a <strong>0.9% lower</strong> residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
@@ -420,9 +463,9 @@
       ],
       "where": "methods",
       "values": {
-        "local.hi40": -0.23049525962572925,
-        "local.lo40": -1.5053600531702904,
-        "local.pct40": -0.8699770650854588
+        "local.hi40": -0.23049525639687873,
+        "local.lo40": -1.505360056357885,
+        "local.pct40": -0.8699770650854477
       }
     },
     "m_local_benchmark": {
@@ -436,7 +479,7 @@
       "where": "methods",
       "values": {
         "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
-        "local.hi40": -0.23049525962572925
+        "local.hi40": -0.23049525639687873
       }
     },
     "m_coverage": {
@@ -490,17 +533,17 @@
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.ieee.hi": 2.900560844385769,
-        "rel.ieee.lo": -4.108306707231879,
-        "rel.ieee.pct": -0.6656704852563755,
-        "rel.med.hi": -1.554456200672194,
-        "rel.med.lo": -7.502015086729507,
-        "rel.med.pct": -4.574560912045412,
-        "rel.saidi.hi": 0.3213934486601344,
-        "rel.saidi.lo": -4.848154087791712,
-        "rel.saidi.pct": -2.2975651729961633,
-        "rel.saifi.lo": -4.462883087529046,
-        "rel.saifi.pct": -1.84129626827364
+        "rel.ieee.hi": 2.9005608300142427,
+        "rel.ieee.lo": -4.108306693834251,
+        "rel.ieee.pct": -0.6656704852537998,
+        "rel.med.hi": -1.5544562096819203,
+        "rel.med.lo": -7.50201507826509,
+        "rel.med.pct": -4.574560912045911,
+        "rel.saidi.hi": 0.32139353269300397,
+        "rel.saidi.lo": -4.848154167497687,
+        "rel.saidi.pct": -2.297565172997873,
+        "rel.saifi.lo": -4.462883115886673,
+        "rel.saifi.pct": -1.841296268275483
       }
     },
     "m_rel_county": {
@@ -511,12 +554,12 @@
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.county.last": -13.244218938922025,
+        "rel.county.last": -13.244218938922058,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753064305236,
+        "rel.county.max_lo": -17.79975306430528,
         "rel.county.n_high": 34,
         "rel.county.threshold": 10,
-        "rel.county.y2024": -35.699007258608404
+        "rel.county.y2024": -35.699007258608454
       }
     },
     "m_case_dominion": {
@@ -585,10 +628,10 @@
     "run.auctions_through": "2028/29",
     "run.dc_attribution_through": "2027/28",
     "run.latest_months": "January to July",
-    "local.pct40": -0.8699770650854588,
-    "local.lo40": -1.5053600531702904,
-    "local.hi40": -0.23049525962572925,
-    "local.p": 0.007897750108398771,
+    "local.pct40": -0.8699770650854477,
+    "local.lo40": -1.505360056357885,
+    "local.hi40": -0.23049525639687873,
+    "local.p": 0.007897750418010663,
     "local.n_units": 326,
     "pjm.y2015": 2.4354321521718125,
     "pjm.y2015_lo": -0.997371047253226,
@@ -775,6 +818,39 @@
     "auc.dc_first_dy": "2025/26",
     "auc.dc_last_dy": "2027/28",
     "auc.no_dc_dy": "2028/29",
+    "cap_ne.y2018_19": 288.82,
+    "cap_ne.y2019_20": 200.97,
+    "cap_ne.y2020_21": 156.27,
+    "cap_ne.y2021_22": 131.25,
+    "cap_ne.y2022_23": 107.75,
+    "cap_ne.y2023_24": 58.01,
+    "cap_ne.y2024_25": 82.94,
+    "cap_ne.y2025_26": 69.98,
+    "cap_ne.y2026_27": 66.69,
+    "cap_ne.y2027_28": 93.49,
+    "cap_ne.first_dy": "2018/19",
+    "cap_ne.first": 288.82,
+    "cap_ne.latest_dy": "2027/28",
+    "cap_ne.latest": 93.49,
+    "cap_ne.max": 288.82,
+    "cap_ne.n_utilities": 12,
+    "cap_ne.states": "CT, MA, ME, NH, RI",
+    "auc_ne.y2018_19": 9.551,
+    "auc_ne.y2019_20": 7.03,
+    "auc_ne.y2020_21": 5.297,
+    "auc_ne.y2021_22": 4.631,
+    "auc_ne.y2022_23": 3.8,
+    "auc_ne.y2023_24": 2.001,
+    "auc_ne.y2024_25": 2.611,
+    "auc_ne.y2025_26": 2.591,
+    "auc_ne.y2026_27": 2.59,
+    "auc_ne.y2027_28": 3.58,
+    "auc_ne.latest_dy": "2027/28",
+    "cap.same_dy_as_ne": 241.64,
+    "dc.pjm_pipeline_gw": 132.12607,
+    "dc.pjm_pipeline_per_1k": 5.389336375239822,
+    "dc.ne_pipeline_gw": 0.66949,
+    "dc.ne_pipeline_per_1k": 0.12336295193987686,
     "case.dom.idx": 109.1,
     "case.dom.chg19": 9.099999999999994,
     "case.dom.ytd": 16.971330485649073,
@@ -812,38 +888,38 @@
     "gen.texas": 88.4,
     "gen.pjm": 26.7,
     "gen.georgia": 8.0,
-    "rel.saidi.pct": -2.2975651729961633,
-    "rel.saidi.lo": -4.848154087791712,
-    "rel.saidi.hi": 0.3213934486601344,
-    "rel.saifi.pct": -1.84129626827364,
-    "rel.saifi.lo": -4.462883087529046,
-    "rel.saifi.hi": 0.8522282195340791,
-    "rel.med.pct": -4.574560912045412,
-    "rel.med.lo": -7.502015086729507,
-    "rel.med.hi": -1.554456200672194,
-    "rel.saifi_med.pct": -1.8991312620697087,
-    "rel.saifi_med.lo": -4.033983772991901,
-    "rel.saifi_med.hi": 0.28321301127607335,
+    "rel.saidi.pct": -2.297565172997873,
+    "rel.saidi.lo": -4.848154167497687,
+    "rel.saidi.hi": 0.32139353269300397,
+    "rel.saifi.pct": -1.841296268275483,
+    "rel.saifi.lo": -4.462883115886673,
+    "rel.saifi.hi": 0.8522282494655586,
+    "rel.med.pct": -4.574560912045911,
+    "rel.med.lo": -7.50201507826509,
+    "rel.med.hi": -1.5544562096819203,
+    "rel.saifi_med.pct": -1.8991312620710077,
+    "rel.saifi_med.lo": -4.033983731625767,
+    "rel.saifi_med.hi": 0.28321296804636464,
     "rel.n_units": 1339,
     "rel.years": "2013-2025",
-    "rel.ieee.pct": -0.6656704852563755,
-    "rel.ieee.lo": -4.108306707231879,
-    "rel.ieee.hi": 2.900560844385769,
+    "rel.ieee.pct": -0.6656704852537998,
+    "rel.ieee.lo": -4.108306693834251,
+    "rel.ieee.hi": 2.9005608300142427,
     "rel.share_state_method": 24.9,
     "rel.county.n_high": 34,
     "rel.county.n": 2978,
     "rel.county.threshold": 10,
     "rel.county.last_year": 2025,
-    "rel.county.last": -13.244218938922025,
-    "rel.county.max_lo": -17.799753064305236,
-    "rel.county.max": -2.34885052848659,
-    "rel.county.y2018": -2.34885052848659,
-    "rel.county.y2020": -16.86495053482828,
-    "rel.county.y2021": -5.781894155800593,
-    "rel.county.y2022": -9.539484087729166,
-    "rel.county.y2023": -2.580274517717729,
-    "rel.county.y2024": -35.699007258608404,
-    "rel.county.y2025": -13.244218938922025,
+    "rel.county.last": -13.244218938922058,
+    "rel.county.max_lo": -17.79975306430528,
+    "rel.county.max": -2.3488505284866346,
+    "rel.county.y2018": -2.3488505284866346,
+    "rel.county.y2020": -16.864950534828303,
+    "rel.county.y2021": -5.781894155800638,
+    "rel.county.y2022": -9.5394840877292,
+    "rel.county.y2023": -2.580274517717751,
+    "rel.county.y2024": -35.699007258608454,
+    "rel.county.y2025": -13.244218938922058,
     "cov.n_states_competitive": 9,
     "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX",
     "cov.homes_competitive": 20277686,
@@ -859,8 +935,9 @@
     "fact.georgia_base_rates_frozen_through": 2028.0,
     "fact.lbnl_us_dc_twh_2023": 176.0,
     "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
+    "fact.isone_next_auction": 2028.0,
     "case.dom.base_rate_share": 38.026835713647706
   },
   "facts_due": [],
-  "n_claims": 36
+  "n_claims": 38
 }

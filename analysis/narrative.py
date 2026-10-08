@@ -45,9 +45,10 @@ def dy_key(dy: str) -> str:
 
 # ---------------------------------------------------------------- values
 
-def capacity_series() -> list[dict]:
-    """Median capacity cost per home by delivery year, restructured PJM (default service)."""
+def capacity_series(market: str = "PJM") -> list[dict]:
+    """Median capacity cost per home by delivery year for default-service utilities in a market."""
     cc = pd.DataFrame(json.loads((DATA / "capacity_household_cost.json").read_text()))
+    cc = cc[cc.get("market", "PJM").eq(market)] if "market" in cc else cc
     d = cc[cc.supply == "default_service"].groupby("delivery_year").agg(
         central=("usd_per_home_yr_central", "median"), low=("usd_per_home_yr_low", "median"),
         high=("usd_per_home_yr_high", "median"), dc=("usd_per_home_yr_dc_central", "median"),
@@ -130,7 +131,7 @@ def values() -> dict:
               "cap.dc_latest_dy": with_dc[-1]["dy"] if with_dc else None,
               "cap.dc_latest": with_dc[-1]["dc"] if with_dc else None})
     cc = pd.DataFrame(json.loads((DATA / "capacity_household_cost.json").read_text()))
-    ds = cc[cc.supply == "default_service"]
+    ds = cc[(cc.supply == "default_service") & (cc.market.eq("PJM") if "market" in cc else True)]
     v["cap.n_utilities"], v["cap.states"] = int(ds.utility_id_eia.nunique()), ", ".join(sorted(ds.state.unique()))
     v["cap.kwh"] = float(ds[ds.delivery_year == last["dy"]].kwh_per_home_yr.median())
     auc = pd.read_csv(REF / "capacity_auctions.csv")
@@ -146,6 +147,29 @@ def values() -> dict:
     v["auc.dc_busd_total"] = float(dc.dc_attributable_busd.sum())
     v["auc.dc_first_dy"], v["auc.dc_last_dy"] = (dc.delivery_year.iloc[0], dc.delivery_year.iloc[-1]) if len(dc) else (None, None)
     v["auc.no_dc_dy"] = ", ".join(rto[rto.dc_attributable_busd.isna() & (rto.delivery_year > (v["auc.dc_last_dy"] or ""))].delivery_year) or None
+
+    # New England (ISO-NE Forward Capacity Auctions), same method
+    ne = capacity_series("ISONE")
+    if ne:
+        for d in ne:
+            v[f"cap_ne.{dy_key(d['dy'])}"] = d["central"]
+        v.update({"cap_ne.first_dy": ne[0]["dy"], "cap_ne.first": ne[0]["central"], "cap_ne.latest_dy": ne[-1]["dy"],
+                  "cap_ne.latest": ne[-1]["central"], "cap_ne.max": max(d["central"] for d in ne)})
+        ncc = cc[(cc.market == "ISONE") & (cc.supply == "default_service")] if "market" in cc else cc.iloc[0:0]
+        v["cap_ne.n_utilities"], v["cap_ne.states"] = int(ncc.utility_id_eia.nunique()), ", ".join(sorted(ncc.state.unique()))
+        nea = auc[(auc.market == "ISONE") & (auc.lda == "RTO")]
+        for r in nea.itertuples():
+            v[f"auc_ne.{dy_key(r.delivery_year)}"] = float(r.price_native)
+        v["auc_ne.latest_dy"] = nea.delivery_year.iloc[-1] if len(nea) else None
+        same = next((d for d in cap if d["dy"] == ne[-1]["dy"]), None)
+        v["cap.same_dy_as_ne"] = same["central"] if same else None
+    # Data center load by grid region (operating + pipeline MW per 1,000 residential customers)
+    ux = pd.DataFrame(json.loads((DATA / "utility_exposure.json").read_text()))
+    g = ux.groupby("balancing_authority")[["mw_op", "mw_pipeline", "res_customers"]].sum()
+    for ba, key in (("PJM", "pjm"), ("ISNE", "ne")):
+        if ba in g.index:
+            v[f"dc.{key}_pipeline_gw"] = g.loc[ba, "mw_pipeline"] / 1000
+            v[f"dc.{key}_pipeline_per_1k"] = g.loc[ba, "mw_pipeline"] / g.loc[ba, "res_customers"] * 1000
 
     # Case studies
     series, ytd = case_series()
@@ -227,6 +251,8 @@ def fmt(x, spec: str | None) -> str:
             return f"{x:.0f}"
         case "f1":
             return f"{x:.1f}"
+        case "f2":
+            return f"{x:.2f}"
         case "r100":
             return f"{round(x, -2):,.0f}"
         case "month":

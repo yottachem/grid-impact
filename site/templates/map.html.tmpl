@@ -50,7 +50,7 @@ optgroup { font-style: normal; color: var(--muted); }
         <option value="burden">Energy burden: annual bill as % of median income</option>
         <option value="bill">Average annual residential bill</option>
         <option value="chg">Bill change since 2018-19, after inflation</option>
-        <option value="cap">PJM capacity cost per home, 2026/27</option>
+        <option value="cap">Capacity auction cost per home, 2026/27 (PJM and New England)</option>
       </optgroup>
       <optgroup label="Data center load: counties">
         <option value="pipe1k">Data center pipeline MW per 1,000 households</option>
@@ -86,7 +86,7 @@ const METRICS = {
   burden: { bins: [0.015, 0.02, 0.03, 0.04, 0.06], colors: SEQ, labels: ["< 1.5%", "1.5–2%", "2–3%", "3–4%", "4–6%", "6%+"], fmt: v => (v * 100).toFixed(1) + "%" },
   bill: { bins: [1600, 1800, 2000, 2200, 2400], colors: SEQ, labels: ["< $1.6k", "1.6–1.8k", "1.8–2.0k", "2.0–2.2k", "2.2–2.4k", "$2.4k+"], fmt: v => "$" + Math.round(v).toLocaleString() },
   chg: { bins: [-0.15, -0.05, 0.05, 0.15], colors: DIV, labels: ["−15% or more", "−15 to −5%", "±5%", "+5 to +15%", "+15% or more"], fmt: v => (v > 0 ? "+" : "") + (v * 100).toFixed(0) + "%" },
-  cap: { bins: [200, 240, 280, 320], colors: SEQ.slice(1), labels: ["< $200", "$200–240", "$240–280", "$280–320", "$320+"], fmt: v => "$" + Math.round(v) },
+  cap: { bins: [50, 100, 175, 250], colors: SEQ.slice(1), labels: ["< $50", "$50–100", "$100–175", "$175–250", "$250+"], fmt: v => "$" + Math.round(v) },
   pipe1k: { bins: [5, 25, 100, 250], colors: SEQ.slice(1), labels: ["< 5", "5–25", "25–100", "100–250", "250+ MW"], fmt: v => v.toFixed(1) + " MW", county: true },
   op1k: { bins: [5, 25, 100, 250], colors: SEQ.slice(1), labels: ["< 5", "5–25", "25–100", "100–250", "250+ MW"], fmt: v => v.toFixed(1) + " MW", county: true },
 };
@@ -171,14 +171,14 @@ map.on("load", () => {
       ${row(`Avg annual bill (${p.by || "—"})`, p.bill ? "$" + Math.round(p.bill).toLocaleString() + (p.bb === "state" ? " (state average)" : "") : "—")}
       ${row("Energy burden", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : "—")}
       ${row("Bill change since 2019", p.chg != null ? METRICS.chg.fmt(p.chg) : "—")}
-      ${row("Capacity cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
+      ${row("Capacity auction cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
       ${row("Data center load in tract", p.dcmw ? fmtMW(p.dcmw) : null)}</div>`,
     "counties-fill": p => `<div class="pop"><b>${esc(p.name || "County " + p.id)}${p.st ? ", " + p.st : ""}</b>
       ${row("Households", p.hh ? Math.round(p.hh).toLocaleString() : "—")}
       ${row("Energy burden (household-weighted)", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : null)}
       ${row("Avg annual bill", p.bill != null ? "$" + Math.round(p.bill).toLocaleString() : null)}
       ${row("Bill change since 2018-19", p.chg != null ? METRICS.chg.fmt(p.chg) : null)}
-      ${row("Capacity cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) : null)}
+      ${row("Capacity auction cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) : null)}
       ${row("Operating data centers", p.op ? fmtMW(p.op) : "none listed")}
       ${row("Pipeline (proposed + construction)", p.pipe ? fmtMW(p.pipe) : "none listed")}
       ${row("Pipeline per 1,000 households", p.pipe1k ? p.pipe1k.toFixed(1) + " MW" : null)}

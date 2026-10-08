@@ -76,9 +76,9 @@ sup.fn { font: 500 10px/0 var(--font-data); margin-left: 1px; } sup.fn a { color
   <section class="figures" aria-label="Headline figures">{{figure:fig1}}{{figure:fig2}}{{figure:fig3}}{{figure:fig4}}</section>
 
   <section class="chart" aria-labelledby="c1h">
-    <h2 id="c1h">Capacity cost per household in restructured PJM states</h2>
-    <p class="reading" id="c1r">{{claim:c1_reading}}</p>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Capacity cost per home per year (central estimate)</span><span><i style="background:var(--s2)"></i>Portion attributed to data center load</span><span><i class="line" style="background:var(--muted)"></i>Range (peak factor 1.0 to 1.4)</span></div>
+    <h2 id="c1h">Capacity cost per household: restructured PJM vs. New England</h2>
+    <p class="reading" id="c1r">{{claim:c1_reading}} {{claim:c1_compare}}</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Capacity cost per home per year (central estimate)</span><span><i style="background:var(--s2)"></i>Portion attributed to data center load</span><span><i class="line" style="background:var(--muted)"></i>Range (peak factor 1.0 to 1.4)</span><span><i class="line" style="background:var(--s3)"></i>New England (ISO-NE), central estimate</span></div>
     <div class="plot" id="c1"></div>
     <p class="note">{{claim:c1_note}}</p>
   </section>
@@ -145,7 +145,7 @@ function chart1() {
   const svg = d3.select(host).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img")
     .attr("aria-label", "Column chart of capacity cost per household by delivery year");
   const x = d3.scaleBand().domain(cap.map(d => d.dy)).range([m.l, W - m.r]).padding(0.28);
-  const y = d3.scaleLinear().domain([0, Math.max(300, d3.max(cap, d => d.high) * 1.08)]).nice().range([H - m.b, m.t]);
+  const y = d3.scaleLinear().domain([0, Math.max(300, d3.max(cap, d => d.high) * 1.08, d3.max(D.capacity_ne || [], d => d.central) * 1.08 || 0)]).nice().range([H - m.b, m.t]);
   svg.append("g").selectAll("line").data(y.ticks(6)).join("line")
     .attr("x1", m.l).attr("x2", W - m.r).attr("y1", d => y(d)).attr("y2", d => y(d)).style("stroke", "var(--grid)");
   svg.append("g").selectAll("text").data(y.ticks(6)).join("text")
@@ -166,10 +166,20 @@ function chart1() {
   g.filter(d => ["2024/25", capLast.dy].includes(d.dy)).append("text").attr("class", "lab")
     .attr("x", d => x(d.dy) + bw / 2).attr("y", d => y(d.high) - 8).attr("text-anchor", "middle").text(d => usd(d.central));
   svg.append("line").attr("x1", m.l).attr("x2", W - m.r).attr("y1", y(0)).attr("y2", y(0)).style("stroke", "var(--line)");
+  // New England: same method, drawn as a line over the PJM columns
+  const ne = (D.capacity_ne || []).filter(d => x(d.dy) != null);
+  const neX = d => x(d.dy) + bw / 2;
+  svg.append("path").datum(ne).attr("d", d3.line().x(neX).y(d => y(d.central)))
+    .style("fill", "none").style("stroke", "var(--s3)").style("stroke-width", "2px");
+  svg.append("g").selectAll("circle").data(ne).join("circle").attr("cx", neX).attr("cy", d => y(d.central)).attr("r", 4)
+    .style("fill", "var(--s3)").style("stroke", "var(--surface)").style("stroke-width", "2px");
+  const neLast = ne[ne.length - 1];
+  if (neLast) svg.append("text").attr("class", "lab").attr("x", neX(neLast) + 8).attr("y", y(neLast.central) - 8).text(`New England ${usd(neLast.central)}`);
+  const neBy = new Map(ne.map(d => [d.dy, d]));
   const tip = tooltip(host);
   g.append("rect").attr("x", d => x(d.dy) - x.step() * x.paddingInner() / 2).attr("width", x.step()).attr("y", m.t).attr("height", H - m.t - m.b)
     .style("fill", "transparent")
-    .on("pointermove", (e, d) => tip.show(`<b>Delivery year ${d.dy}</b>${row("Cost per home", usd(d.central), css("--s1"))}${row("Range", `${usd(d.low)} to ${usd(d.high)}`)}${row("Data center portion", d.dc != null ? usd(d.dc) : "not published", css("--s2"))}${row("Auction price", "$" + d.price.toFixed(2) + "/MW-day")}`, e))
+    .on("pointermove", (e, d) => tip.show(`<b>Delivery year ${d.dy}</b>${row("Cost per home", usd(d.central), css("--s1"))}${row("Range", `${usd(d.low)} to ${usd(d.high)}`)}${row("Data center portion", d.dc != null ? usd(d.dc) : "not published", css("--s2"))}${row("Auction price", "$" + d.price.toFixed(2) + "/MW-day")}${neBy.has(d.dy) ? row("New England cost per home", usd(neBy.get(d.dy).central), css("--s3")) : ""}`, e))
     .on("pointerleave", () => tip.hide());
 }
 
