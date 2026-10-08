@@ -59,7 +59,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: lbnl-2025-retail-price-trends
     title: "Recent Retail Electricity Price Trends: What Do We Know… or Think We Know?"
@@ -80,7 +80,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: lbnl-2026-retail-price-trends
     title: "Retail Electricity Price Trends and Drivers: 2026 Edition"
@@ -100,7 +100,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: imm-2026-som-2025
     title: 2025 State of the Market Report for PJM
@@ -121,7 +121,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: imm-2025-bra-2025-26-part-g
     title: "IMM Analysis of the 2025/2026 RPM Base Residual Auction, Part G (revised)"
@@ -141,7 +141,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: imm-2025-bra-2026-27-part-a
     title: "IMM Analysis of the 2026/2027 RPM Base Residual Auction, Part A"
@@ -161,7 +161,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: imm-2026-bra-2027-28-part-a
     title: "IMM Analysis of the 2027/2028 RPM Base Residual Auction, Part A"
@@ -181,7 +181,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: pjm-2024-bra-2025-26
     title: 2025/2026 Base Residual Auction Report
@@ -200,7 +200,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: pjm-2025-bra-2026-27
     title: 2026/2027 Base Residual Auction Report
@@ -219,7 +219,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: pjm-2025-bra-2027-28-release
     title: PJM Auction Procures 134,479 MW of Generation Resources (2027/2028 Base Residual Auction)
@@ -239,7 +239,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2026-12-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: pjm-2026-bra-2028-29
     title: 2028/2029 Base Residual Auction Report
@@ -258,7 +258,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: ieefa-2025-pjm-capacity
     title: Projected data center growth spurs PJM capacity prices by factor of 10
@@ -278,7 +278,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: synapse-2025-dc-opc-capacity
     title: "Drivers of PJM's Capacity Market Price Surge and the Impact to DC Electric Customers"
@@ -299,7 +299,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: mdopc-2025-07-auction
     title: Data center power demands drive record power auction prices with varying impacts on Maryland customers
@@ -321,7 +321,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: mdopc-2025-12-auction
     title: Data center power demands again drive record power auction prices
@@ -340,7 +340,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-07-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: ucs-2025-pjm-transmission
     title: Connection Costs Loophole Costs Customers Over $4 Billion to Connect Data Centers to Power Grid
@@ -361,7 +361,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: harvard-eli-2025-extracting-profits
     title: "Extracting Profits from the Public: How Utility Ratepayers Are Paying for Big Tech's Power"
@@ -381,7 +381,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: jlarc-2024-va-data-centers
     title: Data Centers in Virginia (Report 598)
@@ -401,7 +401,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: va-scc-2025-dominion-biennial
     title: SCC Issues Order in Dominion Energy Virginia's 2025 Biennial Review
@@ -421,7 +421,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-01-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: gapsc-2025-rate-freeze
     title: Georgia PSC approves plan to freeze Georgia Power base rates through at least 2028
@@ -440,7 +440,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2026-12-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: texas-2025-sb6
     title: Texas Senate Bill 6 (89th Legislature) on large loads in ERCOT
@@ -460,7 +460,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: e3-2025-amazon-ratepayer
     title: Study for Amazon on rate design to manage large-load growth
@@ -480,7 +480,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: cmu-2025-oeo-grid-impacts
     title: Electricity Grid Impacts of Rising Demand from Data Centers and Cryptocurrency Mining Operations
@@ -501,7 +501,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: johnson-2026-erl-costs-emissions
     title: Power system costs and emissions from data center and cryptocurrency mining expansion in the United States
@@ -523,7 +523,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: lbnl-2024-dc-energy
     title: 2024 United States Data Center Energy Usage Report
@@ -544,7 +544,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: nerc-2026-ltra-2025
     title: 2025 Long-Term Reliability Assessment
@@ -564,7 +564,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2026-12-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: aceee-2024-energy-burden
     title: "How High Are Household Energy Burdens? An Assessment of National and Metropolitan Energy Burdens across the U.S."
@@ -585,7 +585,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-09-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: fractracker-2026-dc-tracker
     title: U.S. Data Centers Tracker
@@ -605,7 +605,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-04-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: pnnl-2025-im3-atlas
     title: IM3 Open Source Data Center Atlas
@@ -624,7 +624,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   # ------------------------------------------------------------ News and fact-checks
   - id: bloomberg-2025-wholesale-near-dc
@@ -645,7 +645,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: politifact-2026-warren-267
     title: How much have data centers increased electricity prices?
@@ -666,7 +666,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: utilitydive-2025-primary-reason
     title: "Data centers 'primary reason' for high PJM capacity prices: market monitor"
@@ -686,7 +686,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: utilitydive-2026-forty-percent
     title: "Data centers were 40% of PJM capacity costs in last auction: market monitor"
@@ -705,7 +705,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: marketplace-2026-lowered-bills
     title: Data centers lowered electric bills in some places — for now
@@ -725,7 +725,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   # ------------------------------------------------------------ Batch 1, part 2: Josh's links (2026-10-08) and what they cite
   - id: cr-2026-ai-data-centers
@@ -750,7 +750,7 @@ entries:
     review_by: 2027-03-31
     vault: "wiki/sources/grid-impact/2026-03-20 - AI Data Centers Big Tech's Impact on Electric Bills, Water, and More.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: crs-2025-r48646
     title: "Data Centers and Their Energy Consumption: Frequently Asked Questions (R48646)"
@@ -774,7 +774,7 @@ entries:
     review_by: 2027-03-31
     vault: "wiki/sources/grid-impact/2025-08-26 - Data Centers and Their Energy Consumption Frequently Asked Questions (R48646).md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: hls-2025-peskoe-interview
     title: How data centers may lead to higher electricity bills
@@ -796,7 +796,7 @@ entries:
     review_by: 2027-03-31
     vault: "wiki/sources/grid-impact/2025-09-03 - How data centers may lead to higher electricity bills.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: datacenterwatch-2025-q2
     title: Data Center Watch Report, Q2 2025 Update
@@ -815,7 +815,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-01-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: heatmap-2026-cancellations
     title: "Local Opposition to Data Centers Is Surging. So Are Canceled Projects."
@@ -835,7 +835,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-01-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: ceres-2025-drained-by-data
     title: "Drained by Data: The Cumulative Impact of Data Centers on Regional Water Stress"
@@ -854,7 +854,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-06-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: iea-2025-energy-ai
     title: Energy and AI
@@ -873,7 +873,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-04-30
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: epri-2024-powering-intelligence
     title: "Powering Intelligence: Analyzing Artificial Intelligence and Data Center Energy Consumption"
@@ -892,7 +892,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-02-28
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: epri-2026-powering-intelligence-update
     title: "Powering Intelligence: Updated U.S. Data Center Scenarios"
@@ -912,7 +912,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-02-28
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: eia-2026-dc-pilot-survey
     title: EIA Launches Pilot Survey on Energy Use at Data Centers
@@ -933,7 +933,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   # ------------------------------------------------------------ Batch 1, part 3: Josh's second set of links (2026-10-08) and what they cite
   - id: npr-2026-ratepayers-congress
@@ -951,14 +951,14 @@ entries:
       - One estimate puts Maryland households' added cost at about $168 to $216 a year, mainly from the data center boom.
       - Experts say pass-through depends on each utility's supply contracts, rates, and regulators, and that nondisclosure agreements hide what data centers pay.
     relation: supports
-    relation_note: The Maryland estimate is close to this site's capacity cost for a typical restructured-PJM home ($217 to $242 a year), and the story describes the same regional spread of costs.
-    use: [benchmark, context]
+    relation_note: Describes the same regional spread of capacity costs the site measures. The Maryland estimate is not sourced in the story, so the site does not compare against it.
+    use: [context]
     cites: [imm-2026-som-2025, harvard-eli-2025-extracting-profits]
     accessed: 2026-10-08
     review_by: 2026-12-31
     vault: "wiki/sources/grid-impact/2026-10-01 - AI data centers How much are ratepayers on the hook for.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: eesi-2026-dc-higher-bills
     title: Data Center Power Demands Are Contributing to Higher Energy Bills
@@ -981,7 +981,7 @@ entries:
     review_by: 2027-02-28
     vault: "wiki/sources/grid-impact/2026-02-24 - Data Center Power Demands Are Contributing to Higher Energy Bills.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: psu-2026-ask-expert-wiseman
     title: "Ask an expert: Are data centers driving up my electricity bills?"
@@ -1003,7 +1003,7 @@ entries:
     review_by: 2027-06-30
     vault: "wiki/sources/grid-impact/2026-07-07 - Ask an expert Are data centers driving up my electricity bills.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: psu-iee-2026-wiseman-bill
     title: What AI data centers could mean for your electric bill
@@ -1024,7 +1024,7 @@ entries:
     review_by: 2027-06-30
     vault: "wiki/sources/grid-impact/2026-06-18 - What AI data centers could mean for your electric bill.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: hk-2026-california-dc-laws
     title: "California's 2026 Data Center Laws: What You Need to Know"
@@ -1046,7 +1046,7 @@ entries:
     review_by: 2027-03-31
     vault: "wiki/sources/grid-impact/2026-10-05 - California's 2026 Data Center Laws What You Need to Know.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: umich-stpp-2025-dc-come-to-town
     title: What Happens When Data Centers Come to Town?
@@ -1068,7 +1068,7 @@ entries:
     review_by: 2027-06-30
     vault: "wiki/sources/grid-impact/2025-07 - What Happens When Data Centers Come to Town.md"
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: icf-2025-power-demand
     title: "Power Demand Forecasts: How Electricity Demand Will Grow, and Its Impact on Affordability"
@@ -1088,7 +1088,7 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-05-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08
 
   - id: neada-2025-cost-of-power
     title: "The Cost of Power: How Soaring Electric Rates Are Deepening the Energy Affordability Crisis"
@@ -1108,4 +1108,4 @@ entries:
     accessed: 2026-10-08
     review_by: 2027-03-31
     added: 2026-10-08
-    approved: null
+    approved: 2026-10-08

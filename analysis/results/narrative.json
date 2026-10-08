@@ -1,5 +1,5 @@
 {
-  "run_date": "2026-10-07",
+  "run_date": "2026-10-08",
   "prices_through": "2026-07",
   "data_checks_failed": {},
   "claims": {
@@ -82,10 +82,10 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "cap.dc_latest": 103.14,
+        "cap.dc_latest": 95.78,
         "cap.dc_latest_dy": "2027/28"
       },
-      "value": "$103"
+      "value": "$96"
     },
     "fig3": {
       "status": "ok",
@@ -114,8 +114,8 @@
     },
     "c1_reading": {
       "status": "ok",
-      "html": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $100 to $137 a year of it to data center load.",
-      "text": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $100 to $137 a year of it to data center load.",
+      "html": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $96 to $137 a year of it to data center load.",
+      "text": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $96 to $137 a year of it to data center load.",
       "reason": null,
       "refs": [
         "imm-2026-som-2025",
@@ -126,7 +126,7 @@
         "auc.latest_dy": "2028/29",
         "auc.y2025_26": 269.92,
         "cap.dc_max": 137.03,
-        "cap.dc_min": 100.19,
+        "cap.dc_min": 95.78,
         "cap.first_dy": "2018/19",
         "cap.latest": 241.64,
         "cap.latest_dy": "2028/29",
@@ -245,6 +245,20 @@
         "pjm.latest_lo": 10.957758452167464
       }
     },
+    "local_benchmark": {
+      "status": "ok",
+      "html": "This matches EPRI&#x27;s state-level causal study, which estimates that data center growth from 2019 to 2024 lowered average residential rates about 6%.",
+      "text": "This matches EPRI's state-level causal study, which estimates that data center growth from 2019 to 2024 lowered average residential rates about 6%.",
+      "reason": null,
+      "refs": [
+        "epri-2026-dc-rates"
+      ],
+      "where": "findings",
+      "values": {
+        "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
+        "local.hi40": -0.23049525962572925
+      }
+    },
     "rel_utility": {
       "status": "ok",
       "html": "<strong>What about reliability?</strong> Across 1,339 utilities (2013-2025), a 40% rise in a utility&#x27;s own commercial load has not gone with more outages: \u22122.3% in everyday outage minutes per customer (95% CI \u22124.8% to +0.3%) and \u22121.8% in the number of outages, compared with utilities in the same regional grid and year. Including major storms, \u22124.6%.",
@@ -271,16 +285,16 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.county.last": -13.244218938922659,
+        "rel.county.last": -13.244218938922025,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753077365608,
+        "rel.county.max_lo": -17.799753064305236,
         "rel.county.n_high": 34
       }
     },
     "rel_supply": {
       "status": "ok",
-      "html": "These are local outages that have already happened; the forward risk is supply: PJM&#x27;s 2027/28 auction cleared about 6,500 MW short of its reliability target.",
-      "text": "These are local outages that have already happened; the forward risk is supply: PJM's 2027/28 auction cleared about 6,500 MW short of its reliability target.",
+      "html": "These are local outages that have already happened; the forward risk is supply: PJM&#x27;s 2027/28 auction cleared about 6,600 MW short of its reliability target.",
+      "text": "These are local outages that have already happened; the forward risk is supply: PJM's 2027/28 auction cleared about 6,600 MW short of its reliability target.",
       "reason": null,
       "refs": [
         "nerc-2026-ltra-2025",
@@ -288,7 +302,7 @@
       ],
       "where": "findings",
       "values": {
-        "fact.pjm_shortfall_2027_28_mw": 6520.0
+        "fact.pjm_shortfall_2027_28_mw": 6623.0
       }
     },
     "caveat_timing": {
@@ -354,8 +368,8 @@
     },
     "m_capacity_result": {
       "status": "ok",
-      "html": "<strong>Result:</strong> for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor&#x27;s findings attribute about $100-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
-      "text": "Result: for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor's findings attribute about $100-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
+      "html": "<strong>Result:</strong> for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor&#x27;s findings attribute about $96-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
+      "text": "Result: for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor's findings attribute about $96-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
       "reason": null,
       "refs": [
         "imm-2026-som-2025"
@@ -363,7 +377,7 @@
       "where": "methods",
       "values": {
         "cap.dc_max": 137.03,
-        "cap.dc_min": 100.19,
+        "cap.dc_min": 95.78,
         "cap.first_dy": "2018/19",
         "cap.increase": 195.94,
         "cap.kwh": 10348.765,
@@ -396,6 +410,20 @@
         "local.hi40": -0.23049525962572925,
         "local.lo40": -1.5053600531702904,
         "local.pct40": -0.8699770650854588
+      }
+    },
+    "m_local_benchmark": {
+      "status": "ok",
+      "html": "EPRI&#x27;s state-level causal study, using a different method (an instrumental variable for where data centers were built), finds the same direction: data center growth from 2019 to 2024 lowered average residential rates about 6%.",
+      "text": "EPRI's state-level causal study, using a different method (an instrumental variable for where data centers were built), finds the same direction: data center growth from 2019 to 2024 lowered average residential rates about 6%.",
+      "reason": null,
+      "refs": [
+        "epri-2026-dc-rates"
+      ],
+      "where": "methods",
+      "values": {
+        "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
+        "local.hi40": -0.23049525962572925
       }
     },
     "m_pjm": {
@@ -457,12 +485,12 @@
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.county.last": -13.244218938922659,
+        "rel.county.last": -13.244218938922025,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753077365608,
+        "rel.county.max_lo": -17.799753064305236,
         "rel.county.n_high": 34,
         "rel.county.threshold": 10,
-        "rel.county.y2024": -35.69900725860856
+        "rel.county.y2024": -35.699007258608404
       }
     },
     "m_case_dominion": {
@@ -526,7 +554,7 @@
   },
   "flagged": [],
   "values": {
-    "run.date": "2026-10-07",
+    "run.date": "2026-10-08",
     "run.prices_through": "2026-07",
     "run.auctions_through": "2028/29",
     "run.dc_attribution_through": "2027/28",
@@ -663,12 +691,12 @@
     "cap.y2026_27.central": 237.23,
     "cap.y2026_27.low": 197.69,
     "cap.y2026_27.high": 276.76,
-    "cap.y2026_27.dc": 100.19,
+    "cap.y2026_27.dc": 107.12,
     "cap.y2026_27.price": 329.17,
     "cap.y2027_28.central": 241.64,
     "cap.y2027_28.low": 201.37,
     "cap.y2027_28.high": 281.92,
-    "cap.y2027_28.dc": 103.14,
+    "cap.y2027_28.dc": 95.78,
     "cap.y2027_28.price": 333.44,
     "cap.y2028_29.central": 241.64,
     "cap.y2028_29.low": 201.37,
@@ -687,10 +715,10 @@
     "cap.min_dy": "2023/24",
     "cap.min": 32.41,
     "cap.max_high": 281.92,
-    "cap.dc_min": 100.19,
+    "cap.dc_min": 95.78,
     "cap.dc_max": 137.03,
     "cap.dc_latest_dy": "2027/28",
-    "cap.dc_latest": 103.14,
+    "cap.dc_latest": 95.78,
     "cap.n_utilities": 24,
     "cap.states": "DC, DE, IL, MD, NJ, OH, PA",
     "cap.kwh": 10348.765,
@@ -715,9 +743,9 @@
     "auc.bge.y2025_26": 466.35,
     "auc.dom.y2025_26": 444.26,
     "auc.dc_busd.y2025_26": 9.3,
-    "auc.dc_busd.y2026_27": 6.8,
-    "auc.dc_busd.y2027_28": 7.0,
-    "auc.dc_busd_total": 23.1,
+    "auc.dc_busd.y2026_27": 7.27,
+    "auc.dc_busd.y2027_28": 6.5,
+    "auc.dc_busd_total": 23.07,
     "auc.dc_first_dy": "2025/26",
     "auc.dc_last_dy": "2027/28",
     "auc.no_dc_dy": "2028/29",
@@ -780,28 +808,29 @@
     "rel.county.n": 2978,
     "rel.county.threshold": 10,
     "rel.county.last_year": 2025,
-    "rel.county.last": -13.244218938922659,
-    "rel.county.max_lo": -17.799753077365608,
-    "rel.county.max": -2.3488505284867567,
-    "rel.county.y2018": -2.3488505284867567,
-    "rel.county.y2020": -16.864950534828527,
-    "rel.county.y2021": -5.781894155800882,
-    "rel.county.y2022": -9.539484087729445,
-    "rel.county.y2023": -2.5802745177180064,
-    "rel.county.y2024": -35.69900725860856,
-    "rel.county.y2025": -13.244218938922659,
+    "rel.county.last": -13.244218938922025,
+    "rel.county.max_lo": -17.799753064305236,
+    "rel.county.max": -2.34885052848659,
+    "rel.county.y2018": -2.34885052848659,
+    "rel.county.y2020": -16.86495053482828,
+    "rel.county.y2021": -5.781894155800593,
+    "rel.county.y2022": -9.539484087729166,
+    "rel.county.y2023": -2.580274517717729,
+    "rel.county.y2024": -35.699007258608404,
+    "rel.county.y2025": -13.244218938922025,
     "fact.pjm_states": 13.0,
     "fact.pjm_capped_auctions": "2026/27 to 2028/29",
     "fact.pjm_uncapped_2028_29_usd_mw_day": 554.72,
-    "fact.pjm_shortfall_2027_28_mw": 6520.0,
+    "fact.pjm_shortfall_2027_28_mw": 6623.0,
     "fact.imm_dc_share_of_increase_2025_26": 63.0,
     "fact.dominion_rpm_entry": "2025/26",
     "fact.dominion_base_rate_increase_usd_month": 11.24,
     "fact.dominion_gs5_min_mw": 25.0,
     "fact.georgia_base_rates_frozen_through": 2028.0,
     "fact.lbnl_us_dc_twh_2023": 176.0,
+    "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
     "case.dom.base_rate_share": 38.026835713647706
   },
   "facts_due": [],
-  "n_claims": 32
+  "n_claims": 34
 }

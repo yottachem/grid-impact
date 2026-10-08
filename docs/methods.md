@@ -92,7 +92,7 @@ PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generatin
 
 - **Cost per home per year** = (auction total ÷ PJM annual energy) × (zone price ÷ PJM-wide price) × household kWh per year × residential peak factor.
 - **Peak factor:** capacity is charged on each customer's share of the system peak, and homes peak harder than their share of energy. The central estimate uses 1.2, with 1.0 and 1.4 as the range. A cross-check using a household peak contribution of 2.0-2.5 kW gives $240-300 a year at the capped price.
-- **Data center share:** the market monitor found that data center load added ${{auc.dc_busd.y2025_26:f1}} billion to the 2025/26 auction and ${{auc.dc_busd_total:f1}} billion across the {{auc.dc_first_dy}} to {{auc.dc_last_dy}} auctions. The remainder after 2025/26 is split between the later years in proportion to auction cost. No attribution has been published for {{auc.no_dc_dy}}.
+- **Data center share:** the market monitor estimates that existing and forecast data center load added ${{auc.dc_busd.y2025_26:f1}} billion to the 2025/26 auction, ${{auc.dc_busd.y2026_27:f1}} billion to 2026/27, and ${{auc.dc_busd.y2027_28:f1}} billion to 2027/28 (${{auc.dc_busd_total:f1}} billion in all). Each year's share of auction cost is applied to that year's household cost. No attribution has been published for {{auc.no_dc_dy}}.
 - **Who pays:** auction prices reach customers directly in restructured states (Illinois, New Jersey, Pennsylvania, Ohio, Maryland, Delaware, DC), where default supply passes them through. Regulated utilities mostly recover the cost of their own plants. Dominion supplied its own capacity outside the auction through 2024/25; AEP's regulated utilities still do.
 - **Upper bound:** the auction total is cleared MW times price. PJM notes this overstates cost to customers, because some load is hedged or self-supplied.
 
@@ -104,7 +104,7 @@ PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generatin
 
 The outcome is the log of inflation-adjusted residential price for {{local.n_units:int}} utility service areas, January 2015 to {{run.prices_through:month}}, with utility and month fixed effects, heating and cooling degree days, and standard errors clustered by utility.
 
-- {{claim:m_local}}
+- {{claim:m_local}} {{claim:m_local_benchmark}}
 - {{claim:m_pjm}}
 - {{claim:m_pjm_restructured}}
 
@@ -163,6 +163,7 @@ Every page links to a "Report an issue" form (Google Forms, no sign-in). It asks
 
 ## Changelog
 
+- **2026-10-08:** References page added (52 sources: research, filings, market monitor reports, news). Corrections found while compiling it: PJM's 2027/28 shortfall is 6,623 MW (PJM's release; previously about 6,500 from a secondary source), and the data center share of 2026/27 and 2027/28 capacity cost now uses the market monitor's published figure for each auction ($7.27B and $6.50B) instead of splitting the three-auction total by auction cost.
 - **2026-10-08:** Findings and Methods wording generated from checked statements with conditions and plausibility ranges; hand-entered facts moved to a sourced reference table with review dates; "Report an issue" form added to every page.
 - **2026-10-07:** Bill form adds optional supply, delivery, fixed charge, and taxes questions; published medians split supply vs. delivery.
 - **2026-10-07:** Resident bill form launched with per-ZIP pending counts and medians at 10+ bills.

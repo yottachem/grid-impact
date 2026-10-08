@@ -124,6 +124,11 @@ claims:
         text: "**What doesn't explain it.** Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with no measurable change in residential price ({local.pct40:pct}; 95% CI {local.lo40:pct} to {local.hi40:pct}). The burden comes from regional supply shortfalls and how each market passes them through."
     fallback: "**Local load.** Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a {local.pct40:pct} change in residential price (95% CI {local.lo40:pct} to {local.hi40:pct})."
 
+  local_benchmark:
+    holds: local.hi40 < 0
+    text: "This matches EPRI's state-level causal study, which estimates that data center growth from 2019 to 2024 lowered average residential rates about {fact.epri_dc_rate_effect_2019_2024_pct:f0}%."
+    fallback: ""
+
   rel_utility:
     holds: rel.saidi.lo <= 0 and rel.saifi.lo <= 0
     text: "**What about reliability?** Across {rel.n_units:int} utilities ({rel.years}), a 40% rise in a utility's own commercial load has not gone with more outages: {rel.saidi.pct:pct} in everyday outage minutes per customer (95% CI {rel.saidi.lo:pct} to {rel.saidi.hi:pct}) and {rel.saifi.pct:pct} in the number of outages, compared with utilities in the same regional grid and year. Including major storms, {rel.med.pct:pct}."
@@ -172,6 +177,12 @@ claims:
       - holds: local.lo40 <= 0 <= local.hi40
         text: "**Local load:** comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with no measurable change in residential price ({local.pct40:pct}; 95% CI {local.lo40:pct} to {local.hi40:pct}). Local load growth has not raised local residential prices relative to regional peers."
     fallback: "**Local load:** comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a {local.pct40:pct} change in residential price (95% CI {local.lo40:pct} to {local.hi40:pct})."
+
+  m_local_benchmark:
+    where: methods
+    holds: local.hi40 < 0
+    text: "EPRI's state-level causal study, using a different method (an instrumental variable for where data centers were built), finds the same direction: data center growth from 2019 to 2024 lowered average residential rates about {fact.epri_dc_rate_effect_2019_2024_pct:f0}%."
+    fallback: ""
 
   m_pjm:
     where: methods

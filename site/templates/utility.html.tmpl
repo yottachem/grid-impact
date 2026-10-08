@@ -156,7 +156,7 @@ function show(k) {
   const [tName, tTok] = TIER[last.tier] || TIER.none;
   const per1k = x && x.res_customers ? (x.mw_op + x.mw_pipeline) / x.res_customers * 1000 : 0;
   document.getElementById("summary").innerHTML = [
-    [Math.round(last.cust).toLocaleString(), `residential customers (${last.year})`],
+    [Math.round(last.cust).toLocaleString(), `residential customers on the utility's own supply (${last.year})`],
     [last.ba || "—", "regional grid (balancing authority)"],
     [x ? `${fmtMW(x.mw_op)} · ${fmtMW(x.mw_pipeline)}` : "None listed", "data center load in territory: operating · proposed or under construction"],
     [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],

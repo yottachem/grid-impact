@@ -2,7 +2,7 @@
 
 ## Dominion Energy Virginia
 
-Regulated utility in PJM. Self-supplied capacity (FRR) through 2024/25; in the PJM auction from 2025/26 (DOM zone cleared at $444.26/MW-day). The SCC's 2025 biennial review order (Nov 25, 2025) approved a base-rate increase of $11.24/month for a typical residential customer in 2026 (about 1.1¢/kWh at 1,000 kWh) and created a GS-5 class for customers of 25 MW or more, effective Jan 1, 2027. The rest of the 2026 increase is fuel and rider changes, not yet decomposed.
+Regulated utility in PJM. Self-supplied capacity (FRR) through 2024/25; in the PJM auction from 2025/26 (DOM zone cleared at $444.26/MW-day). The Virginia SCC approved a 2026 base-rate increase of $11.24 a month for a typical Dominion residential customer (1,000 kWh). The same order created a GS-5 rate class for customers of 25 MW or more, effective January 1, 2027. The rest of the 2026 increase is fuel and rider changes, not yet decomposed.
 
 **Dominion Energy Virginia** (inflation-adjusted to latest CPI month)
 
@@ -61,7 +61,7 @@ Planned generation in ERCO (EIA-860M 2026-10-05): 88.4 GW, of which gas 17.4 GW;
 
 ## Maryland (BGE and Pepco)
 
-Restructured state: default (standard offer) supply is bought at auction, so PJM capacity prices pass through to residential bills. BGE's zone cleared at $466.35/MW-day in 2025/26 vs $269.92 for the rest of PJM; all zones cleared at the cap in 2026/27 ($329.17) and 2027/28 ($333.44). Maryland has few large data centers of its own.
+Restructured state: default (standard offer) supply is bought at auction, so PJM capacity prices pass through to residential bills. BGE's zone cleared at $466.35/MW-day in 2025/26 vs $269.92 for the rest of PJM. The 2026/27, 2027/28, and 2028/29 Base Residual Auctions cleared at the price cap.
 
 **Baltimore Gas & Electric** (inflation-adjusted to latest CPI month)
 
@@ -98,7 +98,7 @@ Planned generation in PJM (EIA-860M 2026-10-05): 26.7 GW, of which gas 7.2 GW; 8
 
 ## Georgia Power
 
-Regulated utility in the Southeast; no capacity market. Large-load growth is planned through the utility's integrated resource plan and certified by the state PSC.
+Regulated utility in the Southeast; no capacity market. Large-load growth is planned through the utility's integrated resource plan and certified by the state PSC. Georgia Power's base rates are frozen through 2028 under a stipulation approved by the state PSC.
 
 **Georgia Power** (inflation-adjusted to latest CPI month)
 
