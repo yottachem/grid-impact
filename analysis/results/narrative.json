@@ -8,6 +8,7 @@
       "html": "Data centers raise power bills through the regional market, not the utility next door",
       "text": "Data centers raise power bills through the regional market, not the utility next door",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "cap.increase": 195.94,
@@ -20,6 +21,7 @@
       "html": "Across 326 US utility service areas from 2015 to July 2026,",
       "text": "Across 326 US utility service areas from 2015 to July 2026,",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "local.n_units": 326,
@@ -31,6 +33,7 @@
       "html": "a utility&#x27;s own data center load has not pushed up its residential prices relative to neighbors in the same market.",
       "text": "a utility's own data center load has not pushed up its residential prices relative to neighbors in the same market.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "local.hi40": -0.23049525962572925,
@@ -43,6 +46,11 @@
       "html": "The cost shows up regionally: in PJM, the grid operator for 13 states and DC, a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state <strong>about $196 a year more</strong> than in 2024/25.",
       "text": "The cost shows up regionally: in PJM, the grid operator for 13 states and DC, a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state about $196 a year more than in 2024/25.",
       "reason": null,
+      "refs": [
+        "imm-2026-som-2025",
+        "ieefa-2025-pjm-capacity",
+        "imm-2025-bra-2025-26-part-g"
+      ],
       "where": "findings",
       "values": {
         "cap.increase": 195.94,
@@ -58,6 +66,7 @@
       "html": "more per year for capacity in 2028/29 than 2024/25, typical restructured-PJM home",
       "text": "more per year for capacity in 2028/29 than 2024/25, typical restructured-PJM home",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "cap.increase": 195.94,
@@ -70,6 +79,7 @@
       "html": "of the 2027/28 cost per home attributed to data center load",
       "text": "of the 2027/28 cost per home attributed to data center load",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "cap.dc_latest": 103.14,
@@ -82,6 +92,7 @@
       "html": "PJM residential price vs. rest of US in 2026, after inflation (2020 baseline)",
       "text": "PJM residential price vs. rest of US in 2026, after inflation (2020 baseline)",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "pjm.latest": 15.715686451281696,
@@ -94,6 +105,7 @@
       "html": "residential price change with 40% more local commercial load, vs. regional peers",
       "text": "residential price change with 40% more local commercial load, vs. regional peers",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "local.pct40": -0.8699770650854588
@@ -105,6 +117,10 @@
       "html": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $100 to $137 a year of it to data center load.",
       "text": "Capacity costs for a typical home fell to $32 a year in 2023/24, then jumped to $217 when the 2025/26 auction cleared at $269.92 per MW-day, and reached $242 as the 2026/27 to 2028/29 auctions cleared at the price cap. That is the highest level in the record, about 1.5 times 2018/19. The market monitor attributes roughly $100 to $137 a year of it to data center load.",
       "reason": null,
+      "refs": [
+        "imm-2026-som-2025",
+        "pjm-2026-bra-2028-29"
+      ],
       "where": "findings",
       "values": {
         "auc.latest_dy": "2028/29",
@@ -127,6 +143,10 @@
       "html": "Median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM&#x27;s Independent Market Monitor through 2027/28. Delivery years run June to May.",
       "text": "Median across 24 utilities in DC, DE, IL, MD, NJ, OH, PA whose default supply passes auction prices through. Auction results from PJM Base Residual Auction reports through 2028/29; data center attribution from PJM's Independent Market Monitor through 2027/28. Delivery years run June to May.",
       "reason": null,
+      "refs": [
+        "pjm-2026-bra-2028-29",
+        "imm-2026-som-2025"
+      ],
       "where": "findings",
       "values": {
         "cap.n_utilities": 24,
@@ -140,6 +160,7 @@
       "html": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.7% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
       "text": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.7% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "pjm.first_sig": 3.3466253237579124,
@@ -159,6 +180,7 @@
       "html": "Regression on utility-month residential prices with utility and month fixed effects and weather controls; standard errors clustered by utility. 2026 covers January to July.",
       "text": "Regression on utility-month residential prices with utility and month fixed effects and weather controls; standard errors clustered by utility. 2026 covers January to July.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "pjm.latest_year": 2026,
@@ -170,6 +192,9 @@
       "html": "Baltimore Gas &amp; Electric&#x27;s customers, in a PJM state with few large data centers of its own (0.1 GW operating in Maryland vs. 14 GW in Virginia), saw real prices rise 37% between 2019 and 2026 (+14.1% versus the same months last year). Dominion&#x27;s real price changed +9% over the same period (+17.0% versus the same months last year, its first full year inside the PJM capacity auction). Texas, an energy-only market with 88 GW of new generation planned (PJM: 27 GW), was at 97, and Georgia Power at 102, on a 2019 = 100 scale.",
       "text": "Baltimore Gas & Electric's customers, in a PJM state with few large data centers of its own (0.1 GW operating in Maryland vs. 14 GW in Virginia), saw real prices rise 37% between 2019 and 2026 (+14.1% versus the same months last year). Dominion's real price changed +9% over the same period (+17.0% versus the same months last year, its first full year inside the PJM capacity auction). Texas, an energy-only market with 88 GW of new generation planned (PJM: 27 GW), was at 97, and Georgia Power at 102, on a 2019 = 100 scale.",
       "reason": null,
+      "refs": [
+        "mdopc-2025-07-auction"
+      ],
       "where": "findings",
       "values": {
         "case.bge.chg19": 37.30000000000001,
@@ -195,6 +220,7 @@
       "html": "Residential price after inflation (Census-region CPI), indexed to 2019 = 100. The 2026 point (dashed) applies the January to July change vs. the same months of 2025, so seasonal rates don&#x27;t distort it. Texas is the statewide total, which includes some areas outside ERCOT.",
       "text": "Residential price after inflation (Census-region CPI), indexed to 2019 = 100. The 2026 point (dashed) applies the January to July change vs. the same months of 2025, so seasonal rates don't distort it. Texas is the statewide total, which includes some areas outside ERCOT.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "case.last_full_year": 2025,
@@ -207,6 +233,10 @@
       "html": "<strong>What doesn&#x27;t explain it.</strong> Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22120.9% change in residential price (95% CI \u22121.5% to \u22120.2%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
       "text": "What doesn't explain it. Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22120.9% change in residential price (95% CI \u22121.5% to \u22120.2%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
       "reason": null,
+      "refs": [
+        "epri-2026-dc-rates",
+        "lbnl-2025-retail-price-trends"
+      ],
       "where": "findings",
       "values": {
         "local.hi40": -0.23049525962572925,
@@ -220,6 +250,7 @@
       "html": "<strong>What about reliability?</strong> Across 1,339 utilities (2013-2025), a 40% rise in a utility&#x27;s own commercial load has not gone with more outages: \u22122.3% in everyday outage minutes per customer (95% CI \u22124.8% to +0.3%) and \u22121.8% in the number of outages, compared with utilities in the same regional grid and year. Including major storms, \u22124.6%.",
       "text": "What about reliability? Across 1,339 utilities (2013-2025), a 40% rise in a utility's own commercial load has not gone with more outages: \u22122.3% in everyday outage minutes per customer (95% CI \u22124.8% to +0.3%) and \u22121.8% in the number of outages, compared with utilities in the same regional grid and year. Including major storms, \u22124.6%.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "rel.med.pct": -4.574560912045412,
@@ -237,6 +268,7 @@
       "html": "The 34 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221213.2%).",
       "text": "The 34 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221213.2%).",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "rel.county.last": -13.244218938922659,
@@ -250,6 +282,10 @@
       "html": "These are local outages that have already happened; the forward risk is supply: PJM&#x27;s 2027/28 auction cleared about 6,500 MW short of its reliability target.",
       "text": "These are local outages that have already happened; the forward risk is supply: PJM's 2027/28 auction cleared about 6,500 MW short of its reliability target.",
       "reason": null,
+      "refs": [
+        "nerc-2026-ltra-2025",
+        "pjm-2025-bra-2027-28-release"
+      ],
       "where": "findings",
       "values": {
         "fact.pjm_shortfall_2027_28_mw": 6520.0
@@ -260,6 +296,7 @@
       "html": "<strong>Caveats.</strong> The PJM premium began in 2022, before capacity prices spiked, which is consistent with 2022 gas prices being locked into default-service supply contracts; capacity costs explain its widening since 2025.",
       "text": "Caveats. The PJM premium began in 2022, before capacity prices spiked, which is consistent with 2022 gas prices being locked into default-service supply contracts; capacity costs explain its widening since 2025.",
       "reason": null,
+      "refs": [],
       "where": "findings",
       "values": {
         "pjm.first_sig_year": 2022,
@@ -272,6 +309,9 @@
       "html": "Auction totals are cleared MW times price, which PJM notes overstates cost to load because some load is hedged or self-supplied, so household figures are upper-bound averages.",
       "text": "Auction totals are cleared MW times price, which PJM notes overstates cost to load because some load is hedged or self-supplied, so household figures are upper-bound averages.",
       "reason": null,
+      "refs": [
+        "pjm-2026-bra-2028-29"
+      ],
       "where": "findings",
       "values": {}
     },
@@ -280,6 +320,9 @@
       "html": "Dominion&#x27;s 2026 increase also includes an approved base-rate increase of $11.24 a month.",
       "text": "Dominion's 2026 increase also includes an approved base-rate increase of $11.24 a month.",
       "reason": null,
+      "refs": [
+        "va-scc-2025-dominion-biennial"
+      ],
       "where": "findings",
       "values": {
         "case.dom.ytd_year": 2026,
@@ -291,6 +334,11 @@
       "html": "Prices rose from $28.92 per MW-day for 2024/25 to $269.92 for 2025/26, then reached the price cap in each of the 2026/27 to 2028/29 auctions ($329.17, $333.44, $325.00). Without the cap, the 2028/29 auction would have cleared at $554.72.",
       "text": "Prices rose from $28.92 per MW-day for 2024/25 to $269.92 for 2025/26, then reached the price cap in each of the 2026/27 to 2028/29 auctions ($329.17, $333.44, $325.00). Without the cap, the 2028/29 auction would have cleared at $554.72.",
       "reason": null,
+      "refs": [
+        "pjm-2024-bra-2025-26",
+        "pjm-2025-bra-2026-27",
+        "pjm-2026-bra-2028-29"
+      ],
       "where": "methods",
       "values": {
         "auc.latest": 325.0,
@@ -309,6 +357,9 @@
       "html": "<strong>Result:</strong> for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor&#x27;s findings attribute about $100-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
       "text": "Result: for a typical home in a restructured PJM state (about 10,349 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-$253) in 2025/26, $237 ($198-$277) in 2026/27, and $242 ($201-$282) in 2028/29: about $196 a year more than 2024/25. The market monitor's findings attribute about $100-$137 a year of it to data center load. The 2028/29 level is the highest in the series, about 5 times 2024/25 and 1.5 times 2018/19.",
       "reason": null,
+      "refs": [
+        "imm-2026-som-2025"
+      ],
       "where": "methods",
       "values": {
         "cap.dc_max": 137.03,
@@ -336,6 +387,10 @@
       "html": "<strong>Local load:</strong> comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a <strong>0.9% lower</strong> residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
       "text": "Local load: comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a 0.9% lower residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
       "reason": null,
+      "refs": [
+        "epri-2026-dc-rates",
+        "lbnl-2025-retail-price-trends"
+      ],
       "where": "methods",
       "values": {
         "local.hi40": -0.23049525962572925,
@@ -348,6 +403,7 @@
       "html": "<strong>PJM vs. the rest of the US</strong> (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.7% in 2025, +15.7% in 2026. The gap opened <strong>before</strong> capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
       "text": "PJM vs. the rest of the US (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.7% in 2025, +15.7% in 2026. The gap opened before capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
       "reason": null,
+      "refs": [],
       "where": "methods",
       "values": {
         "pjm.first_sig_year": 2022,
@@ -365,6 +421,7 @@
       "html": "<strong>Within PJM, restructured vs. regulated:</strong> +18.3% in 2026, but the two groups were not on parallel paths before 2020, so this comparison is weaker evidence.",
       "text": "Within PJM, restructured vs. regulated: +18.3% in 2026, but the two groups were not on parallel paths before 2020, so this comparison is weaker evidence.",
       "reason": null,
+      "refs": [],
       "where": "methods",
       "values": {
         "pjmr.latest": 18.32102194830516,
@@ -376,6 +433,7 @@
       "html": "A 40% rise in commercial load goes with <strong>\u22122.3%</strong> outage minutes (95% CI \u22124.8% to +0.3%) and \u22121.8% outages; including major storms, \u22124.6% (\u22127.5% to \u22121.6%). IEEE-only check: \u22120.7% (\u22124.1% to +2.9%). No sign that reliability has worsened where commercial load grew.",
       "text": "A 40% rise in commercial load goes with \u22122.3% outage minutes (95% CI \u22124.8% to +0.3%) and \u22121.8% outages; including major storms, \u22124.6% (\u22127.5% to \u22121.6%). IEEE-only check: \u22120.7% (\u22124.1% to +2.9%). No sign that reliability has worsened where commercial load grew.",
       "reason": null,
+      "refs": [],
       "where": "methods",
       "values": {
         "rel.ieee.hi": 2.900560844385769,
@@ -396,6 +454,7 @@
       "html": "The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
       "text": "The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
       "reason": null,
+      "refs": [],
       "where": "methods",
       "values": {
         "rel.county.last": -13.244218938922659,
@@ -411,6 +470,9 @@
       "html": "First year in the PJM capacity auction (its zone cleared at $444.26 for 2025/26). The state regulator approved a base-rate increase of $11.24 a month for a typical home in 2026, about 38% of the nominal rise; fuel and other charges are not yet separated. A new rate class for customers of 25 MW or more starts January 2027.",
       "text": "First year in the PJM capacity auction (its zone cleared at $444.26 for 2025/26). The state regulator approved a base-rate increase of $11.24 a month for a typical home in 2026, about 38% of the nominal rise; fuel and other charges are not yet separated. A new rate class for customers of 25 MW or more starts January 2027.",
       "reason": null,
+      "refs": [
+        "va-scc-2025-dominion-biennial"
+      ],
       "where": "methods",
       "values": {
         "auc.dom.y2025_26": 444.26,
@@ -425,6 +487,9 @@
       "html": "Restructured; few large data centers locally. Real price rose 20% from 2019 to 2025 while local commercial load grew 4%.",
       "text": "Restructured; few large data centers locally. Real price rose 20% from 2019 to 2025 while local commercial load grew 4%.",
       "reason": null,
+      "refs": [
+        "mdopc-2025-07-auction"
+      ],
       "where": "methods",
       "values": {
         "case.bge.com_growth": 3.9,
@@ -438,6 +503,7 @@
       "html": "Energy-only market with 88 GW of planned generation (vs. 27 GW in PJM). Statewide totals include some areas outside ERCOT.",
       "text": "Energy-only market with 88 GW of planned generation (vs. 27 GW in PJM). Statewide totals include some areas outside ERCOT.",
       "reason": null,
+      "refs": [],
       "where": "methods",
       "values": {
         "gen.pjm": 26.7,
@@ -449,6 +515,9 @@
       "html": "Regulated, no capacity market; base rates frozen through 2028.",
       "text": "Regulated, no capacity market; base rates frozen through 2028.",
       "reason": null,
+      "refs": [
+        "gapsc-2025-rate-freeze"
+      ],
       "where": "methods",
       "values": {
         "fact.georgia_base_rates_frozen_through": 2028.0

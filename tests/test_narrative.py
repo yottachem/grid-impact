@@ -100,3 +100,20 @@ def test_formats():
     assert narrative.fmt(6520.0, "r100") == "6,500"
     assert narrative.fmt("2026-07", "month") == "July 2026"
     assert narrative.fmt("2026-10-07", "date") == "October 7, 2026"
+
+
+def test_literature_is_valid():
+    import sys
+    sys.path.insert(0, str(ROOT / "site"))
+    import references
+    assert references.check() == []
+    ids = {e["id"] for e in references.load()["entries"]}
+    spec = yaml.safe_load(narrative.CLAIMS.read_text())
+    for cid, c in spec["claims"].items():
+        for r in c.get("refs") or []:
+            assert r in ids, f"{cid} cites unknown reference {r}"
+    import pandas as pd
+    f = pd.read_csv(ROOT / "reference" / "context_facts.csv", dtype=str)
+    for fid, ref in zip(f.fact_id, f.ref.fillna("")):
+        for r in filter(None, (x.strip() for x in ref.split(";"))):
+            assert r in ids, f"fact {fid} cites unknown reference {r}"

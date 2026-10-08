@@ -1,0 +1,728 @@
+# Research, reports, filings, and news about data centers, the grid, and household electricity costs.
+# Published on the site's References page; cited from Findings and Methods statements
+# (analysis/claims.yaml `refs:`) and from hand-entered facts (reference/context_facts.csv `ref`).
+#
+# One entry per item. Only entries with an `approved` date are published; new entries are added
+# with `approved: null` and go live after the owner reviews the batch.
+#
+#   id           short stable slug: publisher-year-topic
+#   title, authors, publisher, date (YYYY-MM or YYYY-MM-DD), url (or doi)
+#   type         peer-reviewed | government | grid-operator | market-monitor | regulator |
+#                research-org | industry | advocacy | news | dataset
+#   topics       any of TOPICS below
+#   summary      one sentence, in our words
+#   findings     2-4 bullets in our words, with the source's own numbers
+#   relation     supports | differs | mixed | context  (compared with this site's findings)
+#   relation_note  one sentence on how it lines up with, or differs from, the site
+#   use          any of: fact (a number on the site comes from it), benchmark (compared with our
+#                results), method (basis for a modeling choice), context
+#   cites        ids of entries this one relies on (its references, one level down)
+#   accessed     date we last read it
+#   review_by    date to check for updates or corrections (reports revised, stories updated)
+#   vault        Obsidian note path in the Prod Development vault
+#   added, approved
+#
+# Summaries are our own words; quotes stay short; files are never re-hosted (link only).
+
+topics:
+  load-growth: Data center demand and load growth
+  capacity-markets: Capacity markets and auctions
+  retail-rates: Retail rates and household bills
+  transmission: Transmission and distribution costs
+  large-load-tariffs: Large-load tariffs and who pays
+  reliability: Reliability and resource adequacy
+  energy-burden: Energy burden and affordability
+  siting: Siting, water, land, and local impacts
+  generation: Generation, emissions, and fuel
+  data: Data center data and trackers
+
+entries:
+  # ------------------------------------------------------------ Batch 1 (drafted 2026-10-08)
+  - id: epri-2026-dc-rates
+    title: "Have Data Centers Raised Your Electric Bill? Causal Evidence from the United States"
+    authors: ["Watten, Asa", "Bistline, John", "Blanford, Geoffrey"]
+    publisher: Electric Power Research Institute (EPRI); arXiv:2606.19777
+    date: 2026-06-18
+    url: https://arxiv.org/abs/2606.19777
+    type: research-org
+    topics: [retail-rates, load-growth]
+    summary: State-level causal study using the 1947 Interstate Highway Plan (fiber routes) as an instrument for where data centers were built; finds they modestly lowered retail rates from 2015 to 2024.
+    findings:
+      - Doubling data center capacity lowered residential prices about 3.5% for a fixed level of demand.
+      - Data center growth from 2019 to 2024 lowered average residential rates about 6% versus no growth.
+      - No sign of cost shifting between customer classes or of spillovers to neighboring states.
+      - Warns the effect could reverse if supply constraints bind or projected load does not materialize.
+    relation: supports
+    relation_note: Agrees with this site's local result (more local load goes with slightly lower residential prices); like the site, it flags supply shortfalls as the way costs could rise.
+    use: [benchmark]
+    cites: [lbnl-2025-retail-price-trends]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: lbnl-2025-retail-price-trends
+    title: "Recent Retail Electricity Price Trends: What Do We Know… or Think We Know?"
+    authors: ["Wiser, Ryan, et al. (Lawrence Berkeley National Laboratory)", "Hledik, Ryan; Lam, Long; Yan, Audrey (Brattle Group)"]
+    publisher: Lawrence Berkeley National Laboratory and The Brattle Group
+    date: 2025-10-17
+    url: https://eta-publications.lbl.gov/sites/default/files/2025-10/full_summary_retail_price_trends_drivers.pdf
+    type: government
+    topics: [retail-rates, load-growth]
+    summary: National review of what has driven retail electricity prices since 2019, by state and cost component.
+    findings:
+      - National average retail prices have roughly tracked inflation; only a few states saw material real increases.
+      - States with the most load growth generally saw real prices fall (over 1 cent/kWh in the highest-growth states).
+      - Main drivers of increases were transmission and distribution spending, extreme weather and wildfire costs, natural gas prices, and some state policies.
+    relation: supports
+    relation_note: Consistent with this site's finding that local load growth has not raised local residential prices.
+    use: [benchmark, context]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: lbnl-2026-retail-price-trends
+    title: "Retail Electricity Price Trends and Drivers: 2026 Edition"
+    authors: [Lawrence Berkeley National Laboratory]
+    publisher: Lawrence Berkeley National Laboratory
+    date: 2026-03
+    url: https://eta-publications.lbl.gov/sites/default/files/2026-03/retail_price_trends_2026_edition.pdf
+    type: government
+    topics: [retail-rates]
+    summary: Annual update of the Berkeley Lab retail price review, adding 2025.
+    findings:
+      - All-sector average retail prices rose 5.3% in nominal terms and 2.6% after inflation in 2025.
+      - From 2019 to 2025, nominal residential prices rose 33%, commercial 26%, and industrial 27%.
+    relation: context
+    use: [context]
+    cites: [lbnl-2025-retail-price-trends]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: imm-2026-som-2025
+    title: 2025 State of the Market Report for PJM
+    authors: [Monitoring Analytics (PJM Independent Market Monitor)]
+    publisher: Monitoring Analytics, LLC
+    date: 2026-03-12
+    url: https://www.monitoringanalytics.com/reports/PJM_State_of_the_Market/2025.shtml
+    type: market-monitor
+    topics: [capacity-markets, load-growth]
+    summary: The market monitor's annual review of PJM's markets, including how much existing and forecast data center load added to capacity auction revenues.
+    findings:
+      - Data center load growth is the primary reason for recent capacity market conditions, including high prices.
+      - Data center load raised capacity revenues by about $9.3 billion in 2025/26, $7.3 billion in 2026/27, and $6.5 billion in 2027/28 (about $23.1 billion in total).
+    relation: supports
+    relation_note: The site's data center share of household capacity cost comes from these figures.
+    use: [fact]
+    cites: [imm-2025-bra-2025-26-part-g, imm-2025-bra-2026-27-part-a, imm-2026-bra-2027-28-part-a]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: imm-2025-bra-2025-26-part-g
+    title: "IMM Analysis of the 2025/2026 RPM Base Residual Auction, Part G (revised)"
+    authors: [Monitoring Analytics (PJM Independent Market Monitor)]
+    publisher: Monitoring Analytics, LLC
+    date: 2025-06-03
+    url: https://www.monitoringanalytics.com/reports/reports/2025/IMM_Analysis_of_the_20252026_RPM_Base_Residual_Auction_Part_G_20250603_Revised.pdf
+    type: market-monitor
+    topics: [capacity-markets, load-growth]
+    summary: Sensitivity analysis of the 2025/26 auction with and without existing and forecast data center load.
+    findings:
+      - Of 8,453 MW of large-load additions PJM forecast for 2026, data centers were 7,892 MW (93%).
+      - Removing forecast data center load would have sharply lowered 2025/26 prices and revenues; the monitor's estimate of the data center effect is about $9.3 billion.
+    relation: supports
+    use: [fact]
+    cites: [pjm-2024-bra-2025-26]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: imm-2025-bra-2026-27-part-a
+    title: "IMM Analysis of the 2026/2027 RPM Base Residual Auction, Part A"
+    authors: [Monitoring Analytics (PJM Independent Market Monitor)]
+    publisher: Monitoring Analytics, LLC
+    date: 2025-10-01
+    url: https://www.monitoringanalytics.com/reports/Reports/2025/IMM_Analysis_of_the_20262027_RPM_Base_Residual_Auction_Part_A_20251001.pdf
+    type: market-monitor
+    topics: [capacity-markets]
+    summary: Market monitor's analysis of the 2026/27 auction, including the cost of data center load.
+    findings:
+      - Including existing and forecast data center load raised 2026/27 capacity revenues by about $7.3 billion (82%), to $16.1 billion.
+      - Across the 2025/26 and 2026/27 auctions, data center load accounted for about $16.6 billion of $30.8 billion.
+    relation: supports
+    use: [fact]
+    cites: [pjm-2025-bra-2026-27]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: imm-2026-bra-2027-28-part-a
+    title: "IMM Analysis of the 2027/2028 RPM Base Residual Auction, Part A"
+    authors: [Monitoring Analytics (PJM Independent Market Monitor)]
+    publisher: Monitoring Analytics, LLC
+    date: 2026-01-05
+    url: https://www.monitoringanalytics.com/reports/Reports/2026/IMM_Analysis_of_the_20272028_RPM_Base_Residual_Auction_Part_A_20260105.pdf
+    type: market-monitor
+    topics: [capacity-markets]
+    summary: Market monitor's analysis of the 2027/28 auction.
+    findings:
+      - Data center load accounted for about $6.5 billion (40%) of the auction's $16.4 billion cost, mostly from data centers not yet built.
+      - Over the last three auctions, forecast data center load was about $21.3 billion (45%) of $47.2 billion.
+    relation: supports
+    use: [fact]
+    cites: [pjm-2025-bra-2027-28-release]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: pjm-2024-bra-2025-26
+    title: 2025/2026 Base Residual Auction Report
+    authors: [PJM Interconnection]
+    publisher: PJM Interconnection
+    date: 2024-07-30
+    url: https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2025-2026/2025-2026-base-residual-auction-report.pdf
+    type: grid-operator
+    topics: [capacity-markets]
+    summary: Official results of the auction in which PJM capacity prices rose ninefold.
+    findings:
+      - RTO clearing price rose from $28.92 to $269.92 per MW-day; BGE cleared at $466.35 and Dominion at $444.26.
+      - Total auction cost rose from about $2.2 billion to $14.7 billion.
+    relation: context
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: pjm-2025-bra-2026-27
+    title: 2026/2027 Base Residual Auction Report
+    authors: [PJM Interconnection]
+    publisher: PJM Interconnection
+    date: 2025-07-22
+    url: https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2026-2027/2026-2027-bra-report.pdf
+    type: grid-operator
+    topics: [capacity-markets]
+    summary: Official results of the first auction to clear at the negotiated price cap across all of PJM.
+    findings:
+      - All zones cleared at the $329.17 per MW-day cap; 134,311 MW cleared.
+      - Total auction cost was $16.1 billion, up 9.5% from 2025/26.
+    relation: context
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: pjm-2025-bra-2027-28-release
+    title: PJM Auction Procures 134,479 MW of Generation Resources (2027/2028 Base Residual Auction)
+    authors: [PJM Interconnection]
+    publisher: PJM Interconnection
+    date: 2025-12-17
+    url: https://www.pjm.com/-/media/DotCom/about-pjm/newsroom/2025-releases/20251217-pjm-auction-procures-134479-mw-of-generation-resources.pdf
+    type: grid-operator
+    topics: [capacity-markets, reliability]
+    summary: PJM's announcement of 2027/28 results, the first auction to fall short of its reliability requirement across the whole region.
+    findings:
+      - Cleared at the $333.44 per MW-day cap.
+      - Procured capacity, including self-supplied (FRR) areas, was 6,623 MW short of the reliability requirement.
+    relation: supports
+    relation_note: Source of the forward supply-risk figure cited in the site's reliability note.
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2026-12-31
+    added: 2026-10-08
+    approved: null
+
+  - id: pjm-2026-bra-2028-29
+    title: 2028/2029 Base Residual Auction Report
+    authors: [PJM Interconnection]
+    publisher: PJM Interconnection
+    date: 2026-07-14
+    url: https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2028-2029/2028-2029-bra-results-report.pdf
+    type: grid-operator
+    topics: [capacity-markets]
+    summary: Official results of the 2028/29 auction, which again cleared at the price cap.
+    findings:
+      - Cleared at $325.00 per MW-day; without the cap it would have cleared at $554.72.
+      - Its Table 2 is the source of the site's auction price, cleared MW, and total cost series back to 2018/19.
+    relation: context
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: ieefa-2025-pjm-capacity
+    title: Projected data center growth spurs PJM capacity prices by factor of 10
+    authors: ["Kunkel, Cathy"]
+    publisher: Institute for Energy Economics and Financial Analysis (IEEFA)
+    date: 2025-07-30
+    url: https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10
+    type: advocacy
+    topics: [capacity-markets, load-growth]
+    summary: Analysis of the 2026/27 auction that traces the price surge to forecast data center load.
+    findings:
+      - Capacity prices rose from $28.92 per MW-day (2024/25) to $329.17 (2026/27).
+      - Cites the market monitor's finding that data centers caused 63% of the 2025/26 increase, about $9.3 billion.
+    relation: supports
+    use: [fact]
+    cites: [imm-2025-bra-2025-26-part-g, pjm-2025-bra-2026-27]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: synapse-2025-dc-opc-capacity
+    title: "Drivers of PJM's Capacity Market Price Surge and the Impact to DC Electric Customers"
+    authors: [Synapse Energy Economics for the DC Office of the People's Counsel]
+    publisher: Synapse Energy Economics; DC Office of the People's Counsel
+    date: 2025-05
+    url: https://www.synapse-energy.com/drivers-pjms-capacity-market-price-surge-and-impact-dc-electric-customers
+    type: research-org
+    topics: [capacity-markets, retail-rates]
+    summary: Breaks down the 2025/26 capacity price surge and its effect on DC customers' bills.
+    findings:
+      - Attributes the surge to higher forecast load, market rule changes that revalued supply, and plant retirements and reliability-must-run arrangements.
+      - Pepco customers faced roughly $20 more on the average monthly bill from June 2025.
+    relation: supports
+    relation_note: Similar order of magnitude to this site's capacity cost per home for restructured PJM states.
+    use: [benchmark]
+    cites: [pjm-2024-bra-2025-26]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: mdopc-2025-07-auction
+    title: Data center power demands drive record power auction prices with varying impacts on Maryland customers
+    authors: [Maryland Office of People's Counsel]
+    publisher: Maryland Office of People's Counsel
+    date: 2025-07-24
+    url: https://content.govdelivery.com/accounts/MDOPC/bulletins/3ead2f8
+    type: government
+    topics: [capacity-markets, retail-rates]
+    summary: Maryland's consumer advocate on what the 2026/27 auction means for each Maryland utility's customers.
+    findings:
+      - Price rose to a record $329 per MW-day from $270, which itself was about nine times the prior year.
+      - For BGE customers the auction-related part of the bill falls about $3.36 a month (BGE's zone price dropped), but bills remain about $16 a month higher than two auctions earlier.
+      - Says data centers, mostly outside Maryland, drove more than 60% of the 2025/26 cost increase.
+    relation: supports
+    relation_note: Matches this site's Maryland case, where prices rose with little local data center load.
+    use: [benchmark]
+    cites: [pjm-2025-bra-2026-27, imm-2025-bra-2025-26-part-g]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: mdopc-2025-12-auction
+    title: Data center power demands again drive record power auction prices
+    authors: [Maryland Office of People's Counsel]
+    publisher: Maryland Office of People's Counsel
+    date: 2025-12-17
+    url: https://content.govdelivery.com/accounts/MDOPC/bulletins/4006939
+    type: government
+    topics: [capacity-markets, reliability]
+    summary: Maryland's consumer advocate on the 2027/28 auction.
+    findings:
+      - The auction fell about 6,600 MW short of PJM's reliability requirement.
+    relation: supports
+    use: [context]
+    cites: [pjm-2025-bra-2027-28-release]
+    accessed: 2026-10-08
+    review_by: 2027-07-31
+    added: 2026-10-08
+    approved: null
+
+  - id: ucs-2025-pjm-transmission
+    title: Connection Costs Loophole Costs Customers Over $4 Billion to Connect Data Centers to Power Grid
+    authors: ["Jacobs, Mike"]
+    publisher: Union of Concerned Scientists
+    date: 2025-09-29
+    url: https://www.ucs.org/sites/default/files/2025-09/PJM%20Data%20Center%20Issue%20Brief%20-%20Sep%202025.pdf
+    type: advocacy
+    topics: [transmission, large-load-tariffs]
+    summary: Reviews utility filings in seven PJM states for transmission projects built to connect individual data centers, and who pays for them.
+    findings:
+      - In 2024 alone, about $4.3 billion of data center connection costs were approved for recovery from all customers.
+      - Of 130 projects identified, over 95% passed all connection costs to general ratepayers.
+      - Largest totals were in Virginia ($1.9 billion) and Ohio ($1.3 billion).
+    relation: mixed
+    relation_note: Describes a cost channel (local transmission) this site does not yet measure; those costs would add to the regional capacity cost shown here.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: harvard-eli-2025-extracting-profits
+    title: "Extracting Profits from the Public: How Utility Ratepayers Are Paying for Big Tech's Power"
+    authors: ["Martin, Eliza", "Peskoe, Ari"]
+    publisher: Harvard Law School Electricity Law Initiative
+    date: 2025-03-05
+    url: https://eelp.law.harvard.edu/extracting-profits-from-the-public-how-utility-ratepayers-are-paying-for-big-techs-power/
+    type: research-org
+    topics: [large-load-tariffs, retail-rates]
+    summary: Legal review of nearly 50 state proceedings on utility rates and special contracts for data centers.
+    findings:
+      - Regulators often approve data center special contracts in short orders with little analysis, and terms are frequently confidential.
+      - Gaps between federally set transmission and wholesale rates and state-set retail rates can leave other customers paying for infrastructure built for data centers, including for load that never arrives.
+    relation: mixed
+    relation_note: The site compares utility-wide average prices, which would not reveal cost shifts hidden in special contracts; EPRI reports no systematic shifting between customer classes.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: jlarc-2024-va-data-centers
+    title: Data Centers in Virginia (Report 598)
+    authors: [Joint Legislative Audit and Review Commission]
+    publisher: Virginia Joint Legislative Audit and Review Commission (JLARC)
+    date: 2024-12-09
+    url: https://jlarc.virginia.gov/landing-2024-data-centers-in-virginia.asp
+    type: government
+    topics: [large-load-tariffs, retail-rates, load-growth]
+    summary: Virginia's legislative audit of the data center industry's economic, energy, and local impacts.
+    findings:
+      - Data centers currently pay their full cost of service under Dominion's rates.
+      - Unconstrained growth could raise a typical Dominion residential customer's generation and transmission costs by about $14 to $37 a month by 2040, after inflation.
+    relation: mixed
+    relation_note: Agrees with the site that local data center load has not yet raised Dominion's residential prices relative to peers, but projects future increases.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: va-scc-2025-dominion-biennial
+    title: SCC Issues Order in Dominion Energy Virginia's 2025 Biennial Review
+    authors: [Virginia State Corporation Commission]
+    publisher: Virginia State Corporation Commission
+    date: 2025-11-25
+    url: https://www.scc.virginia.gov/about-the-scc/newsreleases/release/scc-issues-order-on-dev-biennial-review-2025/scc-rules-in-dev-biennial-review-case.html
+    type: regulator
+    topics: [large-load-tariffs, retail-rates]
+    summary: Final order raising Dominion's base rates and creating a separate rate class for customers of 25 MW or more.
+    findings:
+      - Approved base-rate increases of $565.7 million in 2026 and $209.9 million in 2027.
+      - A typical residential bill rises about $11.24 a month in 2026 and $2.36 more in 2027, before fuel and riders.
+      - New GS-5 class (25 MW or more) from January 1, 2027, with minimum demand charges of 85% of contracted transmission and distribution demand and 60% of generation demand.
+    relation: context
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2027-01-31
+    added: 2026-10-08
+    approved: null
+
+  - id: gapsc-2025-rate-freeze
+    title: Georgia PSC approves plan to freeze Georgia Power base rates through at least 2028
+    authors: [Georgia Power]
+    publisher: Georgia Power (announcement of Georgia Public Service Commission order)
+    date: 2025-07-01
+    url: https://www.georgiapower.com/news-hub/press-releases/georgia-psc-approves-plan-to-freeze-base-rates-through-2028.html
+    type: industry
+    topics: [retail-rates]
+    summary: The Georgia PSC unanimously approved a stipulation keeping Georgia Power's base rates unchanged through at least 2028.
+    findings:
+      - Base rates (excluding fuel) frozen through at least the end of 2028.
+      - Storm costs, including Hurricane Helene, handled in a separate proceeding in 2026.
+    relation: context
+    use: [fact]
+    accessed: 2026-10-08
+    review_by: 2026-12-31
+    added: 2026-10-08
+    approved: null
+
+  - id: texas-2025-sb6
+    title: Texas Senate Bill 6 (89th Legislature) on large loads in ERCOT
+    authors: [Texas Legislature]
+    publisher: Texas Legislature
+    date: 2025-06-20
+    url: https://capitol.texas.gov/BillLookup/History.aspx?LegSess=89R&Bill=SB6
+    type: government
+    topics: [large-load-tariffs, reliability]
+    summary: Texas law setting interconnection, cost-sharing, and emergency curtailment rules for loads of 75 MW or more in ERCOT.
+    findings:
+      - Large loads pay study fees and a greater share of interconnection costs, and must disclose on-site backup generation.
+      - In emergencies ERCOT can direct large loads to curtail or switch to backup power; new loads after 2025 need remote-disconnect capability.
+      - Directs the state commission to review whether all loads contribute fairly to transmission cost recovery.
+    relation: context
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: e3-2025-amazon-ratepayer
+    title: Study for Amazon on rate design to manage large-load growth
+    authors: [Energy and Environmental Economics (E3)]
+    publisher: E3, commissioned by Amazon
+    date: 2025-12
+    url: https://www.ethree.com/ratepayer-study/
+    type: industry
+    topics: [large-load-tariffs, retail-rates]
+    summary: Industry-funded case studies comparing what four Amazon data centers pay their utilities with the cost of serving them.
+    findings:
+      - In all four territories studied (PG&E, Umatilla Electric, Dominion, Entergy Mississippi) the facilities covered their cost of service.
+      - For a 100 MW facility, estimated surplus revenue of about $3.4 million in 2025 and $6.1 million in 2030 that can benefit other customers.
+    relation: supports
+    relation_note: Consistent with the site's local result, but funded by a data center operator and limited to four facilities.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: cmu-2025-oeo-grid-impacts
+    title: Electricity Grid Impacts of Rising Demand from Data Centers and Cryptocurrency Mining Operations
+    authors: [Open Energy Outlook Initiative, Carnegie Mellon University and North Carolina State University]
+    publisher: Carnegie Mellon University, Scott Institute for Energy Innovation
+    date: 2025-07-28
+    url: https://energy.cmu.edu/_files/documents/electricity-grid-impacts-of-rising-demand-from-data-centers-and-cryptocurrency-mining-operations.pdf
+    type: research-org
+    topics: [load-growth, generation, retail-rates]
+    summary: Least-cost power system modeling of data center and crypto-mining growth through 2030.
+    findings:
+      - Could raise average US generation costs about 8% and power-sector emissions about 30% by 2030.
+      - Central and northern Virginia see the largest regional cost increase, over 25%.
+      - More than 25 GW of coal plants slated to retire keep running mainly to serve the new demand.
+    relation: mixed
+    relation_note: A projection; this site measures what has happened through the latest month. The two would conflict only if projected increases fail to appear in the data.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: johnson-2026-erl-costs-emissions
+    title: Power system costs and emissions from data center and cryptocurrency mining expansion in the United States
+    authors: ["Johnson, Jeremiah X.", "Wade, Cameron", "Blackhurst, Michael", "DeCarolis, Joseph", "Jaramillo, Paulina", "Posen, Daniel"]
+    publisher: Environmental Research Letters
+    date: 2026-05-18
+    doi: 10.1088/1748-9326/ae6c3d
+    type: peer-reviewed
+    topics: [load-growth, retail-rates, generation]
+    summary: Peer-reviewed capacity-expansion modeling of 26 US regions under different gas prices, siting patterns, and policies.
+    findings:
+      - Data center and crypto demand could raise national average power costs 6% to 29% by 2030.
+      - Regional increases reach 57% where growth concentrates (Virginia in the concentrated scenario).
+      - Power-sector CO2 emissions up to 28% higher than without data center growth.
+    relation: mixed
+    relation_note: Forward-looking; useful as the range this site's measured trends can be checked against as data arrives.
+    use: [context]
+    cites: [cmu-2025-oeo-grid-impacts]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: lbnl-2024-dc-energy
+    title: 2024 United States Data Center Energy Usage Report
+    authors: ["Shehabi, Arman, et al."]
+    publisher: Lawrence Berkeley National Laboratory (LBNL-2001637)
+    date: 2024-12
+    url: https://eta-publications.lbl.gov/publications/2024-lbnl-data-center-energy-usage-report
+    type: government
+    topics: [load-growth]
+    summary: The federal benchmark estimate of US data center electricity use, prepared for Congress.
+    findings:
+      - US data centers used about 176 TWh in 2023, 4.4% of US electricity.
+      - Use began rising sharply in 2017 with GPU servers for AI.
+      - Scenarios put 2028 use at 6.7% to 12% of US electricity (74 to 132 GW).
+    relation: context
+    relation_note: Used as a consistency check on the total capacity of operating sites in the site's data center layer.
+    use: [fact, method]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: nerc-2026-ltra-2025
+    title: 2025 Long-Term Reliability Assessment
+    authors: [North American Electric Reliability Corporation]
+    publisher: NERC
+    date: 2026-01
+    url: https://www.nerc.com/globalassets/our-work/assessments/nerc_ltra_2025.pdf
+    type: regulator
+    topics: [reliability, load-growth]
+    summary: NERC's 10-year outlook for supply adequacy across North America.
+    findings:
+      - 13 of 23 assessment areas face resource adequacy challenges over the next decade; AI data centers drive most projected load growth.
+      - PJM, MISO, ERCOT, and two western subregions could reach high risk by 2030.
+    relation: supports
+    relation_note: Consistent with the site's reliability note that the risk is forward-looking supply, not the local outages measured so far.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2026-12-31
+    added: 2026-10-08
+    approved: null
+
+  - id: aceee-2024-energy-burden
+    title: "How High Are Household Energy Burdens? An Assessment of National and Metropolitan Energy Burdens across the U.S."
+    authors: [American Council for an Energy-Efficient Economy]
+    publisher: ACEEE
+    date: 2024-09
+    url: https://www.aceee.org/energy-burden/
+    type: research-org
+    topics: [energy-burden]
+    summary: National and city energy burden estimates from the 2021 American Housing Survey.
+    findings:
+      - Median household energy burden was 2.9%; for low-income households 8.3%.
+      - About a quarter of low-income households spend more than 15% of income on energy.
+      - Black households' median burden is 43% higher than non-Hispanic white households'.
+    relation: context
+    relation_note: Covers all home energy; the site's tract burden covers electricity only, so its median (about 2.2%) is lower.
+    use: [benchmark, method]
+    accessed: 2026-10-08
+    review_by: 2027-09-30
+    added: 2026-10-08
+    approved: null
+
+  - id: fractracker-2026-dc-tracker
+    title: U.S. Data Centers Tracker
+    authors: [FracTracker Alliance]
+    publisher: FracTracker Alliance
+    date: 2026-04
+    url: https://fractracker.org/2026/04/open-u-s-data-centers-tracker/
+    type: dataset
+    topics: [data, siting]
+    summary: Open facility-level map of existing and proposed data centers with power, status, and community context.
+    findings:
+      - Over 1,400 sites, about 800 of them in pre-development or construction.
+      - Adds community advocacy, demographics, environmental justice, and nearby power plant context.
+    relation: context
+    relation_note: The site's main source of proposed data centers and reported power (non-commercial terms, with attribution).
+    use: [method]
+    accessed: 2026-10-08
+    review_by: 2027-04-30
+    added: 2026-10-08
+    approved: null
+
+  - id: pnnl-2025-im3-atlas
+    title: IM3 Open Source Data Center Atlas
+    authors: [Pacific Northwest National Laboratory, IM3 project]
+    publisher: PNNL; MSD-LIVE Data Repository
+    date: 2025-06-06
+    url: https://github.com/IMMM-SFA/datacenter-atlas
+    type: dataset
+    topics: [data, siting]
+    summary: Open dataset of US data center locations from OpenStreetMap, with footprints and projected hyperscale siting.
+    findings:
+      - Street-level locations with building footprints and county assignment.
+      - Includes projections of where new hyperscale data centers are most likely to be sited.
+    relation: context
+    use: [method]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  # ------------------------------------------------------------ News and fact-checks
+  - id: bloomberg-2025-wholesale-near-dc
+    title: How AI Data Centers Are Sending Your Power Bill Soaring
+    authors: [Bloomberg News]
+    publisher: Bloomberg
+    date: 2025-09-29
+    url: https://www.bloomberg.com/graphics/2025-ai-data-centers-electricity-prices/
+    type: news
+    topics: [retail-rates, load-growth]
+    summary: Analysis of wholesale prices at about 25,000 grid nodes (via Grid Status) since 2020, compared with distance to data center activity.
+    findings:
+      - Wholesale prices in some months were up to 267% higher than five years earlier near major data center activity.
+      - 73% of nodes with price increases were within 50 miles of significant data center activity, versus 20% of nodes with decreases.
+    relation: differs
+    relation_note: Measures wholesale prices near data centers; this site measures residential retail prices by utility, which include fixed delivery costs and show no local increase relative to regional peers.
+    use: [context]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: politifact-2026-warren-267
+    title: How much have data centers increased electricity prices?
+    authors: ["McCullough, Caleb"]
+    publisher: PolitiFact
+    date: 2026-06-12
+    url: https://politifact.com/factchecks/2026/jun/12/elizabeth-warren/data-centers-rising-electricity-costs/
+    type: news
+    topics: [retail-rates]
+    summary: Fact-check of a senator's claim that bills near data centers rose up to 267% in five years; rated Mostly False.
+    findings:
+      - The 267% figure was a wholesale price, which makes up only about 30% to 50% of a residential bill.
+      - Average residential prices rose about 42% nationally over five years, more in DC (94%) and Maryland (74%).
+    relation: supports
+    relation_note: Draws the same wholesale-versus-retail distinction this site's findings rest on.
+    use: [context]
+    cites: [bloomberg-2025-wholesale-near-dc, imm-2025-bra-2025-26-part-g, mdopc-2025-07-auction, lbnl-2025-retail-price-trends]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null
+
+  - id: utilitydive-2025-primary-reason
+    title: "Data centers 'primary reason' for high PJM capacity prices: market monitor"
+    authors: ["Howland, Ethan"]
+    publisher: Utility Dive
+    date: 2025-10-02
+    url: https://www.utilitydive.com/news/data-centers-pjm-capacity-auction-market-monitor/801780/
+    type: news
+    topics: [capacity-markets]
+    summary: Report on the market monitor's analysis of the 2026/27 auction.
+    findings:
+      - Data center load added $7.3 billion (82%) to 2026/27 capacity revenues.
+      - Without the price cap, data center load would have added another $3.2 billion.
+    relation: supports
+    use: [context]
+    cites: [imm-2025-bra-2026-27-part-a, ucs-2025-pjm-transmission]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: utilitydive-2026-forty-percent
+    title: "Data centers were 40% of PJM capacity costs in last auction: market monitor"
+    authors: ["Howland, Ethan"]
+    publisher: Utility Dive
+    date: 2026-01-07
+    url: https://www.utilitydive.com/news/data-centers-pjm-capacity-auction/808951/
+    type: news
+    topics: [capacity-markets]
+    summary: Report on the market monitor's analysis of the 2027/28 auction.
+    findings:
+      - Data centers were $6.5 billion (40%) of the $16.4 billion auction, about $6.2 billion of it for facilities not yet built.
+    relation: supports
+    use: [context]
+    cites: [imm-2026-bra-2027-28-part-a]
+    accessed: 2026-10-08
+    review_by: 2027-03-31
+    added: 2026-10-08
+    approved: null
+
+  - id: marketplace-2026-lowered-bills
+    title: Data centers lowered electric bills in some places — for now
+    authors: ["Epp, Henry"]
+    publisher: Marketplace
+    date: 2026-07-10
+    url: https://www.marketplace.org/story/2026/07/10/data-centers-lowered-electric-bills-in-some-places-for-now
+    type: news
+    topics: [retail-rates]
+    summary: Radio report on the EPRI and Berkeley Lab findings and why the price-lowering effect may not last.
+    findings:
+      - Residential rates would have been about 6% higher without data centers built from 2019 to 2024 (EPRI).
+      - Notes polling in which about two-thirds of Americans expect data centers to raise costs.
+    relation: supports
+    use: [context]
+    cites: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
+    accessed: 2026-10-08
+    review_by: 2027-06-30
+    added: 2026-10-08
+    approved: null

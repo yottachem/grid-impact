@@ -11,6 +11,7 @@
 #   variants  several {holds, text} pairs, already reviewed; the first that holds is shown.
 #   fallback  neutral wording used while a claim is under review ("" hides the claim).
 #   where     findings (default) or methods.
+#   refs      ids in reference/literature.yaml this statement draws on (shown as footnotes once approved).
 #
 # Rewriting: run /rewrite-claims in Claude Code from this repo. A rewrite changes `text` and
 # `holds` together so the condition states exactly what the new text asserts. Never loosen
@@ -60,6 +61,7 @@ claims:
     fallback: "a 40% rise in a utility's own commercial load went with a {local.pct40:pct} change in its residential price relative to neighbors in the same market (95% CI {local.lo40:pct} to {local.hi40:pct})."
 
   lede_regional:
+    refs: [imm-2026-som-2025]
     holds: cap.increase > 0 and fact.imm_dc_share_of_increase_2025_26 >= 50
     text: "The cost shows up regionally: in PJM, the grid operator for {fact.pjm_states:int} states and DC, a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state **about {cap.increase:usd} a year more** than in 2024/25."
     fallback: "In PJM, capacity costs a typical household in a restructured state {cap.latest:usd} a year for {cap.latest_dy}, versus {cap.y2024_25.central:usd} in 2024/25."
@@ -82,6 +84,7 @@ claims:
 
   # ---------------------------------------------------------------- Findings: chart readings
   c1_reading:
+    refs: [imm-2026-som-2025, pjm-2026-bra-2028-29]
     holds: >-
       cap.min_dy == "2023/24" and cap.latest_is_max and cap.y2025_26.central > 2 * cap.y2024_25.central
       and cap.dc_min is not None and fact.pjm_capped_auctions.endswith(auc.latest_dy)
@@ -89,6 +92,7 @@ claims:
     fallback: "Capacity cost for a typical home: {cap.y2024_25.central:usd} a year in 2024/25, {cap.y2025_26.central:usd} in 2025/26, and {cap.latest:usd} in {cap.latest_dy}. The market monitor attributes {cap.dc_min:usd} to {cap.dc_max:usd} a year to data center load in the years it has assessed."
 
   c1_note:
+    refs: [pjm-2026-bra-2028-29, imm-2026-som-2025]
     text: "Median across {cap.n_utilities:int} utilities in {cap.states} whose default supply passes auction prices through. Auction results from PJM Base Residual Auction reports through {run.auctions_through}; data center attribution from PJM's Independent Market Monitor through {run.dc_attribution_through}. Delivery years run June to May."
 
   c2_reading:
@@ -102,6 +106,7 @@ claims:
     text: "Regression on utility-month residential prices with utility and month fixed effects and weather controls; standard errors clustered by utility. {pjm.latest_year:year} covers {run.latest_months}."
 
   c3_reading:
+    refs: [mdopc-2025-07-auction]
     holds: sites.md.op_gw < 1 and case.bge.chg19 > 0 and case.dom.ytd_year == 2026 and gen.texas > gen.pjm
     text: "Baltimore Gas & Electric's customers, in a PJM state with few large data centers of its own ({sites.md.op_gw:f1} GW operating in Maryland vs. {sites.va.op_gw:f0} GW in Virginia), saw real prices rise {case.bge.chg19:f0}% between 2019 and {case.ytd_year:year} ({case.bge.ytd:pct} versus the same months last year). Dominion's real price changed {case.dom.chg19:pct0} over the same period ({case.dom.ytd:pct} versus the same months last year, its first full year inside the PJM capacity auction). Texas, an energy-only market with {gen.texas:f0} GW of new generation planned (PJM: {gen.pjm:f0} GW), was at {case.tx.idx:f0}, and Georgia Power at {case.ga.idx:f0}, on a 2019 = 100 scale."
     fallback: "Inflation-adjusted residential price in {case.ytd_year:year} on a 2019 = 100 scale: Baltimore Gas & Electric {case.bge.idx:f0}, Dominion {case.dom.idx:f0}, Texas statewide {case.tx.idx:f0}, Georgia Power {case.ga.idx:f0}. Versus the same months last year: {case.bge.ytd:pct}, {case.dom.ytd:pct}, {case.tx.ytd:pct}, and {case.ga.ytd:pct}."
@@ -111,6 +116,7 @@ claims:
 
   # ---------------------------------------------------------------- Findings: notes
   local_note:
+    refs: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
     variants:
       - holds: local.hi40 < 0 and pjm.latest_lo > 0
         text: "**What doesn't explain it.** Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a {local.pct40:pct} change in residential price (95% CI {local.lo40:pct} to {local.hi40:pct}). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through."
@@ -127,6 +133,7 @@ claims:
     text: "The {rel.county.n_high:int} counties with the most operating data center load had no more outage hours than other counties in their state ({rel.county.last_year:year}: {rel.county.last:pct})."
     fallback: "Outage hours in the {rel.county.n_high:int} counties with the most operating data center load, compared with other counties in their state: {rel.county.last:pct} in {rel.county.last_year:year}."
   rel_supply:
+    refs: [nerc-2026-ltra-2025]
     text: "These are local outages that have already happened; the forward risk is supply: PJM's 2027/28 auction cleared about {fact.pjm_shortfall_2027_28_mw:r100} MW short of its reliability target."
 
   caveat_timing:
@@ -134,6 +141,7 @@ claims:
     text: "**Caveats.** The PJM premium began in {pjm.first_sig_year:year}, before capacity prices spiked, which is consistent with 2022 gas prices being locked into default-service supply contracts; capacity costs explain its widening since 2025."
     fallback: "**Caveats.**"
   caveat_upper_bound:
+    refs: [pjm-2026-bra-2028-29]
     text: "Auction totals are cleared MW times price, which PJM notes overstates cost to load because some load is hedged or self-supplied, so household figures are upper-bound averages."
   caveat_dominion:
     holds: case.dom.ytd_year == 2026
@@ -142,18 +150,21 @@ claims:
 
   # ---------------------------------------------------------------- Methods page
   m_capacity_prices:
+    refs: [pjm-2024-bra-2025-26, pjm-2025-bra-2026-27, pjm-2026-bra-2028-29]
     where: methods
     holds: fact.pjm_capped_auctions.endswith(auc.latest_dy)
     text: "Prices rose from {auc.y2024_25:usd2} per MW-day for 2024/25 to {auc.y2025_26:usd2} for 2025/26, then reached the price cap in each of the {fact.pjm_capped_auctions} auctions ({auc.y2026_27:usd2}, {auc.y2027_28:usd2}, {auc.y2028_29:usd2}). Without the cap, the 2028/29 auction would have cleared at {fact.pjm_uncapped_2028_29_usd_mw_day:usd2}."
     fallback: "Prices rose from {auc.y2024_25:usd2} per MW-day for 2024/25 to {auc.y2025_26:usd2} for 2025/26; the latest auction ({auc.latest_dy}) cleared at {auc.latest:usd2}."
 
   m_capacity_result:
+    refs: [imm-2026-som-2025]
     where: methods
     holds: cap.latest_is_max and cap.increase > 0
     text: "**Result:** for a typical home in a restructured PJM state (about {cap.kwh:int} kWh a year), capacity cost was {cap.y2024_25.central:usd} a year in 2024/25, {cap.y2025_26.central:usd} ({cap.y2025_26.low:usd}-{cap.y2025_26.high:usd}) in 2025/26, {cap.y2026_27.central:usd} ({cap.y2026_27.low:usd}-{cap.y2026_27.high:usd}) in 2026/27, and {cap.latest:usd} ({cap.latest_low:usd}-{cap.latest_high:usd}) in {cap.latest_dy}: about {cap.increase:usd} a year more than 2024/25. The market monitor's findings attribute about {cap.dc_min:usd}-{cap.dc_max:usd} a year of it to data center load. The {cap.latest_dy} level is the highest in the series, about {cap.ratio_base:f0} times 2024/25 and {cap.ratio_first:f1} times {cap.first_dy}."
     fallback: "**Result:** for a typical home in a restructured PJM state (about {cap.kwh:int} kWh a year), capacity cost was {cap.y2024_25.central:usd} a year in 2024/25 and {cap.latest:usd} ({cap.latest_low:usd}-{cap.latest_high:usd}) in {cap.latest_dy}. The market monitor's findings attribute about {cap.dc_min:usd}-{cap.dc_max:usd} a year to data center load in the years it has assessed."
 
   m_local:
+    refs: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
     where: methods
     variants:
       - holds: local.hi40 < 0
@@ -192,6 +203,7 @@ claims:
     text: "First year in the PJM capacity auction (its zone cleared at {auc.dom.y2025_26:usd2} for 2025/26). The state regulator approved a base-rate increase of {fact.dominion_base_rate_increase_usd_month:usd2} a month for a typical home in 2026, about {case.dom.base_rate_share:f0}% of the nominal rise; fuel and other charges are not yet separated. A new rate class for customers of {fact.dominion_gs5_min_mw:int} MW or more starts January 2027."
     fallback: "In the PJM capacity auction since 2025/26 (its zone cleared at {auc.dom.y2025_26:usd2} that year)."
   m_case_bge:
+    refs: [mdopc-2025-07-auction]
     where: methods
     holds: sites.md.op_gw < 1 and case.bge.real_chg_to_last_full > 0
     text: "Restructured; few large data centers locally. Real price rose {case.bge.real_chg_to_last_full:f0}% from 2019 to {case.last_full_year:year} while local commercial load grew {case.bge.com_growth:f0}%."

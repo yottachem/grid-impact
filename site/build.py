@@ -16,9 +16,11 @@ DATA, TEMPLATES, DIST = HERE / "data", HERE / "templates", HERE / "dist"
 sys.path.insert(0, str(HERE / "prototype"))
 import build_findings  # noqa: E402  (payload for the findings page)
 from analysis import narrative  # noqa: E402  (build_findings puts the repo root on sys.path)
+import references  # noqa: E402  (site/references.py)
 
 REPO = "https://github.com/yottachem/grid-impact"
-PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods")]
+PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods"),
+         ("references.html", "References")]
 FRIENDLY_DATE = lambda d: __import__("datetime").date.fromisoformat(d).strftime("%b %-d, %Y") if d else "—"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600'
@@ -55,6 +57,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 var(-
 .badge { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .05em; }
 .badge i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .status-line { color: var(--fg); }
+sup.fn { font: 500 10px/0 var(--font-data); margin-left: 1px; } sup.fn a { color: var(--s1); text-decoration: none; }
 """
 
 
@@ -170,9 +173,11 @@ def methods_markdown(nar: dict) -> str:
     """docs/methods.md with {{claim:id}} statements and {{value:format}} figures filled in from the latest run."""
     md = (ROOT / "docs" / "methods.md").read_text().replace("# Methods (working draft)", "# Methods")
     v = nar["values"]
+    pub, numbering = references.approved(), {}
     def claim(cid: str) -> str:
         c = nar["claims"][cid]
-        return c["text"] if c["status"] == "ok" else (c["text"] + " *(Under review: the latest data no longer fits the earlier wording.)*")
+        t = references.footnotes(c["text"], c.get("refs") or [], numbering, pub)
+        return t if c["status"] == "ok" else (t + " *(Under review: the latest data no longer fits the earlier wording.)*")
     md = re.sub(r"\{\{claim:([a-z0-9_]+)\}\}", lambda m: claim(m.group(1)), md)
     md = re.sub(r"\{\{([a-z][a-z0-9_.]*)(?::([a-z0-9]+))?\}\}", lambda m: narrative.fmt(v[m.group(1)], m.group(2)), md)
     return md
@@ -276,6 +281,9 @@ def main() -> None:
     body = '<article class="prose">' + markdown.markdown(md, extensions=["tables"]) + "</article>"
     (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, footer(meta, pm, "Methods"),
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
+    refs_body = references.page(nar).replace("__FEEDBACK__", html.escape(build_findings.feedback_url("Other")))
+    (DIST / "references.html").write_text(shell("references.html", "References", refs_body, footer(meta, pm, "Other"),
+        "Research, filings, market reports, and news on data centers, the grid, and household electricity costs."))
     (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta, nar), footer(meta, pm, "Data status"),
         "When each data source was added, last checked, and last brought new data."))
     shutil.copytree(DATA / "tracts", DIST / "data" / "tracts")

@@ -298,6 +298,8 @@ def evaluate(v: dict | None = None, spec: dict | None = None) -> dict:
         x = v.get(name)
         if x is None or not (lo <= x <= hi):
             bad[name] = {"value": x, "range": [lo, hi]}
+    f = facts()
+    fact_refs = f["ref"].dropna().to_dict() if "ref" in f else {}
     out = {"run_date": v["run.date"], "prices_through": v["run.prices_through"], "data_checks_failed": bad,
            "claims": {}, "flagged": [], "values": v}
     for cid, c in spec["claims"].items():
@@ -312,7 +314,9 @@ def evaluate(v: dict | None = None, spec: dict | None = None) -> dict:
             text = c["fallback"] if "fallback" in c else "This finding is being reviewed against data updated {run.date}."
             reason = (f"plausibility check failed for {', '.join(failed_checks)}" if failed_checks
                       else "condition no longer holds: " + " / ".join(str(x.get("holds")) for x in variants))
+        fref = [r.strip() for n in used if n.startswith("fact.") for r in str(fact_refs.get(n[5:], "") or "").split(";") if r.strip()]
         rec = {"status": status, "html": fill(text, v, True), "text": fill(text, v, False), "reason": reason,
+               "refs": list(dict.fromkeys((c.get("refs") or []) + fref)),
                "where": c.get("where", "findings"),
                "values": {n: v[n] for n in sorted(used) if n in v and not isinstance(v[n], bool)}}
         if c.get("value"):
@@ -322,7 +326,6 @@ def evaluate(v: dict | None = None, spec: dict | None = None) -> dict:
             out["flagged"].append(cid)
         out["claims"][cid] = rec
     today = date.today().isoformat()
-    f = facts()
     out["facts_due"] = [{"fact": fid, "review_by": r.review_by, "statement": r.statement, "source": r.source}
                         for fid, r in f.iterrows() if str(r.review_by) <= today]
     out["n_claims"] = len(out["claims"])
