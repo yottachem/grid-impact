@@ -22,3 +22,16 @@ def test_map_popup_does_not_blink():
     t = (TEMPLATES / "map.html.tmpl").read_text()
     assert ".maplibregl-popup { pointer-events: none; }" in t
     assert not re.search(r'map\.on\("mousemove",\s*"', t), "per-layer mousemove handler found; use the HOVER controller"
+
+
+def test_glossary_links_first_use_only_outside_code():
+    import sys
+    sys.path.insert(0, str(TEMPLATES.parent))
+    import glossary
+    ids = [t["id"] for t in glossary.terms()]
+    assert len(ids) == len(set(ids))
+    html = '<h2>PJM</h2><p>PJM runs a capacity auction. PJM again.</p><script>const PJM = 1;</script>'
+    out = glossary.link(html)
+    assert out.count('href="methods.html#term-pjm"') == 1
+    assert "<h2>PJM</h2>" in out and "const PJM = 1;" in out
+    assert 'href="methods.html#term-capacity-auction"' in out

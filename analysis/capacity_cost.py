@@ -1,11 +1,12 @@
-"""Capacity auction cost per household, by utility and delivery year, for PJM and ISO New England.
+"""Capacity auction cost per household, by utility and delivery year, for PJM, ISO New England, and MISO.
 
 cost/household/yr = (auction total $ / market annual energy) x (zone price / market-wide price)
                     x household kWh/yr x residential peak factor
 
 - Auction totals, zone prices, and data center attribution: reference/capacity_auctions.csv
   (PJM BRA reports; Monitoring Analytics; ISO-NE Forward Capacity Auction results, converted from
-  $/kW-month to $/MW-day). Utility zones: reference/pjm_utility_zones.csv, reference/isone_utility_zones.csv.
+  $/kW-month to $/MW-day; MISO Planning Resource Auction results, seasonal since 2023/24 and stored as
+  day-weighted annual figures with the four seasonal prices kept). Utility zones: reference/{pjm,isone,miso}_utility_zones.csv.
 - Market annual energy: EIA-930 (calendar year the delivery year starts in, else latest).
 - Household kWh/yr: utility's latest 12 months of EIA-861M residential sales / customers.
 - Peak factor: capacity is charged on contribution to system peak, and homes peak harder
@@ -22,7 +23,8 @@ from transform.common import MARTS, ROOT, latest, write
 
 PEAK_FACTORS = {"low": 1.0, "central": 1.2, "high": 1.4}
 REF = ROOT / "reference"
-MARKETS = {"PJM": ("PJM", "pjm_utility_zones.csv"), "ISONE": ("ISNE", "isone_utility_zones.csv")}  # market: (EIA-930 code, zones)
+MARKETS = {"PJM": ("PJM", "pjm_utility_zones.csv"), "ISONE": ("ISNE", "isone_utility_zones.csv"),
+           "MISO": ("MISO", "miso_utility_zones.csv")}  # market: (EIA-930 code, zones)
 
 
 def household_kwh() -> pd.DataFrame:

@@ -84,7 +84,7 @@ The map shows household costs for all 50 states and DC: by county when zoomed ou
 - **Weather:** NOAA county heating and cooling degree days, averaged over each utility's service counties and weighted by population (contiguous US only).
 - **Measured load growth:** trailing-12-month commercial sales compared with the same months of 2019. Data centers usually bill as commercial customers, so this tracks load that has actually arrived. Commercial plus industrial is also kept; it picks up oil field and factory load as well.
 
-## Capacity cost per household (PJM and New England)
+## Capacity cost per household (PJM, New England, and MISO)
 
 *Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
@@ -99,6 +99,8 @@ PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generatin
 {{claim:m_capacity_result}}
 
 {{claim:m_capacity_ne}}
+
+{{claim:m_capacity_miso}}
 
 ## Panel regressions
 
@@ -174,6 +176,8 @@ Where a state publishes monthly switching counts by utility, those replace EIA's
 
 ## Changelog
 
+- **2026-10-08:** Correction: the rule that prefers utilities serving a site's or tract's own state had been using each utility's headquarters state only, because of a data-type error. Multi-state utilities now count as in-state wherever EIA lists them. Ameren Illinois, for example, now covers 824 Illinois tracts instead of 116, and about 20 GW of planned data center load moved from rural co-ops to the utilities that serve those areas (Southwestern Public Service in New Mexico, AEP Texas, Ameren Illinois, SWEPCO). National totals are unchanged. Glossary added.
+- **2026-10-08:** MISO (Planning Resource Auction, 2018/19 to 2026/27) added for Ameren Illinois, the MISO utility whose default supply buys capacity in the auction.
 - **2026-10-08:** New England (ISO-NE Forward Capacity Auctions, 2018/19 to 2027/28) added to capacity cost per household, the Findings chart, the map, and the Your utility page.
 - **2026-10-08:** Massachusetts DOER customer choice data added (through June 2026): 82% of Eversource and 69% of National Grid residential customers are on competitive supply or municipal aggregation. Utility-level coverage now uses each utility's latest EIA annual year (58 utilities with a customer split).
 - **2026-10-08:** State switching statistics (IL, PA, NJ) added for utility-level coverage, checked weekly.

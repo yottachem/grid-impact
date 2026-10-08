@@ -163,10 +163,23 @@ def values() -> dict:
         v["auc_ne.latest_dy"] = nea.delivery_year.iloc[-1] if len(nea) else None
         same = next((d for d in cap if d["dy"] == ne[-1]["dy"]), None)
         v["cap.same_dy_as_ne"] = same["central"] if same else None
+    # MISO (Planning Resource Auction; reaches default-service bills mainly at Ameren Illinois)
+    mi = capacity_series("MISO")
+    if mi:
+        for d in mi:
+            v[f"cap_miso.{dy_key(d['dy'])}"] = d["central"]
+        v.update({"cap_miso.latest_dy": mi[-1]["dy"], "cap_miso.latest": mi[-1]["central"],
+                  "cap_miso.max": max(d["central"] for d in mi), "cap_miso.max_dy": max(mi, key=lambda d: d["central"])["dy"],
+                  "cap_miso.min": min(d["central"] for d in mi)})
+        for r in auc[(auc.market == "MISO") & (auc.lda == "RTO")].itertuples():
+            parts = str(r.price_native).split("/")
+            v[f"auc_miso.{dy_key(r.delivery_year)}"] = r.price_usd_mw_day
+            if len(parts) == 4:
+                v[f"auc_miso.summer.{dy_key(r.delivery_year)}"] = float(parts[0])
     # Data center load by grid region (operating + pipeline MW per 1,000 residential customers)
     ux = pd.DataFrame(json.loads((DATA / "utility_exposure.json").read_text()))
     g = ux.groupby("balancing_authority")[["mw_op", "mw_pipeline", "res_customers"]].sum()
-    for ba, key in (("PJM", "pjm"), ("ISNE", "ne")):
+    for ba, key in (("PJM", "pjm"), ("ISNE", "ne"), ("MISO", "miso")):
         if ba in g.index:
             v[f"dc.{key}_pipeline_gw"] = g.loc[ba, "mw_pipeline"] / 1000
             v[f"dc.{key}_pipeline_per_1k"] = g.loc[ba, "mw_pipeline"] / g.loc[ba, "res_customers"] * 1000

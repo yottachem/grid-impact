@@ -35,7 +35,7 @@ def payload() -> dict:
     run = json.loads((RESULTS / "run.json").read_text()) if (RESULTS / "run.json").exists() else {}
     es = json.loads((DATA / "event_studies.json").read_text())["pjm_vs_rest"]
     any_ytd = next(iter(ytd.values()))
-    return {"capacity": narrative.capacity_series(), "capacity_ne": narrative.capacity_series("ISONE"), "event_pjm": es, "cases": cases, "run": run,
+    return {"capacity": narrative.capacity_series(), "capacity_ne": narrative.capacity_series("ISONE"), "capacity_miso": narrative.capacity_series("MISO"), "event_pjm": es, "cases": cases, "run": run,
             "ytd_year": any_ytd["year"], "ytd_months": any_ytd["months"].replace("-", "–"),
             "built": meta["built"][:10], "price_through": meta["sources"]["eia861m"]["last_new_data"] or ""}
 

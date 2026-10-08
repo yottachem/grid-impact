@@ -1,0 +1,132 @@
+# Terms used on the site. Rendered as the Glossary section of the Methods page; the first use of each
+# term on the Findings and Methods pages links to its entry. `match` lists the exact phrases linked
+# (case-sensitive, whole words), longest first.
+terms:
+  - id: pjm
+    term: PJM
+    match: [PJM Interconnection, PJM]
+    definition: >-
+      PJM Interconnection, the grid operator for 13 states and Washington, DC, from New Jersey to Illinois (about 67 million
+      people). It runs the high-voltage grid, the wholesale electricity markets, and a capacity auction. It owns no power
+      plants and does not sell to homes. The name comes from the Pennsylvania-New Jersey-Maryland Interconnection, the power
+      pool it began as in 1927. Northern Virginia's data center cluster is inside PJM.
+  - id: iso-ne
+    term: ISO New England (ISO-NE)
+    match: [ISO New England, ISO-NE]
+    definition: >-
+      The grid operator for Connecticut, Maine, Massachusetts, New Hampshire, Rhode Island, and Vermont. It runs the region's
+      wholesale markets and the Forward Capacity Auction.
+  - id: miso
+    term: MISO
+    match: [MISO]
+    definition: >-
+      The Midcontinent Independent System Operator, the grid operator for 15 states from Manitoba's border to Louisiana,
+      including most of Illinois outside Chicago, Michigan, Minnesota, and Iowa. It runs a yearly Planning Resource Auction
+      for capacity, with separate prices for each season since 2023/24.
+  - id: rto
+    term: Grid operator (RTO or ISO)
+    match: [grid operator, regional grid]
+    definition: >-
+      A regional transmission organization or independent system operator: a nonprofit that runs the high-voltage grid and
+      wholesale power markets for a region. It schedules power plants and plans transmission but does not own plants or sell
+      electricity to homes.
+  - id: capacity-auction
+    term: Capacity auction
+    match: [capacity auctions, capacity auction, Base Residual Auction, Forward Capacity Auction, Planning Resource Auction]
+    definition: >-
+      An auction in which a grid operator pays power plants, batteries, and demand-response providers to be available to run
+      during the highest-demand hours, usually one to three years ahead. Utilities and suppliers pay the cost and recover it
+      on customers' bills. PJM's is the Base Residual Auction, ISO New England's the Forward Capacity Auction, and MISO's the
+      Planning Resource Auction.
+  - id: mw-day
+    term: Capacity price ($/MW-day, $/kW-month)
+    match: [per MW-day, per kW-month]
+    definition: >-
+      The price of making one megawatt of capacity available for one day. ISO New England quotes prices per kilowatt per month;
+      the site converts them (1 $/kW-month is about $32.88/MW-day).
+  - id: delivery-year
+    term: Delivery year
+    match: [delivery year, delivery years, Delivery years]
+    definition: >-
+      The 12 months a capacity auction buys for, June 1 through May 31 (written 2026/27).
+  - id: peak-factor
+    term: Peak factor
+    match: [peak factor]
+    definition: >-
+      How much more of the system's peak a home is responsible for than its share of yearly electricity. Capacity is charged on
+      contribution to the peak, and homes use relatively more at peak times (summer evenings). The site uses 1.2, with 1.0 and
+      1.4 as the range.
+  - id: restructured
+    term: Restructured state
+    match: [restructured states, restructured state, restructured]
+    definition: >-
+      A state where the local utility delivers power but customers can buy the electricity itself (supply) from competitive
+      suppliers. Customers who do not choose get the utility's default service. In these states, capacity auction prices pass
+      directly into bills.
+  - id: regulated
+    term: Regulated (vertically integrated) utility
+    match: [regulated utilities, regulated utility]
+    definition: >-
+      A utility that owns power plants as well as the wires and sells both, with rates set by the state regulator. It mostly
+      recovers the cost of its own plants rather than paying capacity auction prices.
+  - id: default-service
+    term: Default service (basic, standard offer)
+    match: [default supply, default service, default-service, basic service, standard service]
+    definition: >-
+      The supply a customer in a restructured state gets from the utility without choosing a supplier. Names vary by state:
+      basic service (Massachusetts), standard service (Connecticut), standard offer service (Maryland, Maine), default service
+      (Pennsylvania). The utility buys the power in wholesale markets and passes the cost through.
+  - id: supply-delivery
+    term: Supply and delivery charges
+    match: [delivery charges, supply charges]
+    definition: >-
+      The two main parts of a bill in restructured states. Supply is the electricity itself (generation and capacity); delivery
+      is the cost of the wires, poles, and substations that bring it to the home, set by the state regulator.
+  - id: aggregation
+    term: Municipal or community choice aggregation
+    match: [aggregation programs, aggregation program, aggregation]
+    definition: >-
+      A program in which a city or town buys supply for all of its residents from a competitive supplier, unless a resident opts
+      out. Common in Massachusetts, Ohio, Illinois, and California.
+  - id: competitive-supply
+    term: Competitive supplier
+    match: [competitive suppliers, competitive supplier, competitive supply]
+    definition: >-
+      A company other than the utility that sells the electricity supply portion of a bill in a restructured state (called a
+      retail electric provider in Texas). The utility still delivers the power and sends the bill.
+  - id: market-monitor
+    term: Market monitor
+    match: [Independent Market Monitor, market monitor]
+    definition: >-
+      An independent firm that watches a grid operator's markets for problems and reports on them. PJM's is Monitoring
+      Analytics, whose reports estimate how much data center load added to capacity costs.
+  - id: confidence-interval
+    term: 95% confidence interval (CI)
+    match: [95% CI, confidence band, confidence interval]
+    definition: >-
+      The range a result could plausibly fall in given the data's noise. When the interval excludes zero, the effect is
+      statistically distinguishable from no effect.
+  - id: real-price
+    term: Real (inflation-adjusted) price
+    match: [after inflation, inflation-adjusted]
+    definition: >-
+      A price expressed in today's dollars using the Consumer Price Index for the utility's Census region, so changes reflect
+      more than general inflation.
+  - id: saidi
+    term: SAIDI and SAIFI
+    match: [SAIDI, SAIFI]
+    definition: >-
+      Standard reliability measures: SAIDI is the average minutes without power per customer per year; SAIFI is the average
+      number of outages per customer. Usually reported with and without major storms.
+  - id: energy-burden
+    term: Energy burden
+    match: [energy burden, Energy burden]
+    definition: >-
+      The share of household income spent on energy bills. The site's measure covers electricity only.
+  - id: kwh
+    term: kWh, MW, GW, TWh
+    match: [kWh]
+    definition: >-
+      Units of electricity. A kilowatt-hour (kWh) is the energy a 1,000-watt appliance uses in an hour; a typical US home uses
+      about 10,000 kWh a year. A megawatt (MW) is 1,000 kilowatts of power, a gigawatt (GW) 1,000 MW, and a terawatt-hour
+      (TWh) a billion kWh. Large data centers draw 100 MW or more.

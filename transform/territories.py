@@ -35,9 +35,10 @@ def load() -> gpd.GeoDataFrame:
     terr["density"] = terr.customers.fillna(1).clip(lower=1) / terr.Shape__Area
     st = pd.read_parquet(latest("pudl_eia861_annual", "out_eia861__yearly_utility_service_territory.parquet"),
                          columns=["utility_id_eia", "state"])
-    serves = st.groupby("utility_id_eia").state.agg(lambda s: set(s.dropna()))
-    terr["serves"] = terr.utility_id_eia.map(serves)
-    terr["serves"] = [s if isinstance(s, set) and s else {h} for s, h in zip(terr.serves, terr.STATE)]
+    serves = {u: set(map(str, g.dropna())) for u, g in st.groupby("utility_id_eia").state}
+    # Fall back to HIFLD's headquarters state only when EIA lists none. (A set-valued groupby.agg comes back
+    # as a list with Arrow-backed strings; checking for a set made every utility fall back to its HQ state.)
+    terr["serves"] = [serves.get(u) or {h} for u, h in zip(terr.utility_id_eia, terr.STATE)]
     return terr[["utility_id_eia", "customers", "density", "serves", "geometry"]].to_crs("EPSG:4326")
 
 

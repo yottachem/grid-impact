@@ -1,0 +1,2 @@
+utility_id_eia,utility_name,state,zone,lda_chain,supply,note
+56697,Ameren Illinois Company,IL,Zone 4,RTO,default_service,Restructured: default supply buys capacity in MISO's Planning Resource Auction. Most other MISO utilities are regulated and supply their own capacity.

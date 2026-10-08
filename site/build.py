@@ -17,6 +17,7 @@ sys.path.insert(0, str(HERE / "prototype"))
 import build_findings  # noqa: E402  (payload for the findings page)
 from analysis import narrative  # noqa: E402  (build_findings puts the repo root on sys.path)
 import references  # noqa: E402  (site/references.py)
+import glossary  # noqa: E402  (site/glossary.py)
 
 REPO = "https://github.com/yottachem/grid-impact"
 PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods"),
@@ -60,6 +61,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 var(-
 .badge i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .status-line { color: var(--fg); }
 sup.fn { font: 500 10px/0 var(--font-data); margin-left: 1px; } sup.fn a { color: var(--s1); text-decoration: none; }
+""" + glossary.CSS + """
 """
 
 
@@ -243,7 +245,7 @@ def footer(meta: dict, price_through: str, page: str = "Other") -> str:
             f"<span>Data: EIA, PJM, PJM Independent Market Monitor, BLS, NOAA, Census, ORNL; data center locations from "
             f"FracTracker Alliance (non-commercial use), PNNL IM3, © OpenStreetMap contributors, PeeringDB. "
             f'<a href="methods.html">Methods and licenses</a> · <a href="{REPO}">Source code</a> · '
-            f'<a href="{html.escape(build_findings.feedback_url(page))}">Report an issue</a></span>')
+            f'<a href="methods.html#glossary">Glossary</a> · <a href="{html.escape(build_findings.feedback_url(page))}">Report an issue</a></span>')
 
 
 def price_month() -> str:
@@ -269,6 +271,7 @@ def main() -> None:
     nar = build_findings.load_narrative()
     title, t = split_template((TEMPLATES / "findings.html.tmpl").read_text())
     t = build_findings.render(t.replace("__DATA__", json.dumps(build_findings.payload(), separators=(",", ":"))), nar)
+    t = glossary.link(t)
     t = t.replace("Grid Impact Tracker · findings draft", "Grid Impact Tracker · findings")
     t = t.replace("Draft built", "Built")
     (DIST / "findings.html").write_text(shell("findings.html", title, t, foot,
@@ -307,7 +310,7 @@ def main() -> None:
     md = re.sub(r"\*Records each modeling decision.*?\*\n", "", md)
     md += "\n\n## Data downloads and licenses\n\n" + (DATA / "README.md").read_text().split("\n", 2)[2].replace("](", "](data/")
     md += "\n\nFiles: " + ", ".join(f"[{f.name}](data/{f.name})" for f in sorted(DATA.glob("*.json"))) + "\n"
-    body = '<article class="prose">' + markdown.markdown(md, extensions=["tables"]) + "</article>"
+    body = '<article class="prose">' + glossary.link(markdown.markdown(md, extensions=["tables"]), href="") + markdown.markdown(glossary.section()) + "</article>"
     (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, footer(meta, pm, "Methods"),
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
     if references.approved():

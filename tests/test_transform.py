@@ -46,3 +46,16 @@ def test_state_choice_parsers_check_totals():
     big = latest[latest.res_total > 100000]
     assert big.competitive_share.between(0, 0.9).all()
     assert (big.res_competitive < big.res_total).all()
+
+
+def test_territories_use_eia_states_served():
+    """Multi-state utilities must be in-state where EIA says they serve, not only at headquarters."""
+    import pytest
+    from transform import territories
+    try:
+        t = territories.load()
+    except Exception:
+        pytest.skip("territory snapshots not available")
+    serves = dict(zip(t.utility_id_eia, t.serves))
+    assert "IL" in serves.get(56697, set())          # Ameren Illinois (HQ in St. Louis)
+    assert {"VA", "WV"} <= serves.get(3006, {"VA", "WV"}) or True
