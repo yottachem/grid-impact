@@ -26,7 +26,7 @@ def stamp() -> None:
     info = {"ran_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "prices_through": pd.read_parquet(MARTS / "utility_month.parquet", columns=["period"]).period.max().strftime("%Y-%m"),
             "capacity_auctions_through": ref.delivery_year.max(), "dc_attribution_through": attributed,
-            "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, "
+            "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/state_choice/ (MA DOER), "
                              "reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"}
     (ROOT / "analysis" / "results" / "run.json").write_text(json.dumps(info, indent=2))
     print("analysis stamp:", info["ran_at"], "prices through", info["prices_through"])

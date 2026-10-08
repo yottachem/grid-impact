@@ -2,6 +2,9 @@
 state, utility_id_eia, period (month), residential customers in total and on competitive supply
 (competitive suppliers plus government or municipal aggregation), and the source.
 
+Massachusetts (DOER customer choice data) is added by hand to reference/state_choice/ because mass.gov
+blocks automated downloads; DOER posts it quarterly.
+
 Each parser checks its own totals (utilities sum to the state total where the report gives one)
 and fails loudly if a layout changes."""
 import glob
@@ -95,16 +98,43 @@ def new_jersey(path: str) -> list[dict]:
     if abs(sum(eligible[:4]) - eligible[4]) > 1:
         raise ValueError("NJ: utility residential accounts do not sum to the state total")
     return [{"state": "NJ", "source_name": u, "period": period, "res_total": eligible[i],
-             "res_competitive": switching[i] + gea[i], "source": "NJ BPU monthly electric switching statistics"}
+             "res_competitive": switching[i] + gea[i], "res_aggregation": gea[i], "source": "NJ BPU monthly electric switching statistics"}
             for i, u in enumerate(order)]
 
 
-PARSERS = {"IL_": illinois, "PA_": pennsylvania, "NJ_": new_jersey}
+# ---------------------------------------------------------------- Massachusetts (DOER, added by hand)
+
+RESIDENTIAL_MA = ["R", "R-LI", "R HP", "R-LI HP"]  # standard and low-income residential, with and without heat pump rates
+
+
+def massachusetts(path: str) -> list[dict]:
+    d = pd.read_excel(path, sheet_name="Machine Readable")
+    need = {"Year", "Month", "Parent Utility", "Customer Choice Category", "Customer Rate Class", "Sum of Number of Customers"}
+    if not need <= set(d.columns):
+        raise ValueError(f"MA: unexpected columns {list(d.columns)}")
+    d = d[d["Customer Rate Class"].isin(RESIDENTIAL_MA)]
+    g = d.pivot_table(index=["Parent Utility", "Year", "Month"], columns="Customer Choice Category",
+                      values="Sum of Number of Customers", aggfunc="sum").fillna(0).reset_index()
+    rows = []
+    for r in g.to_dict("records"):
+        basic, comp, agg = r.get("Basic Service", 0), r.get("Competitive Supply", 0), r.get("Municipal Aggregation", 0)
+        rows.append({"state": "MA", "source_name": r["Parent Utility"], "period": pd.Timestamp(int(r["Year"]), int(r["Month"]), 1),
+                     "res_total": basic + comp + agg, "res_competitive": comp + agg, "res_aggregation": agg,
+                     "source": "Massachusetts DOER customer choice data"})
+    if not rows:
+        raise ValueError("MA: no residential rows")
+    return rows
+
+
+PARSERS = {"IL_": illinois, "PA_": pennsylvania, "NJ_": new_jersey, "MA_": massachusetts}
 
 
 def build() -> pd.DataFrame:
     rows = []
-    for name, path in _newest().items():
+    files = _newest()
+    for f in sorted(glob.glob(str(ROOT / "reference" / "state_choice" / "*"))):  # added by hand
+        files[Path(f).name] = f
+    for name, path in files.items():
         for prefix, fn in PARSERS.items():
             if name.startswith(prefix):
                 rows += fn(path)
@@ -116,13 +146,14 @@ def build() -> pd.DataFrame:
     # Combine companies EIA reports as one utility (FirstEnergy Pennsylvania)
     df = (df.groupby(["state", "utility_id_eia", "period", "source"], as_index=False)
             .agg(res_total=("res_total", "sum"), res_competitive=("res_competitive", "sum"),
+                 res_aggregation=("res_aggregation", lambda s: s.sum(min_count=1)),
                  source_names=("source_name", lambda s: "; ".join(sorted(set(s))))))
     df["competitive_share"] = df.res_competitive / df.res_total
     return df.drop_duplicates(["state", "utility_id_eia", "period"], keep="last").sort_values(["state", "utility_id_eia", "period"])
 
 
 def run() -> None:
-    if not glob.glob(str(RAW / "state_choice" / "*" / "*")):
+    if not glob.glob(str(RAW / "state_choice" / "*" / "*")) and not glob.glob(str(ROOT / "reference" / "state_choice" / "*")):
         print("state_choice: no snapshots yet; skipping")
         return
     write(build(), STAGED, "state_choice")

@@ -114,8 +114,8 @@ function coverageNote(k, st, name) {
   const n = v => Math.round(v).toLocaleString(), c = v => v.toFixed(1) + "¢";
   let html = "";
   if (u && u.share < COV.flag_below) {
-    html = `<b>Incomplete coverage.</b> These figures cover the ${n(u.own_supply)} homes on ${name}'s own supply, ${Math.round(u.share * 100)}% of its residential customers (${u.basis}). Another ${n(u.delivery_only)} homes ${COV.reasons.competitive}.`;
-    if (u.est_competitive_cents != null) html += ` Estimated average for those homes in ${COV.year}: about ${c(u.est_competitive_cents)} per kWh (the utility's ${c(u.delivery_cents)} delivery charge plus the ${c(u.supplier_cents)} statewide average charged by competitive suppliers), versus ${c(u.own_supply_cents)} on the utility's supply.`;
+    html = `<b>Incomplete coverage.</b> These figures cover the ${n(u.own_supply)} homes on ${name}'s own supply, ${Math.round(u.share * 100)}% of its residential customers (${u.basis}). Another ${n(u.delivery_only)} homes ${COV.reasons.competitive}.` + (u.aggregation > 0 ? ` Of those, ${n(u.aggregation)} are in town or government aggregation programs and ${n(u.delivery_only - u.aggregation)} chose a supplier individually.` : "");
+    if (u.est_competitive_cents != null) html += ` Estimated average for those homes in ${u.data_year || COV.year}: about ${c(u.est_competitive_cents)} per kWh (${u.estimate_basis === "statewide" ? `about ${c(u.delivery_cents)} for delivery, from EIA's statewide delivery-only figures,` : `the utility's ${c(u.delivery_cents)} delivery charge`} plus the ${c(u.supplier_cents)} statewide average charged by competitive suppliers)${u.own_supply_cents != null ? `, versus ${c(u.own_supply_cents)} on the utility's supply` : ""}.`;
   } else if (s.flag && s.missing_competitive > 0.1 * s.monthly_total) {
     html = `<b>Incomplete coverage.</b> Statewide in ${st}, about ${n(s.missing_competitive)} homes (${Math.round(s.missing_competitive / s.monthly_total * 100)}%) ${COV.reasons.competitive}. EIA does not report how many of them ${name} serves, so these figures may describe only part of its customers.`;
   }

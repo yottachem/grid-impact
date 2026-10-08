@@ -62,7 +62,17 @@ def annual() -> tuple[pd.DataFrame, pd.DataFrame, int]:
         "retail_allin_cents": (col("sales_revenue", "retail_bundled") * 100 / pd.Series(col("sales_mwh", "retail_bundled"), index=g.index).where(lambda x: x > 0)) / 1000,
     })
     st["annual_share"] = st.own_supply / (st.own_supply + st.delivery_only)
-    named = r[(r.utility_id_eia != 99999) & ~retail]
+    # Delivery revenue per kWh for delivery-only homes EIA does not attribute to a utility (its statewide
+    # adjustment row); used as the delivery rate for utilities without their own delivery-only figures
+    adj = r[(r.utility_id_eia == 99999) & (r.service_type == "delivery")].groupby("state")[["sales_revenue", "sales_mwh"]].sum()
+    st["unattributed_delivery_cents"] = (adj.sales_revenue * 100 / adj.sales_mwh.where(adj.sales_mwh > 0) / 1000).reindex(st.index)
+    # Utility-level figures: each utility's latest reported year (EIA's newest annual file is an early release
+    # that omits many large utilities, which then appear only in the statewide adjustment row)
+    ra = s[(s.customer_class == "residential") & (s.year >= year - 2) & (s.utility_id_eia != 99999)]
+    ra = ra.assign(service_type=ra.service_type.astype(str), entity_type=ra.entity_type.astype(str))
+    ra = ra[~ra.entity_type.isin(["Retail Power Marketer", "Community Choice Aggregator"])]
+    last = ra.groupby(["utility_id_eia", "state"]).year.transform("max")
+    named = ra[ra.year == last]
     st["split_by_utility"] = named[named.service_type == "delivery"].groupby("state").customers.sum().reindex(st.index).fillna(0) \
         / st.delivery_only.where(st.delivery_only > 0)
     u = named.groupby(["utility_id_eia", "state", "service_type"])[["customers", "sales_mwh", "sales_revenue"]].sum().unstack("service_type")
@@ -70,7 +80,12 @@ def annual() -> tuple[pd.DataFrame, pd.DataFrame, int]:
         "own_supply": u["customers"].get("bundled"), "delivery_only": u["customers"].get("delivery"),
         "own_supply_cents": u["sales_revenue"].get("bundled") * 100 / u["sales_mwh"].get("bundled") / 1000,
         "delivery_cents": u["sales_revenue"].get("delivery") * 100 / u["sales_mwh"].get("delivery").where(lambda x: x > 0) / 1000,
-    }).reset_index()
+    })
+    ut["data_year"] = named.groupby(["utility_id_eia", "state"]).year.max().reindex(ut.index)
+    ut = ut.reset_index()
+    # Own-supply price for every named utility (state reports can add utilities without delivery-only rows)
+    b = named[named.service_type == "bundled"].groupby(["utility_id_eia", "state"])[["sales_revenue", "sales_mwh"]].sum()
+    st.attrs["own_cents"] = (b.sales_revenue * 100 / b.sales_mwh.where(b.sales_mwh > 0) / 1000)
     ut = ut[ut.delivery_only.fillna(0) > 0]
     ut["share"] = ut.own_supply.fillna(0) / (ut.own_supply.fillna(0) + ut.delivery_only)
     ut = ut.join(st.supplier_cents, on="state")
@@ -87,16 +102,26 @@ def merge_state_reports(ut: pd.DataFrame, st: pd.DataFrame) -> pd.DataFrame:
     sc = pd.read_parquet(path)
     sc = sc[sc.res_total.fillna(0) >= 1000].sort_values("period").groupby(["state", "utility_id_eia"]).tail(1)
     sc = sc.assign(own_supply=(sc.res_total - sc.res_competitive).round(), delivery_only=sc.res_competitive.round(),
+                   aggregation=sc.res_aggregation.round() if "res_aggregation" in sc else None,
                    basis=sc.source + ", " + sc.period.dt.strftime("%B %Y"), as_of=sc.period.dt.strftime("%Y-%m"))
-    keep = ["utility_id_eia", "state", "own_supply", "delivery_only", "basis", "as_of"]
+    keep = ["utility_id_eia", "state", "own_supply", "delivery_only", "aggregation", "basis", "as_of"]
     eia = ut.set_index(["utility_id_eia", "state"])
     new = sc[keep].set_index(["utility_id_eia", "state"])
-    cols = ["own_supply", "delivery_only", "basis", "as_of"]
+    cols = ["own_supply", "delivery_only", "aggregation", "basis", "as_of"]
     for idx, r in new.iterrows():
         eia.loc[idx, cols] = [r[c] for c in cols]
         if pd.isna(eia.loc[idx, "supplier_cents"]):
             eia.loc[idx, "supplier_cents"] = st.supplier_cents.get(idx[1])
     eia["share"] = eia.own_supply / (eia.own_supply + eia.delivery_only)
+    own = st.attrs.get("own_cents")
+    if own is not None:
+        eia["own_supply_cents"] = eia.own_supply_cents.fillna(own.reindex(eia.index))
+    eia["estimate_basis"] = eia.get("estimate_basis", pd.Series(index=eia.index, dtype=object)).where(eia.delivery_cents.isna(), "utility")
+    gap = eia.delivery_cents.isna()
+    state_of = eia.index.get_level_values("state")
+    eia.loc[gap, "delivery_cents"] = st.unattributed_delivery_cents.reindex(state_of[gap]).values
+    eia.loc[gap & eia.delivery_cents.notna(), "estimate_basis"] = "statewide"
+    eia["est_competitive_cents"] = eia.delivery_cents + eia.supplier_cents
     return eia.reset_index()
 
 
@@ -123,12 +148,13 @@ def run() -> dict:
             comp = min(missing, rec.get("delivery_only", 0))
             rec["missing"], rec["missing_competitive"], rec["missing_annual_only"] = missing, comp, missing - comp
         states[s] = rec
-    ut = ut.assign(basis="EIA-861 " + str(year), as_of=str(year))
+    ut = ut.assign(basis="EIA-861 " + ut.data_year.astype(int).astype(str), as_of=ut.data_year.astype(int).astype(str))
     ut = merge_state_reports(ut, st)
     utils = [{k: (None if pd.isna(v) else (round(float(v), 3 if k == "share" else 1) if isinstance(v, float) else v))
               for k, v in r.items()} for r in ut.assign(utility_id_eia=ut.utility_id_eia.astype(int),
                                                         own_supply=ut.own_supply.fillna(0).astype(int),
-                                                        delivery_only=ut.delivery_only.astype(int)).to_dict("records")]
+                                                        delivery_only=ut.delivery_only.astype(int),
+                                                        aggregation=ut.get("aggregation")).to_dict("records")]
     out = {"month": mo.month.iloc[0] if len(mo) else None, "year": year, "flag_below": FLAG_BELOW, "reason": REASON, "reasons": REASONS,
            "states": states, "utilities": utils}
     (ROOT / "site" / "data" / "coverage.json").write_text(json.dumps(out, separators=(",", ":")))

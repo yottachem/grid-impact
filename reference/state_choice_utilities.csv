@@ -16,3 +16,6 @@ NJ,ACE,963,NJ BPU monthly electric switching statistics
 NJ,JCP&L,9726,
 NJ,PSE&G,15477,
 NJ,RECO,16213,
+MA,Eversource,54913,MA DOER customer choice data (NSTAR Electric Company in EIA)
+MA,National Grid,11804,MA DOER combines Massachusetts Electric and Nantucket Electric (about 1% of the total); mapped to Massachusetts Electric
+MA,Unitil,6374,Fitchburg Gas & Electric Light in EIA
