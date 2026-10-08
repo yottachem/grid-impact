@@ -116,12 +116,12 @@ def build() -> gpd.GeoDataFrame:
         tr.loc[use_state, col] = tr.loc[use_state, f"state_{col}"]
     tr = tr.drop(columns=[c for c in tr.columns if c.startswith("state_")])
     cc = pd.read_parquet(MARTS / "capacity_household_cost.parquet")
-    dy = "2026/27"  # current delivery year (June 2026 - May 2027)
-    cc = cc[(cc.delivery_year == dy) & cc.supply.eq("default_service")]
-    cc = cc[["utility_id_eia", "state", "usd_per_home_yr_central", "usd_per_home_yr_dc_central"]].rename(
-        columns={"usd_per_home_yr_central": "capacity_cost", "usd_per_home_yr_dc_central": "capacity_cost_dc"})
+    dy = "2026/27"  # current delivery year; markets without it yet (NYISO's May-April year) use their latest
+    cc = cc[(cc.delivery_year <= dy) & cc.supply.eq("default_service")]
+    cc = cc.sort_values("delivery_year").groupby(["utility_id_eia", "state"]).tail(1)
+    cc = cc[["utility_id_eia", "state", "usd_per_home_yr_central", "usd_per_home_yr_dc_central", "delivery_year"]].rename(
+        columns={"usd_per_home_yr_central": "capacity_cost", "usd_per_home_yr_dc_central": "capacity_cost_dc", "delivery_year": "capacity_year"})
     tr = tr.merge(cc, left_on=["utility_id_eia", "STUSPS"], right_on=["utility_id_eia", "state"], how="left").drop(columns="state")
-    tr["capacity_year"] = dy
     tr["energy_burden"] = tr.bill / tr.income
     sites = pd.read_parquet(MARTS / "datacenter_sites.parquet")
     live = sites[sites.status_group.isin(["operating", "construction", "proposed"]) & ~sites.duplicate]

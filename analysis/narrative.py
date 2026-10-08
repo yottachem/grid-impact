@@ -176,10 +176,35 @@ def values() -> dict:
             v[f"auc_miso.{dy_key(r.delivery_year)}"] = r.price_usd_mw_day
             if len(parts) == 4:
                 v[f"auc_miso.summer.{dy_key(r.delivery_year)}"] = float(parts[0])
+    # NYISO (monthly ICAP spot auctions by locality; complete May-April capability years)
+    ny = capacity_series("NYISO")
+    if ny:
+        v.update({"cap_ny.first_dy": ny[0]["dy"], "cap_ny.first": ny[0]["central"], "cap_ny.latest_dy": ny[-1]["dy"],
+                  "cap_ny.latest": ny[-1]["central"], "cap_ny.max": max(d["central"] for d in ny), "cap_ny.min": min(d["central"] for d in ny)})
+        coned = cc[(cc.get("market") == "NYISO") & (cc.utility_id_eia == 4226)] if "market" in cc else cc.iloc[0:0]
+        if len(coned):
+            v["cap_ny.coned_latest"] = float(coned.sort_values("delivery_year").usd_per_home_yr_central.iloc[-1])
+            v["cap_ny.coned_max"] = float(coned.usd_per_home_yr_central.max())
+            v["cap_ny.coned_max_dy"] = coned.sort_values("usd_per_home_yr_central").delivery_year.iloc[-1]
+    try:
+        from transform.common import latest
+        spot = pd.DataFrame(json.load(open(latest("nyiso_icap", "spot_prices.json"))))
+        spot["summer"] = spot.month.str[5:7].astype(int).between(5, 10)
+        spot["year"] = spot.month.str[:4].astype(int)
+        su = spot[spot.summer].groupby("year").NYC.agg(["mean", "max", "size"])
+        last = int(spot.year.max())
+        v.update({"nyiso.nyc_summer_year": last, "nyiso.nyc_summer_avg": float(su.loc[last, "mean"]),
+                  "nyiso.nyc_summer_months": int(su.loc[last, "size"]),
+                  "nyiso.nyc_prior_summer_max_avg": float(su.loc[su.index < last, "mean"].max()),
+                  "nyiso.nyc_month_max": float(spot.NYC.max()), "nyiso.nyc_month_max_when": spot.loc[spot.NYC.idxmax(), "month"],
+                  "nyiso.through": spot.month.max(),
+                  "nyiso.record_month_in_latest_summer": spot.loc[spot.NYC.idxmax(), "month"] >= f"{last}-05"})
+    except (FileNotFoundError, KeyError):
+        pass
     # Data center load by grid region (operating + pipeline MW per 1,000 residential customers)
     ux = pd.DataFrame(json.loads((DATA / "utility_exposure.json").read_text()))
     g = ux.groupby("balancing_authority")[["mw_op", "mw_pipeline", "res_customers"]].sum()
-    for ba, key in (("PJM", "pjm"), ("ISNE", "ne"), ("MISO", "miso")):
+    for ba, key in (("PJM", "pjm"), ("ISNE", "ne"), ("MISO", "miso"), ("NYIS", "ny")):
         if ba in g.index:
             v[f"dc.{key}_pipeline_gw"] = g.loc[ba, "mw_pipeline"] / 1000
             v[f"dc.{key}_pipeline_per_1k"] = g.loc[ba, "mw_pipeline"] / g.loc[ba, "res_customers"] * 1000

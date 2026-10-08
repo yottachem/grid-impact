@@ -106,7 +106,7 @@ def map_layers() -> None:
         t[c] = t[c].round(nd)
     props = {"tract_geoid": "id", "county_name": "county", "state": "st", "income": "inc", "households": "hh",
              "utility_name": "util", "bill_year": "by", "bill_basis": "bb", "bill": "bill", "kwh": "kwh",
-             "bill_change_real": "chg", "energy_burden": "burden", "capacity_cost": "cap", "capacity_cost_dc": "capdc", "dc_mw": "dcmw"}
+             "bill_change_real": "chg", "energy_burden": "burden", "capacity_cost": "cap", "capacity_cost_dc": "capdc", "capacity_year": "cy", "dc_mw": "dcmw"}
     tdir = SITE / "tracts"
     tdir.mkdir(parents=True, exist_ok=True)
     for old in tdir.glob("*.json"):

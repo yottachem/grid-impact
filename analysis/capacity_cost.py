@@ -1,4 +1,4 @@
-"""Capacity auction cost per household, by utility and delivery year, for PJM, ISO New England, and MISO.
+"""Capacity auction cost per household, by utility and delivery year, for PJM, ISO New England, MISO, and NYISO.
 
 cost/household/yr = (auction total $ / market annual energy) x (zone price / market-wide price)
                     x household kWh/yr x residential peak factor
@@ -6,7 +6,8 @@ cost/household/yr = (auction total $ / market annual energy) x (zone price / mar
 - Auction totals, zone prices, and data center attribution: reference/capacity_auctions.csv
   (PJM BRA reports; Monitoring Analytics; ISO-NE Forward Capacity Auction results, converted from
   $/kW-month to $/MW-day; MISO Planning Resource Auction results, seasonal since 2023/24 and stored as
-  day-weighted annual figures with the four seasonal prices kept). Utility zones: reference/{pjm,isone,miso}_utility_zones.csv.
+  day-weighted annual figures with the four seasonal prices kept; NYISO monthly ICAP spot prices by locality,
+  averaged over May-April capability years, with an approximate statewide requirement of 36 GW UCAP). Utility zones: reference/{pjm,isone,miso}_utility_zones.csv.
 - Market annual energy: EIA-930 (calendar year the delivery year starts in, else latest).
 - Household kWh/yr: utility's latest 12 months of EIA-861M residential sales / customers.
 - Peak factor: capacity is charged on contribution to system peak, and homes peak harder
@@ -24,7 +25,8 @@ from transform.common import MARTS, ROOT, latest, write
 PEAK_FACTORS = {"low": 1.0, "central": 1.2, "high": 1.4}
 REF = ROOT / "reference"
 MARKETS = {"PJM": ("PJM", "pjm_utility_zones.csv"), "ISONE": ("ISNE", "isone_utility_zones.csv"),
-           "MISO": ("MISO", "miso_utility_zones.csv")}  # market: (EIA-930 code, zones)
+           "MISO": ("MISO", "miso_utility_zones.csv"), "NYISO": ("NYIS", "nyiso_utility_zones.csv")}
+NYISO_UCAP_MW = 36000  # approximate NYCA UCAP requirement: forecast peak ~31.5 GW x (1 + IRM 18-24%), less derating  # market: (EIA-930 code, zones)
 
 
 def household_kwh() -> pd.DataFrame:
@@ -45,9 +47,35 @@ def build() -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True)
 
 
+def nyiso_auctions() -> pd.DataFrame:
+    """NYISO capability years (May-April) from monthly ICAP spot prices (ingest/nyiso_icap.py): the average of
+    12 monthly prices per locality, as $/MW-day; complete capability years only."""
+    try:
+        rows = json.load(open(latest("nyiso_icap", "spot_prices.json")))
+    except FileNotFoundError:
+        return pd.DataFrame()
+    m = pd.DataFrame(rows)
+    m["start"] = m.month.str[:4].astype(int) - (m.month.str[5:7].astype(int) < 5)
+    out = []
+    for start, g in m.groupby("start"):
+        if len(g) < 12:
+            continue
+        dy = f"{start}/{str(start + 1)[2:]}"
+        for col, lda in (("NYCA", "RTO"), ("NYC", "NYC"), ("LI", "LI"), ("G-J Locality", "G-J")):
+            kwmo = g[col].mean()
+            price = kwmo * 12000 / 365
+            out.append({"market": "NYISO", "delivery_year": dy, "dy_start": f"{start}-05-01", "lda": lda, "price_usd_mw_day": round(price, 2),
+                        "cleared_ucap_mw": NYISO_UCAP_MW if lda == "RTO" else None,
+                        "total_cost_busd": round(price * 365 * NYISO_UCAP_MW / 1e9, 3) if lda == "RTO" else None,
+                        "dc_attributable_busd": None, "price_native": round(kwmo, 3), "price_unit": "$/kW-month, 12-month average of spot auctions"})
+    return pd.DataFrame(out)
+
+
 def build_market(market: str, code: str, zone_file: str, homes: pd.DataFrame, all_energy: pd.DataFrame) -> pd.DataFrame:
     auctions = pd.read_csv(REF / "capacity_auctions.csv")
-    auctions = auctions[auctions.market == market]
+    auctions = nyiso_auctions() if market == "NYISO" else auctions[auctions.market == market]
+    if auctions.empty:
+        return pd.DataFrame()
     rto = auctions[auctions.lda == "RTO"].set_index("delivery_year")
     energy = all_energy[(all_energy.rto == code) & (all_energy.days >= 365)].set_index("year").energy_mwh
     zones = pd.read_csv(REF / zone_file)

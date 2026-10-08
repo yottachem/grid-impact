@@ -50,7 +50,7 @@ optgroup { font-style: normal; color: var(--muted); }
         <option value="burden">Energy burden: annual bill as % of median income</option>
         <option value="bill">Average annual residential bill</option>
         <option value="chg">Bill change since 2018-19, after inflation</option>
-        <option value="cap">Capacity auction cost per home, 2026/27 (PJM, New England, MISO)</option>
+        <option value="cap">Capacity auction cost per home (PJM, New England, MISO, New York)</option>
       </optgroup>
       <optgroup label="Data center load: counties">
         <option value="pipe1k">Data center pipeline MW per 1,000 households</option>
@@ -171,14 +171,14 @@ map.on("load", () => {
       ${row(`Avg annual bill (${p.by || "—"})`, p.bill ? "$" + Math.round(p.bill).toLocaleString() + (p.bb === "state" ? " (state average)" : "") : "—")}
       ${row("Energy burden", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : "—")}
       ${row("Bill change since 2019", p.chg != null ? METRICS.chg.fmt(p.chg) : "—")}
-      ${row("Capacity auction cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
+      ${row(`Capacity auction cost per home${p.cy ? ", " + p.cy : ""}`, p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
       ${row("Data center load in tract", p.dcmw ? fmtMW(p.dcmw) : null)}</div>`,
     "counties-fill": p => `<div class="pop"><b>${esc(p.name || "County " + p.id)}${p.st ? ", " + p.st : ""}</b>
       ${row("Households", p.hh ? Math.round(p.hh).toLocaleString() : "—")}
       ${row("Energy burden (household-weighted)", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : null)}
       ${row("Avg annual bill", p.bill != null ? "$" + Math.round(p.bill).toLocaleString() : null)}
       ${row("Bill change since 2018-19", p.chg != null ? METRICS.chg.fmt(p.chg) : null)}
-      ${row("Capacity auction cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) : null)}
+      ${row(`Capacity auction cost per home${p.cy ? ", " + p.cy : ""}`, p.cap != null ? "$" + Math.round(p.cap) : null)}
       ${row("Operating data centers", p.op ? fmtMW(p.op) : "none listed")}
       ${row("Pipeline (proposed + construction)", p.pipe ? fmtMW(p.pipe) : "none listed")}
       ${row("Pipeline per 1,000 households", p.pipe1k ? p.pipe1k.toFixed(1) + " MW" : null)}

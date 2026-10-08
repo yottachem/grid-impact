@@ -23,6 +23,13 @@ terms:
       The Midcontinent Independent System Operator, the grid operator for 15 states from Manitoba's border to Louisiana,
       including most of Illinois outside Chicago, Michigan, Minnesota, and Iowa. It runs a yearly Planning Resource Auction
       for capacity, with separate prices for each season since 2023/24.
+  - id: nyiso
+    term: NYISO
+    match: [NYISO]
+    definition: >-
+      The New York Independent System Operator, the grid operator for New York State. It buys capacity in seasonal, monthly,
+      and monthly spot auctions, priced separately for New York City, Long Island, the lower Hudson Valley, and the rest of
+      the state, on May-to-April capability years.
   - id: rto
     term: Grid operator (RTO or ISO)
     match: [grid operator, regional grid]

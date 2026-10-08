@@ -1,0 +1,8 @@
+utility_id_eia,utility_name,state,zone,lda_chain,supply,note
+4226,Consolidated Edison Co-NY Inc,NY,NYC,NYC>RTO,default_service,New York City (Zone J); its Westchester customers are in the G-J Locality (Zone I)
+11171,Long Island Power Authority,NY,LI,LI>RTO,default_service,Public power authority; its power supply charge passes market capacity costs through
+14154,Orange & Rockland Utils Inc,NY,G-J,G-J>RTO,default_service,Lower Hudson Valley (Zone G)
+3249,Central Hudson Gas & Elec Corp,NY,G-J,G-J>RTO,default_service,Hudson Valley (Zone G)
+13573,Niagara Mohawk Power Corp. (National Grid),NY,NYCA,RTO,default_service,Rest of state
+13511,New York State Elec & Gas Corp,NY,NYCA,RTO,default_service,Rest of state
+16183,Rochester Gas & Electric Corp,NY,NYCA,RTO,default_service,Rest of state

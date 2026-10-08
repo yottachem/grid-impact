@@ -103,9 +103,14 @@ claims:
     text: "In MISO, the central US grid, most utilities supply their own capacity, so auction prices reach household bills directly mainly at Ameren Illinois. There the cost has swung rather than climbed: {cap_miso.y2022_23:usd} a year in 2022/23, {cap_miso.y2023_24:usd} the next year, {cap_miso.y2025_26:usd} in 2025/26 when the summer price hit ${auc_miso.summer.y2025_26:f2} per MW-day, and {cap_miso.latest:usd} for {cap_miso.latest_dy}. MISO has {dc.miso_pipeline_gw:int} GW of data centers planned or under construction ({dc.miso_pipeline_per_1k:f1} MW per 1,000 homes, against {dc.pjm_pipeline_per_1k:f1} in PJM)."
     fallback: "In MISO, capacity cost for an Ameren Illinois home was {cap_miso.y2025_26:usd} a year in 2025/26 and {cap_miso.latest:usd} for {cap_miso.latest_dy}."
 
+  c1_ny:
+    holds: nyiso.record_month_in_latest_summer and dc.ny_pipeline_per_1k < 0.25 * dc.pjm_pipeline_per_1k
+    text: "New York has little data center load ({dc.ny_pipeline_gw:f1} GW planned or under construction, {dc.ny_pipeline_per_1k:f1} MW per 1,000 homes), yet New York City's capacity price, which sets most of Con Edison's cost, reached a record ${nyiso.nyc_month_max:f2} per kW-month in {nyiso.nyc_month_max_when:month} and averaged ${nyiso.nyc_summer_avg:f2} over summer {nyiso.nyc_summer_year:year}. Statewide, a typical New York home's capacity cost was {cap_ny.latest:usd} a year for {cap_ny.latest_dy}."
+    fallback: "In New York, a typical home's capacity cost was {cap_ny.latest:usd} a year for {cap_ny.latest_dy}; New York City's capacity price averaged ${nyiso.nyc_summer_avg:f2} per kW-month in summer {nyiso.nyc_summer_year:year}."
+
   c1_note:
     refs: [pjm-2026-bra-2028-29, imm-2026-som-2025]
-    text: "PJM: median across {cap.n_utilities:int} utilities in {cap.states} whose default supply passes auction prices through. New England: median across {cap_ne.n_utilities:int} utilities in {cap_ne.states}, from ISO New England Forward Capacity Auction prices; its next auction is due in {fact.isone_next_auction:year}. MISO: Ameren Illinois, from MISO Planning Resource Auction prices (seasonal since 2023/24, weighted by days). Auction results from PJM Base Residual Auction reports through {run.auctions_through}; data center attribution from PJM's Independent Market Monitor through {run.dc_attribution_through}. Delivery years run June to May."
+    text: "PJM: median across {cap.n_utilities:int} utilities in {cap.states} whose default supply passes auction prices through. New England: median across {cap_ne.n_utilities:int} utilities in {cap_ne.states}, from ISO New England Forward Capacity Auction prices; its next auction is due in {fact.isone_next_auction:year}. MISO: Ameren Illinois, from MISO Planning Resource Auction prices (seasonal since 2023/24, weighted by days). New York: median across 7 utilities, from 12-month averages of NYISO's monthly spot auctions by locality (New York City, Long Island, lower Hudson Valley, rest of state), May-to-April years through {cap_ny.latest_dy}. Auction results from PJM Base Residual Auction reports through {run.auctions_through}; data center attribution from PJM's Independent Market Monitor through {run.dc_attribution_through}. Delivery years run June to May."
 
   c2_reading:
     holds: >-
@@ -196,6 +201,12 @@ claims:
     holds: cap_miso.max > 10 * cap_miso.min
     text: "**MISO.** MISO's Planning Resource Auction is held each spring for the coming June-to-May year, with separate summer, fall, winter, and spring prices since 2023/24; seasonal prices are weighted by days. Most MISO utilities are regulated and supply their own capacity, so the site applies auction prices only where default supply buys capacity in the auction: Ameren Illinois (Zone 4). Its typical home's cost ranged from {cap_miso.min:usd} to {cap_miso.max:usd} a year ({cap_miso.max_dy}); for {cap_miso.latest_dy} it is {cap_miso.latest:usd}. No data center attribution has been published."
     fallback: "**MISO.** Ameren Illinois (Zone 4) capacity cost from MISO Planning Resource Auction prices: {cap_miso.latest:usd} a year for {cap_miso.latest_dy}."
+
+  m_capacity_ny:
+    where: methods
+    holds: cap_ny.max > cap_ny.min
+    text: "**New York.** NYISO buys capacity in seasonal and monthly auctions and a monthly spot auction, priced separately for New York City, Long Island, the lower Hudson Valley (the G-J Locality), and the rest of the state. The site averages the 12 monthly spot prices in each May-to-April capability year (complete years only, through {cap_ny.latest_dy}), read from NYISO's public auction viewer each week, and uses an approximate statewide requirement of 36 GW (forecast peak of about 31.5 GW plus the 18-24% installed reserve margin, less derating). All seven large New York utilities pass these costs through, including the Long Island Power Authority through its power supply charge. A typical home's cost ranged from {cap_ny.min:usd} to {cap_ny.max:usd} a year; Con Edison's peaked at {cap_ny.coned_max:usd} ({cap_ny.coned_max_dy}). New York City's spot price reached ${nyiso.nyc_month_max:f2} per kW-month in {nyiso.nyc_month_max_when:month}."
+    fallback: "**New York.** NYISO monthly spot capacity prices by locality, averaged over May-to-April years; a typical home's cost was {cap_ny.latest:usd} for {cap_ny.latest_dy}."
 
   m_local:
     refs: [epri-2026-dc-rates, lbnl-2025-retail-price-trends]
