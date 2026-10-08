@@ -27,6 +27,7 @@ select { font: 14px var(--font-body); color: var(--fg); background: var(--surfac
 #map { height: max(460px, calc(100vh - 230px)); }
 .maplibregl-popup-content { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; font: 13px/1.4 var(--font-body); box-shadow: 0 6px 20px rgba(0,0,0,.16); }
 .maplibregl-popup-tip { display: none; }
+.maplibregl-popup { pointer-events: none; }  /* the popup must never take the pointer, or the map sees a mouseleave and it blinks */
 .pop b { display: block; font-weight: 600; margin-bottom: 2px; }
 .pop .row { display: flex; justify-content: space-between; gap: 14px; font-variant-numeric: tabular-nums; }
 .pop .k { color: var(--muted); }
@@ -135,11 +136,6 @@ map.on("load", () => {
   map.addLayer({ id: "network", type: "circle", source: "network", layout: { visibility: "none" }, paint: {
     "circle-color": css("--net"), "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2.5, 12, 5],
     "circle-stroke-color": css("--surface"), "circle-stroke-width": 1 } });
-  map.on("mousemove", "network", e => {
-    const p = e.features[0].properties;
-    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${esc(p.n)}</b>${row("Type", "Network facility (PeeringDB)")}${row("Operator", esc(p.o))}${row("County", esc([p.c, p.s].filter(Boolean).join(", ")))}<div class="row"><span class="k">No size data; not counted in totals</span></div></div>`).addTo(map);
-  });
-  map.on("mouseleave", "network", () => pop.remove());
   map.addSource("sites", { type: "geojson", data: sites, cluster: true, clusterMaxZoom: 9, clusterRadius: 40,
     clusterProperties: { mw: ["+", ["get", "mw"]] } });
   map.addLayer({ id: "clusters", type: "circle", source: "sites", filter: ["has", "point_count"], paint: {
@@ -156,15 +152,19 @@ map.on("load", () => {
       8, ["interpolate", ["linear"], ["sqrt", ["get", "mw"]], 0, 3, 70, 14],
       14, ["interpolate", ["linear"], ["sqrt", ["get", "mw"]], 0, 6, 70, 28]] } });
 
-  const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "300px" });
+  const pop = new maplibregl.Popup({ closeButton: false, closeOnClick: false, maxWidth: "300px", offset: 14 });
   const row = (k, v) => v == null || v === "" ? "" : `<div class="row"><span class="k">${k}</span><span>${v}</span></div>`;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const fmtMW = mw => mw >= 1000 ? (mw / 1000).toFixed(1) + " GW" : Math.round(mw) + " MW";
-  map.on("mousemove", "tracts-fill", e => {
-    if (map.queryRenderedFeatures(e.point, { layers: ["sites", "clusters"] }).length) return;
-    const p = e.features[0].properties;
-    map.setFilter("tracts-hover", ["==", ["get", "id"], p.id]);
-    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>Tract ${p.id.slice(5)}, ${esc(p.county)}, ${p.st}</b>
+  // One hover controller for every layer: picks the top feature under the pointer, redraws the popup only when
+  // that feature changes, and otherwise just moves it. queryRenderedFeatures returns the topmost feature first.
+  const HOVER = {
+    clusters: p => `<div class="pop"><b>${p.point_count} data center sites</b>${row("Estimated power", fmtMW(p.mw))}<div class="row"><span class="k">Click to zoom in</span></div></div>`,
+    sites: p => { const label = { operating: "Operating", construction: "Approved or under construction", proposed: "Proposed" }[p.g];
+      return `<div class="pop"><b>${esc(p.n)}</b>${row("Status", label)}${row("Operator", esc(p.o))}
+      ${row("County", esc([p.c, p.s].filter(Boolean).join(", ")))}${row("Power", p.known ? fmtMW(p.mw) + (p.b === "reported" ? " reported" : " estimated") : "no size data")}</div>`; },
+    network: p => `<div class="pop"><b>${esc(p.n)}</b>${row("Type", "Network facility (PeeringDB)")}${row("Operator", esc(p.o))}${row("County", esc([p.c, p.s].filter(Boolean).join(", ")))}<div class="row"><span class="k">No size data; not counted in totals</span></div></div>`,
+    "tracts-fill": p => `<div class="pop"><b>Tract ${p.id.slice(5)}, ${esc(p.county)}, ${p.st}</b>
       ${row("Utility", p.util ? esc(p.util) : "not matched")}
       ${COVST[p.st] ? `<div class="row"><span class="k">${COVST[p.st]}</span></div>` : ""}
       ${row("Median household income", p.inc ? "$" + Math.round(p.inc).toLocaleString() : "—")}
@@ -172,13 +172,8 @@ map.on("load", () => {
       ${row("Energy burden", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : "—")}
       ${row("Bill change since 2019", p.chg != null ? METRICS.chg.fmt(p.chg) : "—")}
       ${row("Capacity cost per home, 2026/27", p.cap != null ? "$" + Math.round(p.cap) + (p.capdc != null ? ` ($${Math.round(p.capdc)} data centers)` : "") : "not passed through")}
-      ${row("Data center load in tract", p.dcmw ? fmtMW(p.dcmw) : null)}</div>`).addTo(map);
-  });
-  map.on("mouseleave", "tracts-fill", () => { pop.remove(); map.setFilter("tracts-hover", ["==", ["get", "id"], ""]); });
-  map.on("mousemove", "counties-fill", e => {
-    if (map.queryRenderedFeatures(e.point, { layers: ["sites", "clusters"] }).length) return;
-    const p = e.features[0].properties;
-    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${esc(p.name || "County " + p.id)}${p.st ? ", " + p.st : ""}</b>
+      ${row("Data center load in tract", p.dcmw ? fmtMW(p.dcmw) : null)}</div>`,
+    "counties-fill": p => `<div class="pop"><b>${esc(p.name || "County " + p.id)}${p.st ? ", " + p.st : ""}</b>
       ${row("Households", p.hh ? Math.round(p.hh).toLocaleString() : "—")}
       ${row("Energy burden (household-weighted)", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : null)}
       ${row("Avg annual bill", p.bill != null ? "$" + Math.round(p.bill).toLocaleString() : null)}
@@ -187,28 +182,42 @@ map.on("load", () => {
       ${row("Operating data centers", p.op ? fmtMW(p.op) : "none listed")}
       ${row("Pipeline (proposed + construction)", p.pipe ? fmtMW(p.pipe) : "none listed")}
       ${row("Pipeline per 1,000 households", p.pipe1k ? p.pipe1k.toFixed(1) + " MW" : null)}
-      ${row("Operating per 1,000 households", p.op1k ? p.op1k.toFixed(1) + " MW" : null)}</div>`).addTo(map);
-  });
-  map.on("mouseleave", "counties-fill", () => pop.remove());
-  map.on("mousemove", "sites", e => {
-    const p = e.features[0].properties;
-    const label = { operating: "Operating", construction: "Approved or under construction", proposed: "Proposed" }[p.g];
-    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${esc(p.n)}</b>${row("Status", label)}${row("Operator", esc(p.o))}
-      ${row("County", esc([p.c, p.s].filter(Boolean).join(", ")))}${row("Power", p.known ? fmtMW(p.mw) + (p.b === "reported" ? " reported" : " estimated") : "no size data")}</div>`).addTo(map);
-    map.getCanvas().style.cursor = "pointer";
-  });
-  map.on("mouseleave", "sites", () => { pop.remove(); map.getCanvas().style.cursor = ""; });
+      ${row("Operating per 1,000 households", p.op1k ? p.op1k.toFixed(1) + " MW" : null)}</div>`,
+  };
+  const POINTER = new Set(["clusters", "sites", "network"]);
+  let hoverKey = null, hoverTract = "", frame = 0, lastEvent = null;
+  function hover() {
+    frame = 0;
+    const e = lastEvent;
+    const layers = Object.keys(HOVER).filter(l => map.getLayer(l) && map.getLayoutProperty(l, "visibility") !== "none");
+    const f = map.queryRenderedFeatures(e.point, { layers })[0];
+    if (!f) { clearHover(); return; }
+    const p = f.properties, id = f.layer.id;
+    const key = id + ":" + (p.id ?? p.cluster_id ?? (p.n || "") + "|" + (p.c || "")) + ":" + (p.point_count ?? "");
+    if (key !== hoverKey) {
+      hoverKey = key;
+      pop.setHTML(HOVER[id](p));
+      map.getCanvas().style.cursor = POINTER.has(id) ? "pointer" : "";
+      const t = id === "tracts-fill" ? p.id : "";
+      if (t !== hoverTract) { hoverTract = t; map.setFilter("tracts-hover", ["==", ["get", "id"], t]); }
+    }
+    pop.setLngLat(e.lngLat);
+    if (!pop.isOpen()) pop.addTo(map);
+  }
+  function clearHover() {
+    if (hoverKey === null) return;
+    hoverKey = null; pop.remove(); map.getCanvas().style.cursor = "";
+    if (hoverTract) { hoverTract = ""; map.setFilter("tracts-hover", ["==", ["get", "id"], ""]); }
+  }
+  map.on("mousemove", e => { lastEvent = e; if (!frame) frame = requestAnimationFrame(hover); });
+  map.on("mouseout", clearHover);
+  map.on("click", e => { lastEvent = e; hover(); });  // touch screens have no hover; a tap shows the popup
+  map.on("movestart", clearHover);
   map.on("click", "clusters", async e => {
     const f = e.features[0];
     const z = await map.getSource("sites").getClusterExpansionZoom(f.properties.cluster_id);
     map.easeTo({ center: f.geometry.coordinates, zoom: z });
   });
-  map.on("mousemove", "clusters", e => {
-    const p = e.features[0].properties;
-    pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>${p.point_count} data center sites</b>${row("Estimated power", fmtMW(p.mw))}<div class="row"><span class="k">Click to zoom in</span></div></div>`).addTo(map);
-    map.getCanvas().style.cursor = "pointer";
-  });
-  map.on("mouseleave", "clusters", () => { pop.remove(); map.getCanvas().style.cursor = ""; });
 
   const metric = document.getElementById("metric");
   const hint = document.getElementById("hint");
