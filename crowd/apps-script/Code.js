@@ -9,6 +9,10 @@
  *     published: for ZIP codes with at least THRESHOLD valid bills, the count and medians
  *   Individual responses are never returned.
  * No names, emails, addresses, account numbers, or files are collected.
+ *
+ * Site feedback ("Report an issue" on every page): setupFeedback() creates a second form whose
+ * answers go to the private "Feedback (private)" tab. doGet() returns only the number of reports,
+ * so the pipeline can notify the owner; report text never leaves the sheet.
  */
 const THRESHOLD = 10;
 const WINDOW_DAYS = 365;
@@ -32,12 +36,23 @@ const Q = {
 const BREAKDOWN_HEADER = "Cost breakdown (optional)";
 const EXCLUDE_HEADER = "Exclude (owner use)";  // any value in this column removes the row from all counts
 const BREAKDOWN_TOLERANCE = 0.08;  // supply + delivery + taxes must be within 8% of the total
+const FEEDBACK_TITLE = "Grid Impact Tracker: report an issue";
+const FEEDBACK_SHEET = "Feedback (private)";
+const FQ = {
+  page: "Which page?",
+  kind: "What kind of issue?",
+  details: "What did you see?",
+  where: "Place, utility, or data center (optional)",
+  email: "Email (optional)",
+};
+const SITE_PAGES = ["Map", "Findings", "Your utility", "Methods", "Data status", "Other"];
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu("Grid Impact")
     .addItem("Set up form (run once)", "setup")
     .addItem("Add cost breakdown questions", "addCostBreakdown")
     .addItem("Add exclude column", "addExcludeColumn")
+    .addItem("Set up feedback form", "setupFeedback")
     .addItem("Show form and data links", "showLinks")
     .addToUi();
 }
@@ -160,6 +175,62 @@ function addExcludeColumn_() {
   return { added: true, tab: sh.getName() };
 }
 
+/** Creates the site feedback form (once). Never deletes or edits anything existing. */
+function setupFeedback() {
+  const r = setupFeedback_();
+  SpreadsheetApp.getUi().alert((r.created ? "Feedback form created.\n\n" : "Feedback form already exists.\n\n") + "Form link: " + r.url);
+}
+
+function setupFeedback_() {
+  const p = PropertiesService.getScriptProperties();
+  if (p.getProperty("feedbackFormId")) return { created: false, url: p.getProperty("feedbackFormUrl"), entry: p.getProperty("feedbackPageEntry") };
+  const ssId = p.getProperty("spreadsheetId");
+  const before = new Set(SpreadsheetApp.openById(ssId).getSheets().map(sh => sh.getSheetId()));
+  const form = FormApp.create(FEEDBACK_TITLE);
+  form.setDescription(
+    "Tell us about a wrong or outdated figure, a data center that is missing or listed twice, a conclusion you " +
+    "disagree with, or anything on the site that is broken or confusing.\n\n" +
+    "Reports go privately to the Grid Impact Tracker project (https://yottachem.github.io/grid-impact/) and are " +
+    "never published. An email address is optional and used only to reply.");
+  form.setCollectEmail(false);
+  form.setAllowResponseEdits(false);
+  form.setShowLinkToRespondAgain(true);
+  form.setConfirmationMessage("Thank you. Your report goes privately to the project owner; nothing you entered is published.");
+  const page = form.addListItem().setTitle(FQ.page).setChoiceValues(SITE_PAGES).setRequired(true);
+  form.addMultipleChoiceItem().setTitle(FQ.kind).setRequired(true).setChoiceValues([
+    "A figure is wrong, missing, or out of date",
+    "A data center is missing, duplicated, or wrong",
+    "I disagree with a conclusion",
+    "Something is broken or hard to use",
+    "Suggestion",
+    "Other"]);
+  form.addParagraphTextItem().setTitle(FQ.details).setRequired(true)
+    .setHelpText("What you saw, and what you think is right. Include a source if you have one (filing, news article, operator website).");
+  form.addTextItem().setTitle(FQ.where).setRequired(false).setHelpText("For example: Loudoun County, VA; Dominion Energy; or a data center's name");
+  form.addTextItem().setTitle(FQ.email).setRequired(false).setHelpText("Only if you would like a reply. Kept private.")
+    .setValidation(FormApp.createTextValidation().requireTextIsEmail().setHelpText("Enter an email address, or leave this blank").build());
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ssId);
+  SpreadsheetApp.flush();
+  const tab = SpreadsheetApp.openById(ssId).getSheets().find(sh => !before.has(sh.getSheetId()));
+  if (tab) tab.setName(FEEDBACK_SHEET);
+  // Entry ID of the page question, so each site page can link to the form with its name filled in
+  const pre = form.createResponse().withItemResponse(page.createResponse("Map")).toPrefilledUrl();
+  const entry = (pre.match(/entry\.(\d+)=/) || [])[1] || "";
+  p.setProperties({ feedbackFormId: form.getId(), feedbackFormUrl: form.getPublishedUrl(), feedbackPageEntry: entry });
+  return { created: true, url: form.getPublishedUrl(), entry: entry };
+}
+
+/** Number of feedback reports (no content). */
+function feedbackCount_() {
+  const p = PropertiesService.getScriptProperties();
+  if (!p.getProperty("feedbackFormId")) return null;
+  const ss = SpreadsheetApp.openById(p.getProperty("spreadsheetId"));
+  const tab = ss.getSheetByName(FEEDBACK_SHEET) || ss.getSheets().find(sh => sh.getLastColumn() > 0 &&
+    sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].indexOf(FQ.details) >= 0);
+  return { form_url: p.getProperty("feedbackFormUrl"), page_entry: p.getProperty("feedbackPageEntry"),
+           total: tab ? Math.max(0, tab.getLastRow() - 1) : 0 };
+}
+
 function showLinks() {
   const p = PropertiesService.getScriptProperties();
   SpreadsheetApp.getUi().alert("Form: " + (p.getProperty("formUrl") || "not set up yet"));
@@ -179,6 +250,7 @@ function aggregates_() {
   const sheet = responsesTab_(ss);
   const out = { threshold: THRESHOLD, window_days: WINDOW_DAYS, updated: new Date().toISOString(),
                 form_url: p.getProperty("formUrl"), pending: [], published: [], invalid: 0, excluded: 0, total: 0 };
+  out.feedback = feedbackCount_();
   if (!sheet) return out;
   const rows = sheet.getDataRange().getValues();
   const head = rows.shift() || [];

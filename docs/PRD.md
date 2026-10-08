@@ -52,6 +52,8 @@ No public, regularly refreshed, method-transparent source connects **data center
 | R7 | Crowdsourced bills: publish only aggregates with n ≥ 10 per ZIP/utility-month; no PII retained | Later |
 | R8 | Pending visibility: before an area reaches the threshold, anyone can see the exact number of valid bills pending for a ZIP code (e.g. "6 of 10 needed"); counts only, no values, until the threshold is met and medians are published. Grouping: ZIP code, rolling 12 months | In progress (2026-10-07): Google Form + Apps Script endpoint in crowd/apps-script; awaiting Apps Script API enablement on the project account |
 | R9 | Data status: every page shows sources tracked, newest data, sources updated recently and added recently; a status page lists each source's added date, last check, last new data, and current/late state | Must (done 2026-10-07) |
+| R10 | Findings stay true to the data: every interpretive statement carries a machine-checked condition; when one fails, the site shows neutral figures marked under review and opens an issue; rewrites are drafted with Claude on the owner's trigger and reviewed before publishing | Must (done 2026-10-08) |
+| R11 | Feedback: every page links to a no-sign-in report form; reports stay private and the owner is notified of new ones | Must (done 2026-10-08) |
 
 ## Key decisions
 

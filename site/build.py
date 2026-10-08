@@ -15,6 +15,7 @@ ROOT = HERE.parent
 DATA, TEMPLATES, DIST = HERE / "data", HERE / "templates", HERE / "dist"
 sys.path.insert(0, str(HERE / "prototype"))
 import build_findings  # noqa: E402  (payload for the findings page)
+from analysis import narrative  # noqa: E402  (build_findings puts the repo root on sys.path)
 
 REPO = "https://github.com/yottachem/grid-impact"
 PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods")]
@@ -98,9 +99,10 @@ def quality_section() -> str:
         s = pd.read_parquet(ROOT / "data" / "marts" / "datacenter_sites.parquet")
         op = s[(s.status_group == "operating") & ~s.duplicate].mw_est.sum() / 1000
         lo, hi = op * 0.5 * 8.76, op * 0.7 * 8.76
+        lbnl = pd.read_csv(ROOT / "reference" / "context_facts.csv", dtype=str).set_index("fact_id").loc["lbnl_us_dc_twh_2023"]
         bench = (f"<p><b>Consistency check.</b> Operating sites total about {op:,.0f} GW of estimated capacity. At typical 50-70% "
                  f"utilization that is roughly {lo:,.0f}-{hi:,.0f} TWh a year, versus Lawrence Berkeley National Laboratory's estimate "
-                 f"of 176 TWh of US data center use in 2023 (December 2024 report). The gap is expected: listed capacity is often "
+                 f"of {float(lbnl.value):,.0f} TWh of US data center use in 2023 (December 2024 report). The gap is expected: listed capacity is often "
                  f"full planned build-out, and use has grown since 2023. Totals are best read as upper bounds.</p>")
     except Exception:
         pass
@@ -119,7 +121,8 @@ def quality_section() -> str:
             f"<p>Pairs pending review are nearby records with a shared operator or similar name that the automatic rules could "
             f"not settle, such as a campus total listed alongside its buildings, or an operating building next to a proposed "
             f"expansion. They are kept, so some double counting may remain. "
-            f'<a href="https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml">Report a correction</a>.</p>'
+            f'<a href="{html.escape(build_findings.feedback_url("Map"))}">Report a correction</a> (no account needed), or '
+            f'<a href="https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml">open a GitHub issue</a>.</p>'
             + bench)
 
 
@@ -144,7 +147,38 @@ def analysis_section() -> str:
             f"example figures carry an as-of date.</p>")
 
 
-def status_page(meta: dict) -> str:
+def claims_section(nar: dict) -> str:
+    """How the findings wording is checked, and anything currently under review."""
+    flagged = nar["flagged"]
+    rows = "".join(f"<tr><td><code>{html.escape(c)}</code></td><td>{nar['claims'][c]['where'].title()}</td>"
+                   f"<td>{html.escape(nar['claims'][c]['reason'] or '')}</td></tr>" for c in flagged)
+    due = "".join(f"<tr><td><code>{html.escape(f['fact'])}</code></td><td>{html.escape(f['statement'])}</td>"
+                  f"<td>{html.escape(f['review_by'])}</td></tr>" for f in nar["facts_due"])
+    return (f"<h2>Findings checks</h2>"
+            f"<p>Each statement on the Findings and Methods pages is stored with the condition it rests on (for example, "
+            f"that a confidence interval excludes zero) and with plausibility ranges for its numbers. Every analysis run "
+            f"checks all {nar['n_claims']} statements. A statement that no longer fits the data is shown as current figures "
+            f"without interpretation, marked under review, and opened as a GitHub issue until it is rewritten and reviewed. "
+            f"Last check: {narrative.fmt(nar['run_date'], 'date')}.</p>"
+            + (f"<table><thead><tr><th>Statement</th><th>Page</th><th>Why</th></tr></thead><tbody>{rows}</tbody></table>"
+               if flagged else "<p><b>All statements fit the current data.</b></p>")
+            + (f"<p>Hand-entered facts past their review date:</p><table><thead><tr><th>Fact</th><th>Statement</th><th>Review by</th>"
+               f"</tr></thead><tbody>{due}</tbody></table>" if due else ""))
+
+
+def methods_markdown(nar: dict) -> str:
+    """docs/methods.md with {{claim:id}} statements and {{value:format}} figures filled in from the latest run."""
+    md = (ROOT / "docs" / "methods.md").read_text().replace("# Methods (working draft)", "# Methods")
+    v = nar["values"]
+    def claim(cid: str) -> str:
+        c = nar["claims"][cid]
+        return c["text"] if c["status"] == "ok" else (c["text"] + " *(Under review: the latest data no longer fits the earlier wording.)*")
+    md = re.sub(r"\{\{claim:([a-z0-9_]+)\}\}", lambda m: claim(m.group(1)), md)
+    md = re.sub(r"\{\{([a-z][a-z0-9_.]*)(?::([a-z0-9]+))?\}\}", lambda m: narrative.fmt(v[m.group(1)], m.group(2)), md)
+    return md
+
+
+def status_page(meta: dict, nar: dict) -> str:
     rows = sorted(meta["sources"].items(), key=lambda kv: (kv[1]["last_new_data"] or "", kv[1]["added"]), reverse=True)
     badge = {"current": ("Current", "var(--s3)"), "late": ("Late", "var(--s2)"), "pending": ("Not yet fetched", "var(--muted)")}
     trs = "".join(
@@ -163,20 +197,24 @@ def status_page(meta: dict) -> str:
             f"<table><thead><tr><th>Source</th><th>Status</th><th>Last new data</th><th>Data through</th><th>Last checked</th>"
             f"<th>Checked</th><th>Added</th></tr></thead><tbody>{trs}</tbody></table>"
             + analysis_section()
+            + claims_section(nar)
             + quality_section()
             + f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
             f'when published; see <a href="methods.html">Methods</a>.</p></article>')
 
 
-def footer(meta: dict, price_through: str) -> str:
+def footer(meta: dict, price_through: str, page: str = "Other") -> str:
     s = meta["sources"]
+    run = ROOT / "analysis" / "results" / "run.json"
+    auctions = json.loads(run.read_text())["capacity_auctions_through"] if run.exists() else "the latest auction"
     fresh = lambda k: s.get(k, {}).get("last_new_data") or "—"
     return (status_line(meta) + f"<span>Updated automatically when sources publish new data. Last build {meta['built'][:10]}. "
             f"Residential prices through {price_through}; data center sites as of {fresh('fractracker_datacenters')}; "
-            f"PJM auctions through 2028/29.</span>"
+            f"PJM auctions through {auctions}.</span>"
             f"<span>Data: EIA, PJM, PJM Independent Market Monitor, BLS, NOAA, Census, ORNL; data center locations from "
             f"FracTracker Alliance (non-commercial use), PNNL IM3, © OpenStreetMap contributors, PeeringDB. "
-            f'<a href="methods.html">Methods and licenses</a> · <a href="{REPO}">Source code</a></span>')
+            f'<a href="methods.html">Methods and licenses</a> · <a href="{REPO}">Source code</a> · '
+            f'<a href="{html.escape(build_findings.feedback_url(page))}">Report an issue</a></span>')
 
 
 def price_month() -> str:
@@ -196,12 +234,12 @@ def main() -> None:
     shutil.copy(DATA / "README.md", DIST / "data" / "README.md")
     meta = json.loads((DATA / "meta.json").read_text())
     pm = price_month()
-    foot = footer(meta, pm)
+    foot = footer(meta, pm, "Findings")
 
     # Findings
-    payload, n_units = build_findings.payload()
+    nar = build_findings.load_narrative()
     title, t = split_template((TEMPLATES / "findings.html.tmpl").read_text())
-    t = t.replace("__DATA__", json.dumps(payload, separators=(",", ":"))).replace("__NUNITS__", str(n_units))
+    t = build_findings.render(t.replace("__DATA__", json.dumps(build_findings.payload(), separators=(",", ":"))), nar)
     t = t.replace("Grid Impact Tracker · findings draft", "Grid Impact Tracker · findings")
     t = t.replace("Draft built", "Built")
     (DIST / "findings.html").write_text(shell("findings.html", title, t, foot,
@@ -211,7 +249,8 @@ def main() -> None:
     sites = json.loads((DATA / "sites_open.json").read_text()) + json.loads((DATA / "sites_fractracker.json").read_text())
     title, t = split_template((TEMPLATES / "map.html.tmpl").read_text())
     t = t.replace("__SITES__", json.dumps(sites, separators=(",", ":")))
-    (DIST / "index.html").write_text(shell("index.html", title, t, foot,
+    t = t.replace("https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml", html.escape(build_findings.feedback_url("Map")))
+    (DIST / "index.html").write_text(shell("index.html", title, t, footer(meta, pm, "Map"),
         "Zoomable map of US data centers with neighborhood electricity costs and county data center load per household."))
     # Old links to map.html land on the map (now the home page)
     (DIST / "map.html").write_text('<!doctype html><meta charset="utf-8"><title>Data Center Map</title>'
@@ -226,18 +265,18 @@ def main() -> None:
           .replace("__CROWD__", (DATA / "crowd.json").read_text())
           .replace("__RELIABILITY__", (DATA / "utility_reliability.json").read_text())
           .replace("__REALMONTH__", html.escape(meta.get("real_dollars_of", "the latest CPI month"))))
-    (DIST / "utility.html").write_text(shell("utility.html", title, t, foot,
+    (DIST / "utility.html").write_text(shell("utility.html", title, t, footer(meta, pm, "Your utility"),
         "Residential price, usage, and bill by utility, adjusted for inflation, with data center load in each territory."))
 
     # Methods (methods.md + data licenses)
-    md = (ROOT / "docs" / "methods.md").read_text().replace("# Methods (working draft)", "# Methods")
+    md = methods_markdown(nar)
     md = re.sub(r"\*Records each modeling decision.*?\*\n", "", md)
     md += "\n\n## Data downloads and licenses\n\n" + (DATA / "README.md").read_text().split("\n", 2)[2].replace("](", "](data/")
     md += "\n\nFiles: " + ", ".join(f"[{f.name}](data/{f.name})" for f in sorted(DATA.glob("*.json"))) + "\n"
     body = '<article class="prose">' + markdown.markdown(md, extensions=["tables"]) + "</article>"
-    (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, foot,
+    (DIST / "methods.html").write_text(shell("methods.html", "Methods", body, footer(meta, pm, "Methods"),
         "Sources, modeling decisions, and known limitations of the Grid Impact Tracker."))
-    (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta), foot,
+    (DIST / "status.html").write_text(shell("status.html", "Data status", status_page(meta, nar), footer(meta, pm, "Data status"),
         "When each data source was added, last checked, and last brought new data."))
     shutil.copytree(DATA / "tracts", DIST / "data" / "tracts")
     (DIST / ".nojekyll").write_text("")

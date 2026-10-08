@@ -86,48 +86,48 @@ The map shows household costs for all 50 states and DC: by county when zoomed ou
 
 ## Capacity cost per household (PJM)
 
-*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
+*Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
-PJM, the grid operator for 13 states and DC, buys generating capacity ahead of time in its Base Residual Auction. Prices rose from $28.92 per MW-day for 2024/25 to $269.92 for 2025/26, then reached the price cap in each of the next three auctions ($329.17, $333.44, $325.00). Without the cap, the 2028/29 auction would have cleared at $554.72.
+PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generating capacity ahead of time in its Base Residual Auction. {{claim:m_capacity_prices}}
 
 - **Cost per home per year** = (auction total ÷ PJM annual energy) × (zone price ÷ PJM-wide price) × household kWh per year × residential peak factor.
 - **Peak factor:** capacity is charged on each customer's share of the system peak, and homes peak harder than their share of energy. The central estimate uses 1.2, with 1.0 and 1.4 as the range. A cross-check using a household peak contribution of 2.0-2.5 kW gives $240-300 a year at the capped price.
-- **Data center share:** the market monitor found that data center load added $9.3 billion to the 2025/26 auction and $23.1 billion across the 2025/26 to 2027/28 auctions. The remaining $13.8 billion is split between 2026/27 and 2027/28 in proportion to auction cost. No attribution has been published for 2028/29.
+- **Data center share:** the market monitor found that data center load added ${{auc.dc_busd.y2025_26:f1}} billion to the 2025/26 auction and ${{auc.dc_busd_total:f1}} billion across the {{auc.dc_first_dy}} to {{auc.dc_last_dy}} auctions. The remainder after 2025/26 is split between the later years in proportion to auction cost. No attribution has been published for {{auc.no_dc_dy}}.
 - **Who pays:** auction prices reach customers directly in restructured states (Illinois, New Jersey, Pennsylvania, Ohio, Maryland, Delaware, DC), where default supply passes them through. Regulated utilities mostly recover the cost of their own plants. Dominion supplied its own capacity outside the auction through 2024/25; AEP's regulated utilities still do.
 - **Upper bound:** the auction total is cleared MW times price. PJM notes this overstates cost to customers, because some load is hedged or self-supplied.
 
-**Result:** for a typical home in a restructured PJM state (about 10,350 kWh a year), capacity cost was $46 a year in 2024/25, $217 ($180-253) in 2025/26, $237 ($198-277) in 2026/27, and $242 ($201-282) in 2027/28 and 2028/29: about $190 a year more than 2024/25. The market monitor's findings attribute about $100-137 a year of it to data center load. The 2027/28 level is the highest in the series, about five times 2024/25 and 1.5 times 2018/19.
+{{claim:m_capacity_result}}
 
 ## Panel regressions
 
-*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
+*Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
-The outcome is the log of inflation-adjusted residential price for 326 utility service areas, January 2015 to July 2026, with utility and month fixed effects, heating and cooling degree days, and standard errors clustered by utility.
+The outcome is the log of inflation-adjusted residential price for {{local.n_units:int}} utility service areas, January 2015 to {{run.prices_through:month}}, with utility and month fixed effects, heating and cooling degree days, and standard errors clustered by utility.
 
-- **Local load:** comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a **0.9% lower** residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.
-- **PJM vs. the rest of the US** (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023 and 2024, +12.7% in 2025, +15.7% in 2026. The gap opened **before** capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened in 2025 and 2026 as capacity costs reached bills.
-- **Within PJM, restructured vs. regulated:** +18.3% in 2026, but the two groups were not on parallel paths before 2020, so this comparison is weaker evidence.
+- {{claim:m_local}}
+- {{claim:m_pjm}}
+- {{claim:m_pjm_restructured}}
 
 ## Reliability
 
-*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page shows current values.*
+*Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
-- **Utility test.** EIA-861 SAIDI (outage minutes per customer per year) and SAIFI (outages per customer), excluding major event days, 2013-2025, for 1,339 utility-state units. The IEEE 1366 figure is used where reported, otherwise the utility's state-method figure (25% of utility-years, including Dominion); each utility and method gets its own fixed effect. Regressed on the log of the utility's commercial sales with balancing authority x year fixed effects. A 40% rise in commercial load goes with **-2.3%** outage minutes (95% CI -4.8% to +0.3%) and -1.8% outages; including major storms, -4.6% (-7.5% to -1.6%). IEEE-only check: -0.7% (-4.1% to +2.9%). No sign that reliability has worsened where commercial load grew.
-- **County check.** ORNL EAGLE-I customer-hours without power per customer, 2018 onward. The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: -36%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.
-- **Limits.** These measure local distribution outages that have already happened. Bulk-supply risk is forward-looking: PJM's 2027/28 capacity auction cleared about 6,500 MW below its reliability requirement.
+- **Utility test.** EIA-861 SAIDI (outage minutes per customer per year) and SAIFI (outages per customer), excluding major event days, {{rel.years}}, for {{rel.n_units:int}} utility-state units. The IEEE 1366 figure is used where reported, otherwise the utility's state-method figure ({{rel.share_state_method:f0}}% of utility-years, including Dominion); each utility and method gets its own fixed effect. Regressed on the log of the utility's commercial sales with balancing authority x year fixed effects. {{claim:m_rel_utility}}
+- **County check.** ORNL EAGLE-I customer-hours without power per customer, 2018 onward. {{claim:m_rel_county}}
+- **Limits.** These measure local distribution outages that have already happened. Bulk-supply risk is forward-looking: PJM's 2027/28 capacity auction cleared about {{fact.pjm_shortfall_2027_28_mw:r100}} MW below its reliability requirement.
 
 ## Case studies
 
-*Figures in this section are as of October 7, 2026. The [Findings](findings.html) page and the [Data status](status.html) page show current values.*
+*Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
 
-Inflation-adjusted residential price, January to July 2026 compared with the same months of 2025:
+Inflation-adjusted residential price, {{run.latest_months}} {{case.ytd_year:year}} compared with the same months of {{case.last_full_year:year}}:
 
 | Market | Change | Context |
 |--------|--------|---------|
-| Dominion Energy Virginia | +17.0% | First year in the PJM capacity auction (its zone cleared at $444.26 for 2025/26). The state regulator approved a base-rate increase of $11.24 a month for a typical home in 2026, about a third of the rise; fuel and other charges are not yet separated. A new rate class for customers of 25 MW or more starts January 2027. |
-| Baltimore Gas & Electric | +14.1% | Restructured; few large data centers locally. Real price rose 20% from 2019 to 2025 while local commercial load grew 4%. |
-| Texas (statewide) | +2.6% | Energy-only market with 88 GW of planned generation (vs. 27 GW in PJM). Statewide totals include some areas outside ERCOT. |
-| Georgia Power | -1.9% | Regulated, no capacity market; base rates frozen. |
+| Dominion Energy Virginia | {{case.dom.ytd:pct}} | {{claim:m_case_dominion}} |
+| Baltimore Gas & Electric | {{case.bge.ytd:pct}} | {{claim:m_case_bge}} |
+| Texas (statewide) | {{case.tx.ytd:pct}} | {{claim:m_case_texas}} |
+| Georgia Power | {{case.ga.ytd:pct}} | {{claim:m_case_georgia}} |
 
 ## Resident bills
 
@@ -138,6 +138,19 @@ Residents can add the numbers from a recent electric bill through a Google Form 
 - Bills are normalized to a 30-day month. A bill counts as valid if its date is within the past 12 months, normalized usage is 50-8,000 kWh, and the implied price is 5-80¢ per kWh.
 - Pending counts are exact, so in a ZIP code with few homes a count of one or two can reveal that someone nearby submitted.
 - Submissions are not verified; one person can submit more than once. Counts are labeled as pending until a ZIP code reaches the threshold, and medians limit the effect of outliers.
+
+## How findings stay current
+
+Each statement on the Findings page, and each result statement on this page, is stored in `analysis/claims.yaml` with the condition it rests on: for example, that a confidence interval lies entirely below zero, that one market's price rose more than another's, or that a figure is the highest on record. Figures fill in from each analysis run; facts entered by hand (rate orders, auction shortfalls, the number of PJM states) live in `reference/context_facts.csv` with their source and a review-by date.
+
+- Every analysis run checks every condition. A statement whose condition no longer holds is replaced by its current figures without interpretation, marked "under review", and opened as a GitHub issue. Some statements have wording already reviewed for more than one outcome (for example, a local price effect that is negative, or indistinguishable from zero); the matching one is used.
+- Each key figure also has a plausibility range. A figure outside it is treated as a possible data error rather than a new finding: the statements that use it are held for review, and the issue asks for the source data to be checked first.
+- Rewritten wording is drafted with Claude and reviewed by the project owner before it is published; the change history is public in the repository.
+- Hand-entered facts past their review date are listed on the [Data status](status.html) page and opened as an issue.
+
+## Feedback
+
+Every page links to a "Report an issue" form (Google Forms, no sign-in). It asks which page, what kind of issue, and what was seen, with an optional place and an optional email for a reply. Reports go to a private sheet and are never published; the pipeline only counts them so the owner is notified.
 
 ## Known limitations
 
@@ -150,6 +163,7 @@ Residents can add the numbers from a recent electric bill through a Google Form 
 
 ## Changelog
 
+- **2026-10-08:** Findings and Methods wording generated from checked statements with conditions and plausibility ranges; hand-entered facts moved to a sourced reference table with review dates; "Report an issue" form added to every page.
 - **2026-10-07:** Bill form adds optional supply, delivery, fixed charge, and taxes questions; published medians split supply vs. delivery.
 - **2026-10-07:** Resident bill form launched with per-ZIP pending counts and medians at 10+ bills.
 - **2026-10-07:** Reliability analysis added (utility SAIDI/SAIFI and county outages); outage minutes per customer added to the Your utility page.

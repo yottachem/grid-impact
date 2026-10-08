@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from transform.common import MARTS, STAGED
+from transform.common import MARTS, ROOT, STAGED
 from transform.utility_month import add_real_price
 
 OUT = Path(__file__).resolve().parent / "results"
@@ -18,10 +18,8 @@ CASES = {
     "dominion": {"title": "Dominion Energy Virginia", "units": [(19876, "VA", "Dominion Energy Virginia")],
                  "ba": "PJM", "sites_state": "VA",
                  "context": "Regulated utility in PJM. Self-supplied capacity (FRR) through 2024/25; in the PJM auction from 2025/26 "
-                            "(DOM zone cleared at $444.26/MW-day). The SCC's 2025 biennial review order (Nov 25, 2025) approved a "
-                            "base-rate increase of $11.24/month for a typical residential customer in 2026 (about 1.1¢/kWh at "
-                            "1,000 kWh) and created a GS-5 class for customers of 25 MW or more, effective Jan 1, 2027. The rest "
-                            "of the 2026 increase is fuel and rider changes, not yet decomposed."},
+                            "(DOM zone cleared at ${zone[DOM][2025/26]:.2f}/MW-day). {fact[dominion_base_rate_increase_usd_month]}. "
+                            "{fact[dominion_gs5_min_mw]}. The rest of the 2026 increase is fuel and rider changes, not yet decomposed."},
     "texas": {"title": "Texas (ERCOT)", "units": [(88888, "TX", "Texas statewide"), (16604, "TX", "CPS Energy (San Antonio)")],
               "ba": "ERCO", "sites_state": "TX",
               "context": "Energy-only market with no capacity auction; most residential customers buy from competitive "
@@ -29,13 +27,25 @@ CASES = {
     "maryland": {"title": "Maryland (BGE and Pepco)", "units": [(1167, "MD", "Baltimore Gas & Electric"), (15270, "MD", "Pepco Maryland")],
                  "ba": "PJM", "sites_state": "MD",
                  "context": "Restructured state: default (standard offer) supply is bought at auction, so PJM capacity prices "
-                            "pass through to residential bills. BGE's zone cleared at $466.35/MW-day in 2025/26 vs $269.92 "
-                            "for the rest of PJM; all zones cleared at the cap in 2026/27 ($329.17) and 2027/28 ($333.44). "
-                            "Maryland has few large data centers of its own."},
+                            "pass through to residential bills. BGE's zone cleared at ${zone[BGE][2025/26]:.2f}/MW-day in 2025/26 vs "
+                            "${zone[RTO][2025/26]:.2f} for the rest of PJM. {fact[pjm_capped_auctions]}."},
     "georgia": {"title": "Georgia Power", "units": [(7140, "GA", "Georgia Power")], "ba": "SOCO", "sites_state": "GA",
                 "context": "Regulated utility in the Southeast; no capacity market. Large-load growth is planned through "
-                           "the utility's integrated resource plan and certified by the state PSC."},
+                           "the utility's integrated resource plan and certified by the state PSC. {fact[georgia_base_rates_frozen_through]}."},
 }
+
+
+def context(case: dict) -> str:
+    """Case context with figures from the hand-entered references (reference/*.csv), each of which carries its source."""
+    auc = pd.read_csv(ROOT / "reference" / "capacity_auctions.csv")
+    zone = {}
+    for r in auc[auc.market == "PJM"].itertuples():
+        zone.setdefault(r.lda, {})[r.delivery_year] = r.price_usd_mw_day
+    facts = pd.read_csv(ROOT / "reference" / "context_facts.csv", dtype=str).set_index("fact_id")
+    fact = {k: r.statement.rstrip(".") for k, r in facts.iterrows()}
+    return case["context"].format(zone=zone, fact=fact)
+
+
 YEARS = range(2019, 2027)
 
 
@@ -105,9 +115,9 @@ def run() -> dict:
     m = m[~m.is_btm]
     results, md = {}, ["# Case studies", ""]
     for key, case in CASES.items():
-        res = {"title": case["title"], "context": case["context"], "units": {}, "exposure": exposure(case),
+        res = {"title": case["title"], "context": context(case), "units": {}, "exposure": exposure(case),
                "generation": generation(case["ba"])}
-        md += [f"## {case['title']}", "", case["context"], ""]
+        md += [f"## {case['title']}", "", res["context"], ""]
         for uid, st, name in case["units"]:
             a = annual(m, uid, st)
             res["units"][name] = json.loads(a.round(3).drop(columns=["through"]).astype(float).to_json(orient="index"))

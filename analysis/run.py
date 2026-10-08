@@ -1,5 +1,5 @@
 """Run analyses after marts are built: capacity cost per household, panel regressions."""
-from analysis import capacity_cost, case_studies, exports, panel, reliability
+from analysis import capacity_cost, case_studies, exports, narrative, panel, reliability
 from transform import tracts
 
 
@@ -11,6 +11,7 @@ def main() -> None:
     print("== reliability"); reliability.run()
     print("== exports"); exports.run()
     stamp()
+    print("== narrative"); narrative.run()  # check every findings statement against this run
 
 
 def stamp() -> None:
@@ -24,7 +25,8 @@ def stamp() -> None:
     info = {"ran_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "prices_through": pd.read_parquet(MARTS / "utility_month.parquet", columns=["period"]).period.max().strftime("%Y-%m"),
             "capacity_auctions_through": ref.delivery_year.max(), "dc_attribution_through": attributed,
-            "manual_inputs": "reference/capacity_auctions.csv, reference/pjm_utility_zones.csv, reference/territory_customers.csv"}
+            "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, "
+                             "reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"}
     (ROOT / "analysis" / "results" / "run.json").write_text(json.dumps(info, indent=2))
     print("analysis stamp:", info["ran_at"], "prices through", info["prices_through"])
 

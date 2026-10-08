@@ -1,0 +1,11 @@
+fact_id,value,unit,statement,as_of,review_by,source
+pjm_states,13,states,PJM runs the grid in 13 states and the District of Columbia,2026-10-07,2027-10-01,"PJM Interconnection, Who We Are (pjm.com)"
+pjm_capped_auctions,2026/27 to 2028/29,delivery years,"The 2026/27, 2027/28, and 2028/29 Base Residual Auctions cleared at the price cap",2026-07-14,2027-07-31,PJM 2028/2029 Base Residual Auction Report (2026-07-14)
+pjm_uncapped_2028_29_usd_mw_day,554.72,$/MW-day,"Without the price cap, the 2028/29 auction would have cleared at $554.72 per MW-day",2026-07-14,2027-07-31,PJM 2028/2029 Base Residual Auction Report (2026-07-14)
+pjm_shortfall_2027_28_mw,6520,MW,"PJM's 2027/28 auction cleared about 6,520 MW below its reliability requirement (about 210 MW short in 2026/27)",2026-03-12,2026-12-31,"Monitoring Analytics (PJM Independent Market Monitor), 2025 State of the Market Report for PJM, March 2026"
+imm_dc_share_of_increase_2025_26,63,%,The market monitor found data center load caused 63% of the 2025/26 capacity cost increase,2026-03-12,2027-06-30,"Monitoring Analytics (PJM Independent Market Monitor), via IEEFA"
+dominion_rpm_entry,2025/26,delivery year,Dominion supplied its own capacity (FRR) through 2024/25 and entered the PJM auction for 2025/26,2025-06-01,2027-06-30,PJM 2025/2026 Base Residual Auction Report
+dominion_base_rate_increase_usd_month,11.24,$/month,"The Virginia SCC approved a 2026 base-rate increase of $11.24 a month for a typical Dominion residential customer (1,000 kWh)",2025-11-25,2027-01-01,"Virginia State Corporation Commission, final order in Dominion's 2025 biennial review (2025-11-25)"
+dominion_gs5_min_mw,25,MW,"The same order created a GS-5 rate class for customers of 25 MW or more, effective January 1, 2027",2025-11-25,2027-01-01,"Virginia State Corporation Commission, final order in Dominion's 2025 biennial review (2025-11-25)"
+georgia_base_rates_frozen_through,2028,year,Georgia Power's base rates are frozen through 2028 under a stipulation approved by the state PSC,2025-07-15,2028-12-31,"Georgia Public Service Commission, order on Georgia Power rate freeze stipulation (July 2025)"
+lbnl_us_dc_twh_2023,176,TWh,US data centers used about 176 TWh of electricity in 2023,2024-12-20,2027-06-30,"Lawrence Berkeley National Laboratory, 2024 United States Data Center Energy Usage Report (December 2024)"
