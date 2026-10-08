@@ -152,6 +152,27 @@ def analysis_section() -> str:
             f"example figures carry an as-of date.</p>")
 
 
+def coverage_section() -> str:
+    """States where EIA's monthly utility figures cover only part of residential customers, and why."""
+    cov = json.loads((DATA / "coverage.json").read_text())
+    rows = sorted(((st, r) for st, r in cov["states"].items() if r.get("flag") and r.get("monthly_total")),
+                  key=lambda kv: kv[1]["monthly_share"])
+    n = lambda v: f"{v:,.0f}"
+    trs = "".join(
+        f"<tr><td>{st}</td><td>{100 * r['monthly_share']:.0f}%</td><td>{n(r['monthly_total'])}</td>"
+        f"<td>{n(r['missing_competitive'])}</td><td>{n(r['missing_annual_only'])}</td>"
+        f"<td>{(str(r['supplier_cents']) + '¢') if r.get('supplier_cents') else ((str(r['retail_allin_cents']) + '¢ all-in') if r.get('retail_allin_cents') else '—')}</td></tr>"
+        for st, r in rows)
+    return (f"<h2>Coverage of residential customers</h2>"
+            f"<p>EIA's monthly survey, the source of the site's utility prices and bills, does not cover every home. Homes are "
+            f"missing for two reasons: some {cov['reasons']['competitive']}; others {cov['reasons']['annual_only']}. "
+            f"States below {cov['flag_below']:.0%} coverage in {cov['month']} are listed; split by reason using EIA's annual "
+            f"survey ({cov['year']}). The Your utility page and the map flag affected utilities, and estimate what homes on "
+            f"competitive supply pay where EIA reports the utility's delivery-only customers.</p>"
+            f"<table><thead><tr><th>State</th><th>Homes covered</th><th>Residential customers</th><th>Missing: competitive supply</th>"
+            f"<th>Missing: annual-only utilities</th><th>Avg competitive supply price</th></tr></thead><tbody>{trs}</tbody></table>")
+
+
 def claims_section(nar: dict) -> str:
     """How the findings wording is checked, and anything currently under review."""
     flagged = nar["flagged"]
@@ -204,6 +225,7 @@ def status_page(meta: dict, nar: dict) -> str:
             f"<table><thead><tr><th>Source</th><th>Status</th><th>Last new data</th><th>Data through</th><th>Last checked</th>"
             f"<th>Checked</th><th>Added</th></tr></thead><tbody>{trs}</tbody></table>"
             + analysis_section()
+            + coverage_section()
             + claims_section(nar)
             + quality_section()
             + f"<p>Hand-entered references (PJM capacity auction results, market monitor findings, curated utility tables) are updated "
@@ -256,6 +278,10 @@ def main() -> None:
     sites = json.loads((DATA / "sites_open.json").read_text()) + json.loads((DATA / "sites_fractracker.json").read_text())
     title, t = split_template((TEMPLATES / "map.html.tmpl").read_text())
     t = t.replace("__SITES__", json.dumps(sites, separators=(",", ":")))
+    cov = json.loads((DATA / "coverage.json").read_text())
+    covst = {st: f"Bill covers homes on the utility's own supply; about {round(100 * r['missing_competitive'] / r['monthly_total'])}% of {st} homes buy supply elsewhere"
+             for st, r in cov["states"].items() if r.get("monthly_total") and r.get("missing_competitive", 0) > 0.1 * r["monthly_total"]}
+    t = t.replace("__COVST__", json.dumps(covst))
     t = t.replace("https://github.com/yottachem/grid-impact/issues/new?template=data-correction.yml", html.escape(build_findings.feedback_url("Map")))
     (DIST / "index.html").write_text(shell("index.html", title, t, footer(meta, pm, "Map"),
         "Zoomable map of US data centers with neighborhood electricity costs and county data center load per household."))
@@ -271,6 +297,7 @@ def main() -> None:
           .replace("__CAPACITY__", (DATA / "capacity_household_cost.json").read_text())
           .replace("__CROWD__", (DATA / "crowd.json").read_text())
           .replace("__RELIABILITY__", (DATA / "utility_reliability.json").read_text())
+          .replace("__COVERAGE__", (DATA / "coverage.json").read_text())
           .replace("__REALMONTH__", html.escape(meta.get("real_dollars_of", "the latest CPI month"))))
     (DIST / "utility.html").write_text(shell("utility.html", title, t, footer(meta, pm, "Your utility"),
         "Residential price, usage, and bill by utility, adjusted for inflation, with data center load in each territory."))

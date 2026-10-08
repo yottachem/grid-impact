@@ -148,6 +148,11 @@ claims:
   caveat_upper_bound:
     refs: [pjm-2026-bra-2028-29]
     text: "Auction totals are cleared MW times price, which PJM notes overstates cost to load because some load is hedged or self-supplied, so household figures are upper-bound averages."
+  caveat_coverage:
+    holds: cov.n_states_competitive > 0
+    text: "In {cov.n_states_competitive:int} states ({cov.states_competitive}), at least 10% of homes buy supply from competitive suppliers or aggregation programs, about {cov.homes_competitive:int} homes in all; EIA's monthly data price only the utility's own supply there, so price comparisons in those states describe homes on utility supply (see Data status)."
+    fallback: ""
+
   caveat_dominion:
     holds: case.dom.ytd_year == 2026
     text: "Dominion's {case.dom.ytd_year:year} increase also includes an approved base-rate increase of {fact.dominion_base_rate_increase_usd_month:usd2} a month."
@@ -182,6 +187,12 @@ claims:
     where: methods
     holds: local.hi40 < 0
     text: "EPRI's state-level causal study, using a different method (an instrumental variable for where data centers were built), finds the same direction: data center growth from 2019 to 2024 lowered average residential rates about {fact.epri_dc_rate_effect_2019_2024_pct:f0}%."
+    fallback: ""
+
+  m_coverage:
+    where: methods
+    holds: cov.n_states_competitive > 0
+    text: "In {cov.n_states_competitive:int} states ({cov.states_competitive}), at least 10% of homes, about {cov.homes_competitive:int} in all, buy supply from competitive suppliers or aggregation programs and are not in the utility-level prices."
     fallback: ""
 
   m_pjm:

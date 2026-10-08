@@ -1,5 +1,5 @@
 """Run analyses after marts are built: capacity cost per household, panel regressions."""
-from analysis import capacity_cost, case_studies, exports, narrative, panel, reliability
+from analysis import capacity_cost, case_studies, coverage, exports, narrative, panel, reliability
 from transform import tracts
 
 
@@ -10,6 +10,7 @@ def main() -> None:
     print("== case_studies"); case_studies.run()
     print("== reliability"); reliability.run()
     print("== exports"); exports.run()
+    print("== coverage"); coverage.run()  # how much of each state's residential customers the monthly data cover
     stamp()
     print("== narrative"); narrative.run()  # check every findings statement against this run
 

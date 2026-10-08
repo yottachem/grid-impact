@@ -183,6 +183,14 @@ def values() -> dict:
     for e in es:
         v[f"rel.county.y{e['year']}"] = e["pct"]
 
+    # Coverage of residential customers in EIA's monthly data (analysis/coverage.py)
+    cov = json.loads((DATA / "coverage.json").read_text()) if (DATA / "coverage.json").exists() else None
+    if cov:
+        comp = {st: r["missing_competitive"] / r["monthly_total"] for st, r in cov["states"].items() if r.get("monthly_total")}
+        heavy = sorted(st for st, x in comp.items() if x >= 0.10)
+        v.update({"cov.n_states_competitive": len(heavy), "cov.states_competitive": ", ".join(heavy),
+                  "cov.homes_competitive": sum(cov["states"][st]["missing_competitive"] for st in heavy), "cov.year": cov["year"]})
+
     # Hand-entered facts: numbers where they parse, text otherwise
     for fid, r in facts().iterrows():
         try:

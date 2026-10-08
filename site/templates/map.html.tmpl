@@ -72,6 +72,7 @@ optgroup { font-style: normal; color: var(--muted); }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.js"></script>
 <script>
 const SITES = __SITES__;
+const COVST = __COVST__;  // states where EIA monthly figures miss many homes on competitive supply
 const COUNTIES_URL = "data/counties_geo.json", TRACT_INDEX_URL = "data/tracts/index.json";
 const TRACT_ZOOM = 6.5;  // below this, household costs show by county
 
@@ -165,6 +166,7 @@ map.on("load", () => {
     map.setFilter("tracts-hover", ["==", ["get", "id"], p.id]);
     pop.setLngLat(e.lngLat).setHTML(`<div class="pop"><b>Tract ${p.id.slice(5)}, ${esc(p.county)}, ${p.st}</b>
       ${row("Utility", p.util ? esc(p.util) : "not matched")}
+      ${COVST[p.st] ? `<div class="row"><span class="k">${COVST[p.st]}</span></div>` : ""}
       ${row("Median household income", p.inc ? "$" + Math.round(p.inc).toLocaleString() : "—")}
       ${row(`Avg annual bill (${p.by || "—"})`, p.bill ? "$" + Math.round(p.bill).toLocaleString() + (p.bb === "state" ? " (state average)" : "") : "—")}
       ${row("Energy burden", p.burden != null ? (p.burden * 100).toFixed(1) + "%" : "—")}

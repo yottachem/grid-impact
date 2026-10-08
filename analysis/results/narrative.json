@@ -329,6 +329,19 @@
       "where": "findings",
       "values": {}
     },
+    "caveat_coverage": {
+      "status": "ok",
+      "html": "In 9 states (CA, CT, IL, MA, NH, OH, PA, RI, TX), at least 10% of homes buy supply from competitive suppliers or aggregation programs, about 20,277,686 homes in all; EIA&#x27;s monthly data price only the utility&#x27;s own supply there, so price comparisons in those states describe homes on utility supply (see Data status).",
+      "text": "In 9 states (CA, CT, IL, MA, NH, OH, PA, RI, TX), at least 10% of homes buy supply from competitive suppliers or aggregation programs, about 20,277,686 homes in all; EIA's monthly data price only the utility's own supply there, so price comparisons in those states describe homes on utility supply (see Data status).",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "cov.homes_competitive": 20277686,
+        "cov.n_states_competitive": 9,
+        "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX"
+      }
+    },
     "caveat_dominion": {
       "status": "ok",
       "html": "Dominion&#x27;s 2026 increase also includes an approved base-rate increase of $11.24 a month.",
@@ -424,6 +437,19 @@
       "values": {
         "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
         "local.hi40": -0.23049525962572925
+      }
+    },
+    "m_coverage": {
+      "status": "ok",
+      "html": "In 9 states (CA, CT, IL, MA, NH, OH, PA, RI, TX), at least 10% of homes, about 20,277,686 in all, buy supply from competitive suppliers or aggregation programs and are not in the utility-level prices.",
+      "text": "In 9 states (CA, CT, IL, MA, NH, OH, PA, RI, TX), at least 10% of homes, about 20,277,686 in all, buy supply from competitive suppliers or aggregation programs and are not in the utility-level prices.",
+      "reason": null,
+      "refs": [],
+      "where": "methods",
+      "values": {
+        "cov.homes_competitive": 20277686,
+        "cov.n_states_competitive": 9,
+        "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX"
       }
     },
     "m_pjm": {
@@ -818,6 +844,10 @@
     "rel.county.y2023": -2.580274517717729,
     "rel.county.y2024": -35.699007258608404,
     "rel.county.y2025": -13.244218938922025,
+    "cov.n_states_competitive": 9,
+    "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX",
+    "cov.homes_competitive": 20277686,
+    "cov.year": 2025,
     "fact.pjm_states": 13.0,
     "fact.pjm_capped_auctions": "2026/27 to 2028/29",
     "fact.pjm_uncapped_2028_29_usd_mw_day": 554.72,
@@ -832,5 +862,5 @@
     "case.dom.base_rate_share": 38.026835713647706
   },
   "facts_due": [],
-  "n_claims": 34
+  "n_claims": 36
 }

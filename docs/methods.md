@@ -152,6 +152,15 @@ Each statement on the Findings page, and each result statement on this page, is 
 
 Every page links to a "Report an issue" form (Google Forms, no sign-in). It asks which page, what kind of issue, and what was seen, with an optional place and an optional email for a reply. Reports go to a private sheet and are never published; the pipeline only counts them so the owner is notified.
 
+## What the monthly data cover
+
+EIA's monthly survey (EIA-861M), the source of utility prices and bills, reports each utility's residential customers, sales, and revenue for homes on the utility's own (basic or default) supply. Two groups of homes are left out:
+
+- **Competitive supply and aggregation.** In restructured states, many homes buy supply from a competitive supplier, a retail electric provider (Texas), or a town or community choice aggregation program. The utility still delivers their power, but EIA's monthly survey counts them only in a statewide total, not by utility. {{claim:m_coverage}}
+- **Smaller utilities.** Co-ops and municipal utilities outside EIA's monthly sample report only once a year. They are not shown on the site.
+
+The [Data status](status.html) page lists every state below 90% coverage and splits its missing homes by reason, using EIA's annual survey ({{cov.year:year}}). The Your utility page and the map flag affected utilities. Where EIA's annual survey reports a utility's delivery-only customers, the Your utility page estimates what those homes pay: the utility's delivery revenue per kWh plus the statewide average price charged by competitive suppliers. The statewide supplier average mixes aggregation programs and individual contracts, so it is a rough guide.
+
 ## Known limitations
 
 - Site lists are incomplete, and most sites don't disclose power; estimates carry wide ranges.
@@ -163,6 +172,7 @@ Every page links to a "Report an issue" form (Google Forms, no sign-in). It asks
 
 ## Changelog
 
+- **2026-10-08:** Coverage flags: states and utilities where EIA's monthly figures miss homes on competitive supply or at annual-only utilities are flagged on the Your utility page, the map, and the Data status page, with an estimated price for competitive-supply homes where EIA reports the split.
 - **2026-10-08:** References page added (52 sources: research, filings, market monitor reports, news). Corrections found while compiling it: PJM's 2027/28 shortfall is 6,623 MW (PJM's release; previously about 6,500 from a secondary source), and the data center share of 2026/27 and 2027/28 capacity cost now uses the market monitor's published figure for each auction ($7.27B and $6.50B) instead of splitting the three-auction total by auction cost.
 - **2026-10-08:** Findings and Methods wording generated from checked statements with conditions and plausibility ranges; hand-entered facts moved to a sourced reference table with review dates; "Report an issue" form added to every page.
 - **2026-10-07:** Bill form adds optional supply, delivery, fixed charge, and taxes questions; published medians split supply vs. delivery.

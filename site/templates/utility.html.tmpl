@@ -41,6 +41,7 @@
 .crowd .meter { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; width: min(320px, 100%); }
 .crowd .meter i { display: block; height: 100%; background: var(--s3); }
 .crowd #zipout { font-size: 15px; }
+.covwarn { margin: 0; padding: 10px 14px; border: 1px solid var(--s4); border-radius: 6px; background: var(--surface); font-size: 14px; max-width: 80ch; }
 .u-note { font-size: 13px; color: var(--muted); margin: 0; max-width: 78ch; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.14); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
 @media (max-width: 800px) { .multiples { grid-template-columns: 1fr; } .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -58,6 +59,7 @@
     <span class="hint" id="qhint"></span>
   </div>
   <section class="summary" id="summary" aria-label="Utility summary"></section>
+  <p class="covwarn" id="covwarn" role="note" hidden></p>
   <p class="reading" id="reading"></p>
   <section class="multiples" aria-label="Price, usage, and bill by year">
     <div class="panel" id="p-price"><h2>Price</h2><span class="sub">¢ per kWh, inflation-adjusted</span></div>
@@ -91,6 +93,8 @@ const UX = __EXPOSURE__;
 const CC = __CAPACITY__;
 const REL = d3.group(__RELIABILITY__, d => d.utility_id_eia + "|" + d.state);
 let CROWD = __CROWD__;
+const COV = __COVERAGE__;
+const covUtil = new Map(COV.utilities.map(d => [d.utility_id_eia + "|" + d.state, d]));
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const key = d => d.utility_id_eia + "|" + d.state;
 const byUtil = d3.group(UB, key);
@@ -103,6 +107,20 @@ const options = [...byUtil.entries()].filter(([, r]) => r.length >= 3)
 const byLabel = new Map(options.map(o => [o.label.toLowerCase(), o.k]));
 document.getElementById("ulist").innerHTML = options.map(o => `<option value="${o.label.replace(/"/g, "&quot;")}">`).join("");
 document.getElementById("qhint").textContent = `${options.length} utilities`;
+
+// Warn when the figures cover only part of the utility's or state's residential customers
+function coverageNote(k, st, name) {
+  const el = document.getElementById("covwarn"), u = covUtil.get(k), s = COV.states[st] || {};
+  const n = v => Math.round(v).toLocaleString(), c = v => v.toFixed(1) + "¢";
+  let html = "";
+  if (u && u.share < COV.flag_below) {
+    html = `<b>Incomplete coverage.</b> These figures cover the ${n(u.own_supply)} homes on ${name}'s own supply, ${Math.round(u.share * 100)}% of its residential customers (EIA-861, ${COV.year}). Another ${n(u.delivery_only)} homes ${COV.reasons.competitive}.`;
+    if (u.est_competitive_cents != null) html += ` Estimated average for those homes in ${COV.year}: about ${c(u.est_competitive_cents)} per kWh (the utility's ${c(u.delivery_cents)} delivery charge plus the ${c(u.supplier_cents)} statewide average charged by competitive suppliers), versus ${c(u.own_supply_cents)} on the utility's supply.`;
+  } else if (s.flag && s.missing_competitive > 0.1 * s.monthly_total) {
+    html = `<b>Incomplete coverage.</b> Statewide in ${st}, about ${n(s.missing_competitive)} homes (${Math.round(s.missing_competitive / s.monthly_total * 100)}%) ${COV.reasons.competitive}. EIA does not report how many of them ${name} serves, so these figures may describe only part of its customers.`;
+  }
+  el.innerHTML = html; el.hidden = !html;
+}
 
 const TIER = { high: ["High", "--s2"], medium: ["Medium", "--s4"], low: ["Low", "--s1"], none: ["None", "--muted"] };
 const pct = (a, b) => ((b / a - 1) * 100);
@@ -161,6 +179,7 @@ function show(k) {
     [x ? `${fmtMW(x.mw_op)} · ${fmtMW(x.mw_pipeline)}` : "None listed", "data center load in territory: operating · proposed or under construction"],
     [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],
   ].map(([n, l]) => `<div class="sum"><span class="sum-n">${n}</span><span class="sum-l">${l}</span></div>`).join("");
+  coverageNote(k, rows[0].state, last.name);
   const b19 = rows.find(r => r.year === 2019) || rows[0];
   const dp = pct(b19.real_price, last.real_price), du = pct(b19.kwh_per_home, last.kwh_per_home), db = pct(b19.real_bill, last.real_bill);
   const driver = Math.abs(dp) > Math.abs(du) * 1.5 ? "Price, not usage, drove the change." : Math.abs(du) > Math.abs(dp) * 1.5 ? "Usage, more than price, drove the change." : "Price and usage both contributed.";
