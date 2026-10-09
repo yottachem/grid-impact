@@ -1,5 +1,5 @@
 {
-  "run_date": "2026-10-08",
+  "run_date": "2026-10-09",
   "prices_through": "2026-07",
   "data_checks_failed": {},
   "claims": {
@@ -140,8 +140,8 @@
     },
     "c1_compare": {
       "status": "ok",
-      "html": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 133 GW in PJM), and a typical home&#x27;s capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
-      "text": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 133 GW in PJM), and a typical home's capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
+      "html": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 132 GW in PJM), and a typical home&#x27;s capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
+      "text": "New England is the comparison. Its capacity auctions have little data center demand behind them (0.7 GW of data centers planned or under construction, against 132 GW in PJM), and a typical home's capacity cost there fell from $289 a year in 2018/19 to $93 in 2027/28, against $242 in restructured PJM.",
       "reason": null,
       "refs": [],
       "where": "findings",
@@ -153,8 +153,8 @@
         "cap_ne.latest_dy": "2027/28",
         "dc.ne_pipeline_gw": 0.66949,
         "dc.ne_pipeline_per_1k": 0.12276822553162461,
-        "dc.pjm_pipeline_gw": 133.00042000000002,
-        "dc.pjm_pipeline_per_1k": 5.3162573554485215
+        "dc.pjm_pipeline_gw": 132.46079999999998,
+        "dc.pjm_pipeline_per_1k": 5.294687808569291
       }
     },
     "c1_miso": {
@@ -175,7 +175,7 @@
         "cap_miso.y2025_26": 203.81,
         "dc.miso_pipeline_gw": 47.27857,
         "dc.miso_pipeline_per_1k": 2.887171800223164,
-        "dc.pjm_pipeline_per_1k": 5.3162573554485215
+        "dc.pjm_pipeline_per_1k": 5.294687808569291
       }
     },
     "c1_ny": {
@@ -190,7 +190,7 @@
         "cap_ny.latest_dy": "2025/26",
         "dc.ny_pipeline_gw": 2.4968999999999997,
         "dc.ny_pipeline_per_1k": 0.3610642872006187,
-        "dc.pjm_pipeline_per_1k": 5.3162573554485215,
+        "dc.pjm_pipeline_per_1k": 5.294687808569291,
         "nyiso.nyc_month_max": 32.59,
         "nyiso.nyc_month_max_when": "2026-05",
         "nyiso.nyc_summer_avg": 19.145,
@@ -275,7 +275,7 @@
         "gen.pjm": 26.7,
         "gen.texas": 88.4,
         "sites.md.op_gw": 0.1,
-        "sites.va.op_gw": 14.2
+        "sites.va.op_gw": 14.1
       }
     },
     "c3_note": {
@@ -342,16 +342,16 @@
     },
     "rel_county": {
       "status": "ok",
-      "html": "The 34 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221213.2%).",
-      "text": "The 34 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221213.2%).",
+      "html": "The 31 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221212.4%).",
+      "text": "The 31 counties with the most operating data center load had no more outage hours than other counties in their state (2025: \u221212.4%).",
       "reason": null,
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.county.last": -13.244218938922781,
+        "rel.county.last": -12.404851788644667,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753077365832,
-        "rel.county.n_high": 34
+        "rel.county.max_lo": -18.325844765266307,
+        "rel.county.n_high": 31
       }
     },
     "rel_supply": {
@@ -489,7 +489,7 @@
         "cap_ne.latest_dy": "2027/28",
         "dc.ne_pipeline_gw": 0.66949,
         "dc.ne_pipeline_per_1k": 0.12276822553162461,
-        "dc.pjm_pipeline_per_1k": 5.3162573554485215,
+        "dc.pjm_pipeline_per_1k": 5.294687808569291,
         "fact.isone_next_auction": 2028.0
       }
     },
@@ -622,18 +622,18 @@
     },
     "m_rel_county": {
       "status": "ok",
-      "html": "The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
-      "text": "The 34 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
+      "html": "The 31 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
+      "text": "The 31 counties with at least 10 MW of operating data center capacity per 1,000 households had the same or fewer outage hours than other counties in their state each year (2024: \u221236%, the year Hurricane Helene hit rural areas). Descriptive: these counties are mostly suburban, with more underground lines.",
       "reason": null,
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.county.last": -13.244218938922781,
+        "rel.county.last": -12.404851788644667,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -17.799753077365832,
-        "rel.county.n_high": 34,
+        "rel.county.max_lo": -18.325844765266307,
+        "rel.county.n_high": 31,
         "rel.county.threshold": 10,
-        "rel.county.y2024": -35.6990072586087
+        "rel.county.y2024": -35.84365990344399
       }
     },
     "m_case_dominion": {
@@ -697,7 +697,7 @@
   },
   "flagged": [],
   "values": {
-    "run.date": "2026-10-08",
+    "run.date": "2026-10-09",
     "run.prices_through": "2026-07",
     "run.auctions_through": "2028/29",
     "run.dc_attribution_through": "2027/28",
@@ -965,8 +965,8 @@
     "nyiso.nyc_month_max_when": "2026-05",
     "nyiso.through": "2026-10",
     "nyiso.record_month_in_latest_summer": true,
-    "dc.pjm_pipeline_gw": 133.00042000000002,
-    "dc.pjm_pipeline_per_1k": 5.3162573554485215,
+    "dc.pjm_pipeline_gw": 132.46079999999998,
+    "dc.pjm_pipeline_per_1k": 5.294687808569291,
     "dc.ne_pipeline_gw": 0.66949,
     "dc.ne_pipeline_per_1k": 0.12276822553162461,
     "dc.miso_pipeline_gw": 47.27857,
@@ -1003,10 +1003,10 @@
     "case.ga.real_chg_to_last_full": 3.976195147472361,
     "case.ytd_year": 2026,
     "case.last_full_year": 2025,
-    "sites.va.op_gw": 14.2,
+    "sites.va.op_gw": 14.1,
     "sites.md.op_gw": 0.1,
-    "sites.tx.op_gw": 12.7,
-    "sites.ga.op_gw": 5.0,
+    "sites.tx.op_gw": 12.5,
+    "sites.ga.op_gw": 4.5,
     "gen.texas": 88.4,
     "gen.pjm": 26.7,
     "gen.georgia": 8.0,
@@ -1028,20 +1028,20 @@
     "rel.ieee.lo": -4.108306693834251,
     "rel.ieee.hi": 2.9005608300142427,
     "rel.share_state_method": 24.9,
-    "rel.county.n_high": 34,
+    "rel.county.n_high": 31,
     "rel.county.n": 2978,
     "rel.county.threshold": 10,
     "rel.county.last_year": 2025,
-    "rel.county.last": -13.244218938922781,
-    "rel.county.max_lo": -17.799753077365832,
-    "rel.county.max": -2.348850528486901,
-    "rel.county.y2018": -2.348850528486901,
-    "rel.county.y2020": -16.864950534828616,
-    "rel.county.y2021": -5.7818941558010035,
-    "rel.county.y2022": -9.539484087729555,
-    "rel.county.y2023": -2.5802745177181285,
-    "rel.county.y2024": -35.6990072586087,
-    "rel.county.y2025": -13.244218938922781,
+    "rel.county.last": -12.404851788644667,
+    "rel.county.max_lo": -18.325844765266307,
+    "rel.county.max": -2.968608960483232,
+    "rel.county.y2018": -2.968608960483232,
+    "rel.county.y2020": -17.50620572297146,
+    "rel.county.y2021": -3.310459548126843,
+    "rel.county.y2022": -7.725646848679945,
+    "rel.county.y2023": -3.0932400059958454,
+    "rel.county.y2024": -35.84365990344399,
+    "rel.county.y2025": -12.404851788644667,
     "cov.n_states_competitive": 9,
     "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX",
     "cov.homes_competitive": 20277686,

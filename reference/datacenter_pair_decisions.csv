@@ -29,3 +29,401 @@ FracTracker,133,Douglasville Campus,FracTracker,162,Microsoft: FTY101,duplicate,
 FracTracker,1775353554262-6428,xAI,FracTracker,500,xAI Colossus 2,distinct,,Third building beside Colossus 2 in Southaven adds capacity (Techzine; DCD),2026-10-07
 FracTracker,833,DIGITAL LOUDOUN IV,FracTracker,923,IAD Round Table Campus,distinct,,Digital Loudoun Plaza vs. Round Table Plaza: different campuses,2026-10-07
 FracTracker,923,IAD Round Table Campus,FracTracker,937,Digital Realty Northern Virginia IAD41,component,b,IAD41 is Building P at 44751 Round Table Plaza; the campus record already includes it (Digital Realty; DatacenterHawk),2026-10-07
+FracTracker,100,Equinix Atlanta AT2 AT3,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,1005,Iron Mountain Building 7,FracTracker,733,KH Data Capital Development,distinct,,"Different parcels: 8328 BETHLEHEM RD vs 11560 HAYDEN RD, 254 m apart",2026-10-09
+FracTracker,1006,Vulcan Data Center,FracTracker,1009,Compton Property SUP,distinct,,"Separate Amazon projects: 8401/8501 Vulcan Ln (113 acres, in the data center overlay) vs the Compton property (77 acres at Ashton Ave and Rixlew Ln, east of Vulcan Quarry) (DCD; InsideNova)",2026-10-09
+FracTracker,101,Vantage: Westlake Project,FracTracker,195,Westlake,duplicate,a,"Same Vantage Westlake project on Plummer Rd SW (DCD filing; Georgia DRI #4256, 754k sq ft, 113 MW reported)",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,1016,QTS Manassas DC 5,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 9301 FREEDOM CENTER BLVD, 645 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,1017,QTS Manassas DC 2,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 9400 GODWIN DR, 1025 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,1018,INNOVATION EXECUTIVE CENTER DC-3,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 9420 GODWIN DR, 1030 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,1019,QTS MANASSAS I DC3 LLC,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 9480 GODWIN DR, 1089 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,1021,QTS MANASSAS I DC6 LLC,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 9540 GODWIN DR, 1028 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,673,Manassas Data Center,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 11101 University Blvd, 905 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 10600 PYRAMID PL, 619 m apart",2026-10-09
+FracTracker,1013,MANASSAS NCP LLC,FracTracker,720,Iron Mountain VA-4,distinct,,"Different parcels: 9000 FREEDOM CENTER BLVD vs 10680 UNIVERSITY BLVD, 904 m apart",2026-10-09
+FracTracker,1016,QTS Manassas DC 5,FracTracker,673,Manassas Data Center,distinct,,"Different parcels: 9301 FREEDOM CENTER BLVD vs 11101 University Blvd, 611 m apart",2026-10-09
+FracTracker,1016,QTS Manassas DC 5,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9301 FREEDOM CENTER BLVD vs 10600 PYRAMID PL, 380 m apart",2026-10-09
+FracTracker,1017,QTS Manassas DC 2,FracTracker,673,Manassas Data Center,distinct,,"Different parcels: 9400 GODWIN DR vs 11101 University Blvd, 997 m apart",2026-10-09
+FracTracker,1017,QTS Manassas DC 2,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9400 GODWIN DR vs 10600 PYRAMID PL, 460 m apart",2026-10-09
+FracTracker,1018,INNOVATION EXECUTIVE CENTER DC-3,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9420 GODWIN DR vs 10600 PYRAMID PL, 438 m apart",2026-10-09
+FracTracker,1019,QTS MANASSAS I DC3 LLC,FracTracker,673,Manassas Data Center,distinct,,"Different parcels: 9480 GODWIN DR vs 11101 University Blvd, 1229 m apart",2026-10-09
+FracTracker,1019,QTS MANASSAS I DC3 LLC,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9480 GODWIN DR vs 10600 PYRAMID PL, 470 m apart",2026-10-09
+FracTracker,1021,QTS MANASSAS I DC6 LLC,FracTracker,673,Manassas Data Center,distinct,,"Different parcels: 9540 GODWIN DR vs 11101 University Blvd, 1268 m apart",2026-10-09
+FracTracker,1021,QTS MANASSAS I DC6 LLC,FracTracker,719,Alexandria Technology Center,distinct,,"Different parcels: 9540 GODWIN DR vs 10600 PYRAMID PL, 413 m apart",2026-10-09
+FracTracker,1022,Stack Infrastructure NVA04,FracTracker,739,Stack Infrastructure Bristow Campus,distinct,,"Different parcels: 9590 HORNBAKER RD vs 11859 HAZEL CIRCLE DR, 1485 m apart",2026-10-09
+FracTracker,1023,NVA15 LLC,FracTracker,739,Stack Infrastructure Bristow Campus,distinct,,"Different parcels: 9650 HORNBAKER RD vs 11859 HAZEL CIRCLE DR, 1343 m apart",2026-10-09
+FracTracker,1024,POWERLOFT @ INNOVATION I,FracTracker,729,Amazon AWS IAD81,distinct,,"Different parcels: 9651 HORNBAKER RD vs 11120 THOMASSON BARN RD, 403 m apart",2026-10-09
+FracTracker,1028,Stack Infrastructure NVA02A,FracTracker,739,Stack Infrastructure Bristow Campus,distinct,,"Different parcels: 9720 HORNBAKER RD vs 11859 HAZEL CIRCLE DR, 1665 m apart",2026-10-09
+FracTracker,1031,Stack Infrastructure NVA02B,FracTracker,739,Stack Infrastructure Bristow Campus,distinct,,"Different parcels: 9750 HORNBAKER RD vs 11859 HAZEL CIRCLE DR, 1548 m apart",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,819,Filigree Ct Campus,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,826,EQUINEX DC13,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,835,EQUINIX ASHBURN EAST,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,836,EQUINIX DC21,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,926,Equinix DC3 Data Center,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1035,AREP Beaumeade Data Center,FracTracker,938,Equinix DC12 International Business Exchange,distinct,,"AREP's own multi-parcel Beaumeade project (DCD), separate owner and parcels from Equinix's Beaumeade and Filigree buildings",2026-10-09
+FracTracker,1038,ACC11 Digital Realty,FracTracker,824,Digital Filigree,distinct,,"Different parcels: Corner of Gresham and Waxpool vs 21780 FILIGREE CT, 638 m apart",2026-10-09
+FracTracker,1038,ACC11 Digital Realty,FracTracker,833,DIGITAL LOUDOUN IV,distinct,,"Different parcels: Corner of Gresham and Waxpool vs 22125 BRODERICK DR, 1526 m apart",2026-10-09
+FracTracker,1038,ACC11 Digital Realty,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: Corner of Gresham and Waxpool vs 44274 ROUND TABLE PLZ, 945 m apart",2026-10-09
+FracTracker,1052,Chantilly Premier Data Center,FracTracker,895,CHANTILLY TECHNOLOGY PARTNERS,distinct,,"Different parcels: Lee Jackson Memorial HWY vs 4030 LAFAYETTE CENTER DR, 1011 m apart",2026-10-09
+FracTracker,1064,CyrusOne Vint Hill Data Center,FracTracker,711,Vint Hill Corners,distinct,,"Separate Fauquier projects: CyrusOne (47 ac at Vint Hill Rd/Pkwy), Vint Hill Corners (46 ac, 4295 Aiken Dr), existing Watson Ct data center (Prince William Times; FauquierNow)",2026-10-09
+FracTracker,1064,CyrusOne Vint Hill Data Center,FracTracker,974,DATA CENTER VINT HILL,distinct,,"Separate Fauquier projects: CyrusOne (47 ac at Vint Hill Rd/Pkwy), Vint Hill Corners (46 ac, 4295 Aiken Dr), existing Watson Ct data center (Prince William Times; FauquierNow)",2026-10-09
+FracTracker,1068,Dulles 2000 Redevelopment,FracTracker,853,DIGITAL STERLING PREMIER,distinct,,Different projects 1.8 km apart (Dulles 2000 redevelopment vs Digital Sterling Premier),2026-10-09
+FracTracker,1068,Dulles 2000 Redevelopment,FracTracker,955,CPUS STERLING LP,distinct,,Different projects 2.0 km apart (Dulles 2000 redevelopment vs CPUS Sterling),2026-10-09
+FracTracker,1069,DULLES NORTH CORPORATE PARK 8,FracTracker,841,QTS BRODERICK ACQUISITION CO LLC,distinct,,Different projects 1.5 km apart (Dulles North Corporate Park vs QTS Broderick Dr),2026-10-09
+FracTracker,1071,Amazon AWS IAD104 Data Center,FracTracker,717,Amazon AWS Tanner Way Campus,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,108,Atlanta Metro DC3,FracTracker,1773439964234-7450,QTS Atlanta Metro Data Center,distinct,,"Different parcels: 953 Herndon Street vs 1033 Jefferson Street NW, 600 m apart",2026-10-09
+FracTracker,109,Microsoft: Project Fulton,FracTracker,139,East Point Campus,duplicate,a,Project Fulton is Microsoft's East Point campus on Ben Hill Rd (first 250k sq ft building operating 2025; DCD),2026-10-09
+FracTracker,1092,Beaver Dam Meta Data Center,PNNL,campus/01453996659,Meta Beaver Dam Data Center,duplicate,b,"PNNL point is the same Meta Beaver Dam project (700k sq ft, under construction); drops the PNNL land-area estimate and 'operating' tag",2026-10-09
+FracTracker,1110,Microsoft Azure Data Center,OSM,way/1177975782,CYS42 Datacenter,distinct,,"Separate Microsoft Cheyenne buildings (CYS41 merged into the FracTracker site, CYS42 separate)",2026-10-09
+FracTracker,1111,Meta Data Center,OSM,way/1485867768,Meta Cheyenne Data Center,duplicate,b,"OSM polygon is Meta's Cheyenne campus in High Plains Business Park (715k-800k sq ft, under construction, opening ~2027; DCD); drops the OSM land-area estimate and 'operating' tag",2026-10-09
+FracTracker,128,Dalton 3,FracTracker,132,Core Scientific,distinct,,Dalton 3 (206 Boring Dr) is a proposed expansion separate from operating Core Scientific Dalton 1 & 2 (Dalton Daily Citizen 2025-09-27),2026-10-09
+FracTracker,130,CORE DALTON 4,FracTracker,132,Core Scientific,distinct,,"Dalton 4 is a proposed 10-acre AI building (News Channel 9), separate from operating Core Scientific Dalton 1 & 2",2026-10-09
+FracTracker,133,Douglasville Campus,FracTracker,134,Atlanta-Douglasville 1,component,b,"Building of Microsoft's Douglasville campus, 1601 N River Rd (four 245k sq ft buildings; datacentermap)",2026-10-09
+FracTracker,133,Douglasville Campus,FracTracker,135,Atlanta-Douglasville 2,component,b,"Building of Microsoft's Douglasville campus, 1601 N River Rd (four 245k sq ft buildings; datacentermap)",2026-10-09
+FracTracker,144,QTS Atlanta Fayetteville Campus/ Project Excalibur,OSM,way/1510517636,QTS,component,b,Unsized OSM QTS building on the QTS Fayetteville campus,2026-10-09
+FracTracker,15,Vantage Data Center,FracTracker,16,Compass Data Center,distinct,,"Different parcels: 45 S Bullard Ave vs 850 S Bullard Ave, 759 m apart",2026-10-09
+FracTracker,165,PWC Lithia Springs,FracTracker,166,Lithia Springs Google Data Center,distinct,,"Different parcels: 2480 Rock House Rd vs 300 Riverside Parkway, 1341 m apart",2026-10-09
+FracTracker,169,Switch Atlanta: The Keep Campus,OSM,way/1149499531,The Keep,component,b,Unsized OSM building on Switch's The Keep campus,2026-10-09
+FracTracker,169,Switch Atlanta: The Keep Campus,OSM,way/1561981236,The Keep,component,b,"Building of Switch's The Keep campus (FracTracker: 1M sq ft, 150 MW reported)",2026-10-09
+FracTracker,1763167926812-6061,H5 Data Center,OSM,way/1193914601,Intergate Quincy Data Center,distinct,,Different operators (H5 vs Sabey Intergate.Quincy),2026-10-09
+FracTracker,1763416659575-1529,Keel Infrastructure Panther Creek,FracTracker,1764029897037-4762,Keel Infrastructure AI,duplicate,b,"Same Keel (formerly Bitfarms) Panther Creek campus off Industrial Rd, Nesquehoning, 350 MW (Keel 10-Q; Times News 2026-04-22)",2026-10-09
+FracTracker,1763745920068-5218,DataBank Downtown Pittsburgh Campus,PeeringDB,8125,DQE Communications (Downtown Pittsburgh),distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1763749832975-3977,Lumen: Pittsurgh Data Center 2,PeeringDB,13513,Lumen Pittsburgh,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1763995888913-4601,Philadelphia IBX Data Center,FracTracker,1763996607437-9425,H5 Philadelphia Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1763996268630-9084,Netrality Philadelphia Data Center,FracTracker,1763996607437-9425,H5 Philadelphia Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1763999740888-7793,Tierpoint Lehigh Valley Data Center,FracTracker,1763999888960-6008,Tierpoint Bethlehem Data Center,distinct,,"Different parcels: 3949 Schelden Circle vs 3864 Courtney Street, Ste 130, 570 m apart",2026-10-09
+FracTracker,1764523127925-6432,Council Bluffs Google Data Center,OSM,way/1226436454,CyrusOne OCB1 Council Bluffs,distinct,,Different operators (Google vs CyrusOne),2026-10-09
+FracTracker,1766553052704-4438,Meta Prineville Data Center,OSM,way/1152747559,Meta,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (3.2M sq ft),2026-10-09
+FracTracker,1766553052704-4438,Meta Prineville Data Center,OSM,way/772827597,Meta,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (3.2M sq ft),2026-10-09
+FracTracker,1767326758446-7307,Google New Albany Data Center,FracTracker,421,New Albany Meta Data Center/Prometheus,distinct,,"Different parcels: 4632 Babbitt Rd (likely Beech Rd) vs 1 Community Cir, 1835 m apart",2026-10-09
+FracTracker,1767326758446-7307,Google New Albany Data Center,OSM,way/1427613543,Google NBY-7,distinct,,Separate Google New Albany buildings (NBY-1 to NBY-5 merged into the FracTracker site; NBY-6/7 separate),2026-10-09
+FracTracker,1769137644043-9598,Switch Las Vegas CORE campus,OSM,way/1263819877,Switch Las Vegas 14,component,b,"Building of Switch's Las Vegas Core Campus (FracTracker: 3.5M sq ft, 495 MW reported)",2026-10-09
+FracTracker,1769137644043-9598,Switch Las Vegas CORE campus,OSM,way/585998678,Switch Las Vegas 9,component,b,"Building of Switch's Las Vegas Core Campus (FracTracker: 3.5M sq ft, 495 MW reported)",2026-10-09
+FracTracker,1769228948240-5975,Amazon Data Services: Cosner Tech Campus,FracTracker,657,Amazon AWS IAD450 - Cosner Tech Campus,duplicate,b,Same address (4049 Massaponax Church Rd); drops the unsized record,2026-10-09
+FracTracker,1769229467675-4233,Amazon Data Services: Carter's Store Tech Campus,FracTracker,657,Amazon AWS IAD450 - Cosner Tech Campus,distinct,,"Different parcels: 8432 Flippo Dr vs 4049 Massaponax Church Rd,, 883 m apart",2026-10-09
+FracTracker,1769230440430-6312,Hunters Ridge LLC Data Center,FracTracker,658,Hunters Ridge South Data Center (Amazon Data Services),distinct,,"Separate Spotsylvania campuses: Hunters Ridge (127 ac off Overview Dr) and Hunters Ridge South (AREP, ~73 ac at the south end of Cosner Dr)",2026-10-09
+FracTracker,1771598732749-2449,Google Project Sharka,OSM,way/1458626323,Google,distinct,,Project Sharka is a new Google Midlothian building under construction; the OSM building is an existing one,2026-10-09
+FracTracker,1771961207263-6481,Red Oak Data Center 2,FracTracker,575,Red Oak Google Data Center,duplicate,b,"Google's Red Oak building is at 156 N Austin Blvd, ~285k sq ft (Dallas Morning News); both records describe it",2026-10-09
+FracTracker,1771961207263-6481,Red Oak Data Center 2,FracTracker,576,Red Oak Data Center Campus,distinct,,Different operators: Compass Red Oak campus (481 Austin Blvd) vs Google Red Oak,2026-10-09
+FracTracker,1772033041660-3162,Canton Data Center,PeeringDB,12237,"ark data centers - Canton,OH",duplicate,b,Same Ark Canton facility; PeeringDB location is geocoded,2026-10-09
+FracTracker,1773439964234-7450,QTS Atlanta Metro Data Center,FracTracker,65,Atlanta Metro DC2,component,b,"Building of the QTS Atlanta Metro campus (Project Granite, per FracTracker); the campus record reports 275 MW",2026-10-09
+FracTracker,1773439964234-7450,QTS Atlanta Metro Data Center,FracTracker,66,Atlanta Metro DC1,component,b,"Building of the QTS Atlanta Metro campus (Project Granite, per FracTracker); the campus record reports 275 MW",2026-10-09
+FracTracker,1773439964234-7450,QTS Atlanta Metro Data Center,FracTracker,71,Atlanta Metro DC4,distinct,,"Different parcels: 1033 Jefferson Street NW vs 1103 Herndon Street, 964 m apart",2026-10-09
+FracTracker,1773462024651-7045,Edged Fort Worth Data Center,FracTracker,1781279207562-4389,Edged Energy Outpost Data Center,duplicate,a,"Same 186-acre Edged site on Chapin School Rd, Fort Worth (two DCD articles); keeps the floor-area estimate",2026-10-09
+FracTracker,1773975249761-2242,NTT Data Center,FracTracker,761,NTT Gainesville Data Center Campus,component,a,"NTT's 96 MW lease is on its Gainesville campus (Grove at Gainesville, 14210/14300 John Marshall Hwy, 336 MW planned; DCD); the campus record covers it",2026-10-09
+FracTracker,1773978559310-7756,Amazon San Antonio Data Center,FracTracker,600,QTS San Antonio,distinct,,"Different parcels: 1535 NW Crossroads vs 8535 Potranco Rd, 1313 m apart",2026-10-09
+FracTracker,1775149605384-7770,Metrobloks data center,FracTracker,1778017951153-8582,Metrobloks/ Lincoln Data Center,duplicate,a,Same address (2515 Old Hughes Rd); keeps the reported 150 MW,2026-10-09
+FracTracker,1776886902353-4568,SAT 93 and SAT94,OSM,way/1533350872,Microsoft,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1778013857128-9358,Leesburg Gateway,FracTracker,962,Leesburg Gateway,duplicate,b,"Same Peterson Leesburg Gateway project between E Market St and Potomac Station Dr, >100 acres (DCD)",2026-10-09
+FracTracker,1780668053834-5680,QTS ATL2 East,OSM,way/1510517636,QTS,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1781209388636-8150,Digital Reality Data Center,FracTracker,1781210985615-4305,Digital Reality Data Center,distinct,,"Different parcels: 301 Virginia Street/1930 3rd Ave vs 2001 6th Ave, 221 m apart",2026-10-09
+FracTracker,1781209388636-8150,Digital Reality Data Center,OSM,way/223783259,CTI Biopharma,distinct,,"CTI Biopharma is a separate Seattle building 1.4 km away, not a Digital Realty site",2026-10-09
+FracTracker,1781210985615-4305,Digital Reality Data Center,OSM,way/223783259,CTI Biopharma,distinct,,"CTI Biopharma is a separate Seattle building 1.4 km away, not a Digital Realty site",2026-10-09
+FracTracker,1781567529916-1891,DKL Meta Data Center,OSM,way/1312792612,DeKalb Meta Data Center,distinct,,Twin Meta DeKalb buildings (~568k sq ft footprints each); the FracTracker site's MW comes from one footprint,2026-10-09
+FracTracker,1782767503983-2590,Black Chamber Partners Data Center,FracTracker,717,Amazon AWS Tanner Way Campus,distinct,,"Different parcels: 10047 Nokesville Rd vs 10201 TANNER WAY, 1532 m apart",2026-10-09
+FracTracker,1782767503983-2590,Black Chamber Partners Data Center,OSM,way/1510517642,AWS,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1786566521912-5699,Jacksonville Data Center,OSM,node/12112266917,Flexential Jacksonville,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,1786991748772-7428,"WhiteFiber/ Enovum Data Center, NC-1/ MAD01",FracTracker,340,Enovum Data Center,component,a,"Nscale's 40 MW is space within WhiteFiber's 96-acre NC-1 site at 805 Island Dr (99 MW, upgradable to 200 MW; DCD)",2026-10-09
+FracTracker,1788613906924-8597,Meta Data Center,OSM,way/1455915217,Meta Kuna Data Center,component,b,OSM buildings on Meta's Kuna campus (960k sq ft; live per DCD); FracTracker record is the campus,2026-10-09
+FracTracker,1790126106451-7608,Sabey Data Centers - Building B ,FracTracker,635,Sabey Data Center,component,a,"Sabey Intergate.Ashburn campus record: 645k sq ft, ~85 MW across three buildings (DCD; datacentermap); this building is part of it",2026-10-09
+FracTracker,1790127482059-3776,Meta Eagle Mountain Data Center,OSM,way/1035123473,Meta,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (4.4M sq ft),2026-10-09
+FracTracker,1790128953043-3329,Colovore Data Center AUS01/ Project Raptor,FracTracker,537,Project Raptor,duplicate,b,"FracTracker names Colovore AUS01 as Project Raptor (Innovation Blvd, Austin); keeps the reported 40 MW",2026-10-09
+FracTracker,186,Project Firecracker (Microsoft),FracTracker,187,Rome Campus,duplicate,b,Same Microsoft Rome campus on Huffaker Rd (Project Firecracker); drops the unsized record,2026-10-09
+FracTracker,194,Stanton Springs Data Center,OSM,way/1054387471,,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (2.5M sq ft),2026-10-09
+FracTracker,194,Stanton Springs Data Center,OSM,way/1070895994,,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (2.5M sq ft),2026-10-09
+FracTracker,209,Stream Atlanta West Data Center,FracTracker,211,Stream Data Center,duplicate,b,"Same Stream campus (SDC ATLA LLC) on Jason Industrial Pkwy and N Baggett Rd, Georgia DRI #4334: 1.34M sq ft in the first filing, ~2.4M later, 240 MW (DCD; Georgia EPD notice)",2026-10-09
+FracTracker,223,Project Osmium,FracTracker,224,Project Ruthenium,distinct,,"Separate Microsoft West Des Moines projects (Osmium, Ruthenium; Business Record)",2026-10-09
+FracTracker,230,DSM14,FracTracker,231,Project Alluvion,distinct,,DSM14 is a 2022 building permit separate from Project Alluvion's eight buildings on White Crane Rd,2026-10-09
+FracTracker,230,DSM14,FracTracker,233,Project Ginger East (Microsoft),distinct,,"Separate Microsoft sites: DSM14 at 3655 SE Soteria Ave (2022 permit, 184.6k sq ft) vs Ginger East at 1475 SE Maffitt Dr",2026-10-09
+FracTracker,230,DSM14,OSM,way/830881731,Microsoft,distinct,,Separate Microsoft site; the OSM buildings are Project Alluvion's,2026-10-09
+FracTracker,231,Project Alluvion,OSM,way/830881731,Microsoft,component,b,"OSM's eight Microsoft buildings on White Crane Rd are Project Alluvion (eight buildings, >1M sq ft; DCD, GeekWire)",2026-10-09
+FracTracker,233,Project Ginger East (Microsoft),OSM,way/830881731,Microsoft,distinct,,Separate Microsoft site; the OSM buildings are Project Alluvion's,2026-10-09
+FracTracker,236,Aligned,FracTracker,237,Aligned,distinct,,"Different parcels: 101 Northwest Point Blvd vs 141 Northwest Point Blvd, 516 m apart",2026-10-09
+FracTracker,236,Aligned,FracTracker,241,Aligned,distinct,,"Different parcels: 101 Northwest Point Blvd vs 50 Northwest Point Blvd, 528 m apart",2026-10-09
+FracTracker,237,Aligned,FracTracker,241,Aligned,distinct,,"Different parcels: 141 Northwest Point Blvd vs 50 Northwest Point Blvd, 335 m apart",2026-10-09
+FracTracker,238,Stream Data Center: Chicago 2,FracTracker,242,Stream Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,240,Stream Data Center: Chicago 1,FracTracker,242,Stream Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,287,Lexington Data center,PeeringDB,5839,QX.Net Lexington,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,3,Google Data Center,OSM,way/714889192,Google Jackson County Data Center,component,b,OSM buildings are Google's two ~135k sq ft Widows Creek buildings; the FracTracker record is the 270k sq ft campus (Made in Alabama),2026-10-09
+FracTracker,315,Meta Data Kansas City Center,OSM,way/1433936352,Meta Data Center,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (1M sq ft),2026-10-09
+FracTracker,322,TierPoint - St Louis Olive Data Center,PeeringDB,15548,TierPoint St. Louis - Locust,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,354,Bellevue Data Center,PeeringDB,1637,Level(3) Bellevue,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,358,Meta Data Center,OSM,way/1253282100,Meta Sarpy Data center,component,a,Unsized FracTracker campus point for Meta Sarpy; the OSM buildings carry the MW,2026-10-09
+FracTracker,358,Meta Data Center,OSM,way/1253282102,Meta Sarpy Data center,component,a,Unsized FracTracker campus point for Meta Sarpy; the OSM buildings carry the MW,2026-10-09
+FracTracker,358,Meta Data Center,OSM,way/844394339,Meta Sarpy Data center,component,a,Unsized FracTracker campus point for Meta Sarpy; the OSM buildings carry the MW,2026-10-09
+FracTracker,362,GI Partners Data Center,FracTracker,363,Prism Capital Partners Data Center,distinct,,"Different parcels: 492 River Rd vs Cathedral Ave & Kingsland St, 1853 m apart",2026-10-09
+FracTracker,409,Johnstown Data Center (Harrison Rd),FracTracker,410,Johnstown Data Center (Beech Rd NW),distinct,,"Different parcels: 2186 Harrison Rd NW vs 2570 Beech Rd NW, 1521 m apart",2026-10-09
+FracTracker,409,Johnstown Data Center (Harrison Rd),FracTracker,411,Johnstown Data Center (Beech Rd),distinct,,"Different parcels: 2186 Harrison Rd NW vs 2801 Beech Rd NW, 1831 m apart",2026-10-09
+FracTracker,409,Johnstown Data Center (Harrison Rd),OSM,way/1252196803,Amazon Web Services,distinct,,Proposed Harrison Rd site (170k sq ft) vs existing Amazon buildings 0.7-2 km away,2026-10-09
+FracTracker,409,Johnstown Data Center (Harrison Rd),OSM,way/1386016627,Amazon Web Services,distinct,,Proposed Harrison Rd site (170k sq ft) vs existing Amazon buildings 0.7-2 km away,2026-10-09
+FracTracker,409,Johnstown Data Center (Harrison Rd),OSM,way/1386016631,Amazon Web Services,distinct,,Proposed Harrison Rd site (170k sq ft) vs existing Amazon buildings 0.7-2 km away,2026-10-09
+FracTracker,410,Johnstown Data Center (Beech Rd NW),FracTracker,411,Johnstown Data Center (Beech Rd),distinct,,"Different parcels: 2570 Beech Rd NW vs 2801 Beech Rd NW, 419 m apart",2026-10-09
+FracTracker,410,Johnstown Data Center (Beech Rd NW),OSM,way/1386016627,Amazon Web Services,distinct,,Separate Amazon CMH buildings; the FracTracker Beech Rd sites already hold their nearby CMH buildings and their floor area does not cover buildings 0.6-1.8 km away,2026-10-09
+FracTracker,410,Johnstown Data Center (Beech Rd NW),OSM,way/1386016631,Amazon Web Services,distinct,,Separate Amazon CMH buildings; the FracTracker Beech Rd sites already hold their nearby CMH buildings and their floor area does not cover buildings 0.6-1.8 km away,2026-10-09
+FracTracker,411,Johnstown Data Center (Beech Rd),OSM,way/1386016627,Amazon Web Services,distinct,,Separate Amazon CMH buildings; the FracTracker Beech Rd sites already hold their nearby CMH buildings and their floor area does not cover buildings 0.6-1.8 km away,2026-10-09
+FracTracker,411,Johnstown Data Center (Beech Rd),OSM,way/1386016631,Amazon Web Services,distinct,,Separate Amazon CMH buildings; the FracTracker Beech Rd sites already hold their nearby CMH buildings and their floor area does not cover buildings 0.6-1.8 km away,2026-10-09
+FracTracker,415,Lancaster Data Center,OSM,way/1252196824,Google,component,b,"OSM building is Google Lancaster's first building (opened 2024, Whiley Rd); the FracTracker record is the 120-acre campus",2026-10-09
+FracTracker,421,New Albany Meta Data Center/Prometheus,OSM,way/1252196813,NAO 5/NAO 6,distinct,,"Separate Meta New Albany buildings; the FracTracker site's MW comes from one 663k sq ft building footprint, not the campus",2026-10-09
+FracTracker,421,New Albany Meta Data Center/Prometheus,OSM,way/1386016634,LCO 1,distinct,,"Separate Meta New Albany buildings; the FracTracker site's MW comes from one 663k sq ft building footprint, not the campus",2026-10-09
+FracTracker,443,Apple Prineville Data Center,OSM,way/1276373853,Apple,duplicate,a,FracTracker's Apple Prineville point carries only a 9k sq ft outbuilding's estimate; OSM holds the main Apple buildings,2026-10-09
+FracTracker,444,Google Dalles Data Center,OSM,way/700431553,Google Taylor Lake Data Center,distinct,,Original Google The Dalles campus (4200 Columbia Rd) vs the Taylor Lake building (River Trail Way),2026-10-09
+FracTracker,488,Meta Data Center,PNNL,campus/01312295357,Meta Aiken Data Center,duplicate,b,"PNNL point is the same Meta Aiken project at Sage Mill Industrial Park (715k sq ft, 100 MW, under construction; DCD)",2026-10-09
+FracTracker,494,Google Clarksville Data Center,OSM,way/1470261550,SPC4A,distinct,,"Separate Google Clarksville buildings (SPC3A and SPC4A, ~170k sq ft footprints each)",2026-10-09
+FracTracker,494,Google Clarksville Data Center,OSM,way/708931343,Google Montgomery Data Center,component,b,"OSM land polygon covers Google's Clarksville/Montgomery County campus; its land-area estimate (1,018 MW) double counts the campus buildings",2026-10-09
+FracTracker,496,Gallatin Data Center,OSM,way/1312795639,Meta Gallatin Data Center,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (1.9M sq ft),2026-10-09
+FracTracker,496,Gallatin Data Center,OSM,way/1312795640,Meta Gallatin Data Center,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (1.9M sq ft),2026-10-09
+FracTracker,5,Meta Data Center,OSM,way/1160814413,Meta Huntsville Data center,distinct,,Separate Meta Huntsville buildings; the FracTracker site's MW comes from one 857k sq ft footprint,2026-10-09
+FracTracker,520,Dallas Data Center,OSM,way/465032484,Lumen Dallas 6,distinct,,"Different operators (Prime/Evocative Dallas vs Lumen Dallas 6), 1.2 km apart",2026-10-09
+FracTracker,520,Dallas Data Center,PeeringDB,1738,DataBank Dallas (DFW6),distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,531,Meta Forth Worth Data Center,OSM,way/673145182,Facebook Fort Worth Datacenter,component,b,OSM building on the same Meta campus; the FracTracker record is the campus total (2.5M sq ft),2026-10-09
+FracTracker,531,Meta Forth Worth Data Center,PeeringDB,14488,TierPoint Dallas Forth Worth,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,55,HostDime Data Center,OSM,way/609126465,HostDime Orlando Data Center,duplicate,a,"Same HostDime Orlando Tier IV facility at 1 Innovative Pl, Eatonville (DCD); FracTracker's 'proposed' status is stale",2026-10-09
+FracTracker,570,Aligned DFW Plano Data Center Campus,OSM,way/1486780799,Aligned Data Centers DFW-04,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,571,DFW-04 Data Center,OSM,way/1486780799,Aligned Data Centers DFW-04,duplicate,b,Same Aligned DFW-04 building; drops the unsized record,2026-10-09
+FracTracker,571,DFW-04 Data Center,OSM,way/597835788,Stream DFW IV,distinct,,Different operators (Aligned DFW-04 vs Stream DFW IV),2026-10-09
+FracTracker,575,Red Oak Google Data Center,FracTracker,576,Red Oak Data Center Campus,distinct,,Different operators: Compass Red Oak campus (481 Austin Blvd) vs Google Red Oak,2026-10-09
+FracTracker,578,365 Data Centers - Richardson,FracTracker,581,Richardson Data Center,distinct,,"Different parcels: 1001 East Campbell Rd vs 1501 E Lookout Dr, 1405 m apart",2026-10-09
+FracTracker,585,Microsoft Data Center,FracTracker,594,Microsoft Data Center: SAT15,distinct,,"Different sites: operating Microsoft San Antonio campus (5150 Rogers Rd) vs proposed SAT14, SAT15, and West Side sites",2026-10-09
+FracTracker,588,Lowes San Antonio Data Center,FracTracker,596,Microsoft San Antonio Data Center,distinct,,"Different parcels: 10045 Rogers Rd vs 5150 Rogers Rd, 636 m apart",2026-10-09
+FracTracker,591,Microsoft Data Center: SAT46,OSM,way/1533350872,Microsoft,component,b,Unsized OSM building on the Microsoft SAT46 campus,2026-10-09
+FracTracker,593,Microsoft Data Center: SAT14,FracTracker,596,Microsoft San Antonio Data Center,distinct,,"Different sites: operating Microsoft San Antonio campus (5150 Rogers Rd) vs proposed SAT14, SAT15, and West Side sites",2026-10-09
+FracTracker,594,Microsoft Data Center: SAT15,FracTracker,596,Microsoft San Antonio Data Center,distinct,,"Different sites: operating Microsoft San Antonio campus (5150 Rogers Rd) vs proposed SAT14, SAT15, and West Side sites",2026-10-09
+FracTracker,634,Equinix Data Center,FracTracker,835,EQUINIX ASHBURN EAST,distinct,,"Different parcels: 21551 Beaumeade Cir vs 22165 BEAUMEADE CIR, 851 m apart",2026-10-09
+FracTracker,634,Equinix Data Center,FracTracker,836,EQUINIX DC21,distinct,,"Different parcels: 21551 Beaumeade Cir vs 22175 BEAUMEADE CIR, 1080 m apart",2026-10-09
+FracTracker,634,Equinix Data Center,FracTracker,926,Equinix DC3 Data Center,distinct,,"Different parcels: 21551 Beaumeade Cir vs 44470 CHILUM PL, 839 m apart",2026-10-09
+FracTracker,634,Equinix Data Center,FracTracker,938,Equinix DC12 International Business Exchange,distinct,,"Different parcels: 21551 Beaumeade Cir vs 44790 PERFORMANCE CIR, 265 m apart",2026-10-09
+FracTracker,635,Sabey Data Center,FracTracker,820,Sabey Data Centers - Intergate.Ashburn Building C,component,b,"Sabey Intergate.Ashburn campus record: 645k sq ft, ~85 MW across three buildings (DCD; datacentermap); this building is part of it",2026-10-09
+FracTracker,638,Microsoft Data Center,FracTracker,639,Microsoft Ridge Road Campus,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,638,Microsoft Data Center,OSM,way/1074591450,Microsoft Boydton Data Center,duplicate,a,Same Microsoft Boydton campus (101 Herbert Dr); drops the unsized record,2026-10-09
+FracTracker,639,Microsoft Ridge Road Campus,FracTracker,640,Microsoft Azure,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,639,Microsoft Ridge Road Campus,OSM,way/1074591450,Microsoft Boydton Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,657,Amazon AWS IAD450 - Cosner Tech Campus,FracTracker,658,Hunters Ridge South Data Center (Amazon Data Services),distinct,,"Different parcels: 4049 Massaponax Church Rd, vs 9300 Cosner Dr, 1665 m apart",2026-10-09
+FracTracker,657,Amazon AWS IAD450 - Cosner Tech Campus,FracTracker,896,Cosner Tech Campus,duplicate,a,Same address (4049 Massaponax Church Rd); drops the unsized record,2026-10-09
+FracTracker,675,Iron Mountain Data Center VA-5,FracTracker,734,Iron Mountain VA-5,distinct,,"Different parcels despite the shared name: 7729 Wellington Glen Dr (15 ac, under construction) vs 11650 Hayden Rd (41 ac, operating)",2026-10-09
+FracTracker,68,Coloblox SMY1 Data Center,FracTracker,86,Marrietta Data Center,distinct,,"Different parcels: 1100 Circle 75 Pkwy vs 2812 Spring Road SE (Suite 210), 883 m apart",2026-10-09
+FracTracker,687,Caroline Center for Innovation - North,FracTracker,872,Caroline Center for Innovation,distinct,,"Separate Caroline County applications on different parcels: SPEX-08-2025 'North' (95 acres, Mickey's Wy) and RZ-01-2025 (278 acres, Carneal Ln), 1.2 km apart",2026-10-09
+FracTracker,693,Microsoft South Hill Campus,FracTracker,964,Hillcrest Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,698,Vantage Data Centers Ashburn I Campus - Building VA16,FracTracker,851,Vantage Data Centers Ashburn II Campus,distinct,,"Different Vantage campuses (Ashburn I at 22321 Pacific Blvd, Ashburn II at 22435 Glenn Dr)",2026-10-09
+FracTracker,700,Aligned Data Centers Ashburn Campus - Building IAD-03,FracTracker,831,Arcola Pacific Campus,distinct,,"Different parcels: 22715 Relocation Dr vs 22020 BRODERICK DR, 1887 m apart",2026-10-09
+FracTracker,700,Aligned Data Centers Ashburn Campus - Building IAD-03,FracTracker,851,Vantage Data Centers Ashburn II Campus,distinct,,"Different parcels: 22715 Relocation Dr vs 22435 GLENN DR, 1396 m apart",2026-10-09
+FracTracker,709,Sterling Data Center,FracTracker,853,DIGITAL STERLING PREMIER,distinct,,"Different parcels: 45110 Loudoun Downs Lane vs 22574 PACIFIC BLVD, 597 m apart",2026-10-09
+FracTracker,711,Vint Hill Corners,FracTracker,974,DATA CENTER VINT HILL,distinct,,"Separate Fauquier projects: CyrusOne (47 ac at Vint Hill Rd/Pkwy), Vint Hill Corners (46 ac, 4295 Aiken Dr), existing Watson Ct data center (Prince William Times; FauquierNow)",2026-10-09
+FracTracker,714,CloudHQ MCC2 Data Center,FracTracker,724,CloudHQ Manassas Campus,distinct,,"Different parcels: 10100 HARRY J PARRISH BLVD vs 10880 AIRMAN AVE, 683 m apart",2026-10-09
+FracTracker,715,Manassas Corporate Center MCC-7 PRA,FracTracker,723,Airport Gateway Commerce Center,distinct,,"Different parcels: 10101 HARRY J PARRISH BLVD vs 10850 Airman Ave, 440 m apart",2026-10-09
+FracTracker,715,Manassas Corporate Center MCC-7 PRA,FracTracker,728,Airport Gateway Commerce Center,distinct,,"Different parcels: 10101 HARRY J PARRISH BLVD vs 10940 AIRMAN AVE, 775 m apart",2026-10-09
+FracTracker,717,Amazon AWS Tanner Way Campus,OSM,way/1510517642,AWS,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,719,Alexandria Technology Center,FracTracker,720,Iron Mountain VA-4,distinct,,"Different parcels: 10600 PYRAMID PL vs 10680 UNIVERSITY BLVD, 496 m apart",2026-10-09
+FracTracker,721,Cloud HQ MCC5 Data Center,FracTracker,723,Airport Gateway Commerce Center,distinct,,"Different parcels: 10740 AIRMAN AVE vs 10850 Airman Ave, 345 m apart",2026-10-09
+FracTracker,721,Cloud HQ MCC5 Data Center,FracTracker,728,Airport Gateway Commerce Center,distinct,,"Different parcels: 10740 AIRMAN AVE vs 10940 AIRMAN AVE, 631 m apart",2026-10-09
+FracTracker,722,CloudHQ MCC3 - Manassas Corporate Center Campus,FracTracker,723,Airport Gateway Commerce Center,distinct,,"Different parcels: 10849 AIRMAN AVE vs 10850 Airman Ave, 240 m apart",2026-10-09
+FracTracker,722,CloudHQ MCC3 - Manassas Corporate Center Campus,FracTracker,724,CloudHQ Manassas Campus,distinct,,"Different parcels: 10849 AIRMAN AVE vs 10880 AIRMAN AVE, 410 m apart",2026-10-09
+FracTracker,722,CloudHQ MCC3 - Manassas Corporate Center Campus,FracTracker,728,Airport Gateway Commerce Center,distinct,,"Different parcels: 10849 AIRMAN AVE vs 10940 AIRMAN AVE, 427 m apart",2026-10-09
+FracTracker,723,Airport Gateway Commerce Center,FracTracker,728,Airport Gateway Commerce Center,component,a,7-acre parcel of the same Airport Gateway Commerce Center project (Prince William records); floor area is on the 36-acre record,2026-10-09
+FracTracker,724,CloudHQ Manassas Campus,FracTracker,725,MANUCHEHR VENTURES LLC,distinct,,"Different parcels: 10880 AIRMAN AVE vs 10900 AIRMAN AVE, 474 m apart",2026-10-09
+FracTracker,730,Prologis Executive Drive Data Center Campus,FracTracker,858,Prologis Executive Dr Data Center Campus,duplicate,b,Same Prologis Executive Dr rezoning in Sterling (DCD); the 8-acre record has no floor area,2026-10-09
+FracTracker,730,Prologis Executive Drive Data Center Campus,FracTracker,859,Prologis NOVA 1,distinct,,"Different parcels: 113 EXECUTIVE DR vs 22675 DULLES SUMMIT CT, 471 m apart",2026-10-09
+FracTracker,730,Prologis Executive Drive Data Center Campus,FracTracker,942,PROLOGIS PARK GATEWAY II,distinct,,"Different parcels: 113 EXECUTIVE DR vs 45180 GLOBAL PLZ, 613 m apart",2026-10-09
+FracTracker,732,Bristow Campus,FracTracker,739,Stack Infrastructure Bristow Campus,duplicate,b,"Same Stack 'Bristow Campus' on former Youth For Tomorrow land north of Nokesville Rd (two buildings, ~540k sq ft), denied by Prince William supervisors Sept 2025 (DCD; InsideNova)",2026-10-09
+FracTracker,733,KH Data Capital Development,FracTracker,734,Iron Mountain VA-5,distinct,,"Different parcels: 11560 HAYDEN RD vs 11650 HAYDEN RD, 348 m apart",2026-10-09
+FracTracker,733,KH Data Capital Development,FracTracker,991,VA6B1 and VA6B2,distinct,,"Different parcels: 11560 HAYDEN RD vs 7749 WELLINGTON RD, 738 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,737,Amazon AWS IAD14 Data Center,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 11801 BREWERS SPRING RD, 136 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,977,Amazon AWS IAD73,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7056 WELLINGTON RD, 1678 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,978,Amazon Data Center- Centuty Park Campus,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7101 CENTURY PARK DR, 798 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,980,Freedom I-66 Business Center (Parcel 8),distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7300 CENTURY PARK DR, 737 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,983,Amazon - AWS Bethlehem Road Campus,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7500 BETHLEHEM RD, 1062 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,984,Amazon AWS IAD7- Mason Campus,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7505 MASON KING CT, 874 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,986,Amazon AWS IAD11,distinct,,"Different parcels: 11800 BREWERS SPRING RD vs 7510 MASON KING CT, 629 m apart",2026-10-09
+FracTracker,736,Amazon AWS - Brewers Spring Road,FracTracker,989,Amazon AWS IAD44 Data Center,distinct,,"Adjacent Prince William parcels 257270 and 257269, separate buildings",2026-10-09
+FracTracker,737,Amazon AWS IAD14 Data Center,FracTracker,978,Amazon Data Center- Centuty Park Campus,distinct,,"Different parcels: 11801 BREWERS SPRING RD vs 7101 CENTURY PARK DR, 910 m apart",2026-10-09
+FracTracker,737,Amazon AWS IAD14 Data Center,FracTracker,983,Amazon - AWS Bethlehem Road Campus,distinct,,"Different parcels: 11801 BREWERS SPRING RD vs 7500 BETHLEHEM RD, 1052 m apart",2026-10-09
+FracTracker,742,SUNRISE TECHNOLOGY PARK,FracTracker,744,Coresite 12100 SV & 12098 SV,distinct,,"Different parcels: 12098 SUNRISE VALLEY DR vs 12379 A SUNRISE VALLEY DR, 640 m apart",2026-10-09
+FracTracker,749,Amazon AWS IAD - Severn & Squire Campus,FracTracker,809,Amazon AWS IAD-169/179,distinct,,"Different parcels: 1304 SQUIRE CT vs 21310 BEAUMEADE CIR, 1731 m apart",2026-10-09
+FracTracker,749,Amazon AWS IAD - Severn & Squire Campus,FracTracker,816,Amazon AWS IAD - 21641 Charles View Data Center,distinct,,"Different parcels: 1304 SQUIRE CT vs 21641 CHARLES VIEW DR, 581 m apart",2026-10-09
+FracTracker,749,Amazon AWS IAD - Severn & Squire Campus,FracTracker,946,DC 21/IAD 98,distinct,,"Different parcels: 1304 SQUIRE CT vs 45305 W SEVERN WAY, 239 m apart",2026-10-09
+FracTracker,75,Equinix Atlanta AT1,FracTracker,93,Atlanta AT1,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,75,Equinix Atlanta AT1,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,750,Gainsville Tech Park,FracTracker,990,MICROSOFT CORPORATION,distinct,,"Different parcels: 13050 HANSEN FARM RD vs 7745 Piney Branch Ln, 449 m apart",2026-10-09
+FracTracker,752,Wellington Data Center / University Business Park,FracTracker,990,MICROSOFT CORPORATION,distinct,,"Different parcels: 13490 UNIVERSITY BLVD vs 7745 Piney Branch Ln, 1717 m apart",2026-10-09
+FracTracker,76,Lumen Atlanta 2,FracTracker,98,Atlanta,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,762,John Marshall CommonsTech Park,FracTracker,763,Village Place at Gainesville Technology Park,distinct,,"Different parcels: 14392 JOHN MARSHALL HWY vs 14403 JOHN MARSHALL HWY, 400 m apart",2026-10-09
+FracTracker,766,Amazon Web Services Mallory,FracTracker,897,AWS Westfax B,distinct,,"Different parcels: 14501 AVION PKWY vs 4100 WESTFAX DR, 594 m apart",2026-10-09
+FracTracker,766,Amazon Web Services Mallory,FracTracker,898,AWS Westfax A,distinct,,"Different parcels: 14501 AVION PKWY vs 4101 WESTFAX DR, 772 m apart",2026-10-09
+FracTracker,768,Lee Road Property,FracTracker,773,Independence Center I,distinct,,"Different parcels: 14558 LEE RD vs 15036 CONFERENCE CENTER DR, 1361 m apart",2026-10-09
+FracTracker,772,EdgeCore Ashburn AS02 Data Center,FracTracker,833,DIGITAL LOUDOUN IV,distinct,,"Different parcels: 1501 Moran Road vs 22125 BRODERICK DR, 1186 m apart",2026-10-09
+FracTracker,772,EdgeCore Ashburn AS02 Data Center,FracTracker,853,DIGITAL STERLING PREMIER,distinct,,"Different parcels: 1501 Moran Road vs 22574 PACIFIC BLVD, 1151 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,841,QTS BRODERICK ACQUISITION CO LLC,distinct,,"Different parcels: 1506 MORAN RD vs 22271 BRODERICK DR, 536 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,856,DATA CENTER BUILDING C,distinct,,"Different parcels: 1506 MORAN RD vs 22631 DULLES SUMMIT CT, 307 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,857,DCT DULLES PHASE II,distinct,,"Different parcels: 1506 MORAN RD vs 22651 DULLES SUMMIT CT, 733 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,860,DCT DULLES DOWNS Land Bay B,distinct,,"Different parcels: 1506 MORAN RD vs 22685 RELOCATION DR, 1054 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,934,QTS Ashburn Data Center - Building 2 (ASH2),distinct,,"Different parcels: 1506 MORAN RD vs 44655 QUALITY TECH LN, 767 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,936,QTS Ashburn Data Center - Building 1 (ASH1),distinct,,"Different parcels: 1506 MORAN RD vs 44675 QUALITY TECH LN, 632 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,941,DCT DULLES DOWNS Land Bay A,distinct,,"Different parcels: 1506 MORAN RD vs 45111 LOUDOUN DOWNS LN, 690 m apart",2026-10-09
+FracTracker,774,QTS Ashburn-Moran,FracTracker,945,DCT DULLES DOWNS Land Bay B,distinct,,"Different parcels: 1506 MORAN RD vs 45220 PROLOGIS PLZ, 1054 m apart",2026-10-09
+FracTracker,777,Amazon AWS IAD55,FracTracker,778,Amazon AWS IAD - John Marshall Campus,distinct,,"Different parcels: 15395 JOHN MARSHALL HWY vs 15435 JOHN MARSHALL HWY, 320 m apart",2026-10-09
+FracTracker,780,Globalinx Virginia Beach,FracTracker,787,Telxius Cable Landing Station Virginia Beach,distinct,,"Different parcels: 1632 Corporate Landing Pkwy vs 1900 Corporate Landing Pkwy Cm, 704 m apart",2026-10-09
+FracTracker,781,Roosevelt Building,FracTracker,782,ELIAS DC ASSETS,distinct,,"Different parcels: 1755 OLD MEADOW RD vs 1764 A OLD MEADOW LN, 149 m apart",2026-10-09
+FracTracker,791,Vantage VA 3,FracTracker,910,Vantage VA 3,distinct,,FracTracker subtracts VA3's first building from the parent campus record,2026-10-09
+FracTracker,795,Cross Mill Center,FracTracker,900,Greenlin Park,distinct,,"Different parcels: 20040 SYCOLIN RD vs 41453 HOGELAND MILL RD, 748 m apart",2026-10-09
+FracTracker,802,CYXTERA COLOCATION,FracTracker,953,Csquare Northern Virginia Data Center,distinct,,"Different parcels: 21110 RIDGETOP CIR vs 45845 NOKES BLVD, 273 m apart",2026-10-09
+FracTracker,802,CYXTERA COLOCATION,FracTracker,956,CYXTERA DC2 COLOCATION,distinct,,"Different parcels: 21110 RIDGETOP CIR vs 45901 NOKES BLVD, 187 m apart",2026-10-09
+FracTracker,803,C1 NORTHERN VA - STERLING I-III,FracTracker,810,CyrusOne Northern Virginia Sterling V & VI Data,distinct,,"Different parcels: 21111 Ridgetop vs 21340 PACIFIC BLVD, 1701 m apart",2026-10-09
+FracTracker,804,MECP3 ASHBURN 3 LLC,FracTracker,808,Ashburn Data Center,distinct,,"Different parcels: 21195 ATLANTIC BLVD vs 21300 COACH GIBBS DR, 1366 m apart",2026-10-09
+FracTracker,805,MECP2 ASHBURN 2 LLC,FracTracker,808,Ashburn Data Center,distinct,,"Different parcels: 21205 ATLANTIC BLVD vs 21300 COACH GIBBS DR, 1360 m apart",2026-10-09
+FracTracker,806,MECP1 ASHBURN 1 LLC,FracTracker,808,Ashburn Data Center,distinct,,"Different parcels: 21215 ATLANTIC BLVD vs 21300 COACH GIBBS DR, 1430 m apart",2026-10-09
+FracTracker,808,Ashburn Data Center,FracTracker,818,Cologix Ashburn (ASH1 & ASH2),distinct,,"Different parcels: 21300 COACH GIBBS DR vs 21673 BEAUMEADE CIRCLE, 1460 m apart",2026-10-09
+FracTracker,808,Ashburn Data Center,FracTracker,835,EQUINIX ASHBURN EAST,distinct,,"Different parcels: 21300 COACH GIBBS DR vs 22165 BEAUMEADE CIR, 1691 m apart",2026-10-09
+FracTracker,808,Ashburn Data Center,FracTracker,931,DBT-DATA ASHBURN HOLDING I,distinct,,"Different parcels: 21300 COACH GIBBS DR vs 44610 GUILFORD DR, 1190 m apart",2026-10-09
+FracTracker,810,CyrusOne Northern Virginia Sterling V & VI Data,FracTracker,953,Csquare Northern Virginia Data Center,distinct,,"Different parcels: 21340 PACIFIC BLVD vs 45845 NOKES BLVD, 1628 m apart",2026-10-09
+FracTracker,810,CyrusOne Northern Virginia Sterling V & VI Data,FracTracker,957,NV-8 CYRUSONE,distinct,,"Different parcels: 21340 PACIFIC BLVD vs 45905 MARIES RD, 1824 m apart",2026-10-09
+FracTracker,816,Amazon AWS IAD - 21641 Charles View Data Center,FracTracker,951,MARIES TECH PARK LLC,distinct,,"Different parcels: 21641 CHARLES VIEW DR vs 45761 MARIES RD, 1868 m apart",2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,824,Digital Filigree,distinct,,Different operators and parcels (Equinix 21701 vs Digital Realty 21780 Filigree Ct),2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,826,EQUINEX DC13,distinct,,"Different parcels: 21701 FILIGREE CT vs 21830 UUNET DR, 1383 m apart",2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,835,EQUINIX ASHBURN EAST,distinct,,"Different parcels: 21701 FILIGREE CT vs 22165 BEAUMEADE CIR, 557 m apart",2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,836,EQUINIX DC21,distinct,,"Different parcels: 21701 FILIGREE CT vs 22175 BEAUMEADE CIR, 624 m apart",2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,926,Equinix DC3 Data Center,distinct,,"Different parcels: 21701 FILIGREE CT vs 44470 CHILUM PL, 719 m apart",2026-10-09
+FracTracker,819,Filigree Ct Campus,FracTracker,938,Equinix DC12 International Business Exchange,distinct,,"Different parcels: 21701 FILIGREE CT vs 44790 PERFORMANCE CIR, 1157 m apart",2026-10-09
+FracTracker,824,Digital Filigree,FracTracker,833,DIGITAL LOUDOUN IV,distinct,,"Different parcels: 21780 FILIGREE CT vs 22125 BRODERICK DR, 1050 m apart",2026-10-09
+FracTracker,824,Digital Filigree,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: 21780 FILIGREE CT vs 44274 ROUND TABLE PLZ, 1153 m apart",2026-10-09
+FracTracker,824,Digital Filigree,FracTracker,927,ACC4 Digital Realty,distinct,,"Different parcels: 21780 FILIGREE CT vs 44480 HASTINGS DR, 719 m apart",2026-10-09
+FracTracker,824,Digital Filigree,FracTracker,937,Digital Realty Northern Virginia IAD41,distinct,,"Different parcels: 21780 FILIGREE CT vs 44757 ROUND TABLE PLZ, 601 m apart",2026-10-09
+FracTracker,825,Aligned Data Centers - Ashburn IAD-02,FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,distinct,,"Different parcels: 21821 UUNET DR vs 21838 UUNET DR, 372 m apart",2026-10-09
+FracTracker,825,Aligned Data Centers - Ashburn IAD-02,FracTracker,922,NTT Global Data Centers,distinct,,"Different parcels: 21821 UUNET DR vs 44245 GIGABIT PLZ, 897 m apart",2026-10-09
+FracTracker,826,EQUINEX DC13,FracTracker,835,EQUINIX ASHBURN EAST,distinct,,"Different parcels: 21830 UUNET DR vs 22165 BEAUMEADE CIR, 1849 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,828,Aligned Data Center AID01,distinct,,"Different parcels: 21838 UUNET DR vs 21890 UUNET DR, 271 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,843,ASH3 DC2,distinct,,"Different parcels: 21838 UUNET DR vs 22271 SHELLHORN RD, 1622 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,846,QTS DATA CENTER ASH3-DC1,distinct,,"Different parcels: 21838 UUNET DR vs 22291 SHELLHORN RD, 1701 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,922,NTT Global Data Centers,distinct,,"Different parcels: 21838 UUNET DR vs 44245 GIGABIT PLZ, 550 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,931,DBT-DATA ASHBURN HOLDING I,distinct,,"Different parcels: 21838 UUNET DR vs 44610 GUILFORD DR, 1855 m apart",2026-10-09
+FracTracker,827,ALIGNED ENERGY DATA CENTERS ASHBURN,FracTracker,935,RAGING WIRE VA1,distinct,,"Different parcels: 21838 UUNET DR vs 44664 GUILFORD DR, 1884 m apart",2026-10-09
+FracTracker,828,Aligned Data Center AID01,FracTracker,922,NTT Global Data Centers,distinct,,"Different parcels: 21890 UUNET DR vs 44245 GIGABIT PLZ, 533 m apart",2026-10-09
+FracTracker,828,Aligned Data Center AID01,FracTracker,931,DBT-DATA ASHBURN HOLDING I,distinct,,"Different parcels: 21890 UUNET DR vs 44610 GUILFORD DR, 1618 m apart",2026-10-09
+FracTracker,829,CloudHQ LC1 Data Center,FracTracker,834,Zebra East,distinct,,"Different parcels: 21955 Loudoun County Pkwy vs 22130 LOUDOUN COUNTY PKWY, 938 m apart",2026-10-09
+FracTracker,83,Atlanta ATL14,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,839,ME-DC Pacific,distinct,,"Separate projects and parcels: PowerHouse Arcola/Pacific (43 ac, Broderick Dr) vs ME-DC Pacific (33 ac, 22255 Pacific Blvd, separate Loudoun application)",2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,851,Vantage Data Centers Ashburn II Campus,distinct,,"Different parcels: 22020 BRODERICK DR vs 22435 GLENN DR, 1641 m apart",2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,854,Aligned Data Centers Ashburn Campus - Building IAD-01,distinct,,"Different parcels: 22020 BRODERICK DR vs 22580 RELOCATION DR, 1720 m apart",2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,934,QTS Ashburn Data Center - Building 2 (ASH2),distinct,,"Different parcels: 22020 BRODERICK DR vs 44655 QUALITY TECH LN, 1355 m apart",2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,943,VANTAGE DATA CENTERS VA12,distinct,,"Different parcels: 22020 BRODERICK DR vs 45194 VANTAGE DATA PLZ, 628 m apart",2026-10-09
+FracTracker,831,Arcola Pacific Campus,FracTracker,944,VANTAGE DATA CENTERS VA11,distinct,,"Different parcels: 22020 BRODERICK DR vs 45200 VANTAGE DATA PLZ, 884 m apart",2026-10-09
+FracTracker,833,DIGITAL LOUDOUN IV,FracTracker,840,SENTINEL ASHBURN II,distinct,,"Different parcels: 22125 BRODERICK DR vs 22262 CLOUD PLZ, 1102 m apart",2026-10-09
+FracTracker,833,DIGITAL LOUDOUN IV,FracTracker,927,ACC4 Digital Realty,distinct,,"Different parcels: 22125 BRODERICK DR vs 44480 HASTINGS DR, 1734 m apart",2026-10-09
+FracTracker,833,DIGITAL LOUDOUN IV,FracTracker,937,Digital Realty Northern Virginia IAD41,distinct,,"Different parcels: 22125 BRODERICK DR vs 44757 ROUND TABLE PLZ, 687 m apart",2026-10-09
+FracTracker,835,EQUINIX ASHBURN EAST,FracTracker,836,EQUINIX DC21,distinct,,"Different parcels: 22165 BEAUMEADE CIR vs 22175 BEAUMEADE CIR, 230 m apart",2026-10-09
+FracTracker,835,EQUINIX ASHBURN EAST,FracTracker,926,Equinix DC3 Data Center,distinct,,"Different parcels: 22165 BEAUMEADE CIR vs 44470 CHILUM PL, 1132 m apart",2026-10-09
+FracTracker,835,EQUINIX ASHBURN EAST,FracTracker,938,Equinix DC12 International Business Exchange,distinct,,"Different parcels: 22165 BEAUMEADE CIR vs 44790 PERFORMANCE CIR, 1115 m apart",2026-10-09
+FracTracker,839,ME-DC Pacific,FracTracker,861,Amazon AWS IAD - 22760 Pacific Blvd Data Center,distinct,,"Different parcels: 22255 PACIFIC BLVD vs 22760 PACIFIC BLV, 1678 m apart",2026-10-09
+FracTracker,840,SENTINEL ASHBURN II,FracTracker,937,Digital Realty Northern Virginia IAD41,distinct,,"Different parcels: 22262 CLOUD PLZ vs 44757 ROUND TABLE PLZ, 1788 m apart",2026-10-09
+FracTracker,841,QTS BRODERICK ACQUISITION CO LLC,FracTracker,924,SDC ASHBURN I,distinct,,"Different parcels: 22271 BRODERICK DR vs 44351 IMPORT PLZ, 1913 m apart",2026-10-09
+FracTracker,841,QTS BRODERICK ACQUISITION CO LLC,FracTracker,934,QTS Ashburn Data Center - Building 2 (ASH2),distinct,,"Different parcels: 22271 BRODERICK DR vs 44655 QUALITY TECH LN, 737 m apart",2026-10-09
+FracTracker,841,QTS BRODERICK ACQUISITION CO LLC,FracTracker,936,QTS Ashburn Data Center - Building 1 (ASH1),distinct,,"Different parcels: 22271 BRODERICK DR vs 44675 QUALITY TECH LN, 619 m apart",2026-10-09
+FracTracker,842,STACK NVA04,FracTracker,847,STACK NVA04,distinct,,Separate Stack buildings on Lockridge Rd (SI NVA04A Building 1 vs NVA04B/Broad Run Building 2-3; Loudoun plan records),2026-10-09
+FracTracker,85,Southern Telecom Atlanta,FracTracker,88,H5 Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,85,Southern Telecom Atlanta,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,851,Vantage Data Centers Ashburn II Campus,FracTracker,854,Aligned Data Centers Ashburn Campus - Building IAD-01,distinct,,"Different parcels: 22435 GLENN DR vs 22580 RELOCATION DR, 641 m apart",2026-10-09
+FracTracker,851,Vantage Data Centers Ashburn II Campus,FracTracker,943,VANTAGE DATA CENTERS VA12,distinct,,"Different parcels: 22435 GLENN DR vs 45194 VANTAGE DATA PLZ, 1026 m apart",2026-10-09
+FracTracker,851,Vantage Data Centers Ashburn II Campus,FracTracker,944,VANTAGE DATA CENTERS VA11,distinct,,"Different parcels: 22435 GLENN DR vs 45200 VANTAGE DATA PLZ, 774 m apart",2026-10-09
+FracTracker,858,Prologis Executive Dr Data Center Campus,FracTracker,859,Prologis NOVA 1,distinct,,"Different parcels: 22660 Executive Dr vs 22675 DULLES SUMMIT CT, 648 m apart",2026-10-09
+FracTracker,858,Prologis Executive Dr Data Center Campus,FracTracker,942,PROLOGIS PARK GATEWAY II,distinct,,"Different parcels: 22660 Executive Dr vs 45180 GLOBAL PLZ, 392 m apart",2026-10-09
+FracTracker,859,Prologis NOVA 1,FracTracker,942,PROLOGIS PARK GATEWAY II,distinct,,"Different parcels: 22675 DULLES SUMMIT CT vs 45180 GLOBAL PLZ, 997 m apart",2026-10-09
+FracTracker,860,DCT DULLES DOWNS Land Bay B,FracTracker,865,DULLES NCP LLC,distinct,,"Different parcels: 22685 RELOCATION DR vs 22916 INTERNATIONAL DR, 1366 m apart",2026-10-09
+FracTracker,860,DCT DULLES DOWNS Land Bay B,FracTracker,945,DCT DULLES DOWNS Land Bay B,distinct,,"FracTracker's proposed record is the 670,953 sq ft addition only (814,516 sq ft total with the existing buildings)",2026-10-09
+FracTracker,865,DULLES NCP LLC,FracTracker,870,Amazon AWS IAD - 23005 International Drive Data Center,distinct,,"Different parcels: 22916 INTERNATIONAL DR vs 23005 INTERNATIONAL DR, 275 m apart",2026-10-09
+FracTracker,865,DULLES NCP LLC,FracTracker,941,DCT DULLES DOWNS Land Bay A,distinct,,"Different parcels: 22916 INTERNATIONAL DR vs 45111 LOUDOUN DOWNS LN, 1730 m apart",2026-10-09
+FracTracker,865,DULLES NCP LLC,FracTracker,945,DCT DULLES DOWNS Land Bay B,distinct,,"Different parcels: 22916 INTERNATIONAL DR vs 45220 PROLOGIS PLZ, 1377 m apart",2026-10-09
+FracTracker,873,Dulles Commerce,FracTracker,874,PROLOGIS-EXCHANGE 43461 OLD OX ROAD Data center,distinct,,"Different parcels: 23700 PEBBLE RUN PL vs 23845 ERINS RUN DR, 505 m apart",2026-10-09
+FracTracker,874,PROLOGIS-EXCHANGE 43461 OLD OX ROAD Data center,FracTracker,876,PROLOGIS-EXCHANGE 43461 OLD OX ROAD Data center,distinct,,"Different parcels: 23845 ERINS RUN DR vs 23965 CARTERS SCHOOL RD, 507 m apart",2026-10-09
+FracTracker,879,Amazon AWS IAD - Quail Campus,FracTracker,902,Amazon AWS IAD - 42090 Reeds Farm Ln Data Center,distinct,,"Different parcels: 24214 QUAIL RIDGE LN vs 42090 REEDS FARM LN, 866 m apart",2026-10-09
+FracTracker,88,H5 Atlanta,FracTracker,97,FOGO Atlanta,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,88,H5 Atlanta,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,880,Amazon AWS IAD - Quail Campus,FracTracker,902,Amazon AWS IAD - 42090 Reeds Farm Ln Data Center,distinct,,"Different parcels: 24244 QUAIL RIDGE LN vs 42090 REEDS FARM LN, 1022 m apart",2026-10-09
+FracTracker,883,AWS IAD61-IAD63 South Riding,FracTracker,884,Amazon AWS IAD - H&M Property Campus,distinct,,"Different parcels: 25316 PREDICTION LN vs 25500 MEADOWDALE DR, 809 m apart",2026-10-09
+FracTracker,883,AWS IAD61-IAD63 South Riding,FracTracker,885,Amazon AWS IAD - Sutton Bay Campus,distinct,,"Different parcels: 25316 PREDICTION LN vs 25800 SUTTON BAY PLZ, 1339 m apart",2026-10-09
+FracTracker,884,Amazon AWS IAD - H&M Property Campus,FracTracker,885,Amazon AWS IAD - Sutton Bay Campus,distinct,,"Different parcels: 25500 MEADOWDALE DR vs 25800 SUTTON BAY PLZ, 871 m apart",2026-10-09
+FracTracker,894,Project Tropical,FracTracker,971,Meta Henrico Data Center,distinct,,"Separate Henrico County parcels in White Oak Technology Park: Meta Henrico (172 ac), Meta Richmond (129 ac), Project Tropical expansion (475 ac, POD2022-00605)",2026-10-09
+FracTracker,894,Project Tropical,FracTracker,981,Meta Richmond Data Center,distinct,,"Separate Henrico County parcels in White Oak Technology Park: Meta Henrico (172 ac), Meta Richmond (129 ac), Project Tropical expansion (475 ac, POD2022-00605)",2026-10-09
+FracTracker,911,Western Lands,FracTracker,913,IAD44,distinct,,FracTracker subtracts IAD44 (Digital WL phases 1 and 2) from the Western Lands parent record,2026-10-09
+FracTracker,914,Digital Realty Northern Virginia IAD14,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: 43791 DEVIN SHAFRON DR vs 44274 ROUND TABLE PLZ, 1853 m apart",2026-10-09
+FracTracker,915,Digital Realty Northern Virginia IAD24,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: 43830 DEVIN SHAFRON DR vs 44274 ROUND TABLE PLZ, 1637 m apart",2026-10-09
+FracTracker,916,Digital Realty IAD13,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: 43831 DEVIN SHAFRON DR vs 44274 ROUND TABLE PLZ, 1712 m apart",2026-10-09
+FracTracker,917,Digital Realty Northern Virginia IAD12,FracTracker,923,IAD Round Table Campus,distinct,,"Different parcels: 43881 DEVIN SHAFRON DR vs 44274 ROUND TABLE PLZ, 1567 m apart",2026-10-09
+FracTracker,922,NTT Global Data Centers,FracTracker,931,DBT-DATA ASHBURN HOLDING I,distinct,,"Different parcels: 44245 GIGABIT PLZ vs 44610 GUILFORD DR, 1515 m apart",2026-10-09
+FracTracker,922,NTT Global Data Centers,FracTracker,935,RAGING WIRE VA1,distinct,,"Different parcels: 44245 GIGABIT PLZ vs 44664 GUILFORD DR, 1635 m apart",2026-10-09
+FracTracker,923,IAD Round Table Campus,FracTracker,927,ACC4 Digital Realty,distinct,,"Different parcels: 44274 ROUND TABLE PLZ vs 44480 HASTINGS DR, 1295 m apart",2026-10-09
+FracTracker,924,SDC ASHBURN I,FracTracker,936,QTS Ashburn Data Center - Building 1 (ASH1),distinct,,"Different parcels: 44351 IMPORT PLZ vs 44675 QUALITY TECH LN, 1413 m apart",2026-10-09
+FracTracker,93,Atlanta AT1,FracTracker,98,Atlanta,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,931,DBT-DATA ASHBURN HOLDING I,FracTracker,935,RAGING WIRE VA1,distinct,,"Different parcels: 44610 GUILFORD DR vs 44664 GUILFORD DR, 346 m apart",2026-10-09
+FracTracker,95,Cogent Data Center Atlanta 1,FracTracker,98,Atlanta,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,951,MARIES TECH PARK LLC,FracTracker,959,Loudoun Commerce Center,distinct,,"Different parcels: 45761 MARIES RD vs 45975 Nokes Blvd, 834 m apart",2026-10-09
+FracTracker,951,MARIES TECH PARK LLC,FracTracker,961,Amazon AWS - Manekin Plaza Data Center,distinct,,"Different parcels: 45761 MARIES RD vs 46000 MANEKIN PLZ, 1003 m apart",2026-10-09
+FracTracker,953,Csquare Northern Virginia Data Center,FracTracker,956,CYXTERA DC2 COLOCATION,distinct,,"Different parcels: 45845 NOKES BLVD vs 45901 NOKES BLVD, 193 m apart",2026-10-09
+FracTracker,959,Loudoun Commerce Center,FracTracker,961,Amazon AWS - Manekin Plaza Data Center,distinct,,"Different parcels: 45975 Nokes Blvd vs 46000 MANEKIN PLZ, 242 m apart",2026-10-09
+FracTracker,966,Gainsville East AWS IAD,OSM,way/1510517638,AWS,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+FracTracker,971,Meta Henrico Data Center,FracTracker,981,Meta Richmond Data Center,distinct,,"Separate Henrico County parcels in White Oak Technology Park: Meta Henrico (172 ac), Meta Richmond (129 ac), Project Tropical expansion (475 ac, POD2022-00605)",2026-10-09
+FracTracker,978,Amazon Data Center- Centuty Park Campus,FracTracker,980,Freedom I-66 Business Center (Parcel 8),distinct,,"Different parcels: 7101 CENTURY PARK DR vs 7300 CENTURY PARK DR, 326 m apart",2026-10-09
+FracTracker,978,Amazon Data Center- Centuty Park Campus,FracTracker,983,Amazon - AWS Bethlehem Road Campus,distinct,,"Different parcels: 7101 CENTURY PARK DR vs 7500 BETHLEHEM RD, 969 m apart",2026-10-09
+FracTracker,978,Amazon Data Center- Centuty Park Campus,FracTracker,984,Amazon AWS IAD7- Mason Campus,distinct,,"Different parcels: 7101 CENTURY PARK DR vs 7505 MASON KING CT, 911 m apart",2026-10-09
+FracTracker,978,Amazon Data Center- Centuty Park Campus,FracTracker,986,Amazon AWS IAD11,distinct,,"Different parcels: 7101 CENTURY PARK DR vs 7510 MASON KING CT, 875 m apart",2026-10-09
+FracTracker,978,Amazon Data Center- Centuty Park Campus,FracTracker,989,Amazon AWS IAD44 Data Center,distinct,,"Different parcels: 7101 CENTURY PARK DR vs 7600 DOANE DR, 689 m apart",2026-10-09
+FracTracker,98,Atlanta,FracTracker,99,Atlanta ATL13,distinct,,Downtown Atlanta carrier hotels: different buildings or separate tenant operations with MW reported per operator,2026-10-09
+FracTracker,980,Freedom I-66 Business Center (Parcel 8),FracTracker,983,Amazon - AWS Bethlehem Road Campus,distinct,,"Different parcels: 7300 CENTURY PARK DR vs 7500 BETHLEHEM RD, 645 m apart",2026-10-09
+FracTracker,983,Amazon - AWS Bethlehem Road Campus,FracTracker,984,Amazon AWS IAD7- Mason Campus,distinct,,"Different parcels: 7500 BETHLEHEM RD vs 7505 MASON KING CT, 206 m apart",2026-10-09
+FracTracker,983,Amazon - AWS Bethlehem Road Campus,FracTracker,986,Amazon AWS IAD11,distinct,,"Different parcels: 7500 BETHLEHEM RD vs 7510 MASON KING CT, 475 m apart",2026-10-09
+FracTracker,983,Amazon - AWS Bethlehem Road Campus,FracTracker,989,Amazon AWS IAD44 Data Center,distinct,,"Different parcels: 7500 BETHLEHEM RD vs 7600 DOANE DR, 1052 m apart",2026-10-09
+OSM,node/8897151054,San Jose Colocation Center,PeeringDB,147,Evocative San Jose (SV7),distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,node/8897151054,San Jose Colocation Center,PeeringDB,33,SVTIX San Jose,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,node/9861806598,Netrality Data Centers,PeeringDB,15589,Lumen Kansas City,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,relation/2744301,Chirisa Technology Parks - Piscataway,OSM,way/362662493,QTS Piscataway Data Center,distinct,,"Separate OSM building footprints (105,786 and 343,444 sq ft), 1768 m apart",2026-10-09
+OSM,way/1019812125,EdgeConneX - Portland,PeeringDB,1922,EdgeConneX Portland (EDCPOR01),duplicate,b,Same facility listed in OSM and PeeringDB,2026-10-09
+OSM,way/1024384322,Data Center Lenexa,OSM,way/880052062,TierPoint Kansas City - Lenexa,distinct,,"Separate OSM building footprints (44,552 and 58,095 sq ft), 1912 m apart",2026-10-09
+OSM,way/1027471509,Amazon Web Services,OSM,way/1252196816,Amazon Web Services,distinct,,"Separate OSM building footprints (221,562 and 216,528 sq ft), 1352 m apart",2026-10-09
+OSM,way/1027471509,Amazon Web Services,OSM,way/1386017490,Amazon Web Services,distinct,,"Separate OSM building footprints (221,562 and 214,042 sq ft), 1128 m apart",2026-10-09
+OSM,way/1027471509,Amazon Web Services,OSM,way/460070145,Amazon Web Services,distinct,,"Separate OSM building footprints (221,562 and 267,452 sq ft), 1876 m apart",2026-10-09
+OSM,way/1054387471,,OSM,way/1070895994,,distinct,,"Separate OSM building footprints (660,258 and 763,506 sq ft), 1032 m apart",2026-10-09
+OSM,way/1065780801,Amazon,OSM,way/58708529,QTS Santa Clara 2,distinct,,"Separate OSM building footprints (98,142 and 36,808 sq ft), 1142 m apart",2026-10-09
+OSM,way/1069388067,Google,OSM,way/1069388156,Google,distinct,,"Separate OSM building footprints (206,252 and 697,831 sq ft), 551 m apart",2026-10-09
+OSM,way/1073720208,Google,OSM,way/1073720219,Google,distinct,,"Separate OSM building footprints (318,940 and 174,583 sq ft), 528 m apart",2026-10-09
+OSM,way/1073720208,Google,OSM,way/1287260560,Google,distinct,,"Separate OSM building footprints (318,940 and 296,835 sq ft), 1138 m apart",2026-10-09
+OSM,way/1073720219,Google,OSM,way/1287260560,Google,distinct,,"Separate OSM building footprints (174,583 and 296,835 sq ft), 997 m apart",2026-10-09
+OSM,way/1149499531,The Keep,OSM,way/1561981236,The Keep,distinct,,Separate OSM buildings of The Keep (both dropped as campus components),2026-10-09
+OSM,way/1152747559,Meta,OSM,way/772827597,Meta,distinct,,"Separate OSM building footprints (622,980 and 630,160 sq ft), 1239 m apart",2026-10-09
+OSM,way/1154503131,Amazon Web Services,OSM,way/1252196805,Amazon Web Services,distinct,,"Separate OSM building footprints (159,123 and 218,032 sq ft), 1619 m apart",2026-10-09
+OSM,way/1154636644,NTT Chicago CH1,PeeringDB,12160,RagingWire CH1 - NTT,duplicate,b,RagingWire is NTT; same Chicago CH1 facility,2026-10-09
+OSM,way/1191496040,Meta,OSM,way/626785488,Meta,distinct,,"Separate OSM building footprints (588,490 and 654,433 sq ft), 662 m apart",2026-10-09
+OSM,way/1191496040,Meta,OSM,way/777679751,Meta,distinct,,"Separate OSM building footprints (588,490 and 654,617 sq ft), 539 m apart",2026-10-09
+OSM,way/1237493975,Google,OSM,way/1237494981,Google,distinct,,"Separate OSM building footprints (292,941 and 297,438 sq ft), 992 m apart",2026-10-09
+OSM,way/1237493975,Google,OSM,way/1312801354,Google,distinct,,"Separate OSM building footprints (292,941 and 297,414 sq ft), 700 m apart",2026-10-09
+OSM,way/1237494981,Google,OSM,way/1312801354,Google,distinct,,"Separate OSM building footprints (297,438 and 297,414 sq ft), 541 m apart",2026-10-09
+OSM,way/1250867182,GlobeNet Tuckerton Cable Landing Station,OSM,way/371491126,AT&T Tuckerton Cable Landing Station (TAT-14),distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,way/1252196803,Amazon Web Services,OSM,way/1386016631,Amazon Web Services,distinct,,"Separate OSM building footprints (214,261 and 214,329 sq ft), 530 m apart",2026-10-09
+OSM,way/1252196816,Amazon Web Services,OSM,way/1386017490,Amazon Web Services,distinct,,"Separate OSM building footprints (216,528 and 214,042 sq ft), 1372 m apart",2026-10-09
+OSM,way/1253282100,Meta Sarpy Data center,OSM,way/1253282102,Meta Sarpy Data center,distinct,,"Separate OSM building footprints (628,560 and 625,288 sq ft), 1457 m apart",2026-10-09
+OSM,way/1253282100,Meta Sarpy Data center,OSM,way/844394339,Meta Sarpy Data center,distinct,,"Separate OSM building footprints (628,560 and 666,382 sq ft), 948 m apart",2026-10-09
+OSM,way/1253282102,Meta Sarpy Data center,OSM,way/844394339,Meta Sarpy Data center,distinct,,"Separate OSM building footprints (625,288 and 666,382 sq ft), 1273 m apart",2026-10-09
+OSM,way/1253282103,Meta,OSM,way/438078069,Facebook Altoona Data Center 1,distinct,,"Separate OSM building footprints (601,076 and 315,400 sq ft), 1346 m apart",2026-10-09
+OSM,way/1253282103,Meta,OSM,way/438078070,Facebook Altoona Data Center 2,distinct,,"Separate OSM building footprints (601,076 and 377,755 sq ft), 1150 m apart",2026-10-09
+OSM,way/1253282103,Meta,OSM,way/830931210,Facebook Altoona Data Center 5,distinct,,"Separate OSM building footprints (601,076 and 628,003 sq ft), 760 m apart",2026-10-09
+OSM,way/1312795639,Meta Gallatin Data Center,OSM,way/1312795640,Meta Gallatin Data Center,distinct,,"Separate OSM building footprints (626,568 and 626,683 sq ft), 593 m apart",2026-10-09
+OSM,way/1386016627,Amazon Web Services,OSM,way/1386016631,Amazon Web Services,distinct,,"Separate OSM building footprints (245,446 and 214,329 sq ft), 1724 m apart",2026-10-09
+OSM,way/1386016642,Amazon Web Services,OSM,way/1386016643,Amazon Web Services,distinct,,"Separate OSM building footprints (212,842 and 261,665 sq ft), 511 m apart",2026-10-09
+OSM,way/1386017490,Amazon Web Services,OSM,way/460070145,Amazon Web Services,distinct,,"Separate OSM building footprints (214,042 and 267,452 sq ft), 795 m apart",2026-10-09
+OSM,way/1386017495,Amazon Web Services,OSM,way/1501456882,Amazon Web Services,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,way/1426146790,CyrusOne Chicago Aurora CME,OSM,way/1481581947,CyrusOne CHI3,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,way/1426525217,Compass Data Center,OSM,way/1426525220,Compass Data Center,distinct,,"Separate OSM building footprints (251,939 and 251,941 sq ft), 519 m apart",2026-10-09
+OSM,way/1426525217,Compass Data Center,OSM,way/850965775,Compass Data Center,distinct,,"Separate OSM building footprints (251,939 and 247,998 sq ft), 1097 m apart",2026-10-09
+OSM,way/1426525220,Compass Data Center,OSM,way/850965775,Compass Data Center,distinct,,"Separate OSM building footprints (251,941 and 247,998 sq ft), 1612 m apart",2026-10-09
+OSM,way/1443567519,Google,OSM,way/700431553,Google Taylor Lake Data Center,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,way/1470261550,SPC4A,OSM,way/708931343,Google Montgomery Data Center,component,b,"OSM land polygon covers Google's Clarksville/Montgomery County campus; its land-area estimate (1,018 MW) double counts the campus buildings",2026-10-09
+OSM,way/379204643,LightEdge Austin II,OSM,way/382785871,LightEdge Austin I,distinct,,"Separate OSM building footprints (86,445 and 30,876 sq ft), 1608 m apart",2026-10-09
+OSM,way/383728972,Hurricane Electric Fremont 1,OSM,way/384310259,XO Fremont,distinct,,"Separate OSM building footprints (33,640 and 181,268 sq ft), 1800 m apart",2026-10-09
+OSM,way/440666998,Xo Communications Colocation Data Center,OSM,way/492699069,TPx Colocation Datacenter,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+OSM,way/571010571,CyrusOne Norwalk,PeeringDB,2357,CyrusOne Norwalk,duplicate,b,Same facility listed in OSM and PeeringDB,2026-10-09
+OSM,way/626785488,Meta,OSM,way/777679751,Meta,distinct,,"Separate OSM building footprints (654,433 and 654,617 sq ft), 671 m apart",2026-10-09
+PeeringDB,10473,Cogent Boca Raton,PeeringDB,1271,"Equinix MI3 - Miami, Boca Raton",distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,10473,Cogent Boca Raton,PeeringDB,9085,Telxius Boca Raton DC,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,10478,Cogent Cleveland,PeeringDB,16456,Cogent Cleveland 2,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,10479,Cogent Columbus,PeeringDB,16457,Cogent Columbus 2,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,1335,XMission - Salt Lake City - Utah,PeeringDB,4293,DataBank Salt Lake City (SLC1),distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,14273,CRALIDXX - Coeur d'Alene Central Office,PeeringDB,9515,Neutron - Coeur d'Alene,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,14379,ProRacks Datacenter- Kansas City,PeeringDB,15589,Lumen Kansas City,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,147,Evocative San Jose (SV7),PeeringDB,33,SVTIX San Jose,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09
+PeeringDB,2936,Zayo Nashville - 209 10th Ave. S,PeeringDB,368,XO Nashville,distinct,,"Different facilities (different operators, addresses, or status); one record is unsized, so no MW double counting",2026-10-09

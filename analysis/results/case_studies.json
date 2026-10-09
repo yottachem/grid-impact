@@ -121,20 +121,20 @@
     },
     "exposure": {
       "sites_by_status": {
-        "operating": 227,
-        "proposed": 214,
+        "operating": 225,
+        "proposed": 207,
         "construction": 13
       },
       "mw_by_status": {
         "construction": 4.9,
-        "operating": 14.2,
-        "proposed": 60.8
+        "operating": 14.1,
+        "proposed": 60.5
       },
       "state": "VA",
       "Dominion Energy Virginia": {
-        "mw_op": 10483,
-        "mw_pipeline": 39625,
-        "mw_pipeline_per_1k_res": 16.4
+        "mw_op": 10410,
+        "mw_pipeline": 39315,
+        "mw_pipeline_per_1k_res": 16.3
       }
     },
     "generation": {
@@ -389,14 +389,14 @@
     },
     "exposure": {
       "sites_by_status": {
-        "operating": 164,
-        "proposed": 102,
+        "operating": 160,
+        "proposed": 100,
         "construction": 37
       },
       "mw_by_status": {
         "construction": 16.6,
-        "operating": 12.7,
-        "proposed": 42.6
+        "operating": 12.5,
+        "proposed": 42.3
       },
       "state": "TX",
       "CPS Energy (San Antonio)": {
@@ -815,20 +815,20 @@
     },
     "exposure": {
       "sites_by_status": {
-        "operating": 103,
-        "proposed": 73,
+        "operating": 94,
+        "proposed": 69,
         "construction": 11
       },
       "mw_by_status": {
         "construction": 4.8,
-        "operating": 5.0,
-        "proposed": 29.3
+        "operating": 4.5,
+        "proposed": 28.7
       },
       "state": "GA",
       "Georgia Power": {
-        "mw_op": 2523,
-        "mw_pipeline": 25610,
-        "mw_pipeline_per_1k_res": 10.3
+        "mw_op": 2313,
+        "mw_pipeline": 25100,
+        "mw_pipeline_per_1k_res": 10.1
       }
     },
     "generation": {

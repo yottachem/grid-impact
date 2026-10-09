@@ -19,7 +19,7 @@ Regulated utility in PJM. Self-supplied capacity (FRR) through 2024/25; in the P
 
 Same months (Jan-Jul): real price 15.18¢ in 2025 vs 17.75¢ in 2026 (**+17.0%**); nominal 14.59¢ vs 17.55¢.
 
-Data center sites in VA: operating 227, proposed 214, construction 13; estimated GW: construction 4.9, operating 14.2, proposed 60.8.
+Data center sites in VA: operating 225, proposed 207, construction 13; estimated GW: construction 4.9, operating 14.1, proposed 60.5.
 Planned generation in PJM (EIA-860M 2026-10-05): 26.7 GW, of which gas 7.2 GW; 8.2 GW scheduled to retire 2026-2030.
 
 ## Texas (ERCOT)
@@ -56,7 +56,7 @@ Same months (Jan-Jul): real price 15.81¢ in 2025 vs 16.21¢ in 2026 (**+2.6%**)
 
 Same months (Jan-Jul): real price 12.84¢ in 2025 vs 13.09¢ in 2026 (**+1.9%**); nominal 12.36¢ vs 12.96¢.
 
-Data center sites in TX: operating 164, proposed 102, construction 37; estimated GW: construction 16.6, operating 12.7, proposed 42.6.
+Data center sites in TX: operating 160, proposed 100, construction 37; estimated GW: construction 16.6, operating 12.5, proposed 42.3.
 Planned generation in ERCO (EIA-860M 2026-10-05): 88.4 GW, of which gas 17.4 GW; 1.5 GW scheduled to retire 2026-2030.
 
 ## Maryland (BGE and Pepco)
@@ -115,6 +115,6 @@ Regulated utility in the Southeast; no capacity market. Large-load growth is pla
 
 Same months (Jan-Jul): real price 17.18¢ in 2025 vs 16.86¢ in 2026 (**-1.9%**); nominal 16.53¢ vs 16.70¢.
 
-Data center sites in GA: operating 103, proposed 73, construction 11; estimated GW: construction 4.8, operating 5.0, proposed 29.3.
+Data center sites in GA: operating 94, proposed 69, construction 11; estimated GW: construction 4.8, operating 4.5, proposed 28.7.
 Planned generation in SOCO (EIA-860M 2026-10-05): 8.0 GW, of which gas 3.0 GW; 1.1 GW scheduled to retire 2026-2030.
 
