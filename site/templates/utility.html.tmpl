@@ -11,6 +11,11 @@
 .picker input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--fg); padding: 8px 10px; width: min(460px, 100%); }
 .picker input:focus-visible { outline: 2px solid var(--s1); outline-offset: 1px; }
 .picker .hint { font-size: 13px; color: var(--muted); }
+.quick { display: inline-flex; border: 1px solid var(--fg); }
+.quick button { font: 500 12.5px var(--font-data); background: var(--surface); color: var(--fg); border: 0; border-right: 1px solid var(--fg); padding: 7px 10px; cursor: pointer; }
+.quick button:last-child { border-right: 0; }
+.quick button[aria-pressed="true"] { background: var(--fg); color: var(--surface); }
+.quick button:focus-visible { outline: 2px solid var(--s1); outline-offset: 1px; }
 .summary { border: 1px solid var(--fg); background: var(--surface); max-width: 780px; }
 .stmt-h { display: flex; justify-content: space-between; gap: 6px 14px; flex-wrap: wrap; padding: 8px 14px; background-color: var(--tint);
   background-image: repeating-linear-gradient(135deg, var(--surface) 0 1px, transparent 1px 6px); border-bottom: 1px solid var(--fg); }
@@ -68,9 +73,11 @@
     <input id="q" list="ulist" autocomplete="off" placeholder="Start typing a utility or state">
     <datalist id="ulist"></datalist>
     <span class="hint" id="qhint"></span>
+    <span class="quick" role="group" aria-label="Massachusetts utilities"><button type="button" data-k="11804|MA">National Grid</button><button type="button" data-k="54913|MA">Eversource</button></span>
   </div>
   <section class="summary" id="summary" aria-label="Utility summary"></section>
   <p class="covwarn" id="covwarn" role="note" hidden></p>
+  <p class="covwarn" id="issuewarn" role="note" hidden></p>
   <p class="reading" id="reading"></p>
   <section class="multiples" aria-label="Price, usage, and bill by year">
     <div class="panel" id="p-price"><h2>Price</h2><span class="sub">¢ per kWh, inflation-adjusted</span></div>
@@ -133,6 +140,11 @@ function coverageNote(k, st, name) {
   el.innerHTML = html; el.hidden = !html;
 }
 
+const ISSUES = __ISSUES__;
+function issueNote(k) {
+  const el = document.getElementById("issuewarn"), i = ISSUES.find(d => d.utility_id_eia + "|" + d.state === k);
+  el.innerHTML = i ? `<b>Data under check from ${i.from_period}.</b> ${i.issue}` : ""; el.hidden = !i;
+}
 const TIER = { high: ["High", "--s2"], medium: ["Medium", "--s4"], low: ["Low", "--g2"], none: ["None", "--muted"] };
 const pct = (a, b) => ((b / a - 1) * 100);
 const sgn = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(0) + "%";
@@ -175,7 +187,7 @@ function small(id, rows, acc, fmt, color) {
     .on("pointerleave", () => { tip.hidden = true; cross.style("opacity", 0); dot.style("opacity", 0); });
 }
 
-let current = "19876|VA";
+let current = "11804|MA";  // National Grid (Massachusetts Electric); Eversource is one click away
 function show(k) {
   const rows = byUtil.get(k); if (!rows) return;
   current = k;
@@ -188,7 +200,7 @@ function show(k) {
     [Math.round(last.cust).toLocaleString(), `residential customers on the utility's own supply (${last.year})`],
     [last.ba || "—", "regional grid (balancing authority)"],
     [x ? `${fmtMW(x.mw_op)} · ${fmtMW(x.mw_pipeline)}` : "None listed", "data center load in territory: operating · proposed or under construction"],
-    [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],
+    [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k < 0.1 ? per1k.toFixed(2) : per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],
   ].map(([n, l]) => `<div class="sum"><span class="sum-l">${l}</span><span class="sum-n">${n}</span></div>`).join("");
   coverageNote(k, rows[0].state, last.name);
   const b19 = rows.find(r => r.year === 2019) || rows[0];
@@ -196,7 +208,7 @@ function show(k) {
   const driver = Math.abs(dp) > Math.abs(du) * 1.5 ? "Price, not usage, drove the change." : Math.abs(du) > Math.abs(dp) * 1.5 ? "Usage, more than price, drove the change." : "Price and usage both contributed.";
   document.getElementById("reading").innerHTML = `From ${b19.year} to ${last.year}, after inflation, the average home's annual bill changed <b>${sgn(db)}</b> (to $${Math.round(last.real_bill).toLocaleString()}): price per kWh ${sgn(dp)}, usage per home ${sgn(du)}. ${driver}`;
   small("p-price", rows, d => d.real_price, (v, t) => t ? v.toFixed(0) : v.toFixed(1) + "¢", css("--s1"));
-  small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(0) + "k" : Math.round(v).toLocaleString(), css("--s1"));
+  small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + "k" : Math.round(v).toLocaleString(), css("--s1"));
   small("p-bill", rows, d => d.real_bill, (v, t) => "$" + (t ? Math.round(v) : Math.round(v).toLocaleString()), css("--s1"));
   const rel = (REL.get(k) || []).filter(d => d.saidi != null).sort((a, b) => a.year - b.year);
   const relHost = document.getElementById("p-rel");
@@ -222,9 +234,14 @@ function show(k) {
         <td>${d.usd_per_home_yr_dc_central != null ? "$" + Math.round(d.usd_per_home_yr_dc_central) : "—"}</td></tr>`).join("") + "</tbody>";
   } else capEl.hidden = true;
   try { localStorage.setItem("gi-utility", k); } catch (e) {}
+  if (typeof markQuick === "function") markQuick();
+  issueNote(k);
 }
 
 const input = document.getElementById("q");
+const quick = document.querySelectorAll(".quick button");
+quick.forEach(b => b.addEventListener("click", () => show(b.dataset.k)));
+const markQuick = () => quick.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.k === current)));
 input.addEventListener("change", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
 input.addEventListener("input", () => { const k = byLabel.get(input.value.toLowerCase()); if (k) show(k); });
 // Resident bills: counts and medians only. Live from the endpoint when reachable, else the last pipeline copy.

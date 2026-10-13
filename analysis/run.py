@@ -1,5 +1,5 @@
 """Run analyses after marts are built: capacity cost per household, panel regressions."""
-from analysis import capacity_cost, case_studies, coverage, exports, narrative, panel, reliability
+from analysis import capacity_cost, case_studies, coverage, exports, massachusetts, narrative, panel, reliability
 from transform import tracts
 
 
@@ -11,6 +11,7 @@ def main() -> None:
     print("== reliability"); reliability.run()
     print("== exports"); exports.run()
     print("== coverage"); coverage.run()  # how much of each state's residential customers the monthly data cover
+    print("== massachusetts"); massachusetts.run()  # figures for the Massachusetts sections
     stamp()
     print("== narrative"); narrative.run()  # check every findings statement against this run
 
@@ -30,7 +31,7 @@ def stamp() -> None:
             "capacity_auctions_through": ref.delivery_year.max(), "dc_attribution_through": attributed,
             "isone_auctions_through": ne.delivery_year.max() if len(ne) else None,
             "manual_inputs": "reference/capacity_auctions.csv, reference/context_facts.csv, reference/pjm_utility_zones.csv, reference/isone_utility_zones.csv, reference/state_choice/ (MA DOER), "
-                             "reference/territory_customers.csv, reference/datacenter_pair_decisions.csv"}
+                             "reference/territory_customers.csv, reference/datacenter_pair_decisions.csv, reference/data_issues.csv"}
     (ROOT / "analysis" / "results" / "run.json").write_text(json.dumps(info, indent=2))
     print("analysis stamp:", info["ran_at"], "prices through", info["prices_through"])
 

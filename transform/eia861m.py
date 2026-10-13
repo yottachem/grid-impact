@@ -4,9 +4,10 @@ three header rows, then Year, Month, Utility Number, Name, State, Ownership, Dat
 followed by (revenue k$, sales MWh, customers) for five sectors."""
 import glob
 
+import numpy as np
 import pandas as pd
 
-from transform.common import RAW, STAGED, write
+from transform.common import RAW, ROOT, STAGED, write
 
 SECTORS = ["res", "com", "ind", "trans", "total"]
 COLS = ["year", "month", "utility_id_eia", "utility_name", "state", "ownership", "data_status"] + [
@@ -42,7 +43,25 @@ def build() -> pd.DataFrame:
     df.loc[cust, "res_bill_usd"] = df.loc[cust, "res_revenue_kusd"] * 1000 / df.loc[cust, "res_customers"]
     df.loc[cust, "res_kwh_per_customer"] = df.loc[cust, "res_sales_mwh"] * 1000 / df.loc[cust, "res_customers"]
     df = df.drop_duplicates(["utility_id_eia", "state", "period", "ownership"], keep="last")
+    df = apply_issues(df)
     return df.sort_values(["state", "utility_id_eia", "period"]).reset_index(drop=True)
+
+
+def apply_issues(df: pd.DataFrame) -> pd.DataFrame:
+    """Blank figures listed in reference/data_issues.csv (reported values that cannot be right, with evidence),
+    so no price, bill, or statement uses them; customers and sales stay."""
+    path = ROOT / "reference" / "data_issues.csv"
+    df["data_issue"] = None
+    if not path.exists():
+        return df
+    for r in pd.read_csv(path, dtype=str).itertuples():
+        hit = (df.utility_id_eia == int(r.utility_id_eia)) & (df.state == r.state) & (df.period >= pd.Timestamp(r.from_period))
+        if isinstance(r.to_period, str) and r.to_period:
+            hit &= df.period <= pd.Timestamp(r.to_period)
+        if "res_revenue_kusd" in r.fields:
+            df.loc[hit, ["res_revenue_kusd", "res_price_cents_kwh", "res_bill_usd"]] = np.nan
+        df.loc[hit, "data_issue"] = r.issue
+    return df
 
 
 def run() -> None:

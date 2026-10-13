@@ -63,7 +63,7 @@ def utilities() -> None:
     m = pd.read_parquet(MARTS / "utility_month.parquet")
     m = m[m.res_customers > 0]
     a = m.groupby(["utility_id_eia", "state", "year"]).agg(
-        name=("utility_name", "last"), months=("month", "nunique"), rev=("res_revenue_kusd", "sum"),
+        name=("utility_name", "last"), months=("res_revenue_kusd", "count"), rev=("res_revenue_kusd", "sum"),
         real_rev=("res_price_real_cents_kwh", lambda s: np.nan), mwh=("res_sales_mwh", "sum"),
         cust=("res_customers", "mean"), tier=("exposure_tier", "last"), ba=("balancing_authority", "last")).reset_index()
     real = m.assign(rr=m.res_revenue_kusd / m.deflator).groupby(["utility_id_eia", "state", "year"]).rr.sum()

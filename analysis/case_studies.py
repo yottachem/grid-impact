@@ -53,7 +53,7 @@ def annual(m: pd.DataFrame, uid: int, state: str) -> pd.DataFrame:
     u = m[(m.utility_id_eia == uid) & (m.state == state)].copy()
     u = add_real_price(u)
     u["real_rev"] = u.res_revenue_kusd / u.deflator
-    g = u.groupby("year").agg(months=("month", "nunique"), rev=("res_revenue_kusd", "sum"), real_rev=("real_rev", "sum"),
+    g = u.groupby("year").agg(months=("res_revenue_kusd", "count"), rev=("res_revenue_kusd", "sum"), real_rev=("real_rev", "sum"),
                               mwh=("res_sales_mwh", "sum"), cust=("res_customers", "mean"), com=("com_sales_mwh", "sum"),
                               through=("period", "max"))
     g["price_cents"] = g.rev * 100 / g.mwh

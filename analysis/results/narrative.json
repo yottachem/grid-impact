@@ -1,19 +1,273 @@
 {
-  "run_date": "2026-10-09",
+  "run_date": "2026-10-13",
   "prices_through": "2026-07",
   "data_checks_failed": {},
   "claims": {
     "headline": {
       "status": "ok",
-      "html": "Data centers raise power bills through the regional market, not the utility next door",
-      "text": "Data centers raise power bills through the regional market, not the utility next door",
+      "html": "Massachusetts power bills are high, but data centers aren&#x27;t why. In PJM, they are.",
+      "text": "Massachusetts power bills are high, but data centers aren't why. In PJM, they are.",
+      "reason": null,
+      "refs": [
+        "ieefa-2025-pjm-capacity",
+        "imm-2025-bra-2025-26-part-g"
+      ],
+      "where": "findings",
+      "values": {
+        "cap.increase": 195.94,
+        "fact.imm_dc_share_of_increase_2025_26": 63.0,
+        "isne.latest_lo": 3.3499812421309505,
+        "ma.cap.first": 245.28,
+        "ma.cap.latest": 83.82,
+        "ma.dc.pipeline_mw": 300
+      }
+    },
+    "lede_ma": {
+      "status": "ok",
+      "html": "Measured from 2020, New England&#x27;s residential prices after inflation rose 22% more than the rest of the US outside PJM by 2023, and were still 10% ahead in 2026. Data centers are not the reason: Massachusetts has 67 MW of them operating and 300 MW proposed, and the capacity charge in a typical Massachusetts home&#x27;s bill fell from $245 a year in 2018/19 to $84 for 2027/28.",
+      "text": "Measured from 2020, New England's residential prices after inflation rose 22% more than the rest of the US outside PJM by 2023, and were still 10% ahead in 2026. Data centers are not the reason: Massachusetts has 67 MW of them operating and 300 MW proposed, and the capacity charge in a typical Massachusetts home's bill fell from $245 a year in 2018/19 to $84 for 2027/28.",
       "reason": null,
       "refs": [],
       "where": "findings",
       "values": {
+        "isne.latest": 10.04582653107946,
+        "isne.latest_lo": 3.3499812421309505,
+        "isne.latest_year": 2026,
+        "isne.y2023": 21.976417850732854,
+        "ma.cap.first": 245.28,
+        "ma.cap.first_dy": "2018/19",
+        "ma.cap.latest": 83.82,
+        "ma.cap.latest_dy": "2027/28",
+        "ma.dc.op_mw": 67,
+        "ma.dc.pipeline_mw": 300
+      }
+    },
+    "lede_contrast": {
+      "status": "ok",
+      "html": "PJM, the grid operator for 13 states and DC from New Jersey to Illinois, shows what it looks like when data centers do drive the market: a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state <strong>about $196 a year more</strong> than in 2024/25. For 2027/28, the same charge is $242 there against $84 in Massachusetts.",
+      "text": "PJM, the grid operator for 13 states and DC from New Jersey to Illinois, shows what it looks like when data centers do drive the market: a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state about $196 a year more than in 2024/25. For 2027/28, the same charge is $242 there against $84 in Massachusetts.",
+      "reason": null,
+      "refs": [
+        "imm-2026-som-2025",
+        "ieefa-2025-pjm-capacity",
+        "imm-2025-bra-2025-26-part-g"
+      ],
+      "where": "findings",
+      "values": {
         "cap.increase": 195.94,
-        "local.lo40": -1.505360056357885,
-        "pjm.latest_lo": 10.957758452167464
+        "cap.latest": 241.64,
+        "cap.latest_dy": "2028/29",
+        "cap.y2024_25.central": 45.7,
+        "fact.imm_dc_share_of_increase_2025_26": 63.0,
+        "fact.pjm_states": 13.0,
+        "ma.cap.latest": 83.82,
+        "ma.cap.latest_dy": "2027/28",
+        "ma.cap.pjm_same_dy": 241.64
+      }
+    },
+    "fig_ma1": {
+      "status": "ok",
+      "html": "capacity charge per year, typical Massachusetts home, 2027/28 (down from $245 in 2018/19)",
+      "text": "capacity charge per year, typical Massachusetts home, 2027/28 (down from $245 in 2018/19)",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "ma.cap.first": 245.28,
+        "ma.cap.first_dy": "2018/19",
+        "ma.cap.latest": 83.82,
+        "ma.cap.latest_dy": "2027/28"
+      },
+      "value": "$84"
+    },
+    "fig_ma2": {
+      "status": "ok",
+      "html": "New England residential price vs. rest of US outside PJM in 2026, after inflation (2020 baseline)",
+      "text": "New England residential price vs. rest of US outside PJM in 2026, after inflation (2020 baseline)",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "isne.latest": 10.04582653107946,
+        "isne.latest_year": 2026
+      },
+      "value": "+10.0%"
+    },
+    "fig_ma3": {
+      "status": "ok",
+      "html": "of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation (June 2026)",
+      "text": "of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation (June 2026)",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "ma.comp.period": "2026-06",
+        "ma.comp.share": 75.8
+      },
+      "value": "76%"
+    },
+    "fig_ma4": {
+      "status": "ok",
+      "html": "of data centers operating in Massachusetts; 300 MW proposed or under construction",
+      "text": "of data centers operating in Massachusetts; 300 MW proposed or under construction",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "ma.dc.op_mw": 67,
+        "ma.dc.pipeline_mw": 300
+      },
+      "value": "67 MW"
+    },
+    "ma_cap_reading": {
+      "status": "ok",
+      "html": "The capacity charge pays power plants to be available at peak, and in Massachusetts basic service passes ISO New England&#x27;s auction price straight through. For a typical home it fell from $245 a year in 2018/19 to $52 in 2023/24, then $102, $64, and $84 for 2027/28. New England&#x27;s auctions have little data center demand behind them: 0.7 GW planned or under construction across the region, against 132 GW in PJM.",
+      "text": "The capacity charge pays power plants to be available at peak, and in Massachusetts basic service passes ISO New England's auction price straight through. For a typical home it fell from $245 a year in 2018/19 to $52 in 2023/24, then $102, $64, and $84 for 2027/28. New England's auctions have little data center demand behind them: 0.7 GW planned or under construction across the region, against 132 GW in PJM.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "dc.ne_pipeline_gw": 0.66949,
+        "dc.ne_pipeline_per_1k": 0.12276822553162461,
+        "dc.pjm_pipeline_gw": 132.46079999999998,
+        "dc.pjm_pipeline_per_1k": 5.294687808569291,
+        "ma.cap.first": 245.28,
+        "ma.cap.first_dy": "2018/19",
+        "ma.cap.latest": 83.82,
+        "ma.cap.latest_dy": "2027/28",
+        "ma.cap.min": 52.01,
+        "ma.cap.min_dy": "2023/24",
+        "ma.cap.y2024_25": 102.2,
+        "ma.cap.y2025_26": 64.03
+      }
+    },
+    "ma_cap_note": {
+      "status": "ok",
+      "html": "Massachusetts: median of the default-service utilities (National Grid&#x27;s Massachusetts Electric and Nantucket Electric, Eversource, Unitil), from ISO New England Forward Capacity Auction prices for their zones; ISO New England&#x27;s next auction is due in 2028. Other markets use the same method; see the comparison section below. Delivery years run June to May.",
+      "text": "Massachusetts: median of the default-service utilities (National Grid's Massachusetts Electric and Nantucket Electric, Eversource, Unitil), from ISO New England Forward Capacity Auction prices for their zones; ISO New England's next auction is due in 2028. Other markets use the same method; see the comparison section below. Delivery years run June to May.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "fact.isone_next_auction": 2028.0
+      }
+    },
+    "ne_reading": {
+      "status": "ok",
+      "html": "New England prices tracked the rest of the country outside PJM in 2021, then rose 8.2% more in 2022 and 22.0% more in 2023, measured from 2020, and were still 10.0% above in 2026. Capacity charges fell over the same years ($118 to $52 per Massachusetts home), so the rise did not come through the capacity auction, the channel that carries data center costs in PJM.",
+      "text": "New England prices tracked the rest of the country outside PJM in 2021, then rose 8.2% more in 2022 and 22.0% more in 2023, measured from 2020, and were still 10.0% above in 2026. Capacity charges fell over the same years ($118 to $52 per Massachusetts home), so the rise did not come through the capacity auction, the channel that carries data center costs in PJM.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "isne.latest": 10.04582653107946,
+        "isne.latest_hi": 17.175482678962673,
+        "isne.latest_lo": 3.3499812421309505,
+        "isne.latest_year": 2026,
+        "isne.y2021_hi": 0.7405541032057927,
+        "isne.y2021_lo": -2.1902905041742637,
+        "isne.y2022": 8.150985926492682,
+        "isne.y2023": 21.976417850732854,
+        "ma.cap.y2021_22": 117.67,
+        "ma.cap.y2023_24": 52.01
+      }
+    },
+    "ne_note": {
+      "status": "ok",
+      "html": "Same regression as the PJM comparison below (utility and month fixed effects, weather controls, standard errors clustered by utility), with New England utilities compared against the rest of the US outside PJM, so PJM&#x27;s own rise does not set the baseline. 2026 covers January to July.",
+      "text": "Same regression as the PJM comparison below (utility and month fixed effects, weather controls, standard errors clustered by utility), with New England utilities compared against the rest of the US outside PJM, so PJM's own rise does not set the baseline. 2026 covers January to July.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "isne.latest_year": 2026,
+        "run.latest_months": "January to July"
+      }
+    },
+    "ma_price_reading": {
+      "status": "ok",
+      "html": "National Grid&#x27;s price after inflation peaked at 41.0\u00a2 per kWh in 2023 and was 33.0\u00a2 in 2025. Eversource&#x27;s was 32.3\u00a2 in 2024; its EIA figures from March 2025 on are under check and left out. Massachusetts&#x27; municipal utilities charged 16.5\u00a2, about half, and the New England average was 27.6\u00a2 against 16.7\u00a2 nationally.",
+      "text": "National Grid's price after inflation peaked at 41.0\u00a2 per kWh in 2023 and was 33.0\u00a2 in 2025. Eversource's was 32.3\u00a2 in 2024; its EIA figures from March 2025 on are under check and left out. Massachusetts' municipal utilities charged 16.5\u00a2, about half, and the New England average was 27.6\u00a2 against 16.7\u00a2 nationally.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "ma.price.ev.last": 32.32,
+        "ma.price.ev.last_year": 2024,
+        "ma.price.issue_from": "2025-03",
+        "ma.price.issue_utility": "Eversource",
+        "ma.price.muni.last": 16.46,
+        "ma.price.ne.last": 27.59,
+        "ma.price.ng.last": 33.05,
+        "ma.price.ng.last_year": 2025,
+        "ma.price.ng.max": 41.01,
+        "ma.price.ng.max_year": 2023,
+        "ma.price.us.last": 16.73
+      }
+    },
+    "ma_price_note": {
+      "status": "ok",
+      "html": "Residential revenue per kWh from EIA&#x27;s monthly survey, full calendar years, in dollars of July 2026 (Northeast CPI). Utility figures cover homes on the utility&#x27;s own (basic) supply. Municipal utilities are combined, weighted by sales.",
+      "text": "Residential revenue per kWh from EIA's monthly survey, full calendar years, in dollars of July 2026 (Northeast CPI). Utility figures cover homes on the utility's own (basic) supply. Municipal utilities are combined, weighted by sales.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "run.prices_through": "2026-07"
+      }
+    },
+    "ma_supply_reading": {
+      "status": "ok",
+      "html": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town&#x27;s aggregation program (55% through towns, 21% individually), as of June 2026. On EIA&#x27;s statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays.",
+      "text": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program (55% through towns, 21% individually), as of June 2026. On EIA's statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "ma.comp.agg_share": 54.6,
+        "ma.comp.individual_share": 21.199999999999996,
+        "ma.comp.period": "2026-06",
+        "ma.comp.share": 75.8,
+        "ma.supply.first_year": 2015,
+        "ma.supply.last_basic": 15.84,
+        "ma.supply.last_supplier": 15.59,
+        "ma.supply.last_year": 2024,
+        "ma.supply.n_years": 10,
+        "ma.supply.net_musd": -105.0,
+        "ma.supply.spike_basic": 17.41,
+        "ma.supply.spike_supplier": 15.15,
+        "ma.supply.spike_year": 2023,
+        "ma.supply.years_higher": 5,
+        "ma.supply.years_lower": 3
+      }
+    },
+    "ma_supply_note": {
+      "status": "ok",
+      "html": "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities&#x27; full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA&#x27;s file are left out.",
+      "text": "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities' full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA's file are left out.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {}
+    },
+    "ma_dc_reading": {
+      "status": "ok",
+      "html": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline.",
+      "text": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline.",
+      "reason": null,
+      "refs": [],
+      "where": "findings",
+      "values": {
+        "dc.pjm_pipeline_gw": 132.46079999999998,
+        "ma.dc.largest": "Servistar Data Center",
+        "ma.dc.largest_county": "Hampden",
+        "ma.dc.largest_mw": 300,
+        "ma.dc.largest_status": "proposed",
+        "ma.dc.n": 25,
+        "ma.dc.op_mw": 67,
+        "ma.dc.pipeline_mw": 300,
+        "ne.dc.op_mw": 137,
+        "ne.dc.pipeline_mw": 669
       }
     },
     "lede_intro": {
@@ -36,9 +290,9 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "local.hi40": -0.23049525639687873,
-        "local.lo40": -1.505360056357885,
-        "local.pct40": -0.8699770650854477
+        "local.hi40": -0.3298652199463237,
+        "local.lo40": -1.5947547378460825,
+        "local.pct40": -0.9643293638947448
       }
     },
     "lede_regional": {
@@ -95,10 +349,10 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "pjm.latest": 15.715686451281696,
+        "pjm.latest": 15.524822544830563,
         "pjm.latest_year": 2026
       },
-      "value": "+15.7%"
+      "value": "+15.5%"
     },
     "fig4": {
       "status": "ok",
@@ -108,9 +362,9 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "local.pct40": -0.8699770650854477
+        "local.pct40": -0.9643293638947448
       },
-      "value": "\u22120.9%"
+      "value": "\u22121.0%"
     },
     "c1_reading": {
       "status": "ok",
@@ -220,22 +474,22 @@
     },
     "c2_reading": {
       "status": "ok",
-      "html": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.7% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
-      "text": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.7% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
+      "html": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.5% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
+      "text": "PJM prices tracked the rest of the country through 2021. The gap opened in 2022 (+3.3%), jumped in 2023 (+11.1%), and widened to +15.5% in 2026 as capacity costs reached bills. The confidence band excludes zero from 2022 on.",
       "reason": null,
       "refs": [],
       "where": "findings",
       "values": {
-        "pjm.first_sig": 3.3466253237579124,
+        "pjm.first_sig": 3.3453602795653348,
         "pjm.first_sig_year": 2022,
-        "pjm.latest": 15.715686451281696,
-        "pjm.latest_hi": 20.67763694652911,
-        "pjm.latest_lo": 10.957758452167464,
+        "pjm.latest": 15.524822544830563,
+        "pjm.latest_hi": 20.468949563751913,
+        "pjm.latest_lo": 10.783605836555644,
         "pjm.latest_year": 2026,
-        "pjm.max_before_latest": 12.748270032175402,
-        "pjm.y2022": 3.3466253237579124,
-        "pjm.y2023": 11.087486330356231,
-        "pjm.y2025": 12.748270032175402
+        "pjm.max_before_latest": 12.625703129069452,
+        "pjm.y2022": 3.3453602795653348,
+        "pjm.y2023": 11.086507121765177,
+        "pjm.y2025": 12.625703129069452
       }
     },
     "c2_note": {
@@ -293,8 +547,8 @@
     },
     "local_note": {
       "status": "ok",
-      "html": "<strong>What doesn&#x27;t explain it.</strong> Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22120.9% change in residential price (95% CI \u22121.5% to \u22120.2%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
-      "text": "What doesn't explain it. Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22120.9% change in residential price (95% CI \u22121.5% to \u22120.2%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
+      "html": "<strong>What doesn&#x27;t explain it.</strong> Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22121.0% change in residential price (95% CI \u22121.6% to \u22120.3%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
+      "text": "What doesn't explain it. Comparing each utility with others in its own regional market and month, a 40% rise in its own commercial load goes with a \u22121.0% change in residential price (95% CI \u22121.6% to \u22120.3%). More sales spread fixed costs. The burden comes from regional supply shortfalls and how each market passes them through.",
       "reason": null,
       "refs": [
         "epri-2026-dc-rates",
@@ -302,10 +556,10 @@
       ],
       "where": "findings",
       "values": {
-        "local.hi40": -0.23049525639687873,
-        "local.lo40": -1.505360056357885,
-        "local.pct40": -0.8699770650854477,
-        "pjm.latest_lo": 10.957758452167464
+        "local.hi40": -0.3298652199463237,
+        "local.lo40": -1.5947547378460825,
+        "local.pct40": -0.9643293638947448,
+        "pjm.latest_lo": 10.783605836555644
       }
     },
     "local_benchmark": {
@@ -319,7 +573,7 @@
       "where": "findings",
       "values": {
         "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
-        "local.hi40": -0.23049525639687873
+        "local.hi40": -0.3298652199463237
       }
     },
     "rel_utility": {
@@ -330,13 +584,13 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.med.pct": -4.574560912045911,
+        "rel.med.pct": -4.574560912045412,
         "rel.n_units": 1339,
-        "rel.saidi.hi": 0.32139353269300397,
-        "rel.saidi.lo": -4.848154167497687,
-        "rel.saidi.pct": -2.297565172997873,
-        "rel.saifi.lo": -4.462883115886673,
-        "rel.saifi.pct": -1.841296268275483,
+        "rel.saidi.hi": 0.3213934486601344,
+        "rel.saidi.lo": -4.848154087791712,
+        "rel.saidi.pct": -2.2975651729961633,
+        "rel.saifi.lo": -4.462883087529046,
+        "rel.saifi.pct": -1.84129626827364,
         "rel.years": "2013-2025"
       }
     },
@@ -348,9 +602,9 @@
       "refs": [],
       "where": "findings",
       "values": {
-        "rel.county.last": -12.404851788644667,
+        "rel.county.last": -12.404851788643967,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -18.325844765266307,
+        "rel.county.max_lo": -18.325844744170173,
         "rel.county.n_high": 31
       }
     },
@@ -377,8 +631,8 @@
       "where": "findings",
       "values": {
         "pjm.first_sig_year": 2022,
-        "pjm.latest": 15.715686451281696,
-        "pjm.y2024": 11.126792703232958
+        "pjm.latest": 15.524822544830563,
+        "pjm.y2024": 11.125642973500538
       }
     },
     "caveat_upper_bound": {
@@ -528,8 +782,8 @@
     },
     "m_local": {
       "status": "ok",
-      "html": "<strong>Local load:</strong> comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a <strong>0.9% lower</strong> residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
-      "text": "Local load: comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a 0.9% lower residential price (95% CI 0.2% to 1.5% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
+      "html": "<strong>Local load:</strong> comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a <strong>1.0% lower</strong> residential price (95% CI 0.3% to 1.6% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
+      "text": "Local load: comparing each utility only with others in the same regional grid in the same month, a 40% rise in its own commercial load goes with a 1.0% lower residential price (95% CI 0.3% to 1.6% lower). Local load growth has not raised local residential prices relative to regional peers; more sales spread fixed costs.",
       "reason": null,
       "refs": [
         "epri-2026-dc-rates",
@@ -537,9 +791,9 @@
       ],
       "where": "methods",
       "values": {
-        "local.hi40": -0.23049525639687873,
-        "local.lo40": -1.505360056357885,
-        "local.pct40": -0.8699770650854477
+        "local.hi40": -0.3298652199463237,
+        "local.lo40": -1.5947547378460825,
+        "local.pct40": -0.9643293638947448
       }
     },
     "m_local_benchmark": {
@@ -553,7 +807,7 @@
       "where": "methods",
       "values": {
         "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
-        "local.hi40": -0.23049525639687873
+        "local.hi40": -0.3298652199463237
       }
     },
     "m_coverage": {
@@ -571,20 +825,20 @@
     },
     "m_pjm": {
       "status": "ok",
-      "html": "<strong>PJM vs. the rest of the US</strong> (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.7% in 2025, +15.7% in 2026. The gap opened <strong>before</strong> capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
-      "text": "PJM vs. the rest of the US (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.7% in 2025, +15.7% in 2026. The gap opened before capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
+      "html": "<strong>PJM vs. the rest of the US</strong> (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.6% in 2025, +15.5% in 2026. The gap opened <strong>before</strong> capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
+      "text": "PJM vs. the rest of the US (2020 = 0): no difference from 2017 to 2021; +3.3% in 2022, +11.1% in 2023, +11.1% in 2024, +12.6% in 2025, +15.5% in 2026. The gap opened before capacity prices spiked, consistent with 2022 natural gas prices being locked into default-supply contracts, and widened as capacity costs reached bills from mid-2025.",
       "reason": null,
       "refs": [],
       "where": "methods",
       "values": {
         "pjm.first_sig_year": 2022,
-        "pjm.latest": 15.715686451281696,
+        "pjm.latest": 15.524822544830563,
         "pjm.latest_year": 2026,
-        "pjm.max_before_latest": 12.748270032175402,
-        "pjm.y2022": 3.3466253237579124,
-        "pjm.y2023": 11.087486330356231,
-        "pjm.y2024": 11.126792703232958,
-        "pjm.y2025": 12.748270032175402
+        "pjm.max_before_latest": 12.625703129069452,
+        "pjm.y2022": 3.3453602795653348,
+        "pjm.y2023": 11.086507121765177,
+        "pjm.y2024": 11.125642973500538,
+        "pjm.y2025": 12.625703129069452
       }
     },
     "m_pjm_restructured": {
@@ -607,17 +861,17 @@
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.ieee.hi": 2.9005608300142427,
-        "rel.ieee.lo": -4.108306693834251,
-        "rel.ieee.pct": -0.6656704852537998,
-        "rel.med.hi": -1.5544562096819203,
-        "rel.med.lo": -7.50201507826509,
-        "rel.med.pct": -4.574560912045911,
-        "rel.saidi.hi": 0.32139353269300397,
-        "rel.saidi.lo": -4.848154167497687,
-        "rel.saidi.pct": -2.297565172997873,
-        "rel.saifi.lo": -4.462883115886673,
-        "rel.saifi.pct": -1.841296268275483
+        "rel.ieee.hi": 2.900560844385769,
+        "rel.ieee.lo": -4.108306707231879,
+        "rel.ieee.pct": -0.6656704852563755,
+        "rel.med.hi": -1.554456200672194,
+        "rel.med.lo": -7.502015086729507,
+        "rel.med.pct": -4.574560912045412,
+        "rel.saidi.hi": 0.3213934486601344,
+        "rel.saidi.lo": -4.848154087791712,
+        "rel.saidi.pct": -2.2975651729961633,
+        "rel.saifi.lo": -4.462883087529046,
+        "rel.saifi.pct": -1.84129626827364
       }
     },
     "m_rel_county": {
@@ -628,12 +882,12 @@
       "refs": [],
       "where": "methods",
       "values": {
-        "rel.county.last": -12.404851788644667,
+        "rel.county.last": -12.404851788643967,
         "rel.county.last_year": 2025,
-        "rel.county.max_lo": -18.325844765266307,
+        "rel.county.max_lo": -18.325844744170173,
         "rel.county.n_high": 31,
         "rel.county.threshold": 10,
-        "rel.county.y2024": -35.84365990344399
+        "rel.county.y2024": -35.84365990344377
       }
     },
     "m_case_dominion": {
@@ -697,58 +951,58 @@
   },
   "flagged": [],
   "values": {
-    "run.date": "2026-10-09",
+    "run.date": "2026-10-13",
     "run.prices_through": "2026-07",
     "run.auctions_through": "2028/29",
     "run.dc_attribution_through": "2027/28",
     "run.latest_months": "January to July",
-    "local.pct40": -0.8699770650854477,
-    "local.lo40": -1.505360056357885,
-    "local.hi40": -0.23049525639687873,
-    "local.p": 0.007897750418010663,
+    "local.pct40": -0.9643293638947448,
+    "local.lo40": -1.5947547378460825,
+    "local.hi40": -0.3298652199463237,
+    "local.p": 0.00305465253673054,
     "local.n_units": 326,
-    "pjm.y2015": 2.4354321521718125,
-    "pjm.y2015_lo": -0.997371047253226,
-    "pjm.y2015_hi": 5.987263885794736,
-    "pjm.y2016": 2.604076813691014,
-    "pjm.y2016_lo": -0.2320165013674491,
-    "pjm.y2016_hi": 5.520791436404049,
-    "pjm.y2017": 0.3305603373034094,
-    "pjm.y2017_lo": -2.1690522704549298,
-    "pjm.y2017_hi": 2.894038862073378,
-    "pjm.y2018": -0.0310235452806173,
-    "pjm.y2018_lo": -1.8106943734400136,
-    "pjm.y2018_hi": 1.7809036292944391,
-    "pjm.y2019": -0.3982969085771559,
-    "pjm.y2019_lo": -1.6852322880171466,
-    "pjm.y2019_hi": 0.905484390447442,
-    "pjm.y2021": -1.0970965804942057,
-    "pjm.y2021_lo": -2.602563530437496,
-    "pjm.y2021_hi": 0.4316402913230321,
-    "pjm.y2022": 3.3466253237579124,
-    "pjm.y2022_lo": 0.244006179173839,
-    "pjm.y2022_hi": 6.545272609307684,
-    "pjm.y2023": 11.087486330356231,
-    "pjm.y2023_lo": 6.933430145605879,
-    "pjm.y2023_hi": 15.40291564942542,
-    "pjm.y2024": 11.126792703232958,
-    "pjm.y2024_lo": 7.546074846668316,
-    "pjm.y2024_hi": 14.826729605091437,
-    "pjm.y2025": 12.748270032175402,
-    "pjm.y2025_lo": 8.910376316652279,
-    "pjm.y2025_hi": 16.7214073183279,
-    "pjm.y2026": 15.715686451281696,
-    "pjm.y2026_lo": 10.957758452167464,
-    "pjm.y2026_hi": 20.67763694652911,
+    "pjm.y2015": 2.4331737777720353,
+    "pjm.y2015_lo": -0.9994641133138972,
+    "pjm.y2015_hi": 5.98483125583078,
+    "pjm.y2016": 2.6032023368091517,
+    "pjm.y2016_lo": -0.2327448825046874,
+    "pjm.y2016_hi": 5.519763146436385,
+    "pjm.y2017": 0.3295376262351102,
+    "pjm.y2017_lo": -2.169975191921991,
+    "pjm.y2017_hi": 2.8929118646503493,
+    "pjm.y2018": -0.0309830999814075,
+    "pjm.y2018_lo": -1.8105934890004336,
+    "pjm.y2018_hi": 1.7808814114449012,
+    "pjm.y2019": -0.3958212882317569,
+    "pjm.y2019_lo": -1.6827639545702544,
+    "pjm.y2019_hi": 0.9079670655269824,
+    "pjm.y2021": -1.0979656679830363,
+    "pjm.y2021_lo": -2.603468215835014,
+    "pjm.y2021_hi": 0.4308081183829637,
+    "pjm.y2022": 3.3453602795653348,
+    "pjm.y2022_lo": 0.2426577530630469,
+    "pjm.y2022_hi": 6.544097400358595,
+    "pjm.y2023": 11.086507121765177,
+    "pjm.y2023_lo": 6.932421249984766,
+    "pjm.y2023_hi": 15.401969956943695,
+    "pjm.y2024": 11.125642973500538,
+    "pjm.y2024_lo": 7.544782765500546,
+    "pjm.y2024_hi": 14.825733138542674,
+    "pjm.y2025": 12.625703129069452,
+    "pjm.y2025_lo": 8.79490549609525,
+    "pjm.y2025_hi": 16.59138768931183,
+    "pjm.y2026": 15.524822544830563,
+    "pjm.y2026_lo": 10.783605836555644,
+    "pjm.y2026_hi": 20.468949563751913,
     "pjm.latest_year": 2026,
-    "pjm.latest": 15.715686451281696,
-    "pjm.latest_lo": 10.957758452167464,
-    "pjm.latest_hi": 20.67763694652911,
+    "pjm.latest": 15.524822544830563,
+    "pjm.latest_lo": 10.783605836555644,
+    "pjm.latest_hi": 20.468949563751913,
     "pjm.pre_null": true,
     "pjm.null_through_2021": true,
     "pjm.first_sig_year": 2022,
-    "pjm.first_sig": 3.3466253237579124,
-    "pjm.max_before_latest": 12.748270032175402,
+    "pjm.first_sig": 3.3453602795653348,
+    "pjm.max_before_latest": 12.625703129069452,
     "pjmr.y2015": 14.173710105925874,
     "pjmr.y2015_lo": 7.052892845921432,
     "pjmr.y2015_hi": 21.76818143638459,
@@ -791,6 +1045,48 @@
     "pjmr.first_sig_year": 2023,
     "pjmr.first_sig": 8.728929653712015,
     "pjmr.max_before_latest": 14.173710105925874,
+    "isne.y2015": -2.1066311932394277,
+    "isne.y2015_lo": -5.480771528446649,
+    "isne.y2015_hi": 1.387958950813828,
+    "isne.y2016": -5.442008259377429,
+    "isne.y2016_lo": -9.083636092446511,
+    "isne.y2016_hi": -1.6545161098683758,
+    "isne.y2017": -5.310635094314476,
+    "isne.y2017_lo": -8.737208321291522,
+    "isne.y2017_hi": -1.755406981114227,
+    "isne.y2018": 0.0559815468108126,
+    "isne.y2018_lo": -2.6425037862793377,
+    "isne.y2018_hi": 2.829261563167229,
+    "isne.y2019": 1.0446022015614842,
+    "isne.y2019_lo": -1.5473322621213037,
+    "isne.y2019_hi": 3.704773762505198,
+    "isne.y2021": -0.7356845020171643,
+    "isne.y2021_lo": -2.1902905041742637,
+    "isne.y2021_hi": 0.7405541032057927,
+    "isne.y2022": 8.150985926492682,
+    "isne.y2022_lo": 0.9717025040467232,
+    "isne.y2022_hi": 15.840730291772998,
+    "isne.y2023": 21.976417850732854,
+    "isne.y2023_lo": 13.25930863932423,
+    "isne.y2023_hi": 31.364447571162145,
+    "isne.y2024": 11.41849199405831,
+    "isne.y2024_lo": 6.102745934101805,
+    "isne.y2024_hi": 17.000556855900427,
+    "isne.y2025": 9.354547858331165,
+    "isne.y2025_lo": 3.2973370489748355,
+    "isne.y2025_hi": 15.766945004887912,
+    "isne.y2026": 10.04582653107946,
+    "isne.y2026_lo": 3.3499812421309505,
+    "isne.y2026_hi": 17.175482678962673,
+    "isne.latest_year": 2026,
+    "isne.latest": 10.04582653107946,
+    "isne.latest_lo": 3.3499812421309505,
+    "isne.latest_hi": 17.175482678962673,
+    "isne.pre_null": false,
+    "isne.null_through_2021": false,
+    "isne.first_sig_year": 2022,
+    "isne.first_sig": 8.150985926492682,
+    "isne.max_before_latest": 21.976417850732854,
     "cap.y2018_19.central": 160.61,
     "cap.y2018_19.low": 133.84,
     "cap.y2018_19.high": 187.38,
@@ -973,6 +1269,92 @@
     "dc.miso_pipeline_per_1k": 2.887171800223164,
     "dc.ny_pipeline_gw": 2.4968999999999997,
     "dc.ny_pipeline_per_1k": 0.3610642872006187,
+    "ma.cap.y2018_19": 245.28,
+    "ma.cap.y2019_20": 180.16,
+    "ma.cap.y2020_21": 140.1,
+    "ma.cap.y2021_22": 117.67,
+    "ma.cap.y2022_23": 96.6,
+    "ma.cap.y2023_24": 52.01,
+    "ma.cap.y2024_25": 102.2,
+    "ma.cap.y2025_26": 64.03,
+    "ma.cap.y2026_27": 59.78,
+    "ma.cap.y2027_28": 83.82,
+    "ma.cap.first_dy": "2018/19",
+    "ma.cap.first": 245.28,
+    "ma.cap.latest_dy": "2027/28",
+    "ma.cap.latest": 83.82,
+    "ma.cap.min": 52.01,
+    "ma.cap.min_dy": "2023/24",
+    "ma.cap.max": 245.28,
+    "ma.cap.change": -161.46,
+    "ma.cap.prev": 59.78,
+    "ma.cap.pjm_same_dy": 241.64,
+    "ma.price.ng.last_year": 2025,
+    "ma.price.ng.last": 33.05,
+    "ma.price.ng.last_bill": 1929,
+    "ma.price.ng.y2019": 30.97,
+    "ma.price.ng.max": 41.01,
+    "ma.price.ng.max_year": 2023,
+    "ma.price.ev.last_year": 2024,
+    "ma.price.ev.last": 32.32,
+    "ma.price.ev.last_bill": 1776,
+    "ma.price.ev.y2019": 29.28,
+    "ma.price.ev.max": 33.89,
+    "ma.price.ev.max_year": 2022,
+    "ma.price.un.last_year": 2025,
+    "ma.price.un.last": 35.76,
+    "ma.price.un.last_bill": 1945,
+    "ma.price.un.y2019": 32.51,
+    "ma.price.un.max": 43.26,
+    "ma.price.un.max_year": 2024,
+    "ma.price.muni.last_year": 2025,
+    "ma.price.muni.last": 16.46,
+    "ma.price.muni.last_bill": 1545,
+    "ma.price.muni.y2019": 19.01,
+    "ma.price.muni.max": 20.17,
+    "ma.price.muni.max_year": 2018,
+    "ma.price.ne.last_year": 2025,
+    "ma.price.ne.last": 27.59,
+    "ma.price.ne.last_bill": 1954,
+    "ma.price.ne.y2019": 27.24,
+    "ma.price.ne.max": 33.09,
+    "ma.price.ne.max_year": 2023,
+    "ma.price.us.last_year": 2025,
+    "ma.price.us.last": 16.73,
+    "ma.price.us.last_bill": 1685,
+    "ma.price.us.y2019": 17.04,
+    "ma.price.us.max": 18.07,
+    "ma.price.us.max_year": 2015,
+    "ma.price.issue_utility": "Eversource",
+    "ma.price.issue_from": "2025-03",
+    "ma.comp.period": "2026-06",
+    "ma.comp.share": 75.8,
+    "ma.comp.agg_share": 54.6,
+    "ma.comp.homes": 2539792,
+    "ma.comp.competitive": 1925422,
+    "ma.comp.aggregation": 1385858,
+    "ma.comp.individual": 539564,
+    "ma.comp.individual_share": 21.199999999999996,
+    "ma.supply.first_year": 2015,
+    "ma.supply.last_year": 2024,
+    "ma.supply.last_supplier": 15.59,
+    "ma.supply.last_basic": 15.84,
+    "ma.supply.net_musd": -105.0,
+    "ma.supply.years_higher": 5,
+    "ma.supply.years_lower": 3,
+    "ma.supply.n_years": 10,
+    "ma.supply.spike_year": 2023,
+    "ma.supply.spike_basic": 17.41,
+    "ma.supply.spike_supplier": 15.15,
+    "ma.dc.op_mw": 67,
+    "ma.dc.pipeline_mw": 300,
+    "ma.dc.n": 25,
+    "ma.dc.largest": "Servistar Data Center",
+    "ma.dc.largest_mw": 300,
+    "ma.dc.largest_county": "Hampden",
+    "ma.dc.largest_status": "proposed",
+    "ne.dc.op_mw": 137,
+    "ne.dc.pipeline_mw": 669,
     "case.dom.idx": 109.1,
     "case.dom.chg19": 9.099999999999994,
     "case.dom.ytd": 16.971330485649073,
@@ -1010,38 +1392,38 @@
     "gen.texas": 88.4,
     "gen.pjm": 26.7,
     "gen.georgia": 8.0,
-    "rel.saidi.pct": -2.297565172997873,
-    "rel.saidi.lo": -4.848154167497687,
-    "rel.saidi.hi": 0.32139353269300397,
-    "rel.saifi.pct": -1.841296268275483,
-    "rel.saifi.lo": -4.462883115886673,
-    "rel.saifi.hi": 0.8522282494655586,
-    "rel.med.pct": -4.574560912045911,
-    "rel.med.lo": -7.50201507826509,
-    "rel.med.hi": -1.5544562096819203,
-    "rel.saifi_med.pct": -1.8991312620710077,
-    "rel.saifi_med.lo": -4.033983731625767,
-    "rel.saifi_med.hi": 0.28321296804636464,
+    "rel.saidi.pct": -2.2975651729961633,
+    "rel.saidi.lo": -4.848154087791712,
+    "rel.saidi.hi": 0.3213934486601344,
+    "rel.saifi.pct": -1.84129626827364,
+    "rel.saifi.lo": -4.462883087529046,
+    "rel.saifi.hi": 0.8522282195340791,
+    "rel.med.pct": -4.574560912045412,
+    "rel.med.lo": -7.502015086729507,
+    "rel.med.hi": -1.554456200672194,
+    "rel.saifi_med.pct": -1.8991312620697087,
+    "rel.saifi_med.lo": -4.033983772991901,
+    "rel.saifi_med.hi": 0.28321301127607335,
     "rel.n_units": 1339,
     "rel.years": "2013-2025",
-    "rel.ieee.pct": -0.6656704852537998,
-    "rel.ieee.lo": -4.108306693834251,
-    "rel.ieee.hi": 2.9005608300142427,
+    "rel.ieee.pct": -0.6656704852563755,
+    "rel.ieee.lo": -4.108306707231879,
+    "rel.ieee.hi": 2.900560844385769,
     "rel.share_state_method": 24.9,
     "rel.county.n_high": 31,
     "rel.county.n": 2978,
     "rel.county.threshold": 10,
     "rel.county.last_year": 2025,
-    "rel.county.last": -12.404851788644667,
-    "rel.county.max_lo": -18.325844765266307,
-    "rel.county.max": -2.968608960483232,
-    "rel.county.y2018": -2.968608960483232,
-    "rel.county.y2020": -17.50620572297146,
-    "rel.county.y2021": -3.310459548126843,
-    "rel.county.y2022": -7.725646848679945,
-    "rel.county.y2023": -3.0932400059958454,
-    "rel.county.y2024": -35.84365990344399,
-    "rel.county.y2025": -12.404851788644667,
+    "rel.county.last": -12.404851788643967,
+    "rel.county.max_lo": -18.325844744170173,
+    "rel.county.max": -2.9686089604830213,
+    "rel.county.y2018": -2.9686089604830213,
+    "rel.county.y2020": -17.506205722971167,
+    "rel.county.y2021": -3.3104595481264987,
+    "rel.county.y2022": -7.725646848679624,
+    "rel.county.y2023": -3.0932400059955123,
+    "rel.county.y2024": -35.84365990344377,
+    "rel.county.y2025": -12.404851788643967,
     "cov.n_states_competitive": 9,
     "cov.states_competitive": "CA, CT, IL, MA, NH, OH, PA, RI, TX",
     "cov.homes_competitive": 20277686,
@@ -1061,5 +1443,5 @@
     "case.dom.base_rate_share": 38.026835713647706
   },
   "facts_due": [],
-  "n_claims": 42
+  "n_claims": 57
 }

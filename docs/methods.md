@@ -1,6 +1,6 @@
 # Methods
 
-This project measures how the growth of US data centers is affecting what residential electricity customers pay. It combines utility price and sales data, power market results, and data center locations, refreshes them automatically as sources publish, and publishes the results with the code that produces them.
+This project measures how the growth of US data centers is affecting what residential electricity customers pay, with Massachusetts as its focus: the Findings page leads with Massachusetts and New England, and uses PJM, where data center demand is driving costs, as the comparison. It combines utility price and sales data, power market results, and data center locations, refreshes them automatically as sources publish, and publishes the results with the code that produces them.
 
 ## Approach
 
@@ -9,6 +9,7 @@ This project measures how the growth of US data centers is affecting what reside
 3. Assemble a monthly panel of residential price, bill, and usage for about 375 utilities from 2015 to the latest EIA release, with inflation, weather, and measured commercial load growth.
 4. Test whether local data center load raises local residential prices, and measure regional effects through PJM's capacity market.
 5. Compare four markets with different designs: Dominion (Virginia), Maryland (BGE and Pepco), Texas (ERCOT), and Georgia Power.
+6. For Massachusetts: the capacity charge in basic service, New England prices against the rest of the US, utility price trends, competitive supply and town aggregation, and the state's data center sites.
 
 ## Data sources
 
@@ -104,6 +105,17 @@ PJM, the grid operator for {{fact.pjm_states:int}} states and DC, buys generatin
 
 {{claim:m_capacity_ny}}
 
+## Massachusetts
+
+*Figures in this section update with each analysis run. Code: `analysis/massachusetts.py`.*
+
+- **Capacity charge per home.** Median across the Massachusetts default-service utilities (Eversource, National Grid's Massachusetts Electric and Nantucket Electric, Unitil), from ISO New England Forward Capacity Auction prices for their zones, by the same method as every market (see Capacity cost per household). Basic service passes the auction price through to customers who have not chosen a supplier.
+- **New England vs. the rest of the US.** The same event-study regression as PJM's (utility and month fixed effects, weather controls, reference year 2020, standard errors clustered by utility), with New England utilities against the rest of the US outside PJM. PJM is left out of the comparison group because its own rise would make New England look lower. The coefficient measures how much New England prices changed relative to that group since 2020, not the difference in price levels.
+- **Utility price trends.** Residential revenue per kWh from EIA-861M by full calendar year, deflated by the Northeast CPI. Utility figures cover homes on the utility's own basic service. Municipal utilities are combined, weighted by sales.
+- **Competitive supply and town aggregation.** Customer counts by utility from the Massachusetts DOER customer choice data (residential rate classes, including low-income and heat-pump rates). Prices from EIA-861 annual: the supply part of basic service is investor-owned utilities' full-service revenue per kWh minus their delivery-only revenue per kWh; the supplier price is the energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. The supplier average mixes town aggregation (which buys in bulk) with individual contracts, so it does not show what a household on an individual contract pays. The dollar difference multiplies the price gap by suppliers' residential sales, an estimate of what those homes would have paid on basic service at the average basic service price.
+- **Data centers.** Massachusetts sites from the merged site list (see Data center sites), with New England totals by state.
+- **Known data issues.** `reference/data_issues.csv` lists reported figures that cannot be right, with the evidence. Those figures are left out of prices, bills, statements, and the regressions; customer and sales counts stay. Current entry: Eversource (NSTAR Electric) residential revenue in EIA-861M from March 2025, which implies about 20 cents per kWh when its basic service supply charge alone was 13 to 15 cents.
+
 ## Panel regressions
 
 *Figures and statements in this section update with each analysis run (last run {{run.date:date}}). See [Data status](status.html) for how they are checked.*
@@ -113,6 +125,7 @@ The outcome is the log of inflation-adjusted residential price for {{local.n_uni
 - {{claim:m_local}} {{claim:m_local_benchmark}}
 - {{claim:m_pjm}}
 - {{claim:m_pjm_restructured}}
+- New England vs. the rest of the US outside PJM, relative to 2020: {{isne.y2023:pct}} in 2023 and {{isne.latest:pct}} in {{isne.latest_year:year}} (95% CI {{isne.latest_lo:pct}} to {{isne.latest_hi:pct}}).
 
 ## Reliability
 
@@ -178,6 +191,7 @@ Where a state publishes monthly switching counts by utility, those replace EIA's
 
 ## Changelog
 
+- **2026-10-13:** The site now focuses on Massachusetts. Findings leads with Massachusetts and New England: the capacity charge in basic service, New England prices vs. the rest of the US outside PJM (new regression), Massachusetts utility price trends, competitive supply and town aggregation, and the state's data center sites. PJM and the other markets follow as the comparison. The map opens on Massachusetts, and Your utility on National Grid with Eversource one click away. New table of known data issues: Eversource's EIA-861M revenue from March 2025 is left out pending EIA revision; dropping those months moves the national results slightly (local effect −0.9% to −1.0% at 40% more load; PJM 2026 gap +15.7% to +15.5%).
 - **2026-10-09:** Review of the remaining 404 flagged data center pairs: 54 more records removed (about 5.7 GW), mostly building-level OpenStreetMap or PNNL records on campuses whose FracTracker record already covers the campus total (Meta, Google, Microsoft, Switch), and projects listed twice (Stream Atlanta West, Keel Panther Creek, Microsoft East Point). 340 pairs confirmed as separate, most of them different county parcels in Northern Virginia. Six pairs remain for review, none with more than 30 MW at stake. PJM's planned and under-construction data center load changes from 133 to 132 GW.
 - **2026-10-08:** New York (NYISO monthly spot capacity prices by locality, 2018/19 to 2025/26) added for seven utilities; collected weekly from NYISO's public auction viewer.
 - **2026-10-08:** Correction: the rule that prefers utilities serving a site's or tract's own state had been using each utility's headquarters state only, because of a data-type error. Multi-state utilities now count as in-state wherever EIA lists them. Ameren Illinois, for example, now covers 824 Illinois tracts instead of 116, and about 20 GW of planned data center load moved from rural co-ops to the utilities that serve those areas (Southwestern Public Service in New Mexico, AEP Texas, Ameren Illinois, SWEPCO). National totals are unchanged. Glossary added.

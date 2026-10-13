@@ -3,7 +3,7 @@
 #
 #   text      what the page says. {name:format} fills in a value from the current run
 #             (see `uv run python -m analysis.narrative --values`). **bold** is allowed.
-#             formats: pct (+1.1%), pct0 (+20%), apct (1.1%, no sign), usd, usd2, int, f0, f1, f2,
+#             formats: pct (+1.1%), pct0 (+20%), apct (1.1%, no sign), apct0 (20%), usd, usd_abs ($106, no sign), usd2, int, f0, f1, f2,
 #             r100 (rounded to hundreds), month (July 2026), date (October 7, 2026), year
 #   holds     the condition the text depends on, as a Python expression over the same values.
 #             If false, the page shows `fallback` (current numbers, no interpretation) marked
@@ -36,16 +36,95 @@ checks:
   case.ga.idx: [50, 250]
   rel.saidi.pct: [-50, 50]
   rel.county.last: [-90, 300]
+  isne.latest: [-30, 80]
+  ma.cap.latest: [0, 1000]
+  ma.cap.first: [0, 1000]
+  ma.price.ng.last: [5, 80]
+  ma.price.muni.last: [5, 80]
+  ma.comp.share: [0, 100]
+  ma.supply.last_supplier: [2, 60]
+  ma.supply.last_basic: [2, 60]
 
 claims:
   # ---------------------------------------------------------------- Findings: header
   headline:
     variants:
-      - holds: local.lo40 <= 0 and pjm.latest_lo > 0 and cap.increase > 0
-        text: Data centers raise power bills through the regional market, not the utility next door
-      - holds: local.lo40 > 0 and pjm.latest_lo > 0
-        text: Data centers are raising power bills locally and through the regional market
-    fallback: How data center growth is showing up in residential power bills
+      - holds: ma.cap.latest < 0.5 * ma.cap.first and ma.dc.pipeline_mw < 1000 and isne.latest_lo > 0 and cap.increase > 0 and fact.imm_dc_share_of_increase_2025_26 >= 50
+        text: Massachusetts power bills are high, but data centers aren't why. In PJM, they are.
+      - holds: ma.cap.latest < 0.5 * ma.cap.first and ma.dc.pipeline_mw < 1000 and cap.increase > 0
+        text: Data centers aren't what's driving Massachusetts power bills. In PJM, they are.
+    fallback: What's driving Massachusetts power bills, and where data centers are raising them
+
+  # ---------------------------------------------------------------- Findings: Massachusetts header
+  lede_ma:
+    holds: ma.cap.latest < ma.cap.first and isne.latest_lo > 0 and isne.y2023 > isne.latest and ma.dc.pipeline_mw < 1000
+    text: "Measured from 2020, New England's residential prices after inflation rose {isne.y2023:apct0} more than the rest of the US outside PJM by 2023, and were still {isne.latest:apct0} ahead in {isne.latest_year:year}. Data centers are not the reason: Massachusetts has {ma.dc.op_mw:int} MW of them operating and {ma.dc.pipeline_mw:int} MW proposed, and the capacity charge in a typical Massachusetts home's bill fell from {ma.cap.first:usd} a year in {ma.cap.first_dy} to {ma.cap.latest:usd} for {ma.cap.latest_dy}."
+    fallback: "New England's residential prices after inflation, relative to the rest of the US outside PJM and measured from 2020: {isne.y2023:pct} in 2023 and {isne.latest:pct} in {isne.latest_year:year}. Massachusetts data centers: {ma.dc.op_mw:int} MW operating, {ma.dc.pipeline_mw:int} MW proposed. Capacity cost for a typical Massachusetts home: {ma.cap.first:usd} a year in {ma.cap.first_dy}, {ma.cap.latest:usd} for {ma.cap.latest_dy}."
+
+  lede_contrast:
+    refs: [imm-2026-som-2025]
+    holds: cap.increase > 0 and fact.imm_dc_share_of_increase_2025_26 >= 50 and ma.cap.pjm_same_dy > 2 * ma.cap.latest
+    text: "PJM, the grid operator for {fact.pjm_states:int} states and DC from New Jersey to Illinois, shows what it looks like when data centers do drive the market: a capacity shortfall driven largely by forecast data center demand now costs a typical household in a restructured state **about {cap.increase:usd} a year more** than in 2024/25. For {ma.cap.latest_dy}, the same charge is {ma.cap.pjm_same_dy:usd} there against {ma.cap.latest:usd} in Massachusetts."
+    fallback: "In PJM, capacity costs a typical household in a restructured state {cap.latest:usd} a year for {cap.latest_dy}, versus {cap.y2024_25.central:usd} in 2024/25; for {ma.cap.latest_dy}, {ma.cap.pjm_same_dy:usd} against {ma.cap.latest:usd} in Massachusetts."
+
+  # ---------------------------------------------------------------- Findings: Massachusetts figures
+  fig_ma1:
+    value: "{ma.cap.latest:usd}"
+    holds: ma.cap.latest < ma.cap.first
+    text: capacity charge per year, typical Massachusetts home, {ma.cap.latest_dy} (down from {ma.cap.first:usd} in {ma.cap.first_dy})
+    fallback: capacity charge per year, typical Massachusetts home, {ma.cap.latest_dy}
+  fig_ma2:
+    value: "{isne.latest:pct}"
+    text: New England residential price vs. rest of US outside PJM in {isne.latest_year:year}, after inflation (2020 baseline)
+  fig_ma3:
+    value: "{ma.comp.share:f0}%"
+    text: of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation ({ma.comp.period:month})
+  fig_ma4:
+    value: "{ma.dc.op_mw:int} MW"
+    text: of data centers operating in Massachusetts; {ma.dc.pipeline_mw:int} MW proposed or under construction
+
+  # ---------------------------------------------------------------- Findings: Massachusetts charts
+  ma_cap_reading:
+    holds: ma.cap.min_dy == "2023/24" and ma.cap.latest < 0.5 * ma.cap.first and dc.ne_pipeline_per_1k < 0.25 * dc.pjm_pipeline_per_1k
+    text: "The capacity charge pays power plants to be available at peak, and in Massachusetts basic service passes ISO New England's auction price straight through. For a typical home it fell from {ma.cap.first:usd} a year in {ma.cap.first_dy} to {ma.cap.min:usd} in 2023/24, then {ma.cap.y2024_25:usd}, {ma.cap.y2025_26:usd}, and {ma.cap.latest:usd} for {ma.cap.latest_dy}. New England's auctions have little data center demand behind them: {dc.ne_pipeline_gw:f1} GW planned or under construction across the region, against {dc.pjm_pipeline_gw:int} GW in PJM."
+    fallback: "Capacity charge for a typical Massachusetts home: {ma.cap.first:usd} a year in {ma.cap.first_dy}, {ma.cap.min:usd} in {ma.cap.min_dy}, {ma.cap.latest:usd} for {ma.cap.latest_dy}."
+
+  ma_cap_note:
+    text: "Massachusetts: median of the default-service utilities (National Grid's Massachusetts Electric and Nantucket Electric, Eversource, Unitil), from ISO New England Forward Capacity Auction prices for their zones; ISO New England's next auction is due in {fact.isone_next_auction:year}. Other markets use the same method; see the comparison section below. Delivery years run June to May."
+
+  ne_reading:
+    holds: >-
+      isne.y2021_lo <= 0 <= isne.y2021_hi and isne.y2022 > 0 and isne.y2023 > isne.y2022 and isne.y2023 >= isne.latest and isne.latest_lo > 0
+      and ma.cap.y2023_24 < ma.cap.y2021_22
+    text: "New England prices tracked the rest of the country outside PJM in 2021, then rose {isne.y2022:apct} more in 2022 and {isne.y2023:apct} more in 2023, measured from 2020, and were still {isne.latest:apct} above in {isne.latest_year:year}. Capacity charges fell over the same years ({ma.cap.y2021_22:usd} to {ma.cap.y2023_24:usd} per Massachusetts home), so the rise did not come through the capacity auction, the channel that carries data center costs in PJM."
+    fallback: "New England residential prices vs. the rest of the US outside PJM, after inflation, relative to 2020: {isne.y2022:pct} in 2022, {isne.y2023:pct} in 2023, {isne.latest:pct} in {isne.latest_year:year} (95% CI {isne.latest_lo:pct} to {isne.latest_hi:pct})."
+
+  ne_note:
+    text: "Same regression as the PJM comparison below (utility and month fixed effects, weather controls, standard errors clustered by utility), with New England utilities compared against the rest of the US outside PJM, so PJM's own rise does not set the baseline. {isne.latest_year:year} covers {run.latest_months}."
+
+  ma_price_reading:
+    holds: ma.price.ng.max_year == 2023 and ma.price.muni.last < 0.6 * ma.price.ng.last and ma.price.issue_utility == "Eversource"
+    text: "National Grid's price after inflation peaked at {ma.price.ng.max:f1}¢ per kWh in 2023 and was {ma.price.ng.last:f1}¢ in {ma.price.ng.last_year:year}. Eversource's was {ma.price.ev.last:f1}¢ in {ma.price.ev.last_year:year}; its EIA figures from {ma.price.issue_from:month} on are under check and left out. Massachusetts' municipal utilities charged {ma.price.muni.last:f1}¢, about half, and the New England average was {ma.price.ne.last:f1}¢ against {ma.price.us.last:f1}¢ nationally."
+    fallback: "Price after inflation, {ma.price.ng.last_year:year}: National Grid {ma.price.ng.last:f1}¢ per kWh, municipal utilities {ma.price.muni.last:f1}¢, New England {ma.price.ne.last:f1}¢, US {ma.price.us.last:f1}¢. Eversource: {ma.price.ev.last:f1}¢ in {ma.price.ev.last_year:year}."
+
+  ma_price_note:
+    text: "Residential revenue per kWh from EIA's monthly survey, full calendar years, in dollars of {run.prices_through:month} (Northeast CPI). Utility figures cover homes on the utility's own (basic) supply. Municipal utilities are combined, weighted by sales."
+
+  ma_supply_reading:
+    variants:
+      - holds: ma.supply.net_musd < 0 and ma.supply.years_lower >= 2 and ma.supply.spike_supplier < ma.supply.spike_basic - 1
+        text: "{ma.comp.share:f0}% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program ({ma.comp.agg_share:f0}% through towns, {ma.comp.individual_share:f0}% individually), as of {ma.comp.period:month}. On EIA's statewide averages, competitive suppliers charged more than basic service in {ma.supply.years_higher:int} of {ma.supply.n_years:int} years from {ma.supply.first_year:year} to {ma.supply.last_year:year}, and less in {ma.supply.years_lower:int}, by the most when basic service spiked ({ma.supply.spike_basic:f1}¢ against {ma.supply.spike_supplier:f1}¢ in {ma.supply.spike_year:year}). Over the period, that is about {ma.supply.net_musd:usd_abs} million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays."
+      - holds: ma.supply.net_musd >= 0
+        text: "{ma.comp.share:f0}% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program ({ma.comp.agg_share:f0}% through towns, {ma.comp.individual_share:f0}% individually), as of {ma.comp.period:month}. On EIA's statewide averages, competitive suppliers charged more than basic service in {ma.supply.years_higher:int} of {ma.supply.n_years:int} years from {ma.supply.first_year:year} to {ma.supply.last_year:year}: about {ma.supply.net_musd:usd_abs} million more over the period. The average mixes town aggregation with individual contracts."
+    fallback: "{ma.comp.share:f0}% of homes at the three investor-owned utilities are on competitive supply or town aggregation ({ma.comp.period:month}). Statewide average supplier price in {ma.supply.last_year:year}: {ma.supply.last_supplier:f1}¢ per kWh; basic service supply: {ma.supply.last_basic:f1}¢."
+
+  ma_supply_note:
+    text: "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities' full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA's file are left out."
+
+  ma_dc_reading:
+    holds: ma.dc.pipeline_mw < 1000 and ma.dc.largest_mw >= 0.5 * ma.dc.pipeline_mw and ma.dc.largest_status == "proposed"
+    text: "Massachusetts has {ma.dc.n:int} data center sites in the merged list, {ma.dc.op_mw:int} MW operating. Nearly all of the {ma.dc.pipeline_mw:int} MW in the pipeline is one proposal: {ma.dc.largest} in {ma.dc.largest_county} County ({ma.dc.largest_mw:int} MW). New England as a whole has {ne.dc.op_mw:int} MW operating and {ne.dc.pipeline_mw:int} MW proposed or under construction; PJM has {dc.pjm_pipeline_gw:int} GW in its pipeline."
+    fallback: "Massachusetts data center sites: {ma.dc.n:int}, with {ma.dc.op_mw:int} MW operating and {ma.dc.pipeline_mw:int} MW proposed or under construction. New England: {ne.dc.op_mw:int} MW operating, {ne.dc.pipeline_mw:int} MW proposed or under construction."
 
   lede_intro:
     text: "Across {local.n_units:int} US utility service areas from 2015 to {run.prices_through:month},"

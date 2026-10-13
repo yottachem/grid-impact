@@ -7,6 +7,9 @@
 2. Regional effect: PJM x year event study vs. the rest of the US (reference 2020),
    utility and month fixed effects, weather controls.
 3. Within PJM: restructured-state utilities x year vs. regulated PJM utilities.
+4. New England: ISO-NE x year event study vs. the rest of the US outside PJM (reference 2020), the same
+   specification as 2. PJM is left out of the comparison group because its own rise would make New England
+   look lower.
 
 Standard errors clustered by utility. Coefficients on logs are reported as % changes.
 Writes analysis/results/panel_results.md and event-study CSVs."""
@@ -32,6 +35,7 @@ def load() -> pd.DataFrame:
     p["ln_price"] = np.log(p.res_price_real_cents_kwh)
     p["ln_com_ttm"] = np.log(p.com_mwh_ttm.where(p.com_mwh_ttm > 0))
     p["pjm"] = (p.ba == "PJM").astype(int)
+    p["isne"] = (p.ba == "ISNE").astype(int)
     p["restructured"] = p.state.isin(RESTRUCTURED).astype(int)
     p["hdd"], p["cdd"] = p.hdd / 100, p.cdd / 100  # per 100 degree days
     return p.dropna(subset=["hdd", "cdd"])
@@ -90,6 +94,14 @@ def run() -> str:
     lines += ["", "## 3. Within PJM: restructured-state utilities vs. regulated (reference year 2020)", "",
               "| Year | Restructured difference | 95% CI | p |", "|---|---|---|---|"]
     lines += [f"| {r.year} | {r.pct:+.1f}% | {r.ci_low:+.1f}% to {r.ci_high:+.1f}% | {r.p:.3f} |" for r in es3.itertuples()]
+
+    # 4. New England vs rest of US outside PJM
+    es4, _ = event_study(p[p.pjm == 0], "isne")
+    es4.to_csv(OUT / "event_study_isne.csv", index=False)
+    lines += ["", "## 4. New England (ISO-NE) vs. rest of US outside PJM (reference year 2020)", "",
+              f"New England units: {p[p.isne == 1].unit.nunique()}.", "",
+              "| Year | New England difference | 95% CI | p |", "|---|---|---|---|"]
+    lines += [f"| {r.year} | {r.pct:+.1f}% | {r.ci_low:+.1f}% to {r.ci_high:+.1f}% | {r.p:.3f} |" for r in es4.itertuples()]
     text = "\n".join(lines) + "\n"
     (OUT / "panel_results.md").write_text(text)
     return text

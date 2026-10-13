@@ -34,7 +34,7 @@ CLAIMS = ROOT / "analysis" / "claims.yaml"
 OUT = RESULTS / "narrative.json"
 CASES = {"dom": ("dominion", "Dominion Energy Virginia"), "bge": ("maryland", "Baltimore Gas & Electric"),
          "tx": ("texas", "Texas statewide"), "ga": ("georgia", "Georgia Power")}
-PLACEHOLDER = re.compile(r"\{([a-z][a-z0-9_.]*)(?::([a-z0-9]+))?\}")
+PLACEHOLDER = re.compile(r"\{([a-z][a-z0-9_.]*)(?::([a-z0-9_]+))?\}")
 NAME = re.compile(r"\b[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+\b")
 
 
@@ -93,7 +93,9 @@ def values() -> dict:
               "local.hi40": le["pct_at_40pct_load_hi"], "local.p": le["p"], "local.n_units": le["n_units"]})
 
     # PJM vs rest of US, and restructured vs regulated within PJM (event studies, 2020 = 0)
-    for prefix, f in (("pjm", "event_study_pjm.csv"), ("pjmr", "event_study_pjm_restructured.csv")):
+    for prefix, f in (("pjm", "event_study_pjm.csv"), ("pjmr", "event_study_pjm_restructured.csv"), ("isne", "event_study_isne.csv")):
+        if not (RESULTS / f).exists():
+            continue
         es = pd.read_csv(RESULTS / f).sort_values("year")
         for r in es.itertuples():
             v[f"{prefix}.y{r.year}"], v[f"{prefix}.y{r.year}_lo"], v[f"{prefix}.y{r.year}_hi"] = r.pct, r.ci_low, r.ci_high
@@ -209,6 +211,54 @@ def values() -> dict:
             v[f"dc.{key}_pipeline_gw"] = g.loc[ba, "mw_pipeline"] / 1000
             v[f"dc.{key}_pipeline_per_1k"] = g.loc[ba, "mw_pipeline"] / g.loc[ba, "res_customers"] * 1000
 
+    # Massachusetts (analysis/massachusetts.py)
+    if (DATA / "massachusetts.json").exists():
+        ma = json.loads((DATA / "massachusetts.json").read_text())
+        mc = ma["capacity"]
+        for d in mc:
+            v[f"ma.cap.{dy_key(d['dy'])}"] = d["central"]
+        v.update({"ma.cap.first_dy": mc[0]["dy"], "ma.cap.first": mc[0]["central"], "ma.cap.latest_dy": mc[-1]["dy"],
+                  "ma.cap.latest": mc[-1]["central"], "ma.cap.min": min(d["central"] for d in mc),
+                  "ma.cap.min_dy": min(mc, key=lambda d: d["central"])["dy"], "ma.cap.max": max(d["central"] for d in mc),
+                  "ma.cap.change": mc[-1]["central"] - mc[0]["central"], "ma.cap.prev": mc[-2]["central"] if len(mc) > 1 else None})
+        same = next((d for d in capacity_series() if d["dy"] == mc[-1]["dy"]), None)
+        v["ma.cap.pjm_same_dy"] = same["central"] if same else None
+        ps = ma["prices"]["series"]
+        for key, name in (("ng", "National Grid"), ("ev", "Eversource"), ("un", "Unitil"), ("muni", "Municipal utilities"),
+                          ("ne", "New England"), ("us", "US")):
+            s_ = ps.get(name, [])
+            if not s_:
+                continue
+            by = {r["year"]: r for r in s_}
+            v.update({f"ma.price.{key}.last_year": s_[-1]["year"], f"ma.price.{key}.last": s_[-1]["cents"],
+                      f"ma.price.{key}.last_bill": s_[-1]["bill"], f"ma.price.{key}.y2019": by.get(2019, {}).get("cents"),
+                      f"ma.price.{key}.max": max(r["cents"] for r in s_), f"ma.price.{key}.max_year": max(s_, key=lambda r: r["cents"])["year"]})
+        v["ma.price.issue_utility"] = ma["prices"]["issues"][0]["utility"] if ma["prices"]["issues"] else None
+        v["ma.price.issue_from"] = ma["prices"]["issues"][0]["from"] if ma["prices"]["issues"] else None
+        cl = ma["competitive"]["latest"]
+        v.update({"ma.comp.period": cl["period"], "ma.comp.share": 100 * cl["share"], "ma.comp.agg_share": 100 * cl["aggregation_share"],
+                  "ma.comp.homes": cl["homes"], "ma.comp.competitive": cl["competitive"], "ma.comp.aggregation": cl["aggregation"],
+                  "ma.comp.individual": cl["competitive"] - cl["aggregation"], "ma.comp.individual_share": 100 * (cl["share"] - cl["aggregation_share"])})
+        pr = ma["competitive"]["price"]
+        if pr:
+            v.update({"ma.supply.first_year": pr[0]["year"], "ma.supply.last_year": pr[-1]["year"],
+                      "ma.supply.last_supplier": pr[-1]["supplier_cents"], "ma.supply.last_basic": pr[-1]["basic_supply_cents"],
+                      "ma.supply.net_musd": sum(r["difference_musd"] for r in pr),
+                      "ma.supply.years_higher": sum(r["supplier_cents"] > r["basic_supply_cents"] + 0.2 for r in pr),
+                      "ma.supply.years_lower": sum(r["supplier_cents"] < r["basic_supply_cents"] - 0.2 for r in pr),
+                      "ma.supply.n_years": len(pr)})
+            spike = max(pr, key=lambda r: r["basic_supply_cents"])
+            v.update({"ma.supply.spike_year": spike["year"], "ma.supply.spike_basic": spike["basic_supply_cents"],
+                      "ma.supply.spike_supplier": spike["supplier_cents"]})
+        dcm = ma["datacenters"]
+        v.update({"ma.dc.op_mw": dcm["ma_mw"].get("operating", 0), "ma.dc.pipeline_mw": dcm["ma_mw"].get("construction", 0) + dcm["ma_mw"].get("proposed", 0),
+                  "ma.dc.n": dcm["ma_count"], "ma.dc.largest": dcm["ma_sites"][0]["name"] if dcm["ma_sites"] else None,
+                  "ma.dc.largest_mw": dcm["ma_sites"][0]["mw"] if dcm["ma_sites"] else None,
+                  "ma.dc.largest_county": dcm["ma_sites"][0]["county"] if dcm["ma_sites"] else None,
+                  "ma.dc.largest_status": dcm["ma_sites"][0]["status"] if dcm["ma_sites"] else None,
+                  "ne.dc.op_mw": sum(r.get("operating", 0) for r in dcm["ne_by_state"].values()),
+                  "ne.dc.pipeline_mw": sum(r.get("construction", 0) + r.get("proposed", 0) for r in dcm["ne_by_state"].values())})
+
     # Case studies
     series, ytd = case_series()
     cs = json.loads((DATA / "case_studies.json").read_text())
@@ -279,8 +329,12 @@ def fmt(x, spec: str | None) -> str:
             return f"{sign(round(x))}{abs(x):.0f}%"
         case "apct":  # magnitude only, for "0.9% lower"
             return f"{abs(x):.1f}%"
+        case "apct0":  # magnitude only, whole percent
+            return f"{abs(x):.0f}%"
         case "usd":
             return f"{'−' if round(x) < 0 else ''}${abs(x):,.0f}"
+        case "usd_abs":  # magnitude only, for "$106 million less"
+            return f"${abs(x):,.0f}"
         case "usd2":
             return f"{'−' if x < 0 else ''}${abs(x):,.2f}"
         case "int":

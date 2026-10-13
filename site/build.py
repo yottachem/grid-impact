@@ -306,6 +306,7 @@ def main() -> None:
           .replace("__CROWD__", (DATA / "crowd.json").read_text())
           .replace("__RELIABILITY__", (DATA / "utility_reliability.json").read_text())
           .replace("__COVERAGE__", (DATA / "coverage.json").read_text())
+          .replace("__ISSUES__", json.dumps(__import__("pandas").read_csv(ROOT / "reference" / "data_issues.csv", dtype={"utility_id_eia": int}).fillna("").to_dict("records")))
           .replace("__REALMONTH__", html.escape(meta.get("real_dollars_of", "the latest CPI month"))))
     (DIST / "utility.html").write_text(shell("utility.html", title, t, footer(meta, pm, "Your utility"),
         "Residential price, usage, and bill by utility, adjusted for inflation, with data center load in each territory."))

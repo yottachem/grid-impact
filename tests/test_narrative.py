@@ -51,7 +51,7 @@ def test_implausible_cost_is_held_as_a_data_check(base):
 @needs_results
 def test_local_price_effect_turning_positive_switches_or_flags(base):
     r = run(base, local__pct40=2.0, local__lo40=0.8, local__hi40=3.2)
-    assert r["claims"]["headline"]["text"].startswith("Data centers are raising power bills locally")
+    assert r["claims"]["headline"]["text"].startswith("Massachusetts power bills")  # headline rests on Massachusetts and PJM figures
     assert "has raised its residential prices" in r["claims"]["lede_local"]["text"]
     assert r["claims"]["local_note"]["status"] == "review"  # "What doesn't explain it" no longer true
     assert r["claims"]["m_local"]["status"] == "review"
@@ -117,3 +117,15 @@ def test_literature_is_valid():
     for fid, ref in zip(f.fact_id, f.ref.fillna("")):
         for r in filter(None, (x.strip() for x in ref.split(";"))):
             assert r in ids, f"fact {fid} cites unknown reference {r}"
+
+
+@needs_results
+def test_massachusetts_headline_follows_its_conditions(base):
+    """The Massachusetts headline needs falling capacity costs, little data center load, and a New England price gap."""
+    r = run(base, isne__latest_lo=-1.0)  # gap no longer significant: drop "bills are high"
+    assert r["claims"]["headline"]["text"].startswith("Data centers aren't what's driving Massachusetts")
+    r = run(base, ma__cap__latest=240.0)  # capacity charge back near 2018/19: neither variant holds
+    assert r["claims"]["headline"]["status"] == "review"
+    r = run(base, ma__dc__pipeline_mw=5000.0)  # large Massachusetts pipeline
+    assert r["claims"]["headline"]["status"] == "review"
+    assert r["claims"]["ma_dc_reading"]["status"] == "review"

@@ -34,8 +34,12 @@ def payload() -> dict:
     meta = json.loads((DATA / "meta.json").read_text())
     run = json.loads((RESULTS / "run.json").read_text()) if (RESULTS / "run.json").exists() else {}
     es = json.loads((DATA / "event_studies.json").read_text())["pjm_vs_rest"]
+    isne = RESULTS / "event_study_isne.csv"
+    es_ne = [] if not isne.exists() else [{k: (round(float(v), 3) if k != "year" else int(v)) for k, v in r.items()}
+                                          for r in __import__("csv").DictReader(isne.open())]
+    ma = json.loads((DATA / "massachusetts.json").read_text()) if (DATA / "massachusetts.json").exists() else {}
     any_ytd = next(iter(ytd.values()))
-    return {"capacity": narrative.capacity_series(), "capacity_ne": narrative.capacity_series("ISONE"), "capacity_miso": narrative.capacity_series("MISO"), "capacity_ny": narrative.capacity_series("NYISO"), "event_pjm": es, "cases": cases, "run": run,
+    return {"capacity": narrative.capacity_series(), "capacity_ne": narrative.capacity_series("ISONE"), "capacity_miso": narrative.capacity_series("MISO"), "capacity_ny": narrative.capacity_series("NYISO"), "event_pjm": es, "event_isne": es_ne, "ma": ma, "cases": cases, "run": run,
             "ytd_year": any_ytd["year"], "ytd_months": any_ytd["months"].replace("-", "–"),
             "built": meta["built"][:10], "price_through": meta["sources"]["eia861m"]["last_new_data"] or ""}
 
