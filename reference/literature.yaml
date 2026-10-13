@@ -1152,3 +1152,73 @@ entries:
     vault: "wiki/sources/grid-impact/2025-08 - The Cost of Power How Soaring Electric Rates Are Deepening the Energy Affordability Crisis.md"
     added: 2026-10-08
     approved: 2026-10-08
+
+  # ------------------------------------------------------------ Batch 2: Massachusetts (approved 2026-10-13)
+  - id: ma-ago-2026-competitive-supply
+    title: "2026 Competitive Supply Report"
+    authors: ["Massachusetts Office of the Attorney General"]
+    publisher: Massachusetts Office of the Attorney General
+    date: 2026-03-31
+    url: https://www.mass.gov/doc/2026-competitive-supply-report/download
+    type: government
+    topics: [retail-rates, energy-burden]
+    summary: The Attorney General's annual analysis of what Massachusetts households on individual competitive electric supply contracts pay compared with their utility's basic service, from utility billing data.
+    findings:
+      - Individual residential customers on competitive supply paid $738.7 million more than basic service would have cost from July 2015 to June 2025.
+      - The most recent year studied (July 2024 to June 2025) added a net loss of $87.4 million.
+      - Covers individual contracts only; town (municipal) aggregation programs are not part of the analysis.
+      - Finds suppliers charge low-income customers higher rates than other customers.
+    relation: mixed
+    relation_note: "Different populations: the Attorney General counts individual contracts only, which cost more than basic service; this site's statewide supplier average from EIA also includes town aggregation and came in slightly below basic service over 2015 to 2024. Together they point to aggregation, not individual contracts, as the cheaper route."
+    use: [fact, benchmark]
+    cites: []
+    accessed: 2026-10-13
+    review_by: 2027-04-30
+    vault: "wiki/sources/grid-impact/2026-03-31 - 2026 Competitive Supply Report.md"
+    added: 2026-10-13
+    approved: 2026-10-13
+
+  - id: isone-2026-large-load-forecast
+    title: "Final Draft 2026 Large Load Forecast"
+    authors: ["Rojo, Victoria"]
+    publisher: ISO New England, Load Forecast Committee
+    date: 2026-03-27
+    url: https://www.iso-ne.com/static-assets/documents/100033/fx2026_large_loads.pdf
+    type: grid-operator
+    topics: [load-growth, reliability]
+    summary: ISO New England's first forecast of large new loads such as data centers, built into its 2026-2035 CELT load forecast (published May 1, 2026).
+    findings:
+      - Two projects qualify (over 20 MW, in a formal study agreement), a 200 MW data center in the Northeast Massachusetts/Boston load zone and an 85 MW electrification project in Connecticut, both nameplate before derating.
+      - Data centers are derated heavily, to about 42% of nameplate at the study stage (60% for maturity times 70% for capacity use).
+      - Neither project is under construction, so neither counts before winter 2027/28; large loads add about 110 MW to summer and winter peaks in the 2030s and about 130 MW in the 2040s (ISO Newswire, May 18, 2026).
+    relation: supports
+    relation_note: Agrees with this site's site list that New England has little data center load in the pipeline; its one data center is in the Boston zone, separate from the larger Westfield proposal in the site list, which has not entered ISO New England's study process.
+    use: [fact, context]
+    cites: []
+    accessed: 2026-10-13
+    review_by: 2027-05-15
+    vault: "wiki/sources/grid-impact/2026-03-27 - Final Draft 2026 Large Load Forecast.md"
+    added: 2026-10-13
+    approved: 2026-10-13
+
+  - id: ma-doer-customer-choice
+    title: "Electric & Gas Customer Choice Data"
+    authors: ["Massachusetts Department of Energy Resources"]
+    publisher: Massachusetts Department of Energy Resources (DOER)
+    date: 2026-06
+    url: https://www.mass.gov/info-details/electric-gas-customer-choice-data
+    type: dataset
+    topics: [retail-rates, data]
+    summary: Monthly counts of Massachusetts electric customers on basic service, individual competitive supply, and town aggregation, by utility and rate class, published quarterly.
+    findings:
+      - Covers the investor-owned utilities (Eversource, National Grid, Unitil) from 2020; town aggregation is reported separately from 2021.
+      - As of June 2026, about 76% of these utilities' residential customers were on competitive supply or town aggregation, 55% through towns.
+    relation: context
+    relation_note: The source of the site's Massachusetts customer split; added to the site by hand each quarter because mass.gov blocks automated downloads.
+    use: [fact]
+    cites: []
+    accessed: 2026-10-13
+    review_by: 2026-12-31
+    vault: "wiki/sources/grid-impact/2026-06 - Electric & Gas Customer Choice Data.md"
+    added: 2026-10-13
+    approved: 2026-10-13

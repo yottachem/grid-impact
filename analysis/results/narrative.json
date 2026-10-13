@@ -98,7 +98,9 @@
       "html": "of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation (June 2026)",
       "text": "of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation (June 2026)",
       "reason": null,
-      "refs": [],
+      "refs": [
+        "ma-doer-customer-choice"
+      ],
       "where": "findings",
       "values": {
         "ma.comp.period": "2026-06",
@@ -218,12 +220,17 @@
     },
     "ma_supply_reading": {
       "status": "ok",
-      "html": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town&#x27;s aggregation program (55% through towns, 21% individually), as of June 2026. On EIA&#x27;s statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays.",
-      "text": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program (55% through towns, 21% individually), as of June 2026. On EIA's statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays.",
+      "html": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town&#x27;s aggregation program (55% through towns, 21% individually), as of June 2026. On EIA&#x27;s statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. That average mixes town aggregation, which buys in bulk, with individual contracts. The Attorney General&#x27;s office, which studies individual contracts only, finds those households paid <strong>$738.7 million more</strong> than basic service from July 2015 to June 2025, $87.4 million of it in the latest year. Taken together, town aggregation, not individual contracts, is what kept the statewide average near or below basic service.",
+      "text": "76% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program (55% through towns, 21% individually), as of June 2026. On EIA's statewide averages, competitive suppliers charged more than basic service in 5 of 10 years from 2015 to 2024, and less in 3, by the most when basic service spiked (17.4\u00a2 against 15.2\u00a2 in 2023). Over the period, that is about $105 million less than basic service would have cost. That average mixes town aggregation, which buys in bulk, with individual contracts. The Attorney General's office, which studies individual contracts only, finds those households paid $738.7 million more than basic service from July 2015 to June 2025, $87.4 million of it in the latest year. Taken together, town aggregation, not individual contracts, is what kept the statewide average near or below basic service.",
       "reason": null,
-      "refs": [],
+      "refs": [
+        "ma-doer-customer-choice",
+        "ma-ago-2026-competitive-supply"
+      ],
       "where": "findings",
       "values": {
+        "fact.ago_individual_supply_loss_latest_musd": 87.4,
+        "fact.ago_individual_supply_loss_musd": 738.7,
         "ma.comp.agg_share": 54.6,
         "ma.comp.individual_share": 21.199999999999996,
         "ma.comp.period": "2026-06",
@@ -246,19 +253,25 @@
       "html": "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities&#x27; full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA&#x27;s file are left out.",
       "text": "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities' full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA's file are left out.",
       "reason": null,
-      "refs": [],
+      "refs": [
+        "ma-doer-customer-choice"
+      ],
       "where": "findings",
       "values": {}
     },
     "ma_dc_reading": {
       "status": "ok",
-      "html": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline.",
-      "text": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline.",
+      "html": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline. ISO New England&#x27;s own first large-load forecast (2026) counts one data center in its formal study process, 200 MW in the Northeast Massachusetts and Boston zone, and expects all large new loads together to add about 110 MW to the region&#x27;s peak in the 2030s.",
+      "text": "Massachusetts has 25 data center sites in the merged list, 67 MW operating. Nearly all of the 300 MW in the pipeline is one proposal: Servistar Data Center in Hampden County (300 MW). New England as a whole has 137 MW operating and 669 MW proposed or under construction; PJM has 132 GW in its pipeline. ISO New England's own first large-load forecast (2026) counts one data center in its formal study process, 200 MW in the Northeast Massachusetts and Boston zone, and expects all large new loads together to add about 110 MW to the region's peak in the 2030s.",
       "reason": null,
-      "refs": [],
+      "refs": [
+        "isone-2026-large-load-forecast"
+      ],
       "where": "findings",
       "values": {
         "dc.pjm_pipeline_gw": 132.46079999999998,
+        "fact.isone_large_load_dc_mw": 200.0,
+        "fact.isone_large_load_peak_2030s_mw": 110.0,
         "ma.dc.largest": "Servistar Data Center",
         "ma.dc.largest_county": "Hampden",
         "ma.dc.largest_mw": 300,
@@ -1440,6 +1453,10 @@
     "fact.lbnl_us_dc_twh_2023": 176.0,
     "fact.epri_dc_rate_effect_2019_2024_pct": 6.0,
     "fact.isone_next_auction": 2028.0,
+    "fact.ago_individual_supply_loss_musd": 738.7,
+    "fact.ago_individual_supply_loss_latest_musd": 87.4,
+    "fact.isone_large_load_dc_mw": 200.0,
+    "fact.isone_large_load_peak_2030s_mw": 110.0,
     "case.dom.base_rate_share": 38.026835713647706
   },
   "facts_due": [],

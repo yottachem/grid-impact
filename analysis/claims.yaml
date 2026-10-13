@@ -77,6 +77,7 @@ claims:
     value: "{isne.latest:pct}"
     text: New England residential price vs. rest of US outside PJM in {isne.latest_year:year}, after inflation (2020 baseline)
   fig_ma3:
+    refs: [ma-doer-customer-choice]
     value: "{ma.comp.share:f0}%"
     text: of National Grid, Eversource, and Unitil homes buy supply from a competitive supplier or town aggregation ({ma.comp.period:month})
   fig_ma4:
@@ -111,19 +112,24 @@ claims:
     text: "Residential revenue per kWh from EIA's monthly survey, full calendar years, in dollars of {run.prices_through:month} (Northeast CPI). Utility figures cover homes on the utility's own (basic) supply. Municipal utilities are combined, weighted by sales."
 
   ma_supply_reading:
+    refs: [ma-doer-customer-choice, ma-ago-2026-competitive-supply]
     variants:
-      - holds: ma.supply.net_musd < 0 and ma.supply.years_lower >= 2 and ma.supply.spike_supplier < ma.supply.spike_basic - 1
-        text: "{ma.comp.share:f0}% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program ({ma.comp.agg_share:f0}% through towns, {ma.comp.individual_share:f0}% individually), as of {ma.comp.period:month}. On EIA's statewide averages, competitive suppliers charged more than basic service in {ma.supply.years_higher:int} of {ma.supply.n_years:int} years from {ma.supply.first_year:year} to {ma.supply.last_year:year}, and less in {ma.supply.years_lower:int}, by the most when basic service spiked ({ma.supply.spike_basic:f1}¢ against {ma.supply.spike_supplier:f1}¢ in {ma.supply.spike_year:year}). Over the period, that is about {ma.supply.net_musd:usd_abs} million less than basic service would have cost. The average mixes town aggregation, which buys in bulk, with individual contracts, so it does not show what a household on an individual contract pays."
+      - holds: ma.supply.net_musd < 0 and ma.supply.years_lower >= 2 and ma.supply.spike_supplier < ma.supply.spike_basic - 1 and fact.ago_individual_supply_loss_musd > 0
+        text: "{ma.comp.share:f0}% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program ({ma.comp.agg_share:f0}% through towns, {ma.comp.individual_share:f0}% individually), as of {ma.comp.period:month}. On EIA's statewide averages, competitive suppliers charged more than basic service in {ma.supply.years_higher:int} of {ma.supply.n_years:int} years from {ma.supply.first_year:year} to {ma.supply.last_year:year}, and less in {ma.supply.years_lower:int}, by the most when basic service spiked ({ma.supply.spike_basic:f1}¢ against {ma.supply.spike_supplier:f1}¢ in {ma.supply.spike_year:year}). Over the period, that is about {ma.supply.net_musd:usd_abs} million less than basic service would have cost. That average mixes town aggregation, which buys in bulk, with individual contracts. The Attorney General's office, which studies individual contracts only, finds those households paid **${fact.ago_individual_supply_loss_musd:f1} million more** than basic service from July 2015 to June 2025, ${fact.ago_individual_supply_loss_latest_musd:f1} million of it in the latest year. Taken together, town aggregation, not individual contracts, is what kept the statewide average near or below basic service."
       - holds: ma.supply.net_musd >= 0
         text: "{ma.comp.share:f0}% of homes at the three investor-owned utilities buy supply from a competitive supplier or their town's aggregation program ({ma.comp.agg_share:f0}% through towns, {ma.comp.individual_share:f0}% individually), as of {ma.comp.period:month}. On EIA's statewide averages, competitive suppliers charged more than basic service in {ma.supply.years_higher:int} of {ma.supply.n_years:int} years from {ma.supply.first_year:year} to {ma.supply.last_year:year}: about {ma.supply.net_musd:usd_abs} million more over the period. The average mixes town aggregation with individual contracts."
     fallback: "{ma.comp.share:f0}% of homes at the three investor-owned utilities are on competitive supply or town aggregation ({ma.comp.period:month}). Statewide average supplier price in {ma.supply.last_year:year}: {ma.supply.last_supplier:f1}¢ per kWh; basic service supply: {ma.supply.last_basic:f1}¢."
 
   ma_supply_note:
+    refs: [ma-doer-customer-choice]
     text: "Customer counts: Massachusetts DOER customer choice data (residential rate classes). Prices: EIA-861 annual, nominal cents per kWh. Basic service supply = investor-owned utilities' full-service revenue per kWh minus their delivery-only revenue per kWh; supplier price = energy-only revenue per kWh of competitive suppliers selling to Massachusetts homes. Years without both large utilities in EIA's file are left out."
 
   ma_dc_reading:
-    holds: ma.dc.pipeline_mw < 1000 and ma.dc.largest_mw >= 0.5 * ma.dc.pipeline_mw and ma.dc.largest_status == "proposed"
-    text: "Massachusetts has {ma.dc.n:int} data center sites in the merged list, {ma.dc.op_mw:int} MW operating. Nearly all of the {ma.dc.pipeline_mw:int} MW in the pipeline is one proposal: {ma.dc.largest} in {ma.dc.largest_county} County ({ma.dc.largest_mw:int} MW). New England as a whole has {ne.dc.op_mw:int} MW operating and {ne.dc.pipeline_mw:int} MW proposed or under construction; PJM has {dc.pjm_pipeline_gw:int} GW in its pipeline."
+    refs: [isone-2026-large-load-forecast]
+    holds: >-
+      ma.dc.pipeline_mw < 1000 and ma.dc.largest_mw >= 0.5 * ma.dc.pipeline_mw and ma.dc.largest_status == "proposed"
+      and fact.isone_large_load_dc_mw < 1000
+    text: "Massachusetts has {ma.dc.n:int} data center sites in the merged list, {ma.dc.op_mw:int} MW operating. Nearly all of the {ma.dc.pipeline_mw:int} MW in the pipeline is one proposal: {ma.dc.largest} in {ma.dc.largest_county} County ({ma.dc.largest_mw:int} MW). New England as a whole has {ne.dc.op_mw:int} MW operating and {ne.dc.pipeline_mw:int} MW proposed or under construction; PJM has {dc.pjm_pipeline_gw:int} GW in its pipeline. ISO New England's own first large-load forecast (2026) counts one data center in its formal study process, {fact.isone_large_load_dc_mw:int} MW in the Northeast Massachusetts and Boston zone, and expects all large new loads together to add about {fact.isone_large_load_peak_2030s_mw:int} MW to the region's peak in the 2030s."
     fallback: "Massachusetts data center sites: {ma.dc.n:int}, with {ma.dc.op_mw:int} MW operating and {ma.dc.pipeline_mw:int} MW proposed or under construction. New England: {ne.dc.op_mw:int} MW operating, {ne.dc.pipeline_mw:int} MW proposed or under construction."
 
   lede_intro:
