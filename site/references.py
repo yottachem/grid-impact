@@ -19,27 +19,27 @@ RELATION_LABEL = {"supports": "Consistent with our findings", "differs": "Differ
                   "mixed": "Partly consistent", "context": "Background"}
 CSS = """
 .refs { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 48px; display: grid; gap: 20px; }
-.refs h1 { font: 600 38px/1.05 var(--font-display); margin: 0; }
+.refs h1 { font: 400 40px/1.08 var(--font-display); letter-spacing: -.01em; margin: 0; }
 .refs .lede { margin: 0; color: var(--muted); max-width: 72ch; }
-.refs h2 { font: 600 24px/1.15 var(--font-display); margin: 12px 0 0; }
+.refs h2 { font: 600 25px/1.2 var(--font-display); margin: 12px 0 0; padding-top: 12px; border-top: 2px solid var(--fg); }
 .filters { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font-size: 13px; }
 .filters .k { color: var(--muted); margin-right: 4px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .06em; }
-.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 4px 10px; font: inherit; cursor: pointer; }
-.chip[aria-pressed="true"] { border-color: var(--s1); color: var(--s1); }
-.ref { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; min-width: 0; scroll-margin-top: 70px; }
-.ref:target { border-color: var(--s1); box-shadow: 0 0 0 2px var(--s1); }
-.ref h3 { font: 600 17px/1.3 var(--font-body); margin: 0; text-wrap: balance; }
+.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 4px 10px; font: 12.5px var(--font-data); cursor: pointer; }
+.chip[aria-pressed="true"] { border-color: var(--fg); background: var(--fg); color: var(--surface); }
+.ref { background: transparent; border-bottom: 1px dashed var(--line); padding: 12px 2px 14px; display: grid; gap: 6px; min-width: 0; scroll-margin-top: 70px; }
+.ref:target { background: var(--tint); box-shadow: -8px 0 0 var(--tint), 8px 0 0 var(--tint); }
+.ref h3 { font: 600 18px/1.3 var(--font-display); margin: 0; text-wrap: balance; }
 .ref h3 a { color: var(--fg); }
 .ref .cite { font-size: 13px; color: var(--muted); }
 .ref .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font: 500 11px/1.6 var(--font-data); letter-spacing: .04em; text-transform: uppercase; border-radius: 4px; padding: 0 6px; border: 1px solid var(--line); color: var(--muted); }
+.tag { font: 500 11px/1.6 var(--font-data); letter-spacing: .04em; text-transform: uppercase; padding: 0 6px; border: 1px solid var(--line); color: var(--muted); }
 .tag.rel-supports { color: var(--s3); border-color: currentColor; }
 .tag.rel-differs { color: var(--s2); border-color: currentColor; }
 .tag.rel-mixed { color: var(--s4); border-color: currentColor; }
 .ref ul { margin: 2px 0; padding-left: 20px; } .ref li { max-width: 80ch; }
 .ref p { margin: 0; max-width: 80ch; }
 .ref .meta { font-size: 13px; color: var(--muted); }
-.ref .meta a { color: var(--s1); }
+.ref .meta a, .refs .lede a { color: var(--s1); }
 .count { font-size: 13px; color: var(--muted); }
 """
 JS = """

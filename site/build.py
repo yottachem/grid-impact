@@ -26,39 +26,44 @@ if not references.approved():  # the References page appears once the first batc
     PAGES = PAGES[:-1]
 FRIENDLY_DATE = lambda d: __import__("datetime").date.fromisoformat(d).strftime("%b %-d, %Y") if d else "—"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600'
-         '&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">')
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600'
+         '&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">')
+# Statement style: the site reads like a utility rate notice (security-tint band, line items, mono figures) with
+# newsroom charts (one teal-highlighted series, the rest gray, stepped auction prices, numbered chart footnotes).
 BASE_CSS = """
-:root { --bg:#f5f7f9; --surface:#fff; --fg:#11161d; --muted:#586271; --line:#d8dee6; --grid:#e8ecf1;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
-  --font-display:"Barlow Semi Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
-  --font-body:"Public Sans","Helvetica Neue",Arial,sans-serif; --font-data:"IBM Plex Mono",ui-monospace,Menlo,monospace; color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root { --bg:#11151a; --surface:#181d23; --fg:#eef1f4; --muted:#9aa5b2; --line:#2b323b; --grid:#232a32;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; color-scheme: dark; } }
+:root { --bg:#f4f5ef; --surface:#fdfdf9; --fg:#1d2321; --muted:#5c6763; --line:#c9cfc7; --grid:#e3e7df; --tint:#e2eae2;
+  --s1:#0a6b66; --s2:#b3261e; --s3:#3d7a3f; --s4:#9a6a00; --g1:#5f6762; --g2:#8d948f; --g3:#aab0a9; --band:rgba(10,107,102,.14);
+  --font-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --font-body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif; --font-data:"IBM Plex Mono",ui-monospace,Menlo,monospace; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg:#131715; --surface:#1a1f1d; --fg:#e8ebe5; --muted:#9aa49e; --line:#333b37; --grid:#262d29; --tint:#1f2a24;
+  --s1:#45c4b8; --s2:#f0645a; --s3:#7fc488; --s4:#e0b04a; --g1:#bcc4be; --g2:#8f9892; --g3:#6a726d; --band:rgba(69,196,184,.18); color-scheme: dark; } }
 * { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 var(--font-body); }
 [hidden] { display: none !important; } img { max-width: 100%; }
-.nav { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.nav { position: sticky; top: 0; z-index: 10; background-color: var(--surface);
+  background-image: repeating-linear-gradient(135deg, var(--tint) 0 2px, transparent 2px 7px); border-bottom: 2px solid var(--fg); }
 .nav-in { max-width: 1120px; margin: 0 auto; padding-inline: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; min-height: 52px; }
-.brand { font: 600 18px/1 var(--font-display); color: var(--fg); text-decoration: none; margin-right: auto; }
-.nav a.l { color: var(--muted); text-decoration: none; font-size: 14px; padding-block: 14px; border-bottom: 2px solid transparent; }
+.brand { font: 600 20px/1 var(--font-display); color: var(--fg); text-decoration: none; margin-right: auto; }
+.nav a.l { color: var(--muted); text-decoration: none; font-size: 14px; padding-block: 14px; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.nav a.l:hover { color: var(--fg); }
 .nav a.l[aria-current="page"] { color: var(--fg); border-bottom-color: var(--s1); }
 .nav a:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; }
-.foot { border-top: 1px solid var(--line); margin-top: 24px; }
+.foot { border-top: 1px dashed var(--line); margin-top: 24px; }
 .foot-in { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 18px 28px; font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
 .foot a { color: inherit; }
 .prose { max-width: 820px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 48px; }
-.prose h1 { font: 600 38px/1.05 var(--font-display); margin: 0 0 12px; }
-.prose h2 { font: 600 24px/1.15 var(--font-display); margin: 32px 0 8px; }
+.prose h1 { font: 400 40px/1.08 var(--font-display); letter-spacing: -.01em; margin: 0 0 12px; text-wrap: balance; }
+.prose h2 { font: 600 25px/1.2 var(--font-display); margin: 36px 0 8px; padding-top: 12px; border-top: 2px solid var(--fg); }
+.prose h3 { font: 600 19px/1.25 var(--font-display); margin: 24px 0 6px; }
 .prose p, .prose li { max-width: 72ch; } .prose code { font: 13px var(--font-data); }
 .prose table { border-collapse: collapse; font-size: 14px; display: block; overflow-x: auto; margin: 8px 0 16px; }
-.prose th, .prose td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
-.prose th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.prose th, .prose td { border-bottom: 1px dashed var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+.prose th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--fg); background: var(--tint); border-bottom: 1px solid var(--fg); }
 .prose a { color: var(--s1); }
 .prose.wide { max-width: 1060px; }
 .src-pub { font-size: 12px; color: var(--muted); }
 .badge { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .05em; }
-.badge i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.badge i { width: 8px; height: 8px; display: inline-block; }
 .status-line { color: var(--fg); }
 sup.fn { font: 500 10px/0 var(--font-data); margin-left: 1px; } sup.fn a { color: var(--s1); text-decoration: none; }
 """ + glossary.CSS + """

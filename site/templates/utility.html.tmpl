@@ -1,50 +1,61 @@
 <title>Your Utility</title>
 <style>
-/* Layout: picker, a summary strip, three small multiples (price, usage, bill), then capacity cost for default-service utilities in PJM, New England, MISO, and New York. */
-.u-wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 22px; }
+/* Layout: picker, then a statement for the chosen utility (line items, tinted header), three small multiples under
+   heavy rules, then the capacity charge table and the bill form. Tokens come from the site shell. */
+.u-wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 24px; }
 .u-head { display: grid; gap: 8px; }
-.u-head h1 { font: 600 clamp(28px, 4vw, 40px)/1.05 var(--font-display); margin: 0; text-wrap: balance; }
+.u-head h1 { font: 400 clamp(30px, 4.4vw, 42px)/1.08 var(--font-display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
 .u-head p { margin: 0; color: var(--muted); max-width: 68ch; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.picker label { font-size: 13px; color: var(--muted); }
-.picker input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; width: min(460px, 100%); }
+.picker label { font: 500 11.5px var(--font-data); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.picker input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--fg); padding: 8px 10px; width: min(460px, 100%); }
 .picker input:focus-visible { outline: 2px solid var(--s1); outline-offset: 1px; }
 .picker .hint { font-size: 13px; color: var(--muted); }
-.summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.sum { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
-.sum-n { font: 600 24px/1.05 var(--font-display); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.sum-l { font-size: 12px; color: var(--muted); line-height: 1.35; }
-.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); width: fit-content; }
-.pill i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.reading { margin: 0; font-size: 16px; max-width: 70ch; }
-.multiples { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 14px 8px; display: grid; gap: 4px; min-width: 0; position: relative; }
-.panel h2 { font: 600 17px/1.2 var(--font-display); margin: 0; }
+.summary { border: 1px solid var(--fg); background: var(--surface); max-width: 780px; }
+.stmt-h { display: flex; justify-content: space-between; gap: 6px 14px; flex-wrap: wrap; padding: 8px 14px; background-color: var(--tint);
+  background-image: repeating-linear-gradient(135deg, var(--surface) 0 1px, transparent 1px 6px); border-bottom: 1px solid var(--fg); }
+.stmt-h b { font: 600 18px/1.25 var(--font-display); }
+.stmt-h span { font: 500 11px/1.8 var(--font-data); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.sum { display: grid; grid-template-columns: minmax(0, max-content) minmax(20px, 1fr) auto; align-items: end; gap: 10px; padding: 9px 14px; border-bottom: 1px dashed var(--line); }
+.sum:last-child { border-bottom: 0; }
+.sum::after { content: ""; grid-column: 2; grid-row: 1; border-bottom: 1px dotted var(--muted); margin-bottom: .4em; }
+.sum-l { grid-column: 1; grid-row: 1; font-size: 14px; line-height: 1.4; max-width: 50ch; }
+.sum-n { grid-column: 3; grid-row: 1; font: 500 15px/1.3 var(--font-data); font-variant-numeric: tabular-nums; text-align: right; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--font-data); text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border: 1px solid var(--fg); color: var(--fg); width: fit-content; }
+.pill i { width: 8px; height: 8px; display: inline-block; }
+.reading { margin: 0; font: 400 19px/1.5 var(--font-display); max-width: 64ch; }
+.multiples { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px 20px; }
+.panel { border-top: 2px solid var(--fg); padding-top: 10px; display: grid; gap: 2px; min-width: 0; position: relative; align-content: start; }
+.panel h2 { font: 600 19px/1.2 var(--font-display); margin: 0; }
 .panel .sub { font-size: 12px; color: var(--muted); }
-.panel svg { width: 100%; height: auto; display: block; overflow: visible; }
+.panel svg { width: 100%; height: auto; display: block; overflow: visible; margin-top: 6px; }
 .panel text { font: 11px var(--font-data); fill: var(--muted); }
 .panel .end { font: 600 12px var(--font-data); fill: var(--fg); }
-.cap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; }
-.cap h2 { font: 600 20px/1.2 var(--font-display); margin: 0; }
-.cap table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.cap th, .cap td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cap, .crowd { border-top: 2px solid var(--fg); padding-top: 12px; display: grid; gap: 10px; }
+.cap h2, .crowd h2 { font: 600 24px/1.2 var(--font-display); margin: 0; }
+.cap table { width: 100%; border-collapse: collapse; font-size: 14px; border: 1px solid var(--fg); background: var(--surface); }
+.cap th, .cap td { padding: 7px 10px; border-bottom: 1px dashed var(--line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cap td { font-family: var(--font-data); font-size: 13.5px; }
 .cap th:first-child, .cap td:first-child { text-align: left; }
-.cap thead th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-.cap .bar { display: inline-block; height: 8px; border-radius: 0 4px 4px 0; vertical-align: middle; margin-right: 8px; background: var(--s1); }
+.cap thead th { font: 500 11px/1.2 var(--font-data); text-transform: uppercase; letter-spacing: .06em; color: var(--fg); background: var(--tint); border-bottom: 1px solid var(--fg); }
+.cap tbody tr:last-child td { border-bottom: 0; }
+.cap .bar { display: inline-block; height: 8px; vertical-align: middle; margin-right: 8px; background: var(--s1); }
 .cap .tablewrap { overflow-x: auto; }
-.crowd { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; }
-.crowd h2 { font: 600 20px/1.2 var(--font-display); margin: 0; }
 .crowd .row2 { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.crowd input { font: 15px var(--font-body); color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; width: 9em; }
-.crowd .btn { display: inline-block; background: var(--s1); color: #fff; text-decoration: none; padding: 9px 14px; border-radius: 6px; font-weight: 600; font-size: 14px; }
+.crowd input { font: 15px var(--font-data); color: var(--fg); background: var(--surface); border: 1px solid var(--fg); padding: 8px 10px; width: 9em; }
+.crowd .btn { display: inline-block; background: var(--s1); color: var(--surface); text-decoration: none; padding: 9px 14px; font-weight: 600; font-size: 14px; }
+.crowd .btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .crowd .btn[aria-disabled="true"] { background: var(--line); color: var(--muted); pointer-events: none; }
-.crowd .meter { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; width: min(320px, 100%); }
-.crowd .meter i { display: block; height: 100%; background: var(--s3); }
+.crowd .meter { height: 8px; background: var(--grid); border: 1px solid var(--line); overflow: hidden; width: min(320px, 100%); }
+.crowd .meter i { display: block; height: 100%; background: var(--s1); }
 .crowd #zipout { font-size: 15px; }
-.covwarn { margin: 0; padding: 10px 14px; border: 1px solid var(--s4); border-radius: 6px; background: var(--surface); font-size: 14px; max-width: 80ch; }
+.covwarn { margin: 0; padding: 10px 14px; border: 1px solid var(--s4); background: var(--surface); font-size: 14px; max-width: 80ch; }
 .u-note { font-size: 13px; color: var(--muted); margin: 0; max-width: 78ch; }
-.tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.14); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
-@media (max-width: 800px) { .multiples { grid-template-columns: 1fr; } .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--fg); border: 1px solid var(--fg); padding: 6px 9px; font: 12px var(--font-data); z-index: 2; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 620px) {
+  .sum { grid-template-columns: minmax(0, 1fr) auto; } .sum::after { display: none; } .sum-n { grid-column: 2; }
+  .reading { font-size: 17.5px; }
+}
 </style>
 
 <div class="u-wrap">
@@ -122,7 +133,7 @@ function coverageNote(k, st, name) {
   el.innerHTML = html; el.hidden = !html;
 }
 
-const TIER = { high: ["High", "--s2"], medium: ["Medium", "--s4"], low: ["Low", "--s1"], none: ["None", "--muted"] };
+const TIER = { high: ["High", "--s2"], medium: ["Medium", "--s4"], low: ["Low", "--g2"], none: ["None", "--muted"] };
 const pct = (a, b) => ((b / a - 1) * 100);
 const sgn = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(0) + "%";
 const fmtMW = mw => mw >= 1000 ? (mw / 1000).toFixed(1) + " GW" : Math.round(mw).toLocaleString() + " MW";
@@ -173,25 +184,25 @@ function show(k) {
   document.getElementById("q").value = label(rows);
   const [tName, tTok] = TIER[last.tier] || TIER.none;
   const per1k = x && x.res_customers ? (x.mw_op + x.mw_pipeline) / x.res_customers * 1000 : 0;
-  document.getElementById("summary").innerHTML = [
+  document.getElementById("summary").innerHTML = `<div class="stmt-h"><b>${label(rows)}</b><span>Data year ${last.year}</span></div>` + [
     [Math.round(last.cust).toLocaleString(), `residential customers on the utility's own supply (${last.year})`],
     [last.ba || "—", "regional grid (balancing authority)"],
     [x ? `${fmtMW(x.mw_op)} · ${fmtMW(x.mw_pipeline)}` : "None listed", "data center load in territory: operating · proposed or under construction"],
     [`<span class="pill"><i style="background:var(${tTok})"></i>${tName}</span>`, per1k ? `${per1k.toFixed(1)} MW per 1,000 residential customers` : "no data center sites in territory"],
-  ].map(([n, l]) => `<div class="sum"><span class="sum-n">${n}</span><span class="sum-l">${l}</span></div>`).join("");
+  ].map(([n, l]) => `<div class="sum"><span class="sum-l">${l}</span><span class="sum-n">${n}</span></div>`).join("");
   coverageNote(k, rows[0].state, last.name);
   const b19 = rows.find(r => r.year === 2019) || rows[0];
   const dp = pct(b19.real_price, last.real_price), du = pct(b19.kwh_per_home, last.kwh_per_home), db = pct(b19.real_bill, last.real_bill);
   const driver = Math.abs(dp) > Math.abs(du) * 1.5 ? "Price, not usage, drove the change." : Math.abs(du) > Math.abs(dp) * 1.5 ? "Usage, more than price, drove the change." : "Price and usage both contributed.";
   document.getElementById("reading").innerHTML = `From ${b19.year} to ${last.year}, after inflation, the average home's annual bill changed <b>${sgn(db)}</b> (to $${Math.round(last.real_bill).toLocaleString()}): price per kWh ${sgn(dp)}, usage per home ${sgn(du)}. ${driver}`;
   small("p-price", rows, d => d.real_price, (v, t) => t ? v.toFixed(0) : v.toFixed(1) + "¢", css("--s1"));
-  small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(0) + "k" : Math.round(v).toLocaleString(), css("--s3"));
-  small("p-bill", rows, d => d.real_bill, (v, t) => "$" + (t ? Math.round(v) : Math.round(v).toLocaleString()), css("--s2"));
+  small("p-kwh", rows, d => d.kwh_per_home, (v, t) => t ? (v / 1000).toFixed(0) + "k" : Math.round(v).toLocaleString(), css("--s1"));
+  small("p-bill", rows, d => d.real_bill, (v, t) => "$" + (t ? Math.round(v) : Math.round(v).toLocaleString()), css("--s1"));
   const rel = (REL.get(k) || []).filter(d => d.saidi != null).sort((a, b) => a.year - b.year);
   const relHost = document.getElementById("p-rel");
   relHost.querySelector(".none")?.remove();
   if (rel.length >= 3) {
-    small("p-rel", rel, d => d.saidi, (v, t) => Math.round(v) + (t ? "" : " min"), css("--s4"));
+    small("p-rel", rel, d => d.saidi, (v, t) => Math.round(v) + (t ? "" : " min"), css("--s1"));
     document.getElementById("relsub").textContent = "SAIDI, excluding major storms (EIA-861, " + (rel[rel.length - 1].standard === "ieee_standard" ? "IEEE method" : "state method") + ")";
   }
   else { relHost.querySelector("svg")?.remove(); relHost.insertAdjacentHTML("beforeend", '<p class="u-note none" style="margin:8px 0">Not reported to EIA for enough years.</p>'); }
