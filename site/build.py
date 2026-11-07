@@ -20,6 +20,10 @@ import references  # noqa: E402  (site/references.py)
 import glossary  # noqa: E402  (site/glossary.py)
 
 REPO = "https://github.com/yottachem/grid-impact"
+# Cloudflare Web Analytics site token for yottachem.github.io (public; it appears in page source). Empty = no beacon.
+ANALYTICS_TOKEN = "ee99837aed054d67b79a567044baec28"
+BEACON = ('<script defer src="https://static.cloudflareinsights.com/beacon.min.js" '
+          f'data-cf-beacon=\'{{"token": "{ANALYTICS_TOKEN}"}}\'></script>') if ANALYTICS_TOKEN else ""
 PAGES = [("index.html", "Map"), ("findings.html", "Findings"), ("utility.html", "Your utility"), ("methods.html", "Methods"),
          ("references.html", "References")]
 if not references.approved():  # the References page appears once the first batch is approved
@@ -77,7 +81,7 @@ def shell(page: str, title: str, body: str, footer: str, description: str) -> st
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
             f'<title>{html.escape(title)} · Grid Impact Tracker</title><meta name="description" content="{html.escape(description)}">'
-            f'{FONTS}<style>{BASE_CSS}</style></head><body>'
+            f'{FONTS}<style>{BASE_CSS}</style>{BEACON}</head><body>'
             f'<nav class="nav" aria-label="Site"><div class="nav-in"><a class="brand" href="index.html">Grid Impact Tracker</a>{nav}</div></nav>'
             f'<main>{body}</main><footer class="foot"><div class="foot-in">{footer}</div></footer></body></html>')
 
