@@ -1222,3 +1222,50 @@ entries:
     vault: "wiki/sources/grid-impact/2026-06 - Electric & Gas Customer Choice Data.md"
     added: 2026-10-13
     approved: 2026-10-13
+
+  # ------------------------------------------------------------ Batch 3: hyperscale electricity use (approved 2026-11-18)
+  - id: harvard-2026-hyperscale-emissions
+    title: "Assessing the Carbon Emissions and Energy Consumption of U.S. Hyperscale Data Centers"
+    authors: ["Guidi, Gianluca", "Dominici, Francesca", "Bargagli-Stoffi, Falco J.", "et al."]
+    publisher: Nature Sustainability (Harvard T.H. Chan School of Public Health); preprint arXiv:2606.05420
+    date: 2026-11-16
+    url: https://doi.org/10.1038/s41893-026-01985-7
+    type: peer-reviewed
+    topics: [load-growth, generation, data]
+    summary: Estimates electricity use and attributable CO2 for 403 operating US hyperscale data centers (May 2024 to April 2025) from facility power capacity and EPA eGRID2023 plant data for each grid region.
+    findings:
+      - The 403 facilities used about 81.8 TWh in the central scenario (68 to 99 TWh across load scenarios), about 1.8% of US electricity and roughly 3.6 times a 2018 estimate.
+      - PJM carries the most, 189 facilities and 32.8 TWh; Virginia alone has 142 facilities and about 21 TWh, roughly a quarter of the total. None of the 403 are in New England.
+      - Attributed supply is 53.9% fossil, 20.9% nuclear, 25.3% renewable; about 25.7 Mt CO2 in the central scenario (21 to 31 Mt), 314 gCO2/kWh versus a 348 gCO2/kWh US average.
+      - The facility list comes from a commercial provider (Baxtel) under a data use agreement and is not public; state and grid-region totals and the code are published (github.com/gianguidi/hyperscale-emissions).
+    relation: context
+    relation_note: "Covers large hyperscale campuses only, so it sits well below whole-industry totals (LBNL: 176 TWh for all US data centers in 2023); its regional split matches this site's picture of load concentrated in PJM, and it finds no hyperscale load in New England."
+    use: [fact, context]
+    cites: [lbnl-2024-dc-energy, iea-2025-energy-ai]
+    accessed: 2026-11-18
+    review_by: 2027-11-30
+    vault: "wiki/sources/grid-impact/2026-11-16 - Assessing the Carbon Emissions and Energy Consumption of U.S. Hyperscale Data Centers.md"
+    added: 2026-11-18
+    approved: 2026-11-18
+
+  - id: guidi-2026-hyperscale-emissions-repo
+    title: "hyperscale-emissions: code and aggregate data for the US hyperscale data center study"
+    authors: ["Guidi, Gianluca"]
+    publisher: GitHub (gianguidi/hyperscale-emissions), version 0.3.0-round3
+    date: 2026-07-13
+    url: https://github.com/gianguidi/hyperscale-emissions
+    type: dataset
+    topics: [load-growth, generation, data]
+    summary: The study authors' public repository, with state and grid-region totals of hyperscale data center electricity use and CO2 (central scenario) and the code behind the paper; no facility-level records.
+    findings:
+      - public/data_state_level.csv gives facilities, TWh, and CO2 by state; public/data_BA_level.csv gives the same by grid region (balancing authority).
+      - Totals match the published paper, about 81.8 TWh and 25.7 Mt CO2; the authors list the preprint's 44.6 Mt and 545 gCO2/kWh as superseded.
+    relation: context
+    relation_note: Source of this site's PJM, Virginia, and New England hyperscale figures; no license is stated, so the site links to it and does not re-host the files.
+    use: [fact]
+    cites: [harvard-2026-hyperscale-emissions]
+    accessed: 2026-11-18
+    review_by: 2027-11-30
+    vault: "wiki/sources/grid-impact/2026-11-16 - Assessing the Carbon Emissions and Energy Consumption of U.S. Hyperscale Data Centers.md"
+    added: 2026-11-18
+    approved: 2026-11-18

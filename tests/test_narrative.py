@@ -119,6 +119,20 @@ def test_literature_is_valid():
             assert r in ids, f"fact {fid} cites unknown reference {r}"
 
 
+def test_facts_from_author_repos_cite_the_repo():
+    """A fact taken from an author's code/data repository must cite a reference entry that links to that repo."""
+    import pandas as pd
+    import sys
+    sys.path.insert(0, str(ROOT / "site"))
+    import references
+    urls = {e["id"]: (e.get("url") or "").lower() for e in references.load()["entries"]}
+    f = pd.read_csv(ROOT / "reference" / "context_facts.csv", dtype=str).fillna("")
+    for r in f.itertuples():
+        for repo in re.findall(r"(?:github\.com|gitlab\.com|zenodo\.org|figshare\.com|huggingface\.co)/[\w.-]+(?:/[\w.-]+)?", r.source.lower()):
+            cited = [urls.get(x.strip(), "") for x in r.ref.split(";") if x.strip()]
+            assert any(repo.rstrip(".") in u for u in cited), f"fact {r.fact_id} uses {repo} but cites no reference linking to it"
+
+
 @needs_results
 def test_massachusetts_headline_follows_its_conditions(base):
     """The Massachusetts headline needs falling capacity costs, little data center load, and a New England price gap."""
